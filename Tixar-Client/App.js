@@ -5,11 +5,10 @@ import HomePage from './pages/login/forgetPassword.js';
 
 export default function App() {
     return (
-        // <View style={styles.container}>
-        //     <Text>Open up App.js to start working on your app!</Text>
-        //     <StatusBar style="auto" />
-        // </View>
-        <HomePage/>
+        <View style={styles.container}>
+            <Text>Open up App.js to start working on your app!</Text>
+            <StatusBar style="auto" />
+        </View>
     );
 }
 
