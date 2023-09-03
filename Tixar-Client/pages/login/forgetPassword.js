@@ -4,12 +4,11 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useFonts } from 'expo-font';
 import { BlurView } from 'expo-blur';
 import HeaderBlock from './headerBlock.js';
-import { Header } from 'react-native/Libraries/NewAppScreen';
 
 export default HomePage = () => {
     const [fontsLoaded] = useFonts({
-        'Lato-Bold': require('../../assets/Lato/Lato-Bold.ttf'),
-        'Lato-Regular': require('../../assets/Lato/Lato-Regular.ttf'),
+        'Lato-Bold': require('../../assets/fonts/Lato/Lato-Bold.ttf'),
+        'Lato-Regular': require('../../assets/fonts/Lato/Lato-Regular.ttf'),
     });
 
     const [nameField, setNameField] = useState('');

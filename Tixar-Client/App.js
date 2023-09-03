@@ -1,6 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import HomePage from './pages/login/forgetPassword.js';
 
 
 export default function App() {
