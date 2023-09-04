@@ -1,21 +1,19 @@
 import { React } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, Image, Pressable, TextInput } from 'react-native';
+import { ImageBackground, View, Text, StyleSheet, SafeAreaView, Image, Pressable, TextInput } from 'react-native';
 
 export default LoadingScreen = ({ onLayout }) => {
     return (
         <SafeAreaView style={styles.container} onLayout={onLayout}>
-            {/* <Text style={styles.title}>
-                hi
-            </Text> */}
-            <View styles={styles.viewPic}>
-                <Image source={require('../assets/soft-ui-pro-react-native-v1.1.1/background3x.png')}></Image>
+            <View style={styles.viewPic} >
+                <Image source={require('../assets/soft-ui-pro-react-native-v1.1.1/background3x.png')}
+                />
             </View>
-            <View styles={styles.viewTitle}>
-                <Text>
+            <View style={styles.viewTitle}>
+                <Text style={styles.title}>
                     TIXAR
                 </Text>
             </View>
-        </SafeAreaView>
+        </SafeAreaView >
     );
 }
 
@@ -23,29 +21,24 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'flex-start',
+        justifyContent: 'center',
     },
     title: {
         fontSize: 35,
         fontFamily: 'Lato-Bold',
-        color: 'black',
-        marginTop: 40,
+        color: 'white',
     },
     viewPic: {
-        justifyContent: 'center',
+        flex: 1,
         alignItems: 'center',
+        justifyContent: 'center',
         zIndex: 1,
     },
     viewTitle: {
         justifyContent: 'center',
         alignItems: 'center',
+        position: 'absolute',
         zIndex: 2,
     },
-    headerImage: {
-        // width: '92%',
-        // height: 225,
-        borderRadius: 22,
-        resizeMode: 'contain',
-        position: 'absolute',
-    },
+    
 });
