@@ -2,87 +2,92 @@ import { React, useState } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, Image, Pressable, TextInput } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import HeaderBlock from './headerBlock.js';
+import { BlurView } from 'expo-blur';
 
-export default ForgetPasswordPage = ({ onLayout }) => {
-    const [nameField, setNameField] = useState('');
-    const handleName = (text) => {
-        setNameField(text);
+export default SetPasswordPage = ({ onLayout }) => {
+    const [passwordField1, setPasswordField1] = useState('');
+    const [passwordField2, setPasswordField2] = useState('');
+    const [passwordCheck, setPasswordCheck] = useState(false);
+
+    const handlePassword1 = (text) => {
+        setPasswordField1(text);
+        setPasswordCheck((text !== '') && (passwordField2 === text));
+    };
+    const handlePassword2 = (text) => {
+        setPasswordField2(text);
+        setPasswordCheck((text !== '') && (passwordField1 === text));
     };
 
-    const [passwordField, setPasswordField] = useState('');
-    const handlePassword = (text) => {
-        setPasswordField(text);
-    };
-
-    const [isCaptchaChecked, setCaptchaChecked] = useState(false);
+    const [isVisible, setIsVisible] = useState(false);
 
     return (
         <SafeAreaView style={styles.container} onLayout={onLayout}>
             <HeaderBlock />
+            {/* <BlurView intensity={30} tint="light" style={styles.blur}>
+            </BlurView> */}
             <View style={styles.translucentBox}>
-                <Text style={styles.subtitle}>Password Reset</Text>
+
+                <Text style={styles.subtitle}>Create New Password</Text>
                 <View style={styles.fieldBox}>
                     <TextInput
+                        secureTextEntry={isVisible}
                         style={styles.fieldText}
-                        onChangeText={handleName}
-                        value={nameField}
-                        placeholder="Name"
-                    />
+                        onChangeText={handlePassword1}
+                        value={passwordField1}
+                        placeholder="New Password" />
+                    <EyeButton isVisible={isVisible} setIsVisible={setIsVisible} />
                 </View>
+
                 <View style={styles.fieldBox}>
                     <TextInput
+                        secureTextEntry={isVisible}
                         style={styles.fieldText}
-                        onChangeText={handlePassword}
-                        value={passwordField}
-                        placeholder="Email"
-                    />
+                        onChangeText={handlePassword2}
+                        value={passwordField2}
+                        placeholder="Confirm New Password" />
+                    <EyeButton isVisible={isVisible} setIsVisible={setIsVisible} />
                 </View>
-                <CaptchaButton isCaptchaChecked={isCaptchaChecked} setCaptchaChecked={setCaptchaChecked} />
-                <ResetButton isCaptchaChecked={isCaptchaChecked}
-                    nameField={nameField} passwordField={passwordField}
-                />
+
+                <ResetButton passwordCheck={passwordCheck} passwordField={passwordField1} />
                 <Text style={styles.footerText}>TIXAR</Text>
             </View>
+
         </SafeAreaView >
     );
 };
 
-const CaptchaButton = ({ isCaptchaChecked, setCaptchaChecked }) => {
+const EyeButton = ({ isVisible, setIsVisible }) => {
     return (
-        <View style={styles.captchaBlock}>
-            <Pressable style={styles.captchaButton}
-                onPress={() => {
-                    setCaptchaChecked(!isCaptchaChecked);
-                    console.log('isCaptchaChecked == ' + isCaptchaChecked);
-                }}>
-                <Image source={isCaptchaChecked ? require('../../assets/soft-ui-pro-react-native-v1.1.1/check3x.png') : null}
-                    style={styles.tickIcon}
-                />
-            </Pressable>
-            <Text style={styles.captchaText}>I am not a robot.</Text>
-        </View>
+        <Pressable style={styles.eyeButton}
+            onPress={() => { setIsVisible(!isVisible) }}>
+            <Image source={isVisible ?
+                require('../../assets/eyeClose.png')
+                : require('../../assets/eyeOpen.png')}
+                style={styles.eyeIcon} />
+        </Pressable>
     );
 }
 
-const ResetButton = ({ isCaptchaChecked, nameField, passwordField }) => {
-    let isValid = isCaptchaChecked && nameField !== '' && passwordField != '';
+const ResetButton = ({ passwordCheck, passwordField }) => {
     return (
-        <LinearGradient colors={isValid ?
-            ['#FF0080', '#7928CA']
-            : ['#E8ECEF', '#E8ECEF']}
+        <LinearGradient colors={
+            passwordCheck ?
+                ['#FF0080', '#7928CA'] :
+                ['#E8ECEF', '#E8ECEF']}
             style={styles.resetBackgroundEnabled}
             start={[0, 0]} end={[1, 0]}>
             <Pressable style={styles.resetButton}
                 onPress={() => {
-                    console.log({ nameField, passwordField });
-                    if (nameField === '' || passwordField === '') {
-                        console.log('Not all fields entered');
+                    if (passwordCheck) {
+                        console.log('password set to "' + passwordField + '"');
+                    } else {
+                        console.log('button disabled');
                     }
                 }} >
-                <Text style={isValid ?
+                <Text style={passwordCheck ?
                     styles.resetTextEnabled
                     : styles.resetTextDisabled}>
-                    Reset My Password</Text>
+                    Set new password</Text>
             </Pressable>
         </LinearGradient >
     )
@@ -109,24 +114,34 @@ const styles = StyleSheet.create({
         top: 130,
         backgroundColor: 'rgba(255, 255, 255, 0.95)',
         borderRadius: 15,
-        zIndex: 2,
+        zIndex: 3,
         alignItems: 'center',
         justifyContent: 'flex-start',
     },
+    blur: {
+        height: '70%',
+        width: '85%',
+        position: 'absolute',
+        top: 130,
+        borderRadius: 15,
+        zIndex: 2,
+    },
     fieldBox: {
+        flexDirection: 'row',
         height: 56,
         width: '86%',
         borderRadius: 10,
         borderColor: '#D2D6DA',
         borderWidth: 1,
-        justifyContent: 'center',
         marginTop: 26,
     },
     fieldText: {
-        left: '5%',
+        flex: 1,
+        left: '25%',
         fontSize: 18,
         fontFamily: 'Lato-Regular',
         color: '#8F8F8F',
+        paddingRight: 35,
     },
     captchaButton: {
         height: 32,
@@ -135,20 +150,6 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         borderColor: '#D2D6DA',
         borderWidth: 1,
-    },
-    captchaBlock: {
-        flexDirection: 'row',
-        marginTop: 50,
-        justifyContent: 'center',
-        alignContent: 'center',
-    },
-    captchaText: {
-        marginTop: 4,
-        left: 17,
-        fontSize: 18,
-        fontFamily: 'Lato-Bold',
-        color: '#252F40',
-        position: 'relative'
     },
     resetButton: {
         width: '86%',
@@ -195,4 +196,13 @@ const styles = StyleSheet.create({
         fontSize: 12,
         position: 'absolute'
     },
+    eyeIcon: {
+        height: 30,
+        width: 30,
+    },
+    eyeButton: {
+        right: '20%',
+        alignItems: 'center',
+        justifyContent: 'center',
+    }
 });

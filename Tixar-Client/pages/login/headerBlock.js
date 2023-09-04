@@ -1,8 +1,6 @@
 import { React, useState } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, Image, Pressable, TextInput } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useFonts } from 'expo-font';
-import { BlurView } from 'expo-blur';
 
 export default HeaderBlock = () => {
     return (
@@ -33,7 +31,7 @@ const styles = StyleSheet.create({
         width: '92%',
         height: 225,
         borderRadius: 22,
-        resizeMode: 'cover',
+        resizeMode: 'contain',
         position: 'absolute',
     },
 });
