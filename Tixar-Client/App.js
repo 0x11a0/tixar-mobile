@@ -1,12 +1,23 @@
-import { StatusBar } from 'expo-status-bar';
-import { useCallback } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { useFonts } from 'expo-font';
 import ForgetPasswordPage from './pages/login/forgetPassword';
 import SetPasswordPage from './pages/login/setPassword';
-import { useFonts } from 'expo-font';
+import { React, useState, useEffect } from 'react';
+import { Pressable, View, Text, Image, StyleSheet, SafeAreaView } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import * as SplashScreen from 'expo-splash-screen';
 
-SplashScreen.preventAutoHideAsync();
+const Drawer = createDrawerNavigator();
+
+function HomePage({ navigation }) {
+    return (
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <Text>Home page</Text>
+        </View>
+    );
+}
+
+
 
 export default function App() {
     const [fontsLoaded] = useFonts({
@@ -14,31 +25,30 @@ export default function App() {
         'Lato-Regular': require('./assets/fonts/Lato/Lato-Regular.ttf'),
     });
 
-    const onLayoutRootView = useCallback(async () => {
-        if (fontsLoaded) {
+
+    if (fontsLoaded) {
+        console.log('fonts loaded');
+        const hideSplash = async () => {
             await SplashScreen.hideAsync();
-        }
-    }, [fontsLoaded]);
-
-    if (!fontsLoaded) {
+        };
+        hideSplash();
+    } else {
         console.log('font not loaded');
-        return;
+        return null;
     }
-    console.log('fonts loaded');
-    return (
-        <ForgetPasswordPage 
-            onLayout={onLayoutRootView} />
 
+    return (
+        <NavContainer />
     );
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    }, text: {
-        fontFamily: 'Lato-Bold',
-    }
-});
+function NavContainer() {
+    return (
+        <NavigationContainer>
+            <Drawer.Navigator>
+                <Drawer.Screen name='Home' component={HomePage} />
+                <Drawer.Screen name='ForgetPassword' component={ForgetPasswordPage} />
+            </Drawer.Navigator>
+        </NavigationContainer>
+    );
+}
