@@ -1,17 +1,12 @@
 import { React } from 'react';
 import { ImageBackground, View, Text, StyleSheet, SafeAreaView, Image, Pressable, TextInput } from 'react-native';
 
-export default LoadingScreen = ({ onLayout }) => {
+export default LoadingScreen = ({ navigation, onLayout }) => {
     return (
         <SafeAreaView style={styles.container} onLayout={onLayout}>
             <View style={styles.viewPic} >
                 <Image source={require('../assets/soft-ui-pro-react-native-v1.1.1/background3x.png')}
                 />
-            </View>
-            <View style={styles.viewTitle}>
-                <Text style={styles.title}>
-                    TIXAR
-                </Text>
             </View>
         </SafeAreaView >
     );
@@ -40,5 +35,4 @@ const styles = StyleSheet.create({
         position: 'absolute',
         zIndex: 2,
     },
-    
 });

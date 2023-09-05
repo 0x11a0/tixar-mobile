@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, SafeAreaView, Image, Pressable, TextInput } fro
 import { LinearGradient } from 'expo-linear-gradient';
 import HeaderBlock from './headerBlock.js';
 
-export default ForgetPasswordPage = ({ onLayout }) => {
+export default ForgetPasswordPage = ({ navigation, onLayout }) => {
     const [nameField, setNameField] = useState('');
     const handleName = (text) => {
         setNameField(text);

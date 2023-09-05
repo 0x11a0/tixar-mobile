@@ -4,7 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import HeaderBlock from './headerBlock.js';
 import { BlurView } from 'expo-blur';
 
-export default SetPasswordPage = ({ onLayout }) => {
+export default SetPasswordPage = ({navigation, onLayout }) => {
     const [passwordField1, setPasswordField1] = useState('');
     const [passwordField2, setPasswordField2] = useState('');
     const [passwordCheck, setPasswordCheck] = useState(false);
