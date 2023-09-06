@@ -4,6 +4,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import HeaderBlock from '../../components/login/headerBlock.js';
 import FooterBlock from '../../components/login/footerBlock.js';
 import TextInputFieldPrivate from '../../components/login/textInputFieldPrivate.js';
+import BlurBlock from '../../components/login/blurBlock.js';
 
 export default SetPasswordPage = () => {
     const [passwordField1, setPasswordField1] = useState('');
@@ -25,6 +26,8 @@ export default SetPasswordPage = () => {
             borderColor: '#f2f2f2',
         }}>
             <HeaderBlock />
+
+            <BlurBlock/>
 
             <View style={styles.translucentBox}>
 
@@ -76,10 +79,10 @@ const styles = StyleSheet.create({
         width: '85%',
         position: 'absolute',
         top: 130,
-        backgroundColor: 'rgba(255, 255, 255, 0.95)',
+        backgroundColor: 'rgba(255, 255, 255, 0.45)',
         borderRadius: 15,
         zIndex: 3,
         alignItems: 'center',
-        justifyContent: 'space-between',
+        justifyContent: 'flex-start',
     },
 });

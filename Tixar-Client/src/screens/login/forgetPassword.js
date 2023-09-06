@@ -1,12 +1,12 @@
 import { React, useState } from 'react';
 import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
-import { BlurView } from 'expo-blur';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import HeaderBlock from '../../components/login/headerBlock.js';
 import FooterBlock from '../../components/login/footerBlock.js';
 import NextButton from '../../components/login/nextButton.js';
 import TextInputField from '../../components/login/textInputField.js';
 import CheckBoxBlock from '../../components/login/checkBoxBlock.js';
+import BlurBlock from '../../components/login/blurBlock.js';
 
 
 export default ForgetPasswordPage = () => {
@@ -29,6 +29,8 @@ export default ForgetPasswordPage = () => {
             borderColor: '#f2f2f2',
         }}>
             <HeaderBlock />
+
+            <BlurBlock/>
 
             <View style={styles.translucentBox}>
 
@@ -75,10 +77,11 @@ const styles = StyleSheet.create({
         width: '85%',
         position: 'absolute',
         top: 130,
-        backgroundColor: 'rgba(255, 255, 255, 0.95)',
+        backgroundColor: 'rgba(255, 255, 255, 0.45)',
         borderRadius: 15,
-        zIndex: 2,
+        zIndex: 3,
         alignItems: 'center',
         justifyContent: 'flex-start',
     },
+    
 });
