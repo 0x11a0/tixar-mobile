@@ -21,7 +21,6 @@ const styles = StyleSheet.create({
         borderColor: '#D2D6DA',
         borderWidth: 1,
         justifyContent: 'center',
-        marginTop: 26,
     },
     fieldText: {
         left: '5%',

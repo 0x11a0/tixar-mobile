@@ -36,7 +36,6 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         borderColor: '#D2D6DA',
         borderWidth: 1,
-        marginTop: 26,
     },
     fieldText: {
         flex: 1,

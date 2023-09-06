@@ -11,10 +11,10 @@ export default BlurBlock = () => {
 
 const styles = StyleSheet.create({
     blurContainer: {
-        height: '80%',
+        height: '81%',
         width: '85%',
         position: 'absolute',
-        top: 130,
+        top: 165,
         borderRadius: 15,
         zIndex: 2,
         alignItems: 'center',

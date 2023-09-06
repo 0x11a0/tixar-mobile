@@ -27,11 +27,13 @@ export default SetPasswordPage = () => {
         }}>
             <HeaderBlock />
 
-            <BlurBlock/>
+            <BlurBlock />
 
             <View style={styles.translucentBox}>
 
                 <Text style={styles.subtitle}>Create New Password</Text>
+
+                <View style={{ height: 25 }} />
 
                 <TextInputFieldPrivate value={passwordField1}
                     placeholder={"New Password"}
@@ -39,13 +41,17 @@ export default SetPasswordPage = () => {
                     isSecure={isSecure}
                     setIsSecure={setIsSecure} />
 
+                <View style={{ height: 25 }} />
+
                 <TextInputFieldPrivate value={passwordField2}
                     placeholder={"Confirm New Password"}
                     onChangeTextFunction={(text) => { setPasswordField2(text); }}
                     isSecure={isSecure}
                     setIsSecure={setIsSecure} />
-
-                <NextButton buttonText={"Set new password"}
+                
+                <View style={{ height: 100 }} />
+                
+                <NextButton buttonText={"Set New Password"}
                     enableCondition={passwordField1 === passwordField2 && passwordField1 !== ''}
                     onPressFunction={() => {
                         // Replace this function with code to update password
@@ -71,15 +77,15 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontFamily: 'Lato-Bold',
         color: '#394051',
-        marginTop: 24,
-        alignSelf: 'center',
+        marginTop: 30,
+        marginBottom: 8,
     },
     translucentBox: {
-        height: '80%',
+        height: '81%',
         width: '85%',
         position: 'absolute',
-        top: 130,
-        backgroundColor: 'rgba(255, 255, 255, 0.45)',
+        top: 165,
+        backgroundColor: 'rgba(255, 255, 255, 0.55)',
         borderRadius: 15,
         zIndex: 3,
         alignItems: 'center',

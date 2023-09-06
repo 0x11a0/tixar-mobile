@@ -29,18 +29,17 @@ export default NextButton = ({ buttonText, enableCondition, onPressFunction }) =
 }
 
 const styles = StyleSheet.create({
+    container: {
+        borderRadius: 8,
+        width: '86%',
+        height: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
     button: {
         width: '86%',
         height: 35,
         alignItems: 'center',
         justifyContent: 'center',
     },
-    container: {
-        marginTop: 55,
-        borderRadius: 8,
-        width: '86%',
-        height: 40,
-        alignItems: 'center',
-        justifyContent: 'center',
-    }
 });

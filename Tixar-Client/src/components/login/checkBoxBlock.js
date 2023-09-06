@@ -29,7 +29,6 @@ export default CheckBoxBlock = ({ isChecked, setIsChecked }) => {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        marginTop: 50,
         justifyContent: 'center',
         alignContent: 'center',
     },

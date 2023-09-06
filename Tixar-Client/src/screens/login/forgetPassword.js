@@ -11,7 +11,7 @@ import BlurBlock from '../../components/login/blurBlock.js';
 
 export default ForgetPasswordPage = () => {
     const [nameField, setNameField] = useState('');
-    const [passwordField, setPasswordField] = useState('');
+    const [emailField, setEmailField] = useState('');
     const [isCaptchaChecked, setCaptchaChecked] = useState(false);
 
     const insets = useSafeAreaInsets();
@@ -30,31 +30,39 @@ export default ForgetPasswordPage = () => {
         }}>
             <HeaderBlock />
 
-            <BlurBlock/>
+            <BlurBlock />
 
             <View style={styles.translucentBox}>
 
                 <Text style={styles.subtitle}>Password Reset</Text>
 
+                <View style={{ height: 25 }} />
+
                 <TextInputField value={nameField}
                     placeholder={"Name"}
                     onChangeTextFunction={(text) => { setNameField(text); }} />
 
-                <TextInputField value={passwordField}
-                    placeholder={"Password"}
-                    onChangeTextFunction={(text) => { setPasswordField(text); }} />
+                <View style={{ height: 25 }} />
+
+                <TextInputField value={emailField}
+                    placeholder={"Email"}
+                    onChangeTextFunction={(text) => { setEmailField(text); }} />
+
+                <View style={{ height: 62 }} />
 
                 <CheckBoxBlock isChecked={isCaptchaChecked} setIsChecked={setCaptchaChecked} />
 
+                <View style={{ height: 52, }} />
+
                 <NextButton buttonText={"Reset My Password"}
-                    enableCondition={isCaptchaChecked && nameField !== '' && passwordField != ''}
+                    enableCondition={isCaptchaChecked && nameField !== '' && emailField != ''}
                     onPressFunction={() => {
                         // Replace this function with navigation to SetPasswordPage
 
-                        if (nameField === '' || passwordField === '') {
+                        if (nameField === '' || emailField === '') {
                             console.log('Not all fields entered');
                         } else {
-                            console.log({ nameField, passwordField });
+                            console.log({ nameField, emailField });
                         }
                     }}
                 />
@@ -71,17 +79,18 @@ const styles = StyleSheet.create({
         fontFamily: 'Lato-Bold',
         color: '#394051',
         marginTop: 24,
+        marginBottom: 8,
     },
     translucentBox: {
-        height: '80%',
+        height: '81%',
         width: '85%',
         position: 'absolute',
-        top: 130,
-        backgroundColor: 'rgba(255, 255, 255, 0.45)',
+        top: 165,
+        backgroundColor: 'rgba(255, 255, 255, 0.55)',
         borderRadius: 15,
         zIndex: 3,
         alignItems: 'center',
         justifyContent: 'flex-start',
     },
-    
+
 });
