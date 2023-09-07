@@ -5,7 +5,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 export default HeaderBlock = () => {
     return (
         <View style={styles.headerBox}>
-            <Image source={require('../../assets/soft-ui-pro-react-native-v1.1.1/background3x.png')}
+            <Image source={require('../../src/assets/soft-ui-pro-react-native-v1.1.1/background3x.png')}
                 style={styles.headerImage} />
             <Text style={styles.title}>TIXAR</Text>
         </View>

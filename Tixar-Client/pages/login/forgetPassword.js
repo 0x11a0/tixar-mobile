@@ -55,7 +55,7 @@ const CaptchaButton = ({ isCaptchaChecked, setCaptchaChecked }) => {
                     setCaptchaChecked(!isCaptchaChecked);
                     console.log('isCaptchaChecked == ' + isCaptchaChecked);
                 }}>
-                <Image source={isCaptchaChecked ? require('../../assets/soft-ui-pro-react-native-v1.1.1/check3x.png') : null}
+                <Image source={isCaptchaChecked ? require('../../src/assets/soft-ui-pro-react-native-v1.1.1/check3x.png') : null}
                     style={styles.tickIcon}
                 />
             </Pressable>

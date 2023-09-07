@@ -61,8 +61,8 @@ const EyeButton = ({ isVisible, setIsVisible }) => {
         <Pressable style={styles.eyeButton}
             onPress={() => { setIsVisible(!isVisible) }}>
             <Image source={isVisible ?
-                require('../../assets/eyeClose.png')
-                : require('../../assets/eyeOpen.png')}
+                require('../../src/assets/eyeClose.png')
+                : require('../../src/assets/eyeOpen.png')}
                 style={styles.eyeIcon} />
         </Pressable>
     );

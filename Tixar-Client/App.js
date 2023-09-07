@@ -1,5 +1,6 @@
 import { useFonts } from 'expo-font';
 import ForgetPasswordPage from './pages/login/forgetPassword';
+import UserProfilePage from './pages/userprofile/userprofile'
 import SetPasswordPage from './pages/login/setPassword';
 import { React, useState, useEffect } from 'react';
 import { Pressable, View, Text, Image, StyleSheet, SafeAreaView } from 'react-native';
@@ -21,8 +22,8 @@ function HomePage({ navigation }) {
 
 export default function App() {
     const [fontsLoaded] = useFonts({
-        'Lato-Bold': require('./assets/fonts/Lato/Lato-Bold.ttf'),
-        'Lato-Regular': require('./assets/fonts/Lato/Lato-Regular.ttf'),
+        'Lato-Bold': require('./src/assets/fonts/Lato/Lato-Bold.ttf'),
+        'Lato-Regular': require('./src/assets/fonts/Lato/Lato-Regular.ttf'),
     });
 
 
@@ -48,6 +49,7 @@ function NavContainer() {
             <Drawer.Navigator>
                 <Drawer.Screen name='Home' component={HomePage} />
                 <Drawer.Screen name='ForgetPassword' component={ForgetPasswordPage} />
+                <Drawer.Screen name='UserProfile' component={UserProfilePage} />
             </Drawer.Navigator>
         </NavigationContainer>
     );
