@@ -17,13 +17,13 @@ export default HeaderBlock = () => {
             <TouchableOpacity style={{flexDirection: 'row', top:14,}} activeOpacity={0.5}>
             <View>
                 <Image
-                    source={require('../../src/assets/ewallet.png')}
+                    source={require('../../src/assets/wallet.png')}
                     style={styles.walletStyle} 
                     />
             </View>
             <View>
                 <Image
-                    source={require('../../src/assets/editButton.png')}
+                    source={require('../../src/assets/edit.png')}
                     style={styles.editStyle}
                     />
             </View>
@@ -94,7 +94,6 @@ const styles = StyleSheet.create({
     },
 
     walletStyle:{
-        bottom:7,
         width: 50,
         height: 50,
 
