@@ -1,8 +1,14 @@
 import { Image, Text, Pressable, View, StyleSheet } from 'react-native';
 
-export default FilerButton = ({ buttonText, imageSource, isFocused, onPressFunction }) => {
+export default FilterButton = ({ buttonText, imageSource, isFocused, onPressFunction, isLeft }) => {
     return (
-        <Pressable style={styles.container}
+        <Pressable style={{
+            flexDirection: 'row',
+            width: '100%',
+            justifyContent: 'center',
+            borderLeftWidth: isLeft ? 0 : 0.5,
+            borderRightWidth: isLeft ? 0.5 : 0,
+            }}
             onPress={() => {
                 isFocused ? console.log('no effect') : onPressFunction();
             }}>
@@ -24,10 +30,6 @@ export default FilerButton = ({ buttonText, imageSource, isFocused, onPressFunct
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flexDirection: 'row',
-        width: '27%'
-    },
     buttonIcon: {
         height: 25,
         width: 25,

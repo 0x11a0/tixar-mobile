@@ -44,29 +44,22 @@ export default BrowseConcertPage = ({ route, navigation }) => {
                     justifyContent: 'center',
                     alignItems: 'center',
                 }}>
+                    <View style={styles.rowBox}>
                     <FilterButton buttonText={'Nearby'}
                         imageSource={require('../assets/soft-ui-pro-react-native-v1.1.1/location3x.png')}
                         isFocused={isNearbyFocused}
-                        onPressFunction={handleNearbyPress} />
-
-
-                    <View style={{ width: '5%' }} />
-
-                    <Text style={{
-                        fontFamily: 'Lato-Regular',
-                        fontSize: 32,
-                        marginBottom: 8,
-                        color: '#8392AB',
-                    }}>
-                        |
-                    </Text>
-
-                    <View style={{ width: '5%' }} />
-
+                        onPressFunction={handleNearbyPress}
+                        isLeft={true} />
+                    </View>
+                    
+                    <View style={styles.rowBox}>
                     <FilterButton buttonText={'Trending'}
                         imageSource={require('../assets/soft-ui-pro-react-native-v1.1.1/location3x.png')}
                         isFocused={isTrendingFocused}
-                        onPressFunction={handleTrendingPress} />
+                        onPressFunction={handleTrendingPress} 
+                        isLeft={false}/>
+                    </View>
+                    
 
                 </View>
 
@@ -113,12 +106,17 @@ export default BrowseConcertPage = ({ route, navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'flex-start'
+        justifyContent: 'flex-start',
     },
     scrollView: {
         backgroundColor: '#F2F2F2',
         // paddingVertical: 10,
         paddingHorizontal: 15,
-    }
+    },
+    rowBox: {
+        flexDirection: 'row',
+        flex: 1,
+        justifyContent: 'center',
+    },
 
 });

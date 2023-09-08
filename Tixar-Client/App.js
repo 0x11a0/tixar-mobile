@@ -15,6 +15,8 @@ import ForgetPasswordPage from './src/screens/login/forgetPassword';
 import SetPasswordPage from './src/screens/login/setPassword';
 import RegisterPage from './src/screens/login/registerPage';
 import { Directions } from 'react-native-gesture-handler';
+import UserLoginPage from './src/screens/login/userLogin';
+import UserRegistrationPage from './src/screens/login/userRegister';
 
 export default function App() {
     const [fontsLoaded] = useFonts({
@@ -65,13 +67,13 @@ export default function App() {
                             headerTitle: 'RETURN'
                         }}
                     />
-                    <Stack.Screen name='loginPage'
-                        component={LoginPage}
+                    <Stack.Screen name='UserLoginPage'
+                        component={UserLoginPage}
                         options={{
                             headerShown: false
                         }} />
-                    <Stack.Screen name='registerPage'
-                        component={RegisterPage}
+                    <Stack.Screen name='UserRegistrationPage'
+                        component={UserRegistrationPage}
                         options={{
                             headerShown: false
                         }} />
@@ -105,7 +107,7 @@ const MyDrawer = ({ route, navigation }) => {
                         }}
                             onPress={() => {
 
-                                navigation.navigate('loginPage');
+                                navigation.navigate('UserLoginPage');
                                 console.log(route.name);
                             }}>
                             <Image source={require('./src/assets/soft-ui-pro-react-native-v1.1.1/users3x.png')}
