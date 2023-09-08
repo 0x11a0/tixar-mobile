@@ -2,6 +2,7 @@ import { useFonts } from 'expo-font';
 import ForgetPasswordPage from './pages/login/forgetPassword';
 import UserProfilePage from './pages/userprofile/userprofile'
 import SetPasswordPage from './pages/login/setPassword';
+import EditUserProfilePage from './pages/userprofile/editUserProfile'
 import { React, useState, useEffect } from 'react';
 import { Pressable, View, Text, Image, StyleSheet, SafeAreaView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
@@ -50,6 +51,8 @@ function NavContainer() {
                 <Drawer.Screen name='Home' component={HomePage} />
                 <Drawer.Screen name='ForgetPassword' component={ForgetPasswordPage} />
                 <Drawer.Screen name='UserProfile' component={UserProfilePage} />
+                <Drawer.Screen name='EditUserProfile' component={EditUserProfilePage} />
+
             </Drawer.Navigator>
         </NavigationContainer>
     );

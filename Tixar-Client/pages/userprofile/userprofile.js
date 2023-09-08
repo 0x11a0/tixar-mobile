@@ -17,9 +17,10 @@ export default UserProfile = () => {
                 <Text style={styles.subtitle}>+ 65 9123 4567</Text>
                 <TouchableOpacity style = {{marginTop:50}}>
                     <Button  onPress={() => Alert.alert('Link to view tickets')} title="View My Tickets" color="#AB2FCD" accessibilityLabel="View Tickets" />
-            </TouchableOpacity>
+                </TouchableOpacity>
             </View>
-        <Text style={styles.footerText}>TIXAR</Text>
+
+            <Text style={styles.footerText}>TIXAR</Text>
         </SafeAreaView>
     )
     
@@ -33,7 +34,6 @@ const styles = StyleSheet.create({
         width: '85%',
         position: 'absolute',
         top: 320,
-        // backgroundColor: 'rgba(255, 255, 255, 0.95)',
         borderRadius: 15,
         zIndex: 2,
         alignItems: 'center',
@@ -82,16 +82,3 @@ const styles = StyleSheet.create({
 
 });
 
-
-/* <View style = {styles.tabContainer}>
-<FlatList
-data ={userEdit}
-renderItem={({item}) =>
-    <TouchableOpacity>
-        <Text>
-            {item}
-        </Text>
-    </TouchableOpacity>
-}
-/>
-</View>*/
