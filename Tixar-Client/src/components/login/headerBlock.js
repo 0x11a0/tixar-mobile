@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
         width: '92%',
         height: 225,
         borderRadius: 22,
-        resizeMode: 'contain',
+        resizeMode: 'cover',
         position: 'absolute',
         zIndex: 1,
     },
