@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
         width: '95%',
         height: 280,
         borderRadius: 22,
-        resizeMode: 'contain',
+        resizeMode: 'cover',
         position: 'absolute',
     }, 
 
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
         flex: 0.5,
         width: 100,
         height: 100,
-        resizeMode: 'contain',        
+        resizeMode: 'cover',        
         marginTop: 8,
     },
 
