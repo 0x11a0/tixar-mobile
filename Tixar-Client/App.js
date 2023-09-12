@@ -71,7 +71,7 @@ export default function App() {
                     <Stack.Screen name='UserLoginPage'
                         component={UserLoginPage}
                         options={{
-                            headerShown: false
+                            headerShown: false,
                         }} />
                     <Stack.Screen name='UserRegistrationPage'
                         component={UserRegistrationPage}

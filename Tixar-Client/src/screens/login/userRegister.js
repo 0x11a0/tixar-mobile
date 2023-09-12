@@ -178,12 +178,12 @@ const styles = StyleSheet.create({
     translucentBox: {
         height: '80%',
         width: '85%',
-        position: 'absolute',
-        top: 130,
+        position: 'relative',
         backgroundColor: 'rgba(255, 255, 255, 0.95)',
         borderRadius: 15,
         zIndex: 3,
         alignItems: 'center',
+        bottom: 40,
     },
     footerText: {
         bottom: 15,

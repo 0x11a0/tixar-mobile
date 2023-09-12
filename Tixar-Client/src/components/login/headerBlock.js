@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
         color: 'white',
         marginTop: 40,
         zIndex: 2,
+        position: 'absolute',
     },
     headerImage: {
         width: '92%',
