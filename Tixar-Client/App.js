@@ -17,6 +17,7 @@ import RegisterPage from './src/screens/login/registerPage';
 import { Directions } from 'react-native-gesture-handler';
 import UserLoginPage from './src/screens/login/userLogin';
 import UserRegistrationPage from './src/screens/login/userRegister';
+import AccountSettingsPage from './src/screens/accountSettingsPage';
 
 export default function App() {
     const [fontsLoaded] = useFonts({
@@ -77,6 +78,25 @@ export default function App() {
                         options={{
                             headerShown: false
                         }} />
+
+                    <Stack.Screen
+                        name="accountSettingsPage"
+                        component={AccountSettingsPage}
+                        options={{
+                        title: "Settings",
+                        headerTitleAlign: 'left',
+                        headerShown: true,
+                        }}
+                    />
+                    <Stack.Screen
+                        name="NotificationsPage"
+                        component={NotificationsPage}
+                        options={{
+                        title: "Notifications",
+                        headerTitleAlign: 'left',
+                        headerShown: true,
+                        }}
+                    />
                 </Stack.Navigator>
 
             </NavigationContainer>
@@ -119,6 +139,57 @@ const MyDrawer = ({ route, navigation }) => {
                         </Pressable>
                 }}
             />
+            <Drawer.Screen
+                name={"Settings"}
+                component={AccountSettingsPage}
+                options={{
+                    headerRight: (props) => (
+                        <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 10}}>
+                            <Pressable
+                                style={{
+                                    justifyContent:"center",
+                                    alignItems: "center",
+                                    marginRight: "7%"
+                                }}
+                                onPress={() => {
+                                    navigation.navigate("loginPage");
+                                    console.log(route.name);
+                                }}
+                            >
+                                <Image
+                                source={require("./src/assets/soft-ui-pro-react-native-v1.1.1/users3x.png")}
+                                style={{
+                                    height: 25,
+                                    width: 25,
+                                    resizeMode: "contain",
+                                }}
+                                />
+
+                            </Pressable>
+                            <Pressable
+                                style={{
+                                justifyContent: "center",
+                                alignItems: "center",
+                                marginRight: "7%",
+                                }}
+                                onPress={() => {
+                                navigation.navigate("loginPage");
+                                console.log(route.name);
+                                }}
+                            >
+                                <Image
+                                source={require("./src/assets/soft-ui-pro-react-native-v1.1.1/users3x.png")}
+                                style={{
+                                    height: 25,
+                                    width: 25,
+                                    resizeMode: "contain",
+                                }}
+                                />
+                            </Pressable>
+                        </View>
+                    ),
+                    }}
+                />
         </Drawer.Navigator>
     );
 }
