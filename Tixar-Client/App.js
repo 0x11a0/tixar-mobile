@@ -18,6 +18,8 @@ import { Directions } from 'react-native-gesture-handler';
 import UserLoginPage from './src/screens/login/userLogin';
 import UserRegistrationPage from './src/screens/login/userRegister';
 import AccountSettingsPage from './src/screens/accountSettingsPage';
+import UserProfilePage from './src/screens/user/userprofile'
+import EditUserProfilePage from './src/screens/user/editUserProfile'
 
 export default function App() {
     const [fontsLoaded] = useFonts({
@@ -118,6 +120,53 @@ const MyDrawer = ({ route, navigation }) => {
         >
             <Drawer.Screen name={'TIXAR'}
                 component={BrowseConcertPage}
+                options={{
+                    headerRight: (props) =>
+                        <Pressable style={{
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            marginRight: '7%',
+                        }}
+                            onPress={() => {
+
+                                navigation.navigate('UserLoginPage');
+                                console.log(route.name);
+                            }}>
+                            <Image source={require('./src/assets/soft-ui-pro-react-native-v1.1.1/users3x.png')}
+                                style={{
+                                    height: 25,
+                                    width: 25,
+                                    resizeMode: 'contain',
+                                }} />
+                        </Pressable>
+                }}
+            />
+            <Drawer.Screen name={'User Profile'}
+                component={UserProfilePage}
+                options={{
+                    headerRight: (props) =>
+                        <Pressable style={{
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            marginRight: '7%',
+                        }}
+                            onPress={() => {
+
+                                navigation.navigate('UserLoginPage');
+                                console.log(route.name);
+                            }}>
+                            <Image source={require('./src/assets/soft-ui-pro-react-native-v1.1.1/users3x.png')}
+                                style={{
+                                    height: 25,
+                                    width: 25,
+                                    resizeMode: 'contain',
+                                }} />
+                        </Pressable>
+                }}
+            />
+
+            <Drawer.Screen name={'Edit User Profile'}
+                component={EditUserProfilePage}
                 options={{
                     headerRight: (props) =>
                         <Pressable style={{
