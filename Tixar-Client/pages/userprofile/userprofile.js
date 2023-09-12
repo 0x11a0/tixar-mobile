@@ -15,8 +15,11 @@ export default UserProfile = () => {
                 <Text style={styles.subtitle}>matthewglock@gmail.com</Text>
                 <Text style = {styles.text}>Phone Number</Text>
                 <Text style={styles.subtitle}>+ 65 9123 4567</Text>
-                <TouchableOpacity style = {styles.viewTicketsButton}>
-                    <Button onPress={() => Alert.alert('Link to view tickets')} title="View My Tickets" color="#AB2FCD" accessibilityLabel="View Tickets" />
+                <TouchableOpacity style = {{marginTop:50}}>
+                    <View style={buttonContainerStyle}>
+                    <Button  onPress={() => Alert.alert('Link to view tickets')} title = "View My Tickets" accessibilityLabel="View Tickets"
+                    color={Platform.OS === 'ios' ? "white" : "#AB2FCD"} />
+                    </View>
                 </TouchableOpacity>
             </View>
 
@@ -25,6 +28,7 @@ export default UserProfile = () => {
     )
     
 }
+const buttonContainerStyle = Platform.OS === 'ios' ? { backgroundColor: "#AB2FCD" } : { backgroundColor: 'transparent' };
 
 const styles = StyleSheet.create({
    
