@@ -6,11 +6,13 @@ import {
   Image,
   ScrollView,
   Pressable,
+  TextInput,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import FooterBlock from "../../components/viewConcert/footerBlock";
 import NextButton from "../../components/viewConcert/nextButton";
 import OptionFields from "../../components/viewConcert/optionFields";
+import DatePicker from "../../components/concertCategory/datePicker";
 
 export default ConcertCategoryPage = ({ route, navigation }) => {
   const insets = useSafeAreaInsets();
@@ -52,14 +54,15 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
         >
           {/* date selection */}
           <Text style={styles.subtitle}>Availibility</Text>
-
-          <OptionFields
-            optionText={"Select date"}
+          
+          <View>
+            <DatePicker 
             icon={require("../../assets/soft-ui-pro-react-native-v1.1.1/calendar3x.png")}
-            onPressFunction={() => {
-              console.log("date option clicked");
-            }}
-          />
+            />
+          </View>
+           
+
+
 
           {/* quantity selection */}
           <Text style={styles.subtitle}>Quantity</Text>

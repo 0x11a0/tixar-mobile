@@ -1,4 +1,4 @@
-import { Pressable, Text, StyleSheet, Image, View } from "react-native";
+import { Pressable, Text, StyleSheet, Image, View} from "react-native";
 
 export default OptionField = ({
   optionText,
