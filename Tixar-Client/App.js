@@ -18,6 +18,7 @@ import { Directions } from 'react-native-gesture-handler';
 import UserLoginPage from './src/screens/login/userLogin';
 import UserRegistrationPage from './src/screens/login/userRegister';
 import AccountSettingsPage from './src/screens/accountSettingsPage';
+import redemptionPage from './src/screens/verifiedFan/redemptionPage';
 
 export default function App() {
     const [fontsLoaded] = useFonts({
@@ -116,6 +117,7 @@ const MyDrawer = ({ route, navigation }) => {
                 }
             }}
         >
+            {/* Navigation sidebar TIXAR */}
             <Drawer.Screen name={'TIXAR'}
                 component={BrowseConcertPage}
                 options={{
@@ -139,6 +141,14 @@ const MyDrawer = ({ route, navigation }) => {
                         </Pressable>
                 }}
             />
+            {/* Navigation sidebar Verified Fans */}
+            <Drawer.Screen
+                name = {"Verified Fans"}
+                component={RedemptionPage}
+            
+            />
+
+            {/* Navigation sidebar Settings */}
             <Drawer.Screen
                 name={"Settings"}
                 component={AccountSettingsPage}
