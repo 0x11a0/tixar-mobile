@@ -67,11 +67,13 @@ const Artists = [
     },
   ];
   
+//   Flatlist stuff
   const Item = ({artistName, points, artistDescription, artistIcon}) => (
     <ArtistBlock artistName={artistName}
         points={points}
         artistDescription={artistDescription}                    
         artistIcon={artistIcon}
+        // Can add the artist page here
         onPressFunction={() => {
                         console.log(artistName + ' pressed');
                         navigation.navigate('ArtistPage', {artistName: 'The Weeknd'});
