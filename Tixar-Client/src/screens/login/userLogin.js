@@ -153,6 +153,7 @@ const LoginButton = ({ credentialCheck, loginField, navigation }) => {
             <Pressable style={styles.loginButton}
                 onPress={() => {
                     if (credentialCheck) {
+                        // Add login auth here
                         console.log('Logging in as "' + loginField + '"');
                         navigation.pop();
                     } else {
