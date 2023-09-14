@@ -6,7 +6,7 @@ import card33x from '../../assets/images/card33x.png';
 
 
 
-export default RedemptionPage = ({navigation, imageBackground}) => {
+export default RedemptionPage = ({navigation}) => {
 
     const [code, setCode] = useState('');
     const [canRedeem, setCanRedeem] = useState(false);

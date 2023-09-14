@@ -18,7 +18,8 @@ import { Directions } from 'react-native-gesture-handler';
 import UserLoginPage from './src/screens/login/userLogin';
 import UserRegistrationPage from './src/screens/login/userRegister';
 import AccountSettingsPage from './src/screens/accountSettingsPage';
-import redemptionPage from './src/screens/verifiedFan/redemptionPage';
+import RedemptionPage from './src/screens/verifiedFan/redemptionPage';
+import fanDashboard from './src/screens/verifiedFan/fanDashboard';
 
 export default function App() {
     const [fontsLoaded] = useFonts({
@@ -98,6 +99,16 @@ export default function App() {
                         headerShown: true,
                         }}
                     />
+
+                    <Stack.Screen
+                        name="RedemptionPage"
+                        component={RedemptionPage}
+                        options={{
+                        title: "Redemption",
+                        headerTitleAlign: 'left',
+                        headerShown: true,
+                        }}
+                    />
                 </Stack.Navigator>
 
             </NavigationContainer>
@@ -143,8 +154,8 @@ const MyDrawer = ({ route, navigation }) => {
             />
             {/* Navigation sidebar Verified Fans */}
             <Drawer.Screen
-                name = {"Verified Fans"}
-                component={RedemptionPage}
+                name = {"Fan Dashboard"}
+                component={fanDashboard}
             
             />
 
