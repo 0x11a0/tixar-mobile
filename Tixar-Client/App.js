@@ -9,7 +9,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import ViewConcertPage from './src/screens/viewConcert/viewConcertPage';
 import BrowseConcertPage from './src/screens/browseConcertPage';
-import ConcertCategoryPage from './src/screens/viewConcert/concertCategoryPage';
+import ConcertCategoryPage from './src/screens/concertCategoryPage';
 import LoginPage from './src/screens/login/loginPage';
 import ForgetPasswordPage from './src/screens/login/forgetPassword';
 import SetPasswordPage from './src/screens/login/setPassword';

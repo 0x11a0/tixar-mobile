@@ -19,7 +19,7 @@ export default DatePicker = ({
     // when the date is changed, update the date, and toggle the date picker
     const onChange = ({ type }, selectedDate) => {
         if (type === "set") {
-            const currentDate = selectedDate || date;
+            const currentDate = selectedDate
             setDate(currentDate);
 
             if (Platform.OS === 'android') {
@@ -54,7 +54,7 @@ export default DatePicker = ({
                 {/* confirm button updates the date variable state and toggles visibility of date picker */}
                 <Pressable 
                 style={styles.dateButton}
-                onPress={onChange}>
+                onPress={onChange}> 
                     <Text style={styles.optionText}>Confirm</Text>
                 </Pressable>
 
