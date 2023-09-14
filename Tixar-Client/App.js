@@ -18,6 +18,7 @@ import { Directions } from 'react-native-gesture-handler';
 import UserLoginPage from './src/screens/login/userLogin';
 import UserRegistrationPage from './src/screens/login/userRegister';
 import AccountSettingsPage from './src/screens/accountSettingsPage';
+import AnimationPage from './src/screens/animationPage';
 
 export default function App() {
     const [fontsLoaded] = useFonts({
@@ -40,16 +41,14 @@ export default function App() {
     const Stack = createNativeStackNavigator();
 
     return (
-        // <SafeAreaProvider>
-        //     <RegisterPage />
-        //     {/* <LoginPage /> */}
-        //     {/* <ForgetPasswordPage /> */}
-        //     {/* <SetPasswordPage /> */}
-        // </SafeAreaProvider>
         <SafeAreaProvider>
             <NavigationContainer>
 
                 <Stack.Navigator>
+                    {/* <Stack.Screen name='Temp'
+                        component={AnimationPage} /> */}
+
+
                     <Stack.Screen name='Drawer'
                         component={MyDrawer}
                         options={{
@@ -83,18 +82,18 @@ export default function App() {
                         name="accountSettingsPage"
                         component={AccountSettingsPage}
                         options={{
-                        title: "Settings",
-                        headerTitleAlign: 'left',
-                        headerShown: true,
+                            title: "Settings",
+                            headerTitleAlign: 'left',
+                            headerShown: true,
                         }}
                     />
                     <Stack.Screen
                         name="NotificationsPage"
                         component={NotificationsPage}
                         options={{
-                        title: "Notifications",
-                        headerTitleAlign: 'left',
-                        headerShown: true,
+                            title: "Notifications",
+                            headerTitleAlign: 'left',
+                            headerShown: true,
                         }}
                     />
                 </Stack.Navigator>
@@ -118,7 +117,9 @@ const MyDrawer = ({ route, navigation }) => {
         >
             <Drawer.Screen name={'TIXAR'}
                 component={BrowseConcertPage}
+                
                 options={{
+                    headerTitle: 'Temp',
                     headerRight: (props) =>
                         <Pressable style={{
                             justifyContent: 'center',
@@ -142,12 +143,13 @@ const MyDrawer = ({ route, navigation }) => {
             <Drawer.Screen
                 name={"Settings"}
                 component={AccountSettingsPage}
+                
                 options={{
                     headerRight: (props) => (
-                        <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 10}}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 10 }}>
                             <Pressable
                                 style={{
-                                    justifyContent:"center",
+                                    justifyContent: "center",
                                     alignItems: "center",
                                     marginRight: "7%"
                                 }}
@@ -157,39 +159,39 @@ const MyDrawer = ({ route, navigation }) => {
                                 }}
                             >
                                 <Image
-                                source={require("./src/assets/soft-ui-pro-react-native-v1.1.1/users3x.png")}
-                                style={{
-                                    height: 25,
-                                    width: 25,
-                                    resizeMode: "contain",
-                                }}
+                                    source={require("./src/assets/soft-ui-pro-react-native-v1.1.1/users3x.png")}
+                                    style={{
+                                        height: 25,
+                                        width: 25,
+                                        resizeMode: "contain",
+                                    }}
                                 />
 
                             </Pressable>
                             <Pressable
                                 style={{
-                                justifyContent: "center",
-                                alignItems: "center",
-                                marginRight: "7%",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    marginRight: "7%",
                                 }}
                                 onPress={() => {
-                                navigation.navigate("loginPage");
-                                console.log(route.name);
+                                    navigation.navigate("loginPage");
+                                    console.log(route.name);
                                 }}
                             >
                                 <Image
-                                source={require("./src/assets/soft-ui-pro-react-native-v1.1.1/users3x.png")}
-                                style={{
-                                    height: 25,
-                                    width: 25,
-                                    resizeMode: "contain",
-                                }}
+                                    source={require("./src/assets/soft-ui-pro-react-native-v1.1.1/users3x.png")}
+                                    style={{
+                                        height: 25,
+                                        width: 25,
+                                        resizeMode: "contain",
+                                    }}
                                 />
                             </Pressable>
                         </View>
                     ),
-                    }}
-                />
+                }}
+            />
         </Drawer.Navigator>
     );
 }
