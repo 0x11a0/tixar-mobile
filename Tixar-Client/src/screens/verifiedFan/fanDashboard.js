@@ -25,7 +25,7 @@ const Artists = [
     },
     {
         id: '3',
-        artistName: 'The 3',
+        artistName: 'Guy with very long name',
         points: 100,
         artistDescription: 'Abel Makkonen Tesfaye (Amharic: አበል መኮነን ተስፋዬ; born February 16, 1990), known professionally as the Weeknd, is a Canadian singer, songwriter, and record producer.[2][3] He is noted for his unconventional music production, artistic reinventions, and his signature use of the falsetto register.[4][5] His accolades include 4 Grammy Awards, 20 Billboard Music Awards, 22 Juno Awards, 6 American Music Awards, 2 MTV Video Music Awards, a Latin Grammy Award, and nominations for an Academy Award and a Primetime Emmy Award.',
         artistIcon: require('../../assets/soft-ui-pro-react-native-v1.1.1/avatar23x.png'),

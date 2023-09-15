@@ -24,7 +24,8 @@ export default ArtistBlock = ({ artistName, points,
 
                             {/* TITLE ROW, SPLITS INTO ARTIST NAME AND POINTS */}
                             <View style={{ flexDirection: 'row',}}>
-                                <Text style={styles.artistName}>
+                                <Text style={styles.artistName}
+                                    numberOfLines={1}>
                                     {artistName}
                                 </Text>
 
