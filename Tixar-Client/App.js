@@ -21,7 +21,7 @@ import AccountSettingsPage from './src/screens/accountSettingsPage';
 import UserProfilePage from './src/screens/user/userprofile'
 import EditUserProfilePage from './src/screens/user/editUserProfile'
 import generatedUserTicket from './src/screens/generatedUserTicket';
-import eWalletWithdrawPage from './src/screens/eWallet/eWalletWithdrawPage';
+import eWallet from './src/screens/eWallet/eWalletPage';
 
 export default function App() {
     const [fontsLoaded] = useFonts({
@@ -255,7 +255,7 @@ const MyDrawer = ({ route, navigation }) => {
             />
             <Drawer.Screen
                 name="Manage E-Wallet"
-                component={eWalletWithdraw}
+                component={eWallet}
             />
         </Drawer.Navigator>
     );

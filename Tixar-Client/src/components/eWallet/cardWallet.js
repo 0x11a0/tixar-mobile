@@ -12,15 +12,14 @@ export default cardWallet = ({navigation}) => {
                 style={styles.headerImage} />
                 <View style={styles.overlayContainer}>
                     <View style={styles.nameContainer}>
-                        <View style={{flexDirection: 'row',
-                                    flex: 4}}>
+                        <View style={{flexDirection: 'row'}}>
 
                             <Text style={styles.eCardTitle}>Matthew Glock</Text>
                         </View>
                         <View style = {{flex: 6, flexDirection: 'column',
                                         justifyContent: 'flex-end'}}>
                             <Image source={require('../../assets/creditcardicon.png')}
-                                style = {{height: 75, width: 100,}}/>
+                                style = {styles.profilePicture}/>
                         </View>
                     </View>
                     <View style={styles.profileContainer}>
@@ -56,9 +55,6 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'space-between'
     },
-    nameContainerDetails: {
-        backgroundColor: 'purple'
-    },
     profileContainer: {
         flex: 1,
         alignItems: 'flex-end',
@@ -78,8 +74,8 @@ const styles = StyleSheet.create({
         color: 'white'
     },
     profilePicture: {
-        height: 80,
-        width: 80,
+        height: 60,
+        width: 60,
         resizeMode: 'cover',
         borderRadius: 15
     },

@@ -35,7 +35,7 @@ export default GeneratedUserTicketPage = () => {
                                 Coldplay Ticket
                             </Text>
                             <Text style={styles.concertInfo}>
-                                Reference Numer: 12345ABC
+                                Reference Number: 12345ABC
                             </Text>
                             <Text style={styles.concertInfo}>
                                 Category: 1
