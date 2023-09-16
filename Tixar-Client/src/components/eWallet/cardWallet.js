@@ -1,6 +1,7 @@
 import { React } from 'react';
 import { View, Text, StyleSheet, Image, Pressable } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
+import { creditcardicon } from '../../assets/creditcardicon.png';
 
 
 export default cardWallet = ({navigation}) => {
@@ -11,14 +12,22 @@ export default cardWallet = ({navigation}) => {
                 style={styles.headerImage} />
                 <View style={styles.overlayContainer}>
                     <View style={styles.nameContainer}>
-                        <Text style={styles.eCardTitle}>Matthew Glock</Text>
-                        <Entypo name="credit-card" size={120} color="white" />
+                        <View style={{flexDirection: 'row',
+                                    flex: 4}}>
+
+                            <Text style={styles.eCardTitle}>Matthew Glock</Text>
+                        </View>
+                        <View style = {{flex: 6, flexDirection: 'column',
+                                        justifyContent: 'flex-end'}}>
+                            <Image source={require('../../assets/creditcardicon.png')}
+                                style = {{height: 75, width: 100,}}/>
+                        </View>
                     </View>
                     <View style={styles.profileContainer}>
                         <View style={{marginBottom: 20}}>
                             <Image source={require('../../assets/soft-ui-pro-react-native-v1.1.1/avatar23x.png')} style={styles.profilePicture}/>
                         </View>
-                        <View>
+                        <View style = {{justifyContent: 'flex-end', flex: 1}}>
                             <Text style={styles.balanceText}>Balance</Text>
                             <Text style={styles.balanceAmount}>$1000.88</Text>
                         </View>
@@ -65,19 +74,20 @@ const styles = StyleSheet.create({
     },
     eCardTitle: {
         fontFamily: 'Lato-Bold',
-        fontSize: 22,
+        fontSize: 28,
         color: 'white'
     },
     profilePicture: {
-        height: 60,
-        width: 60,
+        height: 80,
+        width: 80,
         resizeMode: 'cover',
         borderRadius: 15
     },
     balanceText: {
         fontFamily: 'Lato-Regular',
         fontSize: 14,
-        color: 'white'
+        color: 'white',
+        textAlign: 'right',
     },
     balanceAmount: {
         fontFamily: 'Lato-Regular',

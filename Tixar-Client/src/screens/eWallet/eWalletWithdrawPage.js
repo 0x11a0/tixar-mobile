@@ -16,9 +16,7 @@ export default eWalletWithdraw = () => {
 
         }}>
             <View style={styles.eCardContainer}>
-                <CardWallet>
-
-                </CardWallet>
+                <CardWallet/>
             </View>
             <View style={{
                 flex: 3,
