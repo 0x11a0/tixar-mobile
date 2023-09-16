@@ -93,9 +93,7 @@ export default FanDashboard = ({navigation, }) => {
             flex: 1,
             backgroundColor: "#F8F9FA",
         }}>
-            <View style={styles.container}>
                 <RedeemButton navigation={navigation} />
-            </View>
 
             <FlatList style={styles.list}
                 data={Artists}

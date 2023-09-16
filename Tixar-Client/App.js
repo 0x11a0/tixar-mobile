@@ -20,6 +20,7 @@ import UserRegistrationPage from './src/screens/login/userRegister';
 import AccountSettingsPage from './src/screens/accountSettingsPage';
 import RedemptionPage from './src/screens/verifiedFan/redemptionPage';
 import fanDashboard from './src/screens/verifiedFan/fanDashboard';
+import celebrityDashboard from './src/screens/verifiedFan/celebrityDashboard';
 
 export default function App() {
     const [fontsLoaded] = useFonts({
@@ -157,6 +158,13 @@ const MyDrawer = ({ route, navigation }) => {
                 name = {"Fan Dashboard"}
                 component={fanDashboard}
             
+            />
+
+            {/* Navigation sidebar Celebrity dashboard,
+                can replace to admin only if needed */}
+            <Drawer.Screen
+                name={"Celebrity Dashboard"}
+                component={celebrityDashboard}
             />
 
             {/* Navigation sidebar Settings */}
