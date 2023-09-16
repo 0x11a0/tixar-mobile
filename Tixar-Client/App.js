@@ -18,7 +18,7 @@ import { Directions } from 'react-native-gesture-handler';
 import UserLoginPage from './src/screens/login/userLogin';
 import UserRegistrationPage from './src/screens/login/userRegister';
 import AccountSettingsPage from './src/screens/accountSettingsPage';
-import AnimationPage from './src/screens/animationPage';
+import GenerateFanCodePage from './src/screens/vf/generateFanCodePage2';
 
 export default function App() {
     const [fontsLoaded] = useFonts({
@@ -45,8 +45,8 @@ export default function App() {
             <NavigationContainer>
 
                 <Stack.Navigator>
-                    {/* <Stack.Screen name='Temp'
-                        component={AnimationPage} /> */}
+                    <Stack.Screen name='Temp'
+                        component={GenerateFanCodePage} />
 
 
                     <Stack.Screen name='Drawer'
@@ -119,7 +119,6 @@ const MyDrawer = ({ route, navigation }) => {
                 component={BrowseConcertPage}
                 
                 options={{
-                    headerTitle: 'Temp',
                     headerRight: (props) =>
                         <Pressable style={{
                             justifyContent: 'center',
