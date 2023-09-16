@@ -21,6 +21,7 @@ import AccountSettingsPage from './src/screens/accountSettingsPage';
 import UserProfilePage from './src/screens/user/userprofile'
 import EditUserProfilePage from './src/screens/user/editUserProfile'
 import generatedUserTicket from './src/screens/generatedUserTicket';
+import eWalletWithdrawPage from './src/screens/eWallet/eWalletWithdrawPage';
 
 export default function App() {
     const [fontsLoaded] = useFonts({
@@ -103,6 +104,10 @@ export default function App() {
                     <Stack.Screen
                         name="GeneratedUserTicketPage"
                         component={generatedUserTicket}
+                    />
+                    <Stack.Screen
+                        name="eWalletWithdraw"
+                        component={eWalletWithdraw}
                     />
                 </Stack.Navigator>
 
@@ -247,6 +252,10 @@ const MyDrawer = ({ route, navigation }) => {
             <Drawer.Screen
                 name="GeneratedUserTicketPage"
                 component={generatedUserTicket}
+            />
+            <Drawer.Screen
+                name="Manage E-Wallet"
+                component={eWalletWithdraw}
             />
         </Drawer.Navigator>
     );

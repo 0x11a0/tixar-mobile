@@ -49,7 +49,7 @@ export default GeneratedUserTicketPage = () => {
                         <DashedLine style={styles.dashedLine}/>
                         <Barcode 
                             value="12345678999"
-                            options={{ format: 'UPC', backgroundColor: 'white'}}
+                            options={{ format: 'CODE128', backgroundColor: 'white'}}
                         />
                     </View>
                 </Card>
