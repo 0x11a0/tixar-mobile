@@ -1,16 +1,16 @@
-import { View, Text, StyleSheet, Animated, Easing } from 'react-native';
+import { View, Text, StyleSheet, Animated, Easing, Pressable } from 'react-native';
 import { useState, useRef, useEffect } from 'react';
 import FooterBlock from '../../components/viewConcert/footerBlock';
 import NextButton from '../../components/vf/nextButton';
-import * as Clipboard from 'expo-clipboard';
 import TextInputField from '../../components/vf/textInputField';
+import DatePicker from '../../components/vf/datePicker';
 
 export default GenerateFanCodePages = () => {
     const code = 'AFUHE12';
-  
+
     const [title, setTitle] = useState('');
-    const [points, setPoints] = useState(0);
-    const [expiryDate, setExpiryDate] = useState('');
+    const [points, setPoints] = useState('');
+    const [expiryDate, setExpiryDate] = useState(new Date());
 
     return (
         <View style={styles.container}>
@@ -25,11 +25,30 @@ export default GenerateFanCodePages = () => {
                     {code}
                 </Text>
 
+                <View style={{ height: 20 }} />
+
                 <TextInputField
+                    value={title}
                     placeholder={'Title'}
+                    onChangeTextFunction={(text) => { setTitle(text); }}
+                    keyboardType={'default'}
                 />
 
+                <View style={{ height: 20 }} />
 
+                <TextInputField
+                    value={points}
+                    placeholder={'Points'}
+                    onChangeTextFunction={(text) => { setPoints(text.replace(/[^0-9]/g, '')); }}
+                    keyboardType={'numeric'}
+                />
+
+                <View style={{ height: 20 }} />
+
+
+                <DatePicker
+                    date={expiryDate}
+                    setDate={setExpiryDate} />
 
             </View>
 
@@ -37,10 +56,13 @@ export default GenerateFanCodePages = () => {
 
             <NextButton buttonText={'Save'}
                 onPressFunction={() => {
-                    console.log('code saved');
+                    console.log('title: ' + title);
+                    console.log('point: ' + points);
+                    console.log('date: ' + expiryDate.toString());
                 }
                 }
                 buttonHeight={50}
+                enableCondition={title !== '' && points !== ''}
             />
             <FooterBlock />
         </View>
@@ -71,4 +93,5 @@ const styles = StyleSheet.create({
         color: '#252F40',
         height: '15%',
     },
+
 });

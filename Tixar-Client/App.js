@@ -19,6 +19,7 @@ import UserLoginPage from './src/screens/login/userLogin';
 import UserRegistrationPage from './src/screens/login/userRegister';
 import AccountSettingsPage from './src/screens/accountSettingsPage';
 import GenerateFanCodePage from './src/screens/vf/generateFanCodePage2';
+import AnimationPage from './src/screens/animationPage';
 
 export default function App() {
     const [fontsLoaded] = useFonts({
@@ -45,9 +46,16 @@ export default function App() {
             <NavigationContainer>
 
                 <Stack.Navigator>
-                    <Stack.Screen name='Temp'
-                        component={GenerateFanCodePage} />
+                    {/* <Stack.Screen name='Temp'
+                        component={AnimationPage}
+                        options={{
+                            headerShown: false,
 
+                        }}
+                    /> */}
+                    <Stack.Screen name='Temp'
+                        component={GenerateFanCodePage}
+                    />
 
                     <Stack.Screen name='Drawer'
                         component={MyDrawer}
@@ -117,7 +125,7 @@ const MyDrawer = ({ route, navigation }) => {
         >
             <Drawer.Screen name={'TIXAR'}
                 component={BrowseConcertPage}
-                
+
                 options={{
                     headerRight: (props) =>
                         <Pressable style={{
@@ -142,7 +150,7 @@ const MyDrawer = ({ route, navigation }) => {
             <Drawer.Screen
                 name={"Settings"}
                 component={AccountSettingsPage}
-                
+
                 options={{
                     headerRight: (props) => (
                         <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 10 }}>

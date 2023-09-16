@@ -1,6 +1,6 @@
-import { View, TextInput, StyleSheet } from "react-native";
+import { View, TextInput, StyleSheet, Dimensions } from "react-native";
 
-export default TextInputField = ({ value, placeholder, onChangeTextFunction }) => {
+export default TextInputField = ({ value, placeholder, onChangeTextFunction, keyboardType }) => {
     return (
         <View style={styles.fieldBox}>
             <TextInput
@@ -8,6 +8,7 @@ export default TextInputField = ({ value, placeholder, onChangeTextFunction }) =
                 onChangeText={(text) => { onChangeTextFunction(text); }}
                 value={value}
                 placeholder={placeholder}
+                keyboardType={keyboardType}
             />
         </View>
     );
@@ -16,7 +17,7 @@ export default TextInputField = ({ value, placeholder, onChangeTextFunction }) =
 const styles = StyleSheet.create({
     fieldBox: {
         height: 56,
-        width: '86%',
+        width: Dimensions.get('window').width * 0.70,
         borderRadius: 10,
         borderColor: '#D2D6DA',
         borderWidth: 1,
