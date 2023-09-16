@@ -1,5 +1,4 @@
-import { useFonts } from "expo-font";
-import { React, useState, useEffect, Component, useRef } from "react";
+import { React, useState, useEffect } from "react";
 import {
   Pressable,
   View,
@@ -10,19 +9,8 @@ import {
   ScrollView,
   TextInput,
 } from "react-native";
-import { getHeaderTitle } from "@react-navigation/elements";
-import * as SplashScreen from "expo-splash-screen";
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from "react-native-safe-area-context";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { NavigationContainer } from "@react-navigation/native";
-import { createDrawerNavigator } from "@react-navigation/drawer";
-import { Directions } from "react-native-gesture-handler";
 import { LinearGradient } from "expo-linear-gradient";
 import { Dropdown } from "react-native-element-dropdown";
-import AntDesign from "@expo/vector-icons/AntDesign";
 
 export default CreateConcert = ({ route, navigation }) => {
   const data = [
