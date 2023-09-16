@@ -20,6 +20,7 @@ import UserRegistrationPage from './src/screens/login/userRegister';
 import AccountSettingsPage from './src/screens/accountSettingsPage';
 import UserProfilePage from './src/screens/user/userprofile'
 import EditUserProfilePage from './src/screens/user/editUserProfile'
+import generatedUserTicket from './src/screens/generatedUserTicket';
 
 export default function App() {
     const [fontsLoaded] = useFonts({
@@ -98,6 +99,10 @@ export default function App() {
                         headerTitleAlign: 'left',
                         headerShown: true,
                         }}
+                    />
+                    <Stack.Screen
+                        name="GeneratedUserTicketPage"
+                        component={generatedUserTicket}
                     />
                 </Stack.Navigator>
 
@@ -239,6 +244,10 @@ const MyDrawer = ({ route, navigation }) => {
                     ),
                     }}
                 />
+            <Drawer.Screen
+                name="GeneratedUserTicketPage"
+                component={generatedUserTicket}
+            />
         </Drawer.Navigator>
     );
 }
