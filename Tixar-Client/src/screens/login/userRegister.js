@@ -1,7 +1,7 @@
 import { React, useState } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, Image, Pressable, TextInput } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import HeaderBlock from '../../components/login/headerBlock';
+import HeaderBlockRegister from '../../components/login/headerBlockRegistration';
 
 
 export default UserRegistrationPage = ({navigation}) => {
@@ -39,7 +39,7 @@ export default UserRegistrationPage = ({navigation}) => {
     return (
 
         <SafeAreaView style={styles.container}>
-            <HeaderBlock navigation={navigation}/>
+            <HeaderBlockRegister navigation={navigation}/>
 
                 <View style={styles.translucentBox}>
 
@@ -125,6 +125,7 @@ const CreateAccountButton = ({ credentialCheck, loginField , navigation}) => {
             <Pressable style={styles.CreateAccountButton}
                 onPress={() => {
                     if (credentialCheck) {
+                        // Add register account here
                         console.log('Creating account for "' + loginField + '"');
                         navigation.popToTop();
                     } else {
@@ -178,12 +179,12 @@ const styles = StyleSheet.create({
     translucentBox: {
         height: '80%',
         width: '85%',
-        position: 'absolute',
-        top: 130,
+        position: 'relative',
         backgroundColor: 'rgba(255, 255, 255, 0.95)',
         borderRadius: 15,
         zIndex: 3,
         alignItems: 'center',
+        bottom: 40,
     },
     footerText: {
         bottom: 15,

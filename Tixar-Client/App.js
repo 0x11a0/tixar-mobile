@@ -18,6 +18,9 @@ import { Directions } from 'react-native-gesture-handler';
 import UserLoginPage from './src/screens/login/userLogin';
 import UserRegistrationPage from './src/screens/login/userRegister';
 import AccountSettingsPage from './src/screens/accountSettingsPage';
+import RedemptionPage from './src/screens/verifiedFan/redemptionPage';
+import fanDashboard from './src/screens/verifiedFan/fanDashboard';
+import celebrityDashboard from './src/screens/verifiedFan/celebrityDashboard';
 import UserProfilePage from './src/screens/user/userprofile'
 import EditUserProfilePage from './src/screens/user/editUserProfile'
 
@@ -73,7 +76,7 @@ export default function App() {
                     <Stack.Screen name='UserLoginPage'
                         component={UserLoginPage}
                         options={{
-                            headerShown: false
+                            headerShown: false,
                         }} />
                     <Stack.Screen name='UserRegistrationPage'
                         component={UserRegistrationPage}
@@ -99,6 +102,16 @@ export default function App() {
                         headerShown: true,
                         }}
                     />
+
+                    <Stack.Screen
+                        name="RedemptionPage"
+                        component={RedemptionPage}
+                        options={{
+                        title: "Redemption",
+                        headerTitleAlign: 'left',
+                        headerShown: true,
+                        }}
+                    />
                 </Stack.Navigator>
 
             </NavigationContainer>
@@ -118,6 +131,7 @@ const MyDrawer = ({ route, navigation }) => {
                 }
             }}
         >
+            {/* Navigation sidebar TIXAR */}
             <Drawer.Screen name={'TIXAR'}
                 component={BrowseConcertPage}
                 options={{
@@ -141,6 +155,22 @@ const MyDrawer = ({ route, navigation }) => {
                         </Pressable>
                 }}
             />
+
+            {/* Navigation sidebar Verified Fans */}
+            <Drawer.Screen
+                name = {"Fan Dashboard"}
+                component={fanDashboard}
+            
+            />
+
+            {/* Navigation sidebar Celebrity dashboard,
+                can replace to admin only if needed */}
+            <Drawer.Screen
+                name={"Celebrity Dashboard"}
+                component={celebrityDashboard}
+            />
+
+
             <Drawer.Screen name={'User Profile'}
                 component={UserProfilePage}
                 options={{
@@ -188,6 +218,7 @@ const MyDrawer = ({ route, navigation }) => {
                         </Pressable>
                 }}
             />
+
             <Drawer.Screen
                 name={"Settings"}
                 component={AccountSettingsPage}
