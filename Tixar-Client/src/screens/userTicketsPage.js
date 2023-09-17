@@ -13,6 +13,12 @@ import {
   import FilterButton from '../components/userTickets/filterButton';
   
   export default userTicketsPage = ({ route, navigation }) => {
+
+    // Function to handle the press event of the first ticket
+    const firstTicketPress = () => {
+        console.log("first ticket pressed");
+        navigation.navigate("viewConcertPage"); //change this to haris's view ticket page
+    };
   
     return (
 
@@ -43,6 +49,7 @@ import {
                     concertName={'Coldplay Concert'}
                     concertCategory={'Category: 1'}
                     concertReference={'Reference No. 123456789'}
+                    onPress={() => {firstTicketPress()}}
                 />
                 
                 {/* second concert ticket*/}

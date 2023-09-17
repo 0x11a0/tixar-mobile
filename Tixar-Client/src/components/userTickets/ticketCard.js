@@ -4,7 +4,8 @@ import { View, Image, StyleSheet, Text, Pressable } from "react-native";
 export default TicketCard = ({ 
     concertName,
     concertCategory,
-    concertReference
+    concertReference,
+    onPress // Pass a callback function to handle the press card event
 }) => {
 
   // Function to handle the favorite button press
@@ -13,34 +14,36 @@ export default TicketCard = ({
   };
 
   return (
-    <View style={styles.container}>
+    <Pressable onPress={onPress}> 
+      <View style={styles.container}>
 
-      {/* icon */}
-      <Image
-        source={require("../../assets/soft-ui-pro-react-native-v1.1.1/avatar23x.png")}
-        style={styles.icon}
-        resizeMode="cover"
-      />
-
-      {/* text */}
-      <View style={styles.textContainer}>
-
-        <Text style={styles.concertTitle}>{concertName}</Text>
-        <Text style={styles.concertCategory}>{concertCategory}</Text>
-        <Text style={styles.concertReference}>{concertReference}</Text>
-
-      </View>
-
-      {/* favorite button */}
-      <Pressable onPress={handleFavoritePress} style={styles.favouriteButtonContainer}>
+        {/* icon */}
         <Image
-          source={require("../../assets/soft-ui-pro-react-native-v1.1.1/star3x.png")}
-          style={styles.favouriteButton}
+          source={require("../../assets/soft-ui-pro-react-native-v1.1.1/avatar23x.png")}
+          style={styles.icon}
           resizeMode="cover"
         />
-      </Pressable>
 
-    </View>
+        {/* text */}
+        <View style={styles.textContainer}>
+
+          <Text style={styles.concertTitle}>{concertName}</Text>
+          <Text style={styles.concertCategory}>{concertCategory}</Text>
+          <Text style={styles.concertReference}>{concertReference}</Text>
+
+        </View>
+
+        {/* favorite button */}
+        <Pressable onPress={handleFavoritePress} style={styles.favouriteButtonContainer}>
+          <Image
+            source={require("../../assets/soft-ui-pro-react-native-v1.1.1/star3x.png")}
+            style={styles.favouriteButton}
+            resizeMode="cover"
+          />
+        </Pressable>
+
+      </View>
+    </Pressable>
   );
 };
 
