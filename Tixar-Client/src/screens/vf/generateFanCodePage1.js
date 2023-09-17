@@ -93,6 +93,7 @@ export default GenerateFanCodePages = () => {
                 }
                 }
                 buttonHeight={50}
+                enableCondition={!isAnimating}
             />
             <FooterBlock />
         </View>

@@ -6,8 +6,8 @@ import { interpolate } from 'react-native-reanimated';
 
 export default AnimationPage = () => {
     const insets = useSafeAreaInsets();
-    const length = Dimensions.get('window').width / 4;
-    const duration = 1000;
+    const length = Dimensions.get('window').width / 8;
+    const duration = 700;
     // const firstInter2 = firstAnimation.interpolate({
     //     inputRange: [-1, 0, 1],
     //     outputRange: ['0deg', '30deg', '0deg'],
@@ -23,7 +23,6 @@ export default AnimationPage = () => {
     const [bottomLeftOpacity, setBottomLeftOpacity] = useState(new Animated.Value(0));
     const [topLeftOpacity, setTopLeftOpacity] = useState(new Animated.Value(0));
 
-    // const [firstAnimation, setFirstAnimation] = useState(new Animated.Value(-1));
     const firstAnimation = useRef(new Animated.Value(-1)).current;
     const secondAnimation = useRef(new Animated.Value(-1)).current;
     const thirdAnimation = useRef(new Animated.Value(-1)).current;
@@ -31,14 +30,6 @@ export default AnimationPage = () => {
     const fifthAnimation = useRef(new Animated.Value(1)).current;
     const sixthAnimation = useRef(new Animated.Value(1)).current;
     const seventhAnimation = useRef(new Animated.Value(1)).current;
-
-    // const [secondAnimation, setSecondAnimation] = useState(new Animated.Value(-1));
-    // const [thirdAnimation, setThirdAnimation] = useState(new Animated.Value(-1));
-    // const [fourthAnimation, setFourthAnimation] = useState(new Animated.Value(1));
-    // const [fifthAnimation, setFifthAnimation] = useState(new Animated.Value(1));
-    // const [sixthAnimation, setSixthAnimation] = useState(new Animated.Value(1));
-    // const [seventhAnimation, setSeventhAnimation] = useState(new Animated.Value(1));
-    // const [eighthAnimation, setEighthAnimation] = useState(new Animated.Value(-1));
 
     const firstInter = firstAnimation.interpolate({
         inputRange: [-1, 0, 1],
@@ -206,7 +197,7 @@ export default AnimationPage = () => {
             setTopRightzIndex(1);
             setBottomRightzIndex(2);
             setBottomLeftzIndex(3);
-            // animate0();
+            animate0();
         });
     }
 
@@ -244,7 +235,7 @@ export default AnimationPage = () => {
                 }]}>
                     <LinearGradient colors={['#FF0080', '#7928CA']}
                         style={styles.coolBox}
-                        start={[0, 1]} end={[1, 0]} />
+                        start={[0, 0]} end={[1, 0]} />
                 </Animated.View>
 
                 {/* top right */}
@@ -263,7 +254,7 @@ export default AnimationPage = () => {
                 }]}>
                     <LinearGradient colors={['#FF0080', '#7928CA']}
                         style={styles.coolBox}
-                        start={[0, 1]} end={[1, 0]} />
+                        start={[0, 0]} end={[1, 0]} />
                 </Animated.View>
 
                 {/* bottom right */}
@@ -282,7 +273,7 @@ export default AnimationPage = () => {
                 }]}>
                     <LinearGradient colors={['#FF0080', '#7928CA']}
                         style={styles.coolBox}
-                        start={[0, 1]} end={[1, 0]} />
+                        start={[0, 0]} end={[1, 0]} />
                 </Animated.View>
 
                 {/* bottom left */}
@@ -301,7 +292,7 @@ export default AnimationPage = () => {
                 }]}>
                     <LinearGradient colors={['#FF0080', '#7928CA']}
                         style={styles.coolBox}
-                        start={[0, 1]} end={[1, 0]} />
+                        start={[0, 0]} end={[1, 0]} />
                 </Animated.View>
 
             </View>
@@ -325,10 +316,11 @@ const styles = StyleSheet.create({
     text: {
         fontFamily: 'Lato-Bold',
         fontSize: 30,
+        lineHeight: 30,
     },
     coolBox: {
-        height: Dimensions.get('window').width / 4,
-        width: Dimensions.get('window').width / 4,
+        height: Dimensions.get('window').width / 8,
+        width: Dimensions.get('window').width / 8,
         position: 'absolute',
         // borderTopWidth: 0,
         // borderRightWidth: 0,
