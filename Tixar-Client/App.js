@@ -22,6 +22,7 @@ import UserProfilePage from './src/screens/user/userprofile'
 import EditUserProfilePage from './src/screens/user/editUserProfile'
 import generatedUserTicket from './src/screens/generatedUserTicket';
 import eWallet from './src/screens/eWallet/eWalletPage';
+import eWalletWithdrawPage from './src/screens/eWallet/eWalletWithdrawPage';
 
 export default function App() {
     const [fontsLoaded] = useFonts({
@@ -106,8 +107,12 @@ export default function App() {
                         component={generatedUserTicket}
                     />
                     <Stack.Screen
+                        name="eWallet"
+                        component={eWallet}
+                    />
+                    <Stack.Screen
                         name="eWalletWithdraw"
-                        component={eWalletWithdraw}
+                        component={eWalletWithdrawPage}
                     />
                 </Stack.Navigator>
 
@@ -256,6 +261,10 @@ const MyDrawer = ({ route, navigation }) => {
             <Drawer.Screen
                 name="Manage E-Wallet"
                 component={eWallet}
+            />
+            <Drawer.Screen
+                name="Transfer to Bank"
+                component={eWalletWithdrawPage}
             />
         </Drawer.Navigator>
     );

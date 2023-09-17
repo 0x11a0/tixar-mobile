@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, ScrollView, Pressable, Image, SafeAreaViewBase,
 import CardWallet from '../../components/eWallet/cardWallet';
 import Card from '../../components/accountSettings/card';
 
-export default eWallet = () => {
+export default eWalletWithdraw = () => {
 
     const navigation = useNavigation();
 

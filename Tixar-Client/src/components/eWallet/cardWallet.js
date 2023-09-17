@@ -12,21 +12,19 @@ export default cardWallet = ({navigation}) => {
                 style={styles.headerImage} />
                 <View style={styles.overlayContainer}>
                     <View style={styles.nameContainer}>
-                        <View style={{flexDirection: 'row'}}>
-
+                        <View>
                             <Text style={styles.eCardTitle}>Matthew Glock</Text>
                         </View>
-                        <View style = {{flex: 6, flexDirection: 'column',
-                                        justifyContent: 'flex-end'}}>
+                        <View style = {{}}>
                             <Image source={require('../../assets/creditcardicon.png')}
                                 style = {styles.profilePicture}/>
                         </View>
                     </View>
                     <View style={styles.profileContainer}>
-                        <View style={{marginBottom: 20}}>
+                        <View>
                             <Image source={require('../../assets/soft-ui-pro-react-native-v1.1.1/avatar23x.png')} style={styles.profilePicture}/>
                         </View>
-                        <View style = {{justifyContent: 'flex-end', flex: 1}}>
+                        <View style = {{justifyContent: 'flex-end'}}>
                             <Text style={styles.balanceText}>Balance</Text>
                             <Text style={styles.balanceAmount}>$1000.88</Text>
                         </View>
@@ -46,14 +44,14 @@ const styles = StyleSheet.create({
         ...StyleSheet.absoluteFillObject,
         zIndex: 2,
         flexDirection: 'row',
-        paddingHorizontal: 20,
-        paddingVertical: 15
+        paddingHorizontal: 15,
+        paddingTop: 15,
+        paddingBottom: '15%'
     },
     nameContainer: {
         flex: 1.5,
         zIndex: 2,
         flexDirection: 'column',
-        justifyContent: 'space-between'
     },
     profileContainer: {
         flex: 1,
@@ -62,8 +60,8 @@ const styles = StyleSheet.create({
         zIndex: 2,
     },
     headerImage: {
-        width: '85%',
-        height: '100%',
+        width: 274,
+        height: 161,
         borderRadius: 8,
         resizeMode: 'cover',
         zIndex: 1,
