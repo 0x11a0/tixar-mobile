@@ -18,6 +18,7 @@ import { Directions } from 'react-native-gesture-handler';
 import UserLoginPage from './src/screens/login/userLogin';
 import UserRegistrationPage from './src/screens/login/userRegister';
 import AccountSettingsPage from './src/screens/accountSettingsPage';
+import userTicketsPage from './src/screens/userTicketsPage';
 
 export default function App() {
     const [fontsLoaded] = useFonts({
@@ -56,6 +57,13 @@ export default function App() {
                             headerShown: false,
 
                         }} />
+                    <Stack.Screen name='userTicketsPage'
+                        component={userTicketsPage}
+                        options={{
+                            headerTitle: 'TEST'
+                        }}
+                    />
+                    
                     <Stack.Screen name='viewConcertPage'
                         component={ViewConcertPage}
                         options={{
@@ -190,6 +198,31 @@ const MyDrawer = ({ route, navigation }) => {
                     ),
                     }}
                 />
+
+                {/* user's my tickets page navigation button */}
+                <Drawer.Screen name={'My Tickets'}
+                component={userTicketsPage}
+                options={{
+                    headerRight: (props) =>
+                        <Pressable style={{
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            marginRight: '7%',
+                        }}
+                            onPress={() => {
+
+                                navigation.navigate('UserLoginPage');
+                                console.log(route.name);
+                            }}>
+                            <Image source={require('./src/assets/soft-ui-pro-react-native-v1.1.1/users3x.png')}
+                                style={{
+                                    height: 25,
+                                    width: 25,
+                                    resizeMode: 'contain',
+                                }} />
+                        </Pressable>
+                }}
+            />      
         </Drawer.Navigator>
     );
 }
