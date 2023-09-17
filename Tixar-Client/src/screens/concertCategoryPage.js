@@ -7,8 +7,6 @@ import {
   StyleSheet,
   SafeAreaView,
   Image,
-  TextInput,
-  KeyboardAvoidingView, // Import KeyboardAvoidingView
 } from "react-native";
 import { React, useState } from 'react';
 import { useSafeAreaInsets } from "react-native-safe-area-context";
