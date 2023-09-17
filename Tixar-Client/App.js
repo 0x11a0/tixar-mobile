@@ -24,9 +24,11 @@ import fanDashboard from './src/screens/verifiedFan/fanDashboard';
 import celebrityDashboard from './src/screens/verifiedFan/celebrityDashboard';
 import UserProfilePage from './src/screens/user/userprofile'
 import EditUserProfilePage from './src/screens/user/editUserProfile'
+import generatedUserTicket from './src/screens/generatedUserTicket';
+import eWallet from './src/screens/eWallet/eWalletPage';
+import eWalletWithdrawPage from './src/screens/eWallet/eWalletWithdrawPage';
 import CreateConcertPage from './src/screens/admin/createConcert'
 import CreateCategoriesPage from './src/screens/admin/createCategories';
-
 
 export default function App() {
     const [fontsLoaded] = useFonts({
@@ -118,6 +120,17 @@ export default function App() {
                         headerShown: true,
                         }}
                     />
+                    <Stack.Screen
+                        name="GeneratedUserTicketPage"
+                        component={generatedUserTicket}
+                    />
+                    <Stack.Screen
+                        name="eWallet"
+                        component={eWallet}
+                    />
+                    <Stack.Screen
+                        name="eWalletWithdraw"
+                        component={eWalletWithdrawPage}
 
                     <Stack.Screen
                         name="RedemptionPage"
@@ -335,6 +348,18 @@ const MyDrawer = ({ route, navigation }) => {
                     ),
                     }}
                 />
+            <Drawer.Screen
+                name="GeneratedUserTicketPage"
+                component={generatedUserTicket}
+            />
+            <Drawer.Screen
+                name="Manage E-Wallet"
+                component={eWallet}
+            />
+            <Drawer.Screen
+                name="Transfer to Bank"
+                component={eWalletWithdrawPage}
+            />
 
                 {/* user's my tickets page navigation button */}
                 <Drawer.Screen name={'My Tickets'}
