@@ -16,8 +16,9 @@ export default WithdrawalMethodCard = ({navigation, value, onChangeTextFunction}
                     <Text style={styles.transactionTitle}>Select Withdrawal Method</Text>
                 </View>
                 <View style={styles.paymentMethodContainer}>
-                    <Fontisto name="mastercard" size={100} color="black" />
-                    <Fontisto name="visa" size={100} color="black" />
+                    <Image source={require('../../assets/dbspaylahicon.png')} style={styles.iconImage}/>
+                    <Image source={require('../../assets/mastercardicon.png')} style={{width: 85, height: 85, backgroundColor: 'black', borderRadius: 18}}/>
+                    <Image source={require('../../assets/visaicon.png')} style={styles.iconImage}/>
                 </View>
                 <View style={{alignItems: 'center'}}>
                     <Text style={styles.transactionTitle}>Enter Amount</Text>
@@ -76,5 +77,10 @@ const styles = StyleSheet.create({
         borderColor: '#ccc',
         width: '75%',
       },
+      iconImage: {
+        width: 85,
+        height: 85,
+        borderRadius: 18
+      }
     
 });
