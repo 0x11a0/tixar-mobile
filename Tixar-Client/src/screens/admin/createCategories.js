@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Pressable,
   View,
@@ -6,11 +6,12 @@ import {
   Image,
   StyleSheet,
   SafeAreaView,
-  ScrollView,
   TextInput,
+  Dimensions,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Dropdown } from "react-native-element-dropdown";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default CreateConcert = ({ route, navigation }) => {
   const data = [
@@ -27,34 +28,33 @@ export default CreateConcert = ({ route, navigation }) => {
   const [value, setValue] = useState(1);
   const [isFocus, setIsFocus] = useState(false);
 
-  const [categoryHeight, setCategoryHeight] = useState(1000); // Initialize with the base height
-
-  useEffect(() => {
-    setCategoryHeight(300 + value * 180); // Calculate the total height dynamically
-  }, [value]);
+  const [categoryHeight, setCategoryHeight] = useState(500);
 
   const categoryViews = Array.from({ length: value }, (_, index) => (
-    <>
-      <View key={index} style={styles.categoryFieldBox}>
-        <View style={styles.categoryBox}>
-          <TextInput
-            style={styles.fieldText}
-            onChangeText={handleName}
-            value={nameField}
-            placeholder={`Category Name ${index + 1}:`}
-          />
-        </View>
-        <View style={styles.priceBox}>
-          <TextInput
-            style={styles.fieldText}
-            onChangeText={handleName}
-            value={nameField}
-            placeholder="Price:"
-          />
-        </View>
+    <View key={index} style={styles.categoryFieldBox}>
+      <View style={styles.categoryBox}>
+        <TextInput
+          style={styles.fieldText}
+          onChangeText={handleName}
+          placeholder={`Category Name ${index + 1}:`}
+        />
       </View>
-    </>
+      <View style={styles.priceBox}>
+        <TextInput
+          style={styles.fieldText}
+          onChangeText={handleName}
+          placeholder="Price:"
+        />
+      </View>
+    </View>
   ));
+
+  const scrollViewRef = useRef(null);
+
+  useEffect(() => {
+    const newCategoryHeight = 500 + value * 80;
+    setCategoryHeight(newCategoryHeight);
+  }, [value]);
 
   const renderLabel = () => {
     if (value || isFocus) {
@@ -89,8 +89,20 @@ export default CreateConcert = ({ route, navigation }) => {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.scrollViewContent}>
-      <SafeAreaView style={styles.container}>
+    <KeyboardAwareScrollView
+      contentContainerStyle={styles.scrollViewContent}
+      extraHeight={100}
+      enableOnAndroid={true}
+      enableAutomaticScroll={true}
+    >
+      <SafeAreaView
+        style={[
+          styles.container,
+          {
+            minHeight: categoryHeight + 300,
+          },
+        ]}
+      >
         <View style={styles.thumbnailBox}>
           <Pressable
             style={{
@@ -115,7 +127,14 @@ export default CreateConcert = ({ route, navigation }) => {
           </Pressable>
           <Text style={styles.thumbnail}>Add Thumbnail</Text>
         </View>
-        <View style={[styles.translucentBox, { minHeight: categoryHeight }]}>
+        <View
+          style={[
+            styles.translucentBox,
+            {
+              minHeight: categoryHeight,
+            },
+          ]}
+        >
           <Text style={styles.subtitle}>Category Details</Text>
           <View style={styles.dropdownFieldBox}>
             <View style={styles.dropDownContainer}>
@@ -138,7 +157,6 @@ export default CreateConcert = ({ route, navigation }) => {
                 onChange={(item) => {
                   setValue(item.value);
                   setIsFocus(false);
-                  console.log("NEW VALUE" + item.value);
                 }}
               />
             </View>
@@ -150,7 +168,6 @@ export default CreateConcert = ({ route, navigation }) => {
               style={styles.descriptionFieldText}
               multiline={true}
               onChangeText={handleDescription}
-              value={descriptionField}
               placeholder="Category Description"
             />
           </View>
@@ -163,10 +180,10 @@ export default CreateConcert = ({ route, navigation }) => {
             datesField={datesField}
             descriptionField={descriptionField}
           />
+          <Text style={styles.footerText}>TIXAR</Text>
         </View>
-        <Text style={styles.footerText}>TIXAR</Text>
       </SafeAreaView>
-    </ScrollView>
+    </KeyboardAwareScrollView>
   );
 };
 
@@ -224,6 +241,7 @@ const SubmitButton = ({
     </LinearGradient>
   );
 };
+
 const styles = StyleSheet.create({
   categoryView: {
     backgroundColor: "blue",
@@ -312,7 +330,7 @@ const styles = StyleSheet.create({
 
   thumbnailBox: {
     top: 15,
-    height: "22%",
+    height: 200,
     width: "85%",
     position: "absolute",
     backgroundColor: "rgba(255, 255, 255, 0.95)",
@@ -331,7 +349,6 @@ const styles = StyleSheet.create({
   },
 
   translucentBox: {
-    height: "80%",
     width: "85%",
     position: "absolute",
     top: 250,
@@ -365,10 +382,17 @@ const styles = StyleSheet.create({
   },
 
   footerText: {
-    bottom: 15,
+    // bottom: 15,
     fontFamily: "Lato-Regular",
     fontSize: 12,
-    position: "absolute",
+    // position: "absolute",
+  },
+
+  footerContainer: {
+    // paddingVertical: 30, // Vertical padding
+
+    alignItems: "center", // Center items horizontally
+    justifyContent: "center", // Center items vertically
   },
 
   dropdownFieldBox: {
@@ -462,6 +486,7 @@ const styles = StyleSheet.create({
     height: 40,
     alignItems: "center",
     justifyContent: "center",
+    marginBottom: 30,
   },
 
   resetBackgroundDisabled: {
