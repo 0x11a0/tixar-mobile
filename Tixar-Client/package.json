@@ -10,8 +10,8 @@
   },
   "dependencies": {
     "@ant-design/icons": "^5.2.6",
+    "@react-native-community/datetimepicker": "^7.5.0",
     "@react-native-masked-view/masked-view": "^0.2.9",
-    "@react-native-community/datetimepicker": "7.2.0",
     "@react-native-picker/picker": "^2.5.0",
     "@react-navigation/drawer": "^6.6.3",
     "@react-navigation/native": "^6.1.7",
@@ -28,6 +28,7 @@
     "metro-core": "^0.79.0",
     "react": "18.2.0",
     "react-native": "0.72.4",
+    "react-native-dashed-line": "^1.1.0",
     "react-native-element-dropdown": "^2.10.0",
     "react-native-gesture-handler": "~2.12.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",

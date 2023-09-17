@@ -131,7 +131,7 @@ export default function App() {
                     <Stack.Screen
                         name="eWalletWithdraw"
                         component={eWalletWithdrawPage}
-
+                    />
                     <Stack.Screen
                         name="RedemptionPage"
                         component={RedemptionPage}
