@@ -21,6 +21,8 @@ import AccountSettingsPage from './src/screens/accountSettingsPage';
 import RedemptionPage from './src/screens/verifiedFan/redemptionPage';
 import fanDashboard from './src/screens/verifiedFan/fanDashboard';
 import celebrityDashboard from './src/screens/verifiedFan/celebrityDashboard';
+import UserProfilePage from './src/screens/user/userprofile'
+import EditUserProfilePage from './src/screens/user/editUserProfile'
 
 export default function App() {
     const [fontsLoaded] = useFonts({
@@ -153,6 +155,7 @@ const MyDrawer = ({ route, navigation }) => {
                         </Pressable>
                 }}
             />
+
             {/* Navigation sidebar Verified Fans */}
             <Drawer.Screen
                 name = {"Fan Dashboard"}
@@ -167,7 +170,55 @@ const MyDrawer = ({ route, navigation }) => {
                 component={celebrityDashboard}
             />
 
-            {/* Navigation sidebar Settings */}
+
+            <Drawer.Screen name={'User Profile'}
+                component={UserProfilePage}
+                options={{
+                    headerRight: (props) =>
+                        <Pressable style={{
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            marginRight: '7%',
+                        }}
+                            onPress={() => {
+
+                                navigation.navigate('UserLoginPage');
+                                console.log(route.name);
+                            }}>
+                            <Image source={require('./src/assets/soft-ui-pro-react-native-v1.1.1/users3x.png')}
+                                style={{
+                                    height: 25,
+                                    width: 25,
+                                    resizeMode: 'contain',
+                                }} />
+                        </Pressable>
+                }}
+            />
+
+            <Drawer.Screen name={'Edit User Profile'}
+                component={EditUserProfilePage}
+                options={{
+                    headerRight: (props) =>
+                        <Pressable style={{
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            marginRight: '7%',
+                        }}
+                            onPress={() => {
+
+                                navigation.navigate('UserLoginPage');
+                                console.log(route.name);
+                            }}>
+                            <Image source={require('./src/assets/soft-ui-pro-react-native-v1.1.1/users3x.png')}
+                                style={{
+                                    height: 25,
+                                    width: 25,
+                                    resizeMode: 'contain',
+                                }} />
+                        </Pressable>
+                }}
+            />
+
             <Drawer.Screen
                 name={"Settings"}
                 component={AccountSettingsPage}
