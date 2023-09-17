@@ -149,7 +149,7 @@ export default CreateConcert = ({ route, navigation }) => {
                 maxHeight={300}
                 labelField="label"
                 valueField="value"
-                placeholder={!isFocus ? "Select Number of Categories" : "..."}
+                placeholder={!isFocus ? "Select" : "..."}
                 searchPlaceholder="Search..."
                 value={value}
                 onFocus={() => setIsFocus(true)}
@@ -254,7 +254,7 @@ const styles = StyleSheet.create({
   },
   dropdown: {
     height: 50,
-    width: 60,
+    width: 90,
     borderColor: "#D2D6DA",
     borderWidth: 1,
     borderRadius: 10,
@@ -275,6 +275,7 @@ const styles = StyleSheet.create({
     top: "auto",
     zIndex: 999,
     paddingHorizontal: 8,
+    lineHeight: 17,
   },
 
   placeholderStyle: {
