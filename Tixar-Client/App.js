@@ -19,6 +19,14 @@ import UserLoginPage from './src/screens/login/userLogin';
 import UserRegistrationPage from './src/screens/login/userRegister';
 import AccountSettingsPage from './src/screens/accountSettingsPage';
 import userTicketsPage from './src/screens/userTicketsPage';
+import RedemptionPage from './src/screens/verifiedFan/redemptionPage';
+import fanDashboard from './src/screens/verifiedFan/fanDashboard';
+import celebrityDashboard from './src/screens/verifiedFan/celebrityDashboard';
+import UserProfilePage from './src/screens/user/userprofile'
+import EditUserProfilePage from './src/screens/user/editUserProfile'
+import CreateConcertPage from './src/screens/admin/createConcert'
+import CreateCategoriesPage from './src/screens/admin/createCategories';
+
 
 export default function App() {
     const [fontsLoaded] = useFonts({
@@ -79,6 +87,11 @@ export default function App() {
                     <Stack.Screen name='UserLoginPage'
                         component={UserLoginPage}
                         options={{
+                            headerShown: false,
+                        }} />
+                     <Stack.Screen name='CreateCategoriesPage'
+                        component={CreateCategoriesPage}
+                        options={{
                             headerShown: false
                         }} />
                     <Stack.Screen name='UserRegistrationPage'
@@ -105,6 +118,16 @@ export default function App() {
                         headerShown: true,
                         }}
                     />
+
+                    <Stack.Screen
+                        name="RedemptionPage"
+                        component={RedemptionPage}
+                        options={{
+                        title: "Redemption",
+                        headerTitleAlign: 'left',
+                        headerShown: true,
+                        }}
+                    />
                 </Stack.Navigator>
 
             </NavigationContainer>
@@ -124,6 +147,7 @@ const MyDrawer = ({ route, navigation }) => {
                 }
             }}
         >
+            {/* Navigation sidebar TIXAR */}
             <Drawer.Screen name={'TIXAR'}
                 component={BrowseConcertPage}
                 options={{
@@ -135,7 +159,7 @@ const MyDrawer = ({ route, navigation }) => {
                         }}
                             onPress={() => {
 
-                                navigation.navigate('UserLoginPage');
+                                navigation.navigate('UserLoginPage'); 
                                 console.log(route.name);
                             }}>
                             <Image source={require('./src/assets/soft-ui-pro-react-native-v1.1.1/users3x.png')}
@@ -147,6 +171,119 @@ const MyDrawer = ({ route, navigation }) => {
                         </Pressable>
                 }}
             />
+
+            {/* Navigation sidebar Verified Fans */}
+            <Drawer.Screen
+                name = {"Fan Dashboard"}
+                component={fanDashboard}
+            
+            />
+
+            {/* Navigation sidebar Celebrity dashboard,
+                can replace to admin only if needed */}
+            <Drawer.Screen
+                name={"Celebrity Dashboard"}
+                component={celebrityDashboard}
+            />
+
+
+            <Drawer.Screen name={'User Profile'}
+                component={UserProfilePage}
+                options={{
+                    headerRight: (props) =>
+                        <Pressable style={{
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            marginRight: '7%',
+                        }}
+                            onPress={() => {
+
+                                navigation.navigate('UserProfilePage');
+                                console.log(route.name);
+                            }}>
+                            <Image source={require('./src/assets/soft-ui-pro-react-native-v1.1.1/users3x.png')}
+                                style={{
+                                    height: 25,
+                                    width: 25,
+                                    resizeMode: 'contain',
+                                }} />
+                        </Pressable>
+                }}
+            />
+
+            <Drawer.Screen name={'Edit User Profile'}
+                component={EditUserProfilePage}
+                options={{
+                    headerRight: (props) =>
+                        <Pressable style={{
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            marginRight: '7%',
+                        }}
+                            onPress={() => {
+
+                                navigation.navigate('EditUserProfilePage');
+                                console.log(route.name);
+                            }}>
+                            <Image source={require('./src/assets/soft-ui-pro-react-native-v1.1.1/users3x.png')}
+                                style={{
+                                    height: 25,
+                                    width: 25,
+                                    resizeMode: 'contain',
+                                }} />
+                        </Pressable>
+                }}
+            />
+
+
+        <Drawer.Screen name={'Create Category'}
+                component={CreateCategoriesPage}
+                options={{
+                    headerRight: (props) =>
+                        <Pressable style={{
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            marginRight: '7%',
+                        }}
+                            onPress={() => {
+
+                                navigation.navigate('CreateCategoriesPage');
+                                console.log(route.name);
+                            }}>
+                            <Image source={require('./src/assets/soft-ui-pro-react-native-v1.1.1/users3x.png')}
+                                style={{
+                                    height: 25,
+                                    width: 25,
+                                    resizeMode: 'contain',
+                                }} />
+                        </Pressable>
+                }}
+            />
+
+            <Drawer.Screen name={'Create Concert Page'}
+                component={CreateConcertPage}
+                options={{
+                    headerRight: (props) =>
+                        <Pressable style={{
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            marginRight: '7%',
+                        }}
+                            onPress={() => {
+
+                                navigation.navigate('CreateConcertPage');
+                                console.log(route.name);
+                            }}>
+                            <Image source={require('./src/assets/soft-ui-pro-react-native-v1.1.1/users3x.png')}
+                                style={{
+                                    height: 25,
+                                    width: 25,
+                                    resizeMode: 'contain',
+                                }} />
+                        </Pressable>
+                }}
+            />
+
             <Drawer.Screen
                 name={"Settings"}
                 component={AccountSettingsPage}
