@@ -9,7 +9,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import ViewConcertPage from './src/screens/viewConcert/viewConcertPage';
 import BrowseConcertPage from './src/screens/browseConcertPage';
-import ConcertCategoryPage from './src/screens/viewConcert/concertCategoryPage';
+import ConcertCategoryPage from './src/screens/concertCategoryPage';
 import LoginPage from './src/screens/login/loginPage';
 import ForgetPasswordPage from './src/screens/login/forgetPassword';
 import SetPasswordPage from './src/screens/login/setPassword';
@@ -18,11 +18,17 @@ import { Directions } from 'react-native-gesture-handler';
 import UserLoginPage from './src/screens/login/userLogin';
 import UserRegistrationPage from './src/screens/login/userRegister';
 import AccountSettingsPage from './src/screens/accountSettingsPage';
+import userTicketsPage from './src/screens/userTicketsPage';
+import RedemptionPage from './src/screens/verifiedFan/redemptionPage';
+import fanDashboard from './src/screens/verifiedFan/fanDashboard';
+import celebrityDashboard from './src/screens/verifiedFan/celebrityDashboard';
 import UserProfilePage from './src/screens/user/userprofile'
 import EditUserProfilePage from './src/screens/user/editUserProfile'
 import generatedUserTicket from './src/screens/generatedUserTicket';
 import eWallet from './src/screens/eWallet/eWalletPage';
 import eWalletWithdrawPage from './src/screens/eWallet/eWalletWithdrawPage';
+import CreateConcertPage from './src/screens/admin/createConcert'
+import CreateCategoriesPage from './src/screens/admin/createCategories';
 
 export default function App() {
     const [fontsLoaded] = useFonts({
@@ -61,6 +67,13 @@ export default function App() {
                             headerShown: false,
 
                         }} />
+                    <Stack.Screen name='userTicketsPage'
+                        component={userTicketsPage}
+                        options={{
+                            headerTitle: 'TEST'
+                        }}
+                    />
+                    
                     <Stack.Screen name='viewConcertPage'
                         component={ViewConcertPage}
                         options={{
@@ -75,6 +88,11 @@ export default function App() {
                     />
                     <Stack.Screen name='UserLoginPage'
                         component={UserLoginPage}
+                        options={{
+                            headerShown: false,
+                        }} />
+                     <Stack.Screen name='CreateCategoriesPage'
+                        component={CreateCategoriesPage}
                         options={{
                             headerShown: false
                         }} />
@@ -113,6 +131,15 @@ export default function App() {
                     <Stack.Screen
                         name="eWalletWithdraw"
                         component={eWalletWithdrawPage}
+
+                    <Stack.Screen
+                        name="RedemptionPage"
+                        component={RedemptionPage}
+                        options={{
+                        title: "Redemption",
+                        headerTitleAlign: 'left',
+                        headerShown: true,
+                        }}
                     />
                 </Stack.Navigator>
 
@@ -133,6 +160,7 @@ const MyDrawer = ({ route, navigation }) => {
                 }
             }}
         >
+            {/* Navigation sidebar TIXAR */}
             <Drawer.Screen name={'TIXAR'}
                 component={BrowseConcertPage}
                 options={{
@@ -144,7 +172,7 @@ const MyDrawer = ({ route, navigation }) => {
                         }}
                             onPress={() => {
 
-                                navigation.navigate('UserLoginPage');
+                                navigation.navigate('UserLoginPage'); 
                                 console.log(route.name);
                             }}>
                             <Image source={require('./src/assets/soft-ui-pro-react-native-v1.1.1/users3x.png')}
@@ -156,6 +184,22 @@ const MyDrawer = ({ route, navigation }) => {
                         </Pressable>
                 }}
             />
+
+            {/* Navigation sidebar Verified Fans */}
+            <Drawer.Screen
+                name = {"Fan Dashboard"}
+                component={fanDashboard}
+            
+            />
+
+            {/* Navigation sidebar Celebrity dashboard,
+                can replace to admin only if needed */}
+            <Drawer.Screen
+                name={"Celebrity Dashboard"}
+                component={celebrityDashboard}
+            />
+
+
             <Drawer.Screen name={'User Profile'}
                 component={UserProfilePage}
                 options={{
@@ -167,7 +211,7 @@ const MyDrawer = ({ route, navigation }) => {
                         }}
                             onPress={() => {
 
-                                navigation.navigate('UserLoginPage');
+                                navigation.navigate('UserProfilePage');
                                 console.log(route.name);
                             }}>
                             <Image source={require('./src/assets/soft-ui-pro-react-native-v1.1.1/users3x.png')}
@@ -191,7 +235,7 @@ const MyDrawer = ({ route, navigation }) => {
                         }}
                             onPress={() => {
 
-                                navigation.navigate('UserLoginPage');
+                                navigation.navigate('EditUserProfilePage');
                                 console.log(route.name);
                             }}>
                             <Image source={require('./src/assets/soft-ui-pro-react-native-v1.1.1/users3x.png')}
@@ -203,6 +247,56 @@ const MyDrawer = ({ route, navigation }) => {
                         </Pressable>
                 }}
             />
+
+
+        <Drawer.Screen name={'Create Category'}
+                component={CreateCategoriesPage}
+                options={{
+                    headerRight: (props) =>
+                        <Pressable style={{
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            marginRight: '7%',
+                        }}
+                            onPress={() => {
+
+                                navigation.navigate('CreateCategoriesPage');
+                                console.log(route.name);
+                            }}>
+                            <Image source={require('./src/assets/soft-ui-pro-react-native-v1.1.1/users3x.png')}
+                                style={{
+                                    height: 25,
+                                    width: 25,
+                                    resizeMode: 'contain',
+                                }} />
+                        </Pressable>
+                }}
+            />
+
+            <Drawer.Screen name={'Create Concert Page'}
+                component={CreateConcertPage}
+                options={{
+                    headerRight: (props) =>
+                        <Pressable style={{
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            marginRight: '7%',
+                        }}
+                            onPress={() => {
+
+                                navigation.navigate('CreateConcertPage');
+                                console.log(route.name);
+                            }}>
+                            <Image source={require('./src/assets/soft-ui-pro-react-native-v1.1.1/users3x.png')}
+                                style={{
+                                    height: 25,
+                                    width: 25,
+                                    resizeMode: 'contain',
+                                }} />
+                        </Pressable>
+                }}
+            />
+
             <Drawer.Screen
                 name={"Settings"}
                 component={AccountSettingsPage}
@@ -266,6 +360,31 @@ const MyDrawer = ({ route, navigation }) => {
                 name="Transfer to Bank"
                 component={eWalletWithdrawPage}
             />
+
+                {/* user's my tickets page navigation button */}
+                <Drawer.Screen name={'My Tickets'}
+                component={userTicketsPage}
+                options={{
+                    headerRight: (props) =>
+                        <Pressable style={{
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            marginRight: '7%',
+                        }}
+                            onPress={() => {
+
+                                navigation.navigate('UserLoginPage');
+                                console.log(route.name);
+                            }}>
+                            <Image source={require('./src/assets/soft-ui-pro-react-native-v1.1.1/users3x.png')}
+                                style={{
+                                    height: 25,
+                                    width: 25,
+                                    resizeMode: 'contain',
+                                }} />
+                        </Pressable>
+                }}
+            />      
         </Drawer.Navigator>
     );
 }

@@ -1,12 +1,12 @@
 import { React } from 'react';
 import { View, Text, StyleSheet, Image, Pressable } from 'react-native';
 
-export default HeaderBlock = ({navigation}) => {
+export default HeaderBlockRegister = ({navigation}) => {
     return (
         <View style={styles.container}>
             <Pressable style={styles.backButton}
                 onPress={() => {
-                    navigation.pop();
+                    navigation.popToTop();
                 }}>
                 <Image source={require('../../assets/images/backArrow3x.png')}
                     style={styles.buttonIcon} />
