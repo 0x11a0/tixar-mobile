@@ -5,38 +5,38 @@ import NextButton from '../../components/vf/nextButton';
 import ProgressCircle from '../../components/vf/progressCircle';
 import * as Clipboard from 'expo-clipboard';
 
-export default GenerateFanCodePages = () => {
+export default GenerateFanCodePage1 = () => {
     const code = 'AFUHE12';
     const [isAnimating, setIsAnimating] = useState(false);
     const [rotateRightPercent, setRotateRightPercent] = useState(new Animated.Value(0));
     const [circleOpacity, setCircleOpacity] = useState(new Animated.Value(1));
     const [rotateLeftPercent, setRotateLeftPercent] = useState(new Animated.Value(0));
-    const [textOpacity, setTextOpacity] = useState(new Animated.Value(0));
-    const rotateRight = () => {
-        Animated.timing(rotateRightPercent, {
-            toValue: 1,
-            duration: 1000,
-            easing: Easing.linear,
-            useNativeDriver: true,
-        }).start(() => {
-            rotateLeft();
-        });
-    };
-    const rotateLeft = () => {
-        Animated.timing(rotateLeftPercent, {
-            toValue: 1,
-            duration: 1000,
-            easing: Easing.linear,
-            useNativeDriver: true,
-        }).start(() => {
+    const textOpacity = useRef(new Animated.Value(0)).current;
+    const rotateCircle = () => {
+        Animated.sequence([
+            Animated.timing(rotateRightPercent, {
+                toValue: 1,
+                duration: 1000,
+                easing: Easing.linear,
+                useNativeDriver: true,
+            }),
+            Animated.timing(rotateLeftPercent, {
+                toValue: 1,
+                duration: 1000,
+                easing: Easing.linear,
+                useNativeDriver: true,
+            })
+        ]).start(() => {
             setCircleOpacity(new Animated.Value(0));
             textFadeIn();
             Clipboard.setStringAsync(code);
             setRotateLeftPercent(new Animated.Value(0));
             setRotateRightPercent(new Animated.Value(0));
             setIsAnimating(false);
-        });
+        }
+        )
     };
+
 
     const textFadeIn = () => {
         Animated.timing(textOpacity, {
@@ -52,8 +52,7 @@ export default GenerateFanCodePages = () => {
             duration: 300,
             useNativeDriver: true,
         }).start(() => {
-            setIsAnimating(true);
-            rotateRight();
+            rotateCircle();
         });
     }
 
@@ -84,12 +83,9 @@ export default GenerateFanCodePages = () => {
 
             <NextButton buttonText={'Generate Code'}
                 onPressFunction={() => {
-                    if (!isAnimating) {
-                        textFadeOut();
-                        console.log('code copied to clipboard');
-                    } else {
-                        console.log('button disabled');
-                    }
+                    setIsAnimating(true);
+                    textFadeOut();
+                    console.log('code copied to clipboard');
                 }
                 }
                 buttonHeight={50}

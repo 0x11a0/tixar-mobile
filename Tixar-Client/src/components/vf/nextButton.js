@@ -8,7 +8,7 @@ export default NextButton = ({ buttonText, enableCondition, onPressFunction, but
             : ['#E8ECEF', '#E8ECEF']}
             style={{
                 borderRadius: 8,
-                width: '86%',
+                width: '100%',
                 height: buttonHeight ? buttonHeight : 40,
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -37,7 +37,7 @@ export default NextButton = ({ buttonText, enableCondition, onPressFunction, but
 const styles = StyleSheet.create({
 
     button: {
-        width: '86%',
+        width: '100%',
         height: 35,
         alignItems: 'center',
         justifyContent: 'center',

@@ -5,7 +5,7 @@ import NextButton from '../../components/vf/nextButton';
 import TextInputField from '../../components/vf/textInputField';
 import DatePicker from '../../components/vf/datePicker';
 
-export default GenerateFanCodePages = () => {
+export default GenerateFanCodePage2 = () => {
     const code = 'AFUHE12';
 
     const [title, setTitle] = useState('');
@@ -54,7 +54,7 @@ export default GenerateFanCodePages = () => {
 
             <View style={{ height: 20 }} />
 
-            <NextButton buttonText={'Save'}
+            <NextButton buttonText={'Generate Code'}
                 onPressFunction={() => {
                     console.log('title: ' + title);
                     console.log('point: ' + points);

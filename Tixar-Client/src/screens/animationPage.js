@@ -8,20 +8,49 @@ export default AnimationPage = () => {
     const insets = useSafeAreaInsets();
     const length = Dimensions.get('window').width / 8;
     const duration = 700;
-    // const firstInter2 = firstAnimation.interpolate({
-    //     inputRange: [-1, 0, 1],
-    //     outputRange: ['0deg', '30deg', '0deg'],
-    // });
+
+    const arrow = ' >';
+
+    const firstArrowOpacity = useRef(new Animated.Value(0)).current;
+    const secondArrowOpacity = useRef(new Animated.Value(0)).current;
+    const thirdArrowOpacity = useRef(new Animated.Value(0)).current;
+
+    const animateArrows = () => {
+        Animated.sequence([
+            Animated.timing(firstArrowOpacity, {
+                toValue: 1,
+                duration: duration / 2,
+                useNativeDriver: true,
+            }),
+            Animated.timing(secondArrowOpacity, {
+                toValue: 1,
+                duration: duration / 2,
+                useNativeDriver: true,
+            }),
+            Animated.timing(thirdArrowOpacity, {
+                toValue: 1,
+                duration: duration / 2,
+                useNativeDriver: true,
+            }),
+        ]).start(() => {
+            firstArrowOpacity.setValue(0);
+            secondArrowOpacity.setValue(0);
+            thirdArrowOpacity.setValue(0);
+            animateArrows();
+        });
+    }
+
+
 
     const [topLeftzIndex, setTopLeftzIndex] = useState(0);
     const [topRightzIndex, setTopRightzIndex] = useState(1);
     const [bottomRightzIndex, setBottomRightzIndex] = useState(2);
     const [bottomLeftzIndex, setBottomLeftzIndex] = useState(3);
 
-    const [topRightOpacity, setTopRightOpacity] = useState(new Animated.Value(0));
-    const [bottomRightOpacity, setBottomRightOpacity] = useState(new Animated.Value(0));
-    const [bottomLeftOpacity, setBottomLeftOpacity] = useState(new Animated.Value(0));
-    const [topLeftOpacity, setTopLeftOpacity] = useState(new Animated.Value(0));
+    const topRightOpacity = useRef(new Animated.Value(0)).current;
+    const bottomRightOpacity = useRef(new Animated.Value(0)).current;
+    const bottomLeftOpacity = useRef(new Animated.Value(0)).current;
+    const topLeftOpacity = useRef(new Animated.Value(0)).current;
 
     const firstAnimation = useRef(new Animated.Value(-1)).current;
     const secondAnimation = useRef(new Animated.Value(-1)).current;
@@ -61,50 +90,45 @@ export default AnimationPage = () => {
         outputRange: ['0deg', '90deg', '0deg'],
     });
 
+
     const animate0 = () => {
         Animated.timing(topLeftOpacity, {
             toValue: 1,
             duration: duration,
             useNativeDriver: true,
-        }).start(() => {
-            animate1();
-        });
+        }).start(animate1);
     }
 
     const animate1 = () => {
-        Animated.parallel([
-            Animated.timing(firstAnimation, {
-                toValue: 1,
-                duration: duration,
-                useNativeDriver: true,
-            }),
-            Animated.timing(topRightOpacity, {
-                toValue: 1,
-                duration: duration,
-                useNativeDriver: true,
-            }),
-        ]).start(() => {
-            animate2();
-        });
+        Animated.sequence([
+            Animated.parallel([
+                Animated.timing(firstAnimation, {
+                    toValue: 1,
+                    duration: duration,
+                    useNativeDriver: true,
+                }),
+                Animated.timing(topRightOpacity, {
+                    toValue: 1,
+                    duration: duration,
+                    useNativeDriver: true,
+                }),
+            ]),
+            Animated.parallel([
+                Animated.timing(secondAnimation, {
+                    toValue: 1,
+                    duration: duration,
+                    useNativeDriver: true,
+                }),
+                Animated.timing(bottomRightOpacity, {
+                    toValue: 1,
+                    duration: duration,
+                    useNativeDriver: true,
+                }),
+            ])
+        ]).start(animate2);
     }
 
     const animate2 = () => {
-        Animated.parallel([
-            Animated.timing(secondAnimation, {
-                toValue: 1,
-                duration: duration,
-                useNativeDriver: true,
-            }),
-            Animated.timing(bottomRightOpacity, {
-                toValue: 1,
-                duration: duration,
-                useNativeDriver: true,
-            }),
-        ]).start(() => {
-            animate3();
-        });
-    }
-    const animate3 = () => {
         Animated.parallel([
             Animated.timing(thirdAnimation, {
                 toValue: 1,
@@ -121,70 +145,62 @@ export default AnimationPage = () => {
             setTopRightzIndex(2);
             setBottomRightzIndex(1);
             setBottomLeftzIndex(0);
-            animate4();
+            animate3();
         });
     }
-    const animate4 = () => {
-        Animated.parallel([
-            Animated.timing(fourthAnimation, {
-                toValue: -1,
-                duration: duration,
-                useNativeDriver: true,
-            }),
-            Animated.timing(topLeftOpacity, {
-                toValue: 0,
-                duration: duration,
-                useNativeDriver: true,
-            }),
-        ]).start(() => {
-            animate5();
-        });
-    }
-    const animate5 = () => {
-        Animated.parallel([
-            Animated.timing(fifthAnimation, {
-                toValue: -1,
-                duration: duration,
-                useNativeDriver: true,
-            }),
-            Animated.timing(topRightOpacity, {
-                toValue: 0,
-                duration: duration,
-                useNativeDriver: true,
-            }),
-        ]).start(() => {
-            animate6();
-        });
-    }
-    const animate6 = () => {
-        Animated.parallel([
-            Animated.timing(sixthAnimation, {
-                toValue: -1,
-                duration: duration,
-                useNativeDriver: true,
-            }),
-            Animated.timing(bottomRightOpacity, {
-                toValue: 0,
-                duration: duration,
-                useNativeDriver: true,
-            }),
-        ]).start(() => {
-            animate7();
-        });
+    const animate3 = () => {
+        Animated.sequence([
+            Animated.parallel([
+                Animated.timing(fourthAnimation, {
+                    toValue: -1,
+                    duration: duration,
+                    useNativeDriver: true,
+                }),
+                Animated.timing(topLeftOpacity, {
+                    toValue: 0,
+                    duration: duration,
+                    useNativeDriver: true,
+                }),
+            ]),
+            Animated.parallel([
+                Animated.timing(fifthAnimation, {
+                    toValue: -1,
+                    duration: duration,
+                    useNativeDriver: true,
+                }),
+                Animated.timing(topRightOpacity, {
+                    toValue: 0,
+                    duration: duration,
+                    useNativeDriver: true,
+                }),
+            ]),
+            Animated.parallel([
+                Animated.timing(sixthAnimation, {
+                    toValue: -1,
+                    duration: duration,
+                    useNativeDriver: true,
+                }),
+                Animated.timing(bottomRightOpacity, {
+                    toValue: 0,
+                    duration: duration,
+                    useNativeDriver: true,
+                }),
+            ])
+        ]).start(animate4);
     }
 
-    const animate7 = () => {
+    const animate4 = () => {
         Animated.parallel([
             Animated.timing(seventhAnimation, {
                 toValue: -1,
                 duration: duration,
                 useNativeDriver: true,
             }),
-            Animated.timing(bottomLeftOpacity, {
-                toValue: 0,
-                duration: duration,
-                useNativeDriver: true,
-            }),
+            // Animated.timing(bottomLeftOpacity, {
+            //     toValue: 0,
+            //     duration: duration,
+            //     useNativeDriver: true,
+            // }),
         ]).start(() => {
             firstAnimation.setValue(-1);
             secondAnimation.setValue(-1);
@@ -197,20 +213,20 @@ export default AnimationPage = () => {
             setTopRightzIndex(1);
             setBottomRightzIndex(2);
             setBottomLeftzIndex(3);
-            animate0();
+            topLeftOpacity.setValue(1);
+            bottomLeftOpacity.setValue(0);
+            animate1();
         });
     }
 
-
-
     useEffect(() => {
         animate0();
+        animateArrows();
     }, []);
 
     return (
         <View style={{
             flex: 1,
-            // backgroundColor: 'red',
             marginTop: insets.top,
             paddingBottom: insets.bottom,
             paddingRight: insets.right,
@@ -299,14 +315,39 @@ export default AnimationPage = () => {
 
             <View style={{ height: 20 }} />
             <View style={{
-                // backgroundColor: 'green'
+                flexDirection: 'row',
+
             }}>
                 <Text style={styles.text}>
                     Loading
                 </Text>
+                <Animated.View style={{
+                    opacity: firstArrowOpacity,
+                }}>
+                    <Text style={styles.text}>
+                        {arrow}
+                    </Text>
+                </Animated.View >
+                <Animated.View style={{
+                    // backgroundColor: 'green',
+                    opacity: secondArrowOpacity,
+                }}>
+                    <Text style={styles.text}>
+                        {arrow}
+                    </Text>
+                </Animated.View>
+                <Animated.View style={{
+                    // backgroundColor: 'blue',
+                    opacity: thirdArrowOpacity,
+                }}>
+                    <Text style={styles.text}>
+                        {arrow}
+                    </Text>
+                </Animated.View>
             </View>
         </View>
     );
+
 
 }
 
@@ -317,6 +358,8 @@ const styles = StyleSheet.create({
         fontFamily: 'Lato-Bold',
         fontSize: 30,
         lineHeight: 30,
+        // width: Dimensions.get('window').width / 2,
+        // backgroundColor: 'green',
     },
     coolBox: {
         height: Dimensions.get('window').width / 8,
