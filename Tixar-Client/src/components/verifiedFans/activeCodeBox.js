@@ -1,6 +1,6 @@
 import { View, Image, Text, Pressable, StyleSheet } from 'react-native'
 
-export default ConcertBlock = ({ artistName,
+export default ActiveCodeBlock = ({ artistName,
     monthlyInteractions, newFans, totalFans, artistIcon, onPressFunction }) => {
     return (
         <Pressable style={styles.container}
@@ -11,7 +11,6 @@ export default ConcertBlock = ({ artistName,
             }}>
 
                 <View style={styles.concertBlock}>
-                    <Image source={artistIcon} style={styles.artistIcon}/>
 
 
                 </View>
@@ -22,24 +21,23 @@ export default ConcertBlock = ({ artistName,
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#E0E4EA',
-        height: 250,
+        height: 170,
         borderRadius: 20,
         paddingTop: 10,
-        paddingBottom: 10,
         width: '48%',
         marginTop: 15,
     },
     concertBlock: {
-        flexDirection: 'column',
-        flex: 1,
-        width: '90%',
-        alignSelf: 'center',
+
     },
+
+
     artistIcon: {
-        width: '100%',
-        height: '45%',
-        borderRadius: 16,
-        alignSelf: 'center',
+        width: 130,
+        height: 150,
+        borderRadius: 17,
+        marginLeft: 10,
+        marginRight: 10,
     },
     artistBlock: {
         flexDirection: 'row',

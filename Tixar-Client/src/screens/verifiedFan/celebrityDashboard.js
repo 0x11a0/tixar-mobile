@@ -4,6 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import ArtistBlock from '../../components/verifiedFans/artistBlock';
 import StatisticBox from '../../components/verifiedFans/statisticBox';
 import ConcertBox from '../../components/verifiedFans/concertBox'; 
+import ActiveCodeBox from '../../components/verifiedFans/activeCodeBox';
 
 export default CelebrityDashboard = ({navigation}) => {
 
@@ -21,21 +22,30 @@ export default CelebrityDashboard = ({navigation}) => {
                 alignItems: 'center',
                 alignSelf: 'center',
             }}>
-            <StatisticBox
-                artistName={'Taylor'}
-                monthlyInteractions={40123}
-                newFans={16452}
-                totalFans={131239543}
-                artistIcon={require('../../assets/taylorswifticon.png')}/>
-
-            <View style={{flexDirection: 'row',}}>
-                <ConcertBox
+                <StatisticBox
                     artistName={'Taylor'}
                     monthlyInteractions={40123}
                     newFans={16452}
                     totalFans={131239543}
                     artistIcon={require('../../assets/taylorswifticon.png')}/>
-            </View>
+
+                <View style={{flexDirection: 'row',
+                                width: '100%',
+                                justifyContent: 'space-between',}}>
+                    <ConcertBox
+                        artistName={'Taylor'}
+                        monthlyInteractions={40123}
+                        newFans={16452}
+                        totalFans={131239543}
+                        artistIcon={require('../../assets/nationalstadiumicon.png')}/>
+
+                    <ActiveCodeBox
+                        artistName={'Taylor'}
+                        monthlyInteractions={40123}
+                        newFans={16452}
+                        totalFans={131239543}
+                        artistIcon={require('../../assets/taylorswifticon.png')}/>
+                </View>
             {/* <View>
                 <Text style={styles.footerText}>TIXAR</Text>
             </View> */}
@@ -55,7 +65,7 @@ const GenerateButton = ({navigation}) => {
                     console.log('Navigating to generation page');
                     navigation.navigate('GenerationPage');
                 }}>
-                <Text style = {styles.generateText}>Generate a Fan Code.</Text>
+                <Text style = {styles.generateText}>Generate a Fan Code</Text>
             </Pressable>     
         </LinearGradient>           
     )

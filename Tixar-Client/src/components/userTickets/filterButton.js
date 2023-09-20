@@ -39,7 +39,7 @@ styles = StyleSheet.create({
     },
 
     buttonText: {
-        fontFamily: 'Lato-semibold',
+        fontFamily: 'Lato-Regular',
         fontSize: 14,
         fontWeight: '500',
         fontStyle: 'normal',

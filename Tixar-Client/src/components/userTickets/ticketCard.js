@@ -95,14 +95,14 @@ const styles = StyleSheet.create({
     concertCategory: {
         fontSize: 12,
         color: '#67748E',
-        fontFamily: 'Lato',
+        fontFamily: 'Lato-Regular',
         lineHeight: 27,
     },
 
     concertReference: {
         fontSize: 12,
         color: '#67748E',
-        fontFamily: 'Lato',
+        fontFamily: 'Lato-Regular',
         lineHeight: 27,
     }
 });

@@ -12,7 +12,7 @@ import {
   import TicketCard from '../components/userTickets/ticketCard';
   import FilterButton from '../components/userTickets/filterButton';
   
-  export default userTicketsPage = ({ route, navigation }) => {
+  export default UserTicketsPage = ({ route, navigation }) => {
 
     // Function to handle the press event of the first ticket
     const firstTicketPress = () => {
