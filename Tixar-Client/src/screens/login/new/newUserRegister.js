@@ -76,7 +76,7 @@ export default NewUserRegistrationPage = ({ navigation }) => {
                         style={styles.fieldText}
                         onChangeText={handleFirstName}
                         value={firstNameField}
-                        placeholder="Name" />
+                        placeholder="First Name" />
                 </View>
 
                 {/* Last Name Input Field */}
@@ -85,7 +85,7 @@ export default NewUserRegistrationPage = ({ navigation }) => {
                         style={styles.fieldText}
                         onChangeText={handleLastName}
                         value={lastNameField}
-                        placeholder="Name" />
+                        placeholder="Last Name" />
                 </View>
 
                 {/* Continue Button HEEEEEREEEE THANKS HEHE */}
@@ -123,7 +123,7 @@ export default NewUserRegistrationPage = ({ navigation }) => {
     },
 
     cardText: {
-      fontSize: 18,
+      fontSize: 20,
       fontWeight: "bold",
       fontFamily: 'Lato-Bold',
       color: "#252F40", 
@@ -135,7 +135,7 @@ export default NewUserRegistrationPage = ({ navigation }) => {
         height: 56,
         width: '86%',
         borderRadius: 10,
-        borderColor: '#252F40',
+        borderColor: '#1A1A1A',
         borderWidth: 1,
         marginTop: 26,
     },
