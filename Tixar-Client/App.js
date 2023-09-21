@@ -56,18 +56,7 @@ export default function App() {
         <SafeAreaProvider>
             <NavigationContainer>
 
-                <Stack.Navigator>
-                    <Stack.Screen name='Temp'
-                        component={AnimationPage}
-                        options={{
-                            headerShown: false,
-
-                        }}
-                    />
-                    {/* <Stack.Screen name='Temp'
-                        component={GenerateFanCodePage}
-                    /> */}
-
+                <Stack.Navigator initialRouteName='Drawer'>
                     <Stack.Screen name='Drawer'
                         component={MyDrawer}
                         options={{
@@ -357,9 +346,6 @@ const MyDrawer = ({ route, navigation }) => {
                     ),
                 }}
             />
-
-                    }}
-                />
             <Drawer.Screen
                 name="GeneratedUserTicketPage"
                 component={generatedUserTicket}
