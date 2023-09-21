@@ -7,7 +7,6 @@ import {
   StyleSheet,
   SafeAreaView,
   TextInput,
-  Dimensions,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Dropdown } from "react-native-element-dropdown";
@@ -27,23 +26,43 @@ export default CreateConcert = ({ route, navigation }) => {
 
   const [value, setValue] = useState(1);
   const [isFocus, setIsFocus] = useState(false);
-
   const [categoryHeight, setCategoryHeight] = useState(500);
 
-  const categoryViews = Array.from({ length: value }, (_, index) => (
-    <View key={index} style={styles.categoryFieldBox}>
+  const initialCategories = Array.from({ length: 8 }, (_, index) => ({
+    name: "",
+    price: "",
+    key: index + 1,
+  }));
+  const [categories, setCategories] = useState(initialCategories);
+
+  const handleCategoryChange = (index, text) => {
+    const updatedCategories = [...categories];
+    updatedCategories[index].name = text;
+    setCategories(updatedCategories);
+  };
+
+  const handlePriceChange = (index, text) => {
+    const updatedCategories = [...categories];
+    updatedCategories[index].price = text;
+    setCategories(updatedCategories);
+  };
+
+  const categoryViews = categories.slice(0, value).map((category) => (
+    <View key={category.key} style={styles.categoryFieldBox}>
       <View style={styles.categoryBox}>
         <TextInput
           style={styles.fieldText}
-          onChangeText={handleName}
-          placeholder={`Category Name ${index + 1}:`}
+          placeholder={`Category Name ${category.key}:`}
+          onChangeText={(text) => handleCategoryChange(category.key - 1, text)}
+          value={category.name}
         />
       </View>
       <View style={styles.priceBox}>
         <TextInput
           style={styles.fieldText}
-          onChangeText={handleName}
           placeholder="Price:"
+          onChangeText={(text) => handlePriceChange(category.key - 1, text)}
+          value={category.price}
         />
       </View>
     </View>
@@ -63,29 +82,14 @@ export default CreateConcert = ({ route, navigation }) => {
     return null;
   };
 
-  const [nameField, setNameField] = useState("");
-  const handleName = (text) => {
-    setNameField(text);
-  };
-
-  const [artistField, setArtistField] = useState("");
-  const handleArtist = (text) => {
-    setArtistField(text);
-  };
-
-  const [locationField, setLocationField] = useState("");
-  const handleLocation = (text) => {
-    setLocationField(text);
-  };
-
-  const [datesField, setDateField] = useState("");
-  const handleDates = (text) => {
-    setDateField(text);
-  };
-
   const [descriptionField, setdescriptionField] = useState("");
   const handleDescription = (text) => {
     setdescriptionField(text);
+  };
+
+  const [numberOfCategoryField, setNumberOfCategoryField] = useState("1");
+  const handleNumberOfCategory = (text) => {
+    setNumberOfCategoryField(text);
   };
 
   return (
@@ -151,13 +155,14 @@ export default CreateConcert = ({ route, navigation }) => {
                 valueField="value"
                 placeholder={!isFocus ? "Select" : "..."}
                 searchPlaceholder="Search..."
-                value={value}
                 onFocus={() => setIsFocus(true)}
                 onBlur={() => setIsFocus(false)}
                 onChange={(item) => {
                   setValue(item.value);
                   setIsFocus(false);
+                  handleNumberOfCategory(item.value);
                 }}
+                value={numberOfCategoryField}
               />
             </View>
           </View>
@@ -174,10 +179,8 @@ export default CreateConcert = ({ route, navigation }) => {
           <SubmitButton
             route={route}
             navigation={navigation}
-            nameField={nameField}
-            artistField={artistField}
-            locationField={locationField}
-            datesField={datesField}
+            numberOfCategoryField={numberOfCategoryField}
+            categories={categories}
             descriptionField={descriptionField}
           />
           <Text style={styles.footerText}>TIXAR</Text>
@@ -190,18 +193,32 @@ export default CreateConcert = ({ route, navigation }) => {
 const SubmitButton = ({
   route,
   navigation,
-  nameField,
-  artistField,
-  locationField,
-  datesField,
+  numberOfCategoryField,
+  categories,
   descriptionField,
 }) => {
-  let isValid =
-    nameField !== "" &&
-    artistField !== "" &&
-    locationField !== "" &&
-    datesField !== "" &&
-    descriptionField !== "";
+  // Parse numberOfCategoryField to an integer
+  const numberOfCategories = parseInt(numberOfCategoryField, 10);
+
+  // Create an array to store error messages for categories with empty fields
+  const errorMessages = [];
+
+  // Check if numberOfCategoryField is not empty and categories are not empty
+  const isValid =
+    numberOfCategoryField !== "" &&
+    descriptionField !== "" &&
+    categories.every((category, index) => {
+      if (index < numberOfCategories) {
+        if (category.name === "" || category.price === "") {
+          // Add an error message for this category
+          errorMessages.push(`Category ${index + 1} has empty fields.`);
+          return false;
+        }
+        return true;
+      }
+      return true;
+    });
+
   return (
     <LinearGradient
       colors={isValid ? ["#FF0080", "#7928CA"] : ["#E8ECEF", "#E8ECEF"]}
@@ -213,22 +230,17 @@ const SubmitButton = ({
         style={styles.submitButton}
         onPress={() => {
           console.log({
-            nameField,
-            artistField,
-            locationField,
-            datesField,
+            numberOfCategoryField,
+            categories,
             descriptionField,
           });
-          if (
-            nameField === "" ||
-            artistField === "" ||
-            locationField === "" ||
-            datesField === "" ||
-            descriptionField === ""
-          ) {
+
+          if (!isValid) {
             console.log("Not all fields entered");
+            // Log the specific error messages for categories with empty fields
+            errorMessages.forEach((message) => alert(message));
           }
-          navigation.navigate("CreateCategoriesPage");
+
           console.log(route.name);
         }}
       >
@@ -383,17 +395,13 @@ const styles = StyleSheet.create({
   },
 
   footerText: {
-    // bottom: 15,
     fontFamily: "Lato-Regular",
     fontSize: 12,
-    // position: "absolute",
   },
 
   footerContainer: {
-    // paddingVertical: 30, // Vertical padding
-
-    alignItems: "center", // Center items horizontally
-    justifyContent: "center", // Center items vertically
+    alignItems: "center",
+    justifyContent: "center",
   },
 
   dropdownFieldBox: {
