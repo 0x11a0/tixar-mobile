@@ -1888,10 +1888,10 @@
     prompts "^2.4.0"
     semver "^7.5.2"
 
-"@react-native-community/datetimepicker@^7.5.0":
-  version "7.5.0"
-  resolved "https://registry.yarnpkg.com/@react-native-community/datetimepicker/-/datetimepicker-7.5.0.tgz#479143814a9d6373cdb8cd8f90b5cf03ee0e363a"
-  integrity sha512-nwMje384ib8017P4phJ1v+Y9xkTEGiilV2uoGjFqCNhMFUeBG7kaVy9WKfS1Y0joDlOk4BISm3+3AP4Es5lYZQ==
+"@react-native-community/datetimepicker@^7.2.0":
+  version "7.6.0"
+  resolved "https://registry.yarnpkg.com/@react-native-community/datetimepicker/-/datetimepicker-7.6.0.tgz#4de937ee87572fac555e6e641684ddbf532bada1"
+  integrity sha512-JRQb4bccIWXRV3UWr6ShxtZLhMVHBaV8Fq6fJk0AAysZ35F1U0MdSkRd7eyJWd3JUebsi32j1GK3mdKHoabtrw==
   dependencies:
     invariant "^2.2.4"
 
@@ -1900,10 +1900,10 @@
   resolved "https://registry.yarnpkg.com/@react-native-masked-view/masked-view/-/masked-view-0.2.9.tgz#723a7a076d56b8f5f3fda076eaa5b6b82988e854"
   integrity sha512-Hs4vKBKj+15VxHZHFtMaFWSBxXoOE5Ea8saoigWhahp8Mepssm0ezU+2pTl7DK9z8Y9s5uOl/aPb4QmBZ3R3Zw==
 
-"@react-native-picker/picker@^2.5.0":
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-2.5.0.tgz#25fcb53007241f36ede79a1f8d26c7a85e22c412"
-  integrity sha512-AEZPKwXavmP4VkUUD6bskCrNF+zgd1RvsXJ208YewZSikGZCo0RLlnQxPDrdKoFpbigSYxbvRU5d8h3TzzeQ8Q==
+"@react-native-picker/picker@^2.4.10":
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-2.5.1.tgz#dfa13d5b97bfbedf1f7e7c608181a82f1d58b351"
+  integrity sha512-/sADUfQsosMRYtrqqL3ZYZSECRygj0fXtpRLqxJfwuMEoqfvfn40756R6B1alzusVvDRZFI0ari0iQid56hA/Q==
 
 "@react-native/assets-registry@^0.72.0":
   version "0.72.0"
@@ -3440,7 +3440,7 @@ expo-blur@~12.4.1:
   resolved "https://registry.yarnpkg.com/expo-blur/-/expo-blur-12.4.1.tgz#b391de84914ef9ece0702378e51e09461ad565ab"
   integrity sha512-lGN8FS9LuGUlEriULTC62cCWyg5V7zSVQeJ6Duh1wSq8aAETinZ2/7wrT6o+Uhd/XVVxFNON2T25AGCOtMG6ew==
 
-expo-clipboard@^4.5.0:
+expo-clipboard@^4.3.1:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/expo-clipboard/-/expo-clipboard-4.5.0.tgz#4ef8f1f5635dbe4813503898d7372c2e278fbc6c"
   integrity sha512-M3RfLWYuD+gNo8C305oa0zySQIwtomI4nrY0gXkNB6Ud7+99K+k0JNKPEZQohCa7XgL1YZRbJxth/zrbxSnxZQ==
@@ -5977,7 +5977,15 @@ react-native-svg-charts@^5.4.0:
     d3-shape "^1.0.6"
     prop-types "^15.6.0"
 
-react-native-svg@^13.13.0, react-native-svg@^13.4.0:
+react-native-svg@13.9.0:
+  version "13.9.0"
+  resolved "https://registry.yarnpkg.com/react-native-svg/-/react-native-svg-13.9.0.tgz#8df8a690dd00362601f074dec5d3a86dd0f99c7f"
+  integrity sha512-Ey18POH0dA0ob/QiwCBVrxIiwflhYuw0P0hBlOHeY4J5cdbs8ngdKHeWC/Kt9+ryP6fNoEQ1PUgPYw2Bs/rp5Q==
+  dependencies:
+    css-select "^5.1.0"
+    css-tree "^1.1.3"
+
+react-native-svg@^13.4.0:
   version "13.13.0"
   resolved "https://registry.yarnpkg.com/react-native-svg/-/react-native-svg-13.13.0.tgz#23dedb4594dcc44128d63fa5b13c49534187fef5"
   integrity sha512-L8y8uEiMG0Tr++Nb2+24wlMuv18+bmq/CMoFFtTUlEqVvGCoK2ea8WamPl/9bV8gjL+Rngg5NqEBvKS23sbYoA==
