@@ -31,6 +31,7 @@ import eWallet from './src/screens/eWallet/eWalletPage';
 import eWalletWithdrawPage from './src/screens/eWallet/eWalletWithdrawPage';
 import CreateConcertPage from './src/screens/admin/createConcert'
 import CreateCategoriesPage from './src/screens/admin/createCategories';
+import newUserRegister from './src/screens/login/new/newUserRegister';
 
 export default function App() {
     const [fontsLoaded] = useFonts({
@@ -197,6 +198,8 @@ const MyDrawer = ({ route, navigation }) => {
             />
 
 
+
+
             <Drawer.Screen name={'User Profile'}
                 component={UserProfilePage}
                 options={{
@@ -359,29 +362,36 @@ const MyDrawer = ({ route, navigation }) => {
                 component={eWalletWithdrawPage}
             />
 
-                {/* user's my tickets page navigation button */}
-                <Drawer.Screen name={'My Tickets'}
-                component={userTicketsPage}
-                options={{
-                    headerRight: (props) =>
-                        <Pressable style={{
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            marginRight: '7%',
-                        }}
-                            onPress={() => {
+            {/* user's my tickets page navigation button */}
+            <Drawer.Screen name={'My Tickets'}
+            component={userTicketsPage}
+            options={{
+                headerRight: (props) =>
+                    <Pressable style={{
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        marginRight: '7%',
+                    }}
+                        onPress={() => {
 
-                                navigation.navigate('UserLoginPage');
-                                console.log(route.name);
-                            }}>
-                            <Image source={require('./src/assets/soft-ui-pro-react-native-v1.1.1/users3x.png')}
-                                style={{
-                                    height: 25,
-                                    width: 25,
-                                    resizeMode: 'contain',
-                                }} />
-                        </Pressable>
-                }}
+                            navigation.navigate('UserLoginPage');
+                            console.log(route.name);
+                        }}>
+                        <Image source={require('./src/assets/soft-ui-pro-react-native-v1.1.1/users3x.png')}
+                            style={{
+                                height: 25,
+                                width: 25,
+                                resizeMode: 'contain',
+                            }} />
+                    </Pressable>
+            }}
+            />
+
+            <Drawer.Screen
+                name={"New Registration Page"}
+                component={newUserRegister}
+                options={{headerShown: false}}
+
             />
         </Drawer.Navigator>
     );
