@@ -10,13 +10,13 @@ export default HeaderBlock = ({navigation}) => {
                 }}>
                 <Image source={require('../../assets/images/backArrow3x.png')}
                     style={styles.buttonIcon} />
-                <Text style={styles.buttonText}>{"Back"}</Text>
+                <Text style={styles.buttonText}>{"MY TICKETS"}</Text>
             </Pressable>
 
             <Image source={require('../../assets/soft-ui-pro-react-native-v1.1.1/background3x.png')}
                 style={styles.headerImage} />
 
-            <Text style={styles.title}>TIXAR</Text>
+            <Text style={styles.title}>E-Ticket</Text>
         </View>
     );
 }
@@ -31,12 +31,11 @@ const styles = StyleSheet.create({
         zIndex: 1,
     },
     title: {
-        fontSize: 35,
+        fontSize: 18,
         fontFamily: 'Lato-Bold',
         color: 'white',
         marginTop: 40,
         zIndex: 2,
-        position: 'absolute',
     },
     headerImage: {
         width: '92%',
@@ -53,10 +52,10 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         position: 'absolute',
         zIndex: 2,
-        marginTop: 10,
+        marginTop: 15,
     },
     buttonText: {
-        fontSize: 17,
+        fontSize: 16,
         fontFamily: 'Lato-Regular',
         color: 'white',
         zIndex: 2,
@@ -67,5 +66,6 @@ const styles = StyleSheet.create({
         height: 20,
         width: 20,
         resizeMode: 'contain',
+        marginLeft: 10
     },
 });

@@ -153,6 +153,7 @@ const LoginButton = ({ credentialCheck, loginField, navigation }) => {
             <Pressable style={styles.loginButton}
                 onPress={() => {
                     if (credentialCheck) {
+                        // Add login auth here
                         console.log('Logging in as "' + loginField + '"');
                         navigation.pop();
                     } else {
@@ -204,12 +205,12 @@ const styles = StyleSheet.create({
     translucentBox: {
         height: '80%',
         width: '85%',
-        position: 'absolute',
-        top: 130,
+        position: 'relative',
         backgroundColor: 'rgba(255, 255, 255, 0.95)',
         borderRadius: 15,
         zIndex: 3,
         alignItems: 'center',
+        bottom: 40,
     },
     footerText: {
         bottom: 15,
