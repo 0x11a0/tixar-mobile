@@ -10,39 +10,32 @@ import {
   ImageBackground,
 } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
+import CreateAccountButton from "../../../components/login/new/conditionalButton";
 
 
 export default NewUserRegistrationPage = ({ navigation }) => {
 
+    //states for text input fields
     const [firstNameField, setFirstName] = useState('');
     const [lastNameField, setlastName] = useState('');
     const [emailField, setEmail] = useState('');
+
+    //use to check if all fields are filled
     const [credentialCheck, setCredentialCheck] = useState(false);
-
-    const [isVisible, setIsVisible] = useState(true);
-    const [checkField, setCheck] = useState(false);
-
-    //onchange functions (what am i suppose to do here?)
+  
+    // for each text input field, check if all fields are filledm if yes, set credentialCheck to true
+    const handleEmail = (text) => {
+        setEmail(text)
+        setCredentialCheck((text !== '') && (firstNameField !== '') && (lastNameField !== ''));
+    }
     const handleFirstName = (text) => {
         setFirstName(text)
-        setCredentialCheck((text !== '') && (emailField !== '')  && (lastNameField !== '') && checkField)
+        setCredentialCheck((text !== '') && (emailField !== '')  && (lastNameField !== ''))
     };
     const handleLastName = (text) => {
         setlastName(text)
-        setCredentialCheck((text !== '') && (emailField !== '') && (firstNameField !== '') && checkField);
+        setCredentialCheck((text !== '') && (emailField !== '') && (firstNameField !== ''));
     };
-    const handleEmail = (text) => {
-        setEmail(text)
-        setCredentialCheck((text !== '') && (firstNameField !== '') && (lastNameField !== '') && checkField);
-    }
-
-    const handleCheck = () => {
-        setCredentialCheck((firstNameField !== '') && (lastNameField !== '') && (emailField !== '') && 
-        !checkField); {/* Not sure why checkfield must be flipped, but it doesnt work otherwise,
-                            probably something to do with javascript not running code in order,
-                            but rather simultaneously */}
-    }
-
   
     //rendered items
     return (
@@ -67,7 +60,8 @@ export default NewUserRegistrationPage = ({ navigation }) => {
                         style={styles.fieldText}
                         onChangeText={handleEmail}
                         value={emailField}
-                        placeholder="Email" />
+                        placeholder="Email" 
+                        autoCapitalize='none'/>
                 </View>
 
                 {/* First Name Input Field */}
@@ -76,7 +70,7 @@ export default NewUserRegistrationPage = ({ navigation }) => {
                         style={styles.fieldText}
                         onChangeText={handleFirstName}
                         value={firstNameField}
-                        placeholder="First Name" />
+                        placeholder="First Name"/>
                 </View>
 
                 {/* Last Name Input Field */}
@@ -85,10 +79,17 @@ export default NewUserRegistrationPage = ({ navigation }) => {
                         style={styles.fieldText}
                         onChangeText={handleLastName}
                         value={lastNameField}
-                        placeholder="Last Name" />
+                        placeholder="Last Name"/>
                 </View>
 
                 {/* Continue Button HEEEEEREEEE THANKS HEHE */}
+                <CreateAccountButton
+                    credentialCheck={credentialCheck}
+                    // emailField={emailField}
+                    // firstNameField={firstNameField}
+                    // lastNameField={lastNameField}
+                    navigation={navigation}>
+                </CreateAccountButton>
 
             </View>
 
