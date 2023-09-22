@@ -1,93 +1,172 @@
-import { React, useState } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, Image, Pressable, TextInput, FlatList , TouchableOpacity, Button, onPressLearnMore, Alert } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
-import HeaderBlock from './headerBlockUserProfile';
-const userEdit = ['Ewallet', 'Edit', 'Settings']
+import { React } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  SafeAreaView,
+  Image,
+  Pressable,
+} from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 
+export default UserProfile = ({ route, navigation }) => {
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={styles.headerBox}>
+        <Image
+          source={require("../../assets/soft-ui-pro-react-native-v1.1.1/background3x.png")}
+          style={styles.headerImage}
+        />
+        <Text style={styles.title}>TIXAR</Text>
+      </View>
 
-export default UserProfile = () => {
-    return (
-        <SafeAreaView style={styles.container}>
-            <HeaderBlock />
-        
-            <View style={ styles.translucentBox}>
-                <Text style = {styles.email}>Email</Text>
-                <Text style={styles.subtitle}>matthewglock@gmail.com</Text>
-                <Text style = {styles.text}>Phone Number</Text>
-                <Text style={styles.subtitle}>+ 65 9123 4567</Text>
-                <TouchableOpacity style = {{marginTop:50}}>
-                    <View style={buttonContainerStyle}>
-                    <Button  onPress={() => Alert.alert('Link to view tickets')} title = "View My Tickets" accessibilityLabel="View Tickets"
-                    color={Platform.OS === 'ios' ? "white" : "#AB2FCD"} />
-                    </View>
-                </TouchableOpacity>
-            </View>
+      <View style={styles.translucentBox}>
+        <Text style={styles.subtitle}>Profile</Text>
+        <Image
+          source={require("../../assets/soft-ui-pro-react-native-v1.1.1/avatar23x.png")}
+          style={styles.profileImage}
+        />
+        <View style={styles.infoContainer}>
+          <Text style={styles.header}>Name</Text>
+          <Text style={styles.label}>Charles Leclerc</Text>
 
-            <Text style={styles.footerText}>TIXAR</Text>
-        </SafeAreaView>
-    )
-    
-}
-const buttonContainerStyle = Platform.OS === 'ios' ? { backgroundColor: "#AB2FCD" } : { backgroundColor: 'transparent' };
+          <Text style={styles.header}>Phone Number</Text>
+          <Text style={styles.label}>+65 9257 1024</Text>
+
+          <Text style={styles.header}>Email</Text>
+          <Text style={styles.label}>charles@gmail.com</Text>
+        </View>
+        <LinearGradient
+          colors={["#FF0080", "#7928CA"]}
+          style={styles.buttonBackground}
+          start={[0, 0]}
+          end={[1, 0]}
+        >
+          <Pressable
+            style={styles.editButton}
+            onPress={() => navigation.navigate("EditUserProfile")}
+          >
+            <Text style={styles.buttonText}>Edit Profile</Text>
+          </Pressable>
+        </LinearGradient>
+      </View>
+      <Text style={styles.footerText}>TIXAR</Text>
+    </SafeAreaView>
+  );
+};
 
 const styles = StyleSheet.create({
-   
+  headerBox: {
+    position: "relative",
+    flex: 0.5,
+    alignItems: "center",
+    justifyContent: "flex-start",
+    zIndex: 1,
+  },
 
-      translucentBox: {
-        height: '50%',
-        width: '85%',
-        position: 'absolute',
-        top: 320,
-        borderRadius: 15,
-        zIndex: 2,
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-        alignSelf: 'center'
-    },
-    email: {
-        marginTop: 20,
-        fontFamily: 'Lato-Bold',
-        fontSize: 20,
-        marginBottom:10,
-        marginRight:'auto'
+  label: {
+    fontSize: 17,
+    fontFamily: "Lato-Regular",
+    left: 0,
+    top: "auto",
+    zIndex: 999,
+    lineHeight: 17,
+    color: "#394051",
+    marginBottom: "5%",
+  },
 
-    }, 
-      text: {
-        marginTop: 20,
-        fontFamily: 'Lato-Bold',
-        fontSize: 20,
-        marginBottom:10,
-        marginRight:'auto'
+  infoContainer: {
+    width: "90%", // Adjust the width as needed
+    alignItems: "flex-start", // Align text to the left
+  },
 
-      }, 
-      subtitle: {
-        fontFamily: 'Lato-Regular',
-        fontSize: 15,
-        marginBottom:10,
-        marginRight:'auto'
+  header: {
+    fontSize: 20,
+    fontFamily: "Lato-Bold",
+    color: "#394051",
+    marginTop: "5%",
+    marginBottom: "5%",
+  },
 
-      },
-    
-    container: {
-        flex: 1,
-        backgroundColor: '#f2f2f2',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-        borderColor: '#f2f2f2',
-    },
-    footerText: {
-        bottom: 15,
-        fontFamily: 'Lato-Regular',
-        fontSize: 12,
-        position: 'absolute'
-    },
+  title: {
+    fontSize: 35,
+    fontFamily: "Lato-Bold",
+    color: "white",
+    marginTop: 40,
+    textAlign: "left",
+    alignItems: "flex-start",
+  },
 
-    viewTicketsButton:{
-        marginTop:50,
-        backgroundColor:'#B731D9',
-        borderWidth: 5,
-        borderColor: '#fff'
-    },
+  headerImage: {
+    marginTop: 30,
+    width: "95%",
+    height: 240,
+    borderRadius: 22,
+    resizeMode: "cover",
+    position: "absolute",
+  },
 
+  profileImage: {
+    flex: 0.6,
+    width: 100,
+    height: 100,
+    resizeMode: "cover",
+    marginTop: 8,
+    marginBottom: 20,
+  },
+
+  translucentBox: {
+    height: "75%",
+    width: "85%",
+    position: "absolute",
+    top: 130,
+    backgroundColor: "rgba(255, 255, 255, 0.95)",
+    borderRadius: 15,
+    zIndex: 2,
+    alignItems: "center",
+    justifyContent: "flex-start",
+    alignSelf: "center",
+  },
+
+  subtitle: {
+    fontSize: 20,
+    fontFamily: "Lato-Bold",
+    color: "#394051",
+    marginTop: 24,
+  },
+
+  container: {
+    flex: 1,
+    backgroundColor: "#f2f2f2",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    borderColor: "#f2f2f2",
+  },
+  footerText: {
+    bottom: 15,
+    fontFamily: "Lato-Regular",
+    fontSize: 12,
+    position: "absolute",
+  },
+
+  editButton: {
+    width: "86%",
+    height: 35,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  buttonBackground: {
+    marginTop: 55,
+    borderRadius: 8,
+    width: "86%",
+    height: 40,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  buttonText: {
+    fontSize: 15,
+    fontFamily: "Lato-Bold",
+    color: "white",
+  },
 });
-
