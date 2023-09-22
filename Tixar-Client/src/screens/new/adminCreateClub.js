@@ -1,8 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, Pressable, ScrollView, Image, TextInput } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import FanclubCard from '../../components/new/fanclubCard';
-import NextButton from '../../components/new/nextButton';
+import { View, Text, StyleSheet, SafeAreaView, Pressable, Image, TextInput } from 'react-native';
 import ConditionalButton from '../../components/new/conditionalButton';
 
 export default AdminCreateClub = ({ navigation }) => {

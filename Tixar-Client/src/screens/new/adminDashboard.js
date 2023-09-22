@@ -1,6 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, SafeAreaView, Pressable, ScrollView } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { View, StyleSheet, SafeAreaView, ScrollView } from 'react-native';
 import FanclubCard from '../../components/new/fanclubCard';
 import NextButton from '../../components/new/nextButton';
 
