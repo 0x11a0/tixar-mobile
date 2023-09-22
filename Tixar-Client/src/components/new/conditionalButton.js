@@ -2,7 +2,7 @@ import { React } from 'react';
 import { Text, StyleSheet, Pressable} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
-export default CreateAccountButton = ({ 
+export default ConditionalButton = ({ 
     credentialCheck, 
     navigation
 }) => {
@@ -17,8 +17,6 @@ export default CreateAccountButton = ({
             {/* the button itself */}
             <Pressable 
             
-                // style={styles.buttonBackground} dk what is this for?
-
                 //on press function
                 onPress={() => {
                     if (credentialCheck) {
