@@ -36,7 +36,7 @@ import userTicketsPage from "./src/screens/userTicketsPage";
 import RedemptionPage from "./src/screens/verifiedFan/redemptionPage";
 import fanDashboard from "./src/screens/verifiedFan/fanDashboard";
 import celebrityDashboard from "./src/screens/verifiedFan/celebrityDashboard";
-import UserProfilePage from "./src/screens/user/userprofile";
+import UserProfilePage from "./src/screens/user/userProfile";
 import EditUserProfilePage from "./src/screens/user/editUserProfile";
 import generatedUserTicket from "./src/screens/generatedUserTicket";
 import eWallet from "./src/screens/eWallet/eWalletPage";
@@ -155,10 +155,8 @@ export default function App() {
               headerShown: true,
             }}
           />
-          <Stack.Screen
-            name="EditUserProfile"
-            component={EditUserProfilePage}
-          />
+          <Stack.Screen name="Edit Profile" component={EditUserProfilePage} />
+          <Stack.Screen name="Profile" component={UserProfilePage} />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
@@ -230,35 +228,6 @@ const MyDrawer = ({ route, navigation }) => {
               }}
               onPress={() => {
                 navigation.navigate("UserProfilePage");
-                console.log(route.name);
-              }}
-            >
-              <Image
-                source={require("./src/assets/soft-ui-pro-react-native-v1.1.1/users3x.png")}
-                style={{
-                  height: 25,
-                  width: 25,
-                  resizeMode: "contain",
-                }}
-              />
-            </Pressable>
-          ),
-        }}
-      />
-
-      <Drawer.Screen
-        name={"Edit User Profile"}
-        component={EditUserProfilePage}
-        options={{
-          headerRight: (props) => (
-            <Pressable
-              style={{
-                justifyContent: "center",
-                alignItems: "center",
-                marginRight: "7%",
-              }}
-              onPress={() => {
-                navigation.navigate("EditUserProfilePage");
                 console.log(route.name);
               }}
             >

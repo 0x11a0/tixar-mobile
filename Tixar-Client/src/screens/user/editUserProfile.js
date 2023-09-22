@@ -9,8 +9,48 @@ import {
   TextInput,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
 
-export default EditUserProfile = () => {
+const handleUpdateProfile = (
+  firstNameField,
+  lastNameField,
+  email,
+  navigation
+) => {
+  // Define the API endpoint for updating the user's profile (replace with your actual endpoint)
+  const apiUrl = "http://rt.tixar.sg/api/user";
+
+  // Prepare the data you want to send in the request body
+  const requestData = {
+    firstName: firstNameField,
+    lastName: lastNameField,
+    // email: emailField,
+  };
+
+  // Define the Bearer token (replace with your token)
+  const accessToken = "<Token>";
+
+  // Define headers with the Bearer token
+  const headers = {
+    Authorization: `Bearer ${accessToken}`,
+    "Content-Type": "application/json",
+    "Cache-Control": "no-cache",
+  };
+
+  // Send the PUT request to update the user's profile
+  axios
+    .put(apiUrl, requestData, { headers })
+    .then((response) => {
+      // Handle the successful response here (e.g., show a success message)
+      console.log("Profile updated successfully", response.data);
+    })
+    .catch((error) => {
+      // Handle any errors that occur during the request (e.g., show an error message)
+      console.error("Error updating profile", error);
+    });
+};
+export default EditUserProfile = ({ route, navigation }) => {
   const [firstNameField, setfirstNameField] = useState("");
   const handleFirstName = (text) => {
     setfirstNameField(text);
@@ -69,6 +109,11 @@ export default EditUserProfile = () => {
           firstNameField={firstNameField}
           lastNameField={lastNameField}
           emailField={emailField}
+          handleUpdateProfile={handleUpdateProfile}
+          // navigateToProfile={() => {
+          //   navigation.navigate("UserProfilePage");
+          // }}
+          navigation={navigation}
         />
       </View>
       <Text style={styles.footerText}>TIXAR</Text>
@@ -76,7 +121,12 @@ export default EditUserProfile = () => {
   );
 };
 
-const ResetButton = ({ firstNameField, lastNameField, emailField }) => {
+const ResetButton = ({
+  firstNameField,
+  lastNameField,
+  emailField,
+  navigation,
+}) => {
   let isValid =
     firstNameField !== "" && lastNameField !== "" && emailField !== "";
   return (
@@ -96,6 +146,14 @@ const ResetButton = ({ firstNameField, lastNameField, emailField }) => {
             emailField === ""
           ) {
             console.log("Not all fields entered");
+          } else {
+            handleUpdateProfile(
+              firstNameField,
+              lastNameField,
+              emailField,
+              navigation
+            );
+            navigation.navigate("Profile");
           }
         }}
       >

@@ -1,4 +1,4 @@
-import { React } from "react";
+import { React, useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -8,8 +8,43 @@ import {
   Pressable,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import axios from "axios";
+
+const accessToken = "<Token>";
+
+const headers = {
+  Authorization: `Bearer ${accessToken}`,
+  "Content-Type": "application/json", // You can include other headers as needed
+  "Cache-Control": "no-cache",
+};
 
 export default UserProfile = ({ route, navigation }) => {
+  const [fullName, setFullName] = useState("");
+  const [phone, setPhone] = useState("");
+
+  useEffect(() => {
+    // Define the URL for your GET request
+    const apiUrl = "http://rt.tixar.sg/api/user";
+
+    // Make the GET request with headers
+    axios
+      .get(apiUrl, { headers })
+      .then(function (response) {
+        // Handle success
+        console.log("Data:", response.data);
+        const firstName = response.data.firstName;
+        const lastName = response.data.lastName;
+        const fullName = firstName + " " + lastName;
+        const phoneNumber = response.data.phone;
+        setFullName(fullName); // Update state with full name
+        setPhone(phoneNumber); // Update state with phone number
+      })
+      .catch(function (error) {
+        // Handle error
+        console.error("Error:", error);
+      });
+  }, []); // Empty dependency array ensures this effect runs once when the component mounts
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headerBox}>
@@ -28,10 +63,10 @@ export default UserProfile = ({ route, navigation }) => {
         />
         <View style={styles.infoContainer}>
           <Text style={styles.header}>Name</Text>
-          <Text style={styles.label}>Charles Leclerc</Text>
+          <Text style={styles.label}>{fullName}</Text>
 
           <Text style={styles.header}>Phone Number</Text>
-          <Text style={styles.label}>+65 9257 1024</Text>
+          <Text style={styles.label}>{phone}</Text>
 
           <Text style={styles.header}>Email</Text>
           <Text style={styles.label}>charles@gmail.com</Text>
@@ -44,7 +79,7 @@ export default UserProfile = ({ route, navigation }) => {
         >
           <Pressable
             style={styles.editButton}
-            onPress={() => navigation.navigate("EditUserProfile")}
+            onPress={() => navigation.navigate("Edit Profile")}
           >
             <Text style={styles.buttonText}>Edit Profile</Text>
           </Pressable>
@@ -84,7 +119,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: "Lato-Bold",
     color: "#394051",
-    marginTop: "5%",
+    marginTop: "3%",
     marginBottom: "5%",
   },
 
@@ -107,7 +142,7 @@ const styles = StyleSheet.create({
   },
 
   profileImage: {
-    flex: 0.6,
+    flex: 0.9,
     width: 100,
     height: 100,
     resizeMode: "cover",
@@ -158,6 +193,7 @@ const styles = StyleSheet.create({
 
   buttonBackground: {
     marginTop: 55,
+    marginBottom: 20,
     borderRadius: 8,
     width: "86%",
     height: 40,
