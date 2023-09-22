@@ -19,6 +19,13 @@ export default AdminDashboard = ({ navigation }) => {
                         codesActive={'100'}
                     />
 
+<FanclubCard 
+                        navigationDestination={'NotificationsPage'} //place holder page, change to fanclub page
+                        clubName={'Taylor Swift'}
+                        fanNumber={'1000'}
+                        codesActive={'100'}
+                    />
+
                     {/* Add more FanclubCards as needed */}
                 </ScrollView>
 
@@ -32,7 +39,7 @@ export default AdminDashboard = ({ navigation }) => {
                 </View>
 
             </View>
-            
+
         </SafeAreaView>
     );
 };
