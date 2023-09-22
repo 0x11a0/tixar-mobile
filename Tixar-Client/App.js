@@ -44,7 +44,8 @@ import eWalletWithdrawPage from "./src/screens/eWallet/eWalletWithdrawPage";
 import CreateConcertPage from "./src/screens/admin/createConcert";
 import CreateCategoriesPage from "./src/screens/admin/createCategories";
 import newUserRegister from "./src/screens/new/newUserRegister";
-import adminDashboard from "./src/screens/new/adminDashboard";
+import AdminDashboard from "./src/screens/new/adminDashboard";
+import AdminCreateClub from "./src/screens/new/adminCreateClub";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -430,41 +431,67 @@ const MyDrawer = ({ route, navigation }) => {
         options={{ headerShown: false }}
       />
 
-        {/* <Drawer.Screen
-        name={"Admin Dashboard"}
-        component={AdminDashboard}
-        options={{ headerShown: false }}
-        /> */}
 
-    <Drawer.Screen
-        name={"FANCLUBS"}
-        component={adminDashboard}
-        options={{
-          headerRight: (props) => (
-            <Pressable
-                style={{
-                    justifyContent: "center",
-                    alignItems: "center",
-                    marginRight: "7%",
-                    // backgroundColor: "red",
+      {/* admin's dashboard page navigation button */}
+      <Drawer.Screen
+          name={"FANCLUBS"}
+          component={AdminDashboard}
+          options={{
+            headerRight: (props) => (
+              <Pressable
+                  style={{
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginRight: "7%",
+                      // backgroundColor: "red",
+                  }}
+                  onPress={() => {
+                      navigation.navigate("CreateConcertPage");
+                      console.log(route.name);
+                  }}>
+
+              <Image
+              source={require("./src/assets/soft-ui-pro-react-native-v1.1.1/users3x.png")}
+              style={{
+                  height: 25,
+                  width: 25,
+                  resizeMode: "contain",
+              }}/>
+
+              </Pressable>
+            ),
+          }}
+        />
+
+        <Drawer.Screen
+                name={"CREATE FANCLUB"}
+                component={AdminCreateClub}
+                options={{
+                  headerRight: (props) => (
+                    <Pressable
+                        style={{
+                            justifyContent: "center",
+                            alignItems: "center",
+                            marginRight: "7%",
+                            // backgroundColor: "red",
+                        }}
+                        onPress={() => {
+                            navigation.navigate("CreateConcertPage");
+                            console.log(route.name);
+                        }}>
+
+                    <Image
+                    source={require("./src/assets/soft-ui-pro-react-native-v1.1.1/users3x.png")}
+                    style={{
+                        height: 25,
+                        width: 25,
+                        resizeMode: "contain",
+                    }}/>
+
+                    </Pressable>
+                  ),
                 }}
-                onPress={() => {
-                    navigation.navigate("CreateConcertPage");
-                    console.log(route.name);
-                }}>
-
-            <Image
-            source={require("./src/assets/soft-ui-pro-react-native-v1.1.1/users3x.png")}
-            style={{
-                height: 25,
-                width: 25,
-                resizeMode: "contain",
-            }}/>
-
-            </Pressable>
-          ),
-        }}
-      />
+              />
     </Drawer.Navigator>
   );
 };

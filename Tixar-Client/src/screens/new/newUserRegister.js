@@ -50,6 +50,7 @@ export default NewUserRegistrationPage = ({ navigation }) => {
       <SafeAreaView style={styles.container}>
         {/* Translucent card */}
         <View style={styles.translucentCard}>
+          
           <Text style={styles.cardText}>Create Your Profile.</Text>
 
           <View style={{ height: "10%" }}></View>

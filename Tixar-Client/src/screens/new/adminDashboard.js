@@ -19,7 +19,7 @@ export default AdminDashboard = ({ navigation }) => {
                         codesActive={'100'}
                     />
 
-<FanclubCard 
+                    <FanclubCard 
                         navigationDestination={'NotificationsPage'} //place holder page, change to fanclub page
                         clubName={'Taylor Swift'}
                         fanNumber={'1000'}
