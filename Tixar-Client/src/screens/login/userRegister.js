@@ -117,11 +117,14 @@ const LoginButton = ({navigation}) => {
 const CreateAccountButton = ({ credentialCheck, loginField , navigation}) => {
     return (
         <LinearGradient colors={
+
             credentialCheck ?
                 ['#FF0080', '#7928CA'] :
                 ['#E8ECEF', '#E8ECEF']}
+
             style={styles.loginBackgroundEnabled}
             start={[0, 0]} end={[1, 0]}>
+
             <Pressable style={styles.CreateAccountButton}
                 onPress={() => {
                     if (credentialCheck) {
@@ -132,10 +135,13 @@ const CreateAccountButton = ({ credentialCheck, loginField , navigation}) => {
                         console.log('button disabled');
                     }
                 }} >
+
                 <Text style={credentialCheck ?
                     styles.loginTextEnabled
                     : styles.loginTextDisabled}>
+
                     Create Account</Text>
+                    
             </Pressable>
         </LinearGradient >
     )
