@@ -14,6 +14,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Alert,
+  navigation,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import HeaderBlock from "../../components/login/headerBlock";
@@ -24,6 +25,7 @@ export default NewUserLoginPage = ({ navigation }) => {
   const [valid, setValid] = useState(false);
   const phoneInput = useRef(null);
 
+  // function to handle phone number input as user types
   const handlePhoneInput = (number) => {
     const checkValid = phoneInput.current?.isValidNumber(number);
     setValid(checkValid);
@@ -31,6 +33,7 @@ export default NewUserLoginPage = ({ navigation }) => {
     setPhoneNumber(cleanedNumber);
   };
 
+    // function to handle phone number authentication request
   const handleLogin = () => {
     const endPoint = "http://rt.tixar.sg/api/otp/request";
     const payload = {
@@ -46,16 +49,22 @@ export default NewUserLoginPage = ({ navigation }) => {
     })
       .then((response) => {
         if (response.ok) {
+            console.log("Login request successful");
           return response.json();
         } else {
+            console.log("Login request unsuccessful")
           throw new Error("Failed to login");
         }
       })
       .then((data) => {
-        Alert.alert("Login successful", "Welcome");
+        // upon successful verification of phone number, navigate to OTP page
+        console.log("Phone number valid, Navigating to OTP page")
+        navigation.navigate("UserLoginOTPPage", { phoneNumber: phoneNumber });
       })
       .catch((error) => {
+        // upon unsuccessful verification of phone number, navigate to register page
         Alert.alert("Login failed", error.message);
+        // insert navigation to register page here
       });
   };
 
@@ -142,7 +151,7 @@ const LoginButton = ({ valid, phoneNumber, navigation, handleLogin }) => {
         <Text
           style={valid ? styles.loginTextEnabled : styles.loginTextDisabled}
         >
-          Login
+          Continue
         </Text>
       </Pressable>
     </LinearGradient>

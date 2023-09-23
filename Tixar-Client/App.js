@@ -32,6 +32,7 @@ import eWalletWithdrawPage from './src/screens/eWallet/eWalletWithdrawPage';
 import CreateConcertPage from './src/screens/admin/createConcert'
 import CreateCategoriesPage from './src/screens/admin/createCategories';
 import NewUserLoginPage from './src/screens/login/userLoginNew';
+import UserLoginOTPPage from './src/screens/login/userLoginOTP';
 
 export default function App() {
     const [fontsLoaded] = useFonts({
@@ -86,6 +87,11 @@ export default function App() {
                     <Stack.Screen name='NewUserLoginPage'
                         component={NewUserLoginPage}
                         options={{
+                            headerShown: false,
+                        }} />
+                    <Stack.Screen name = 'UserLoginOTPPage'
+                        component = {UserLoginOTPPage}
+                        options = {{
                             headerShown: false,
                         }} />
                      <Stack.Screen name='CreateCategoriesPage'
