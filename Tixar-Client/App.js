@@ -17,6 +17,7 @@ import RegisterPage from './src/screens/login/registerPage';
 import { Directions } from 'react-native-gesture-handler';
 import UserLoginPage from './src/screens/login/userLogin';
 import UserRegistrationPage from './src/screens/login/userRegister';
+import NewUserRegistrationPage from './src/screens/new/newUserRegister'
 import AccountSettingsPage from './src/screens/accountSettingsPage';
 import GenerateFanCodePage from './src/screens/vf/generateFanCodePage2';
 import AnimationPage from './src/screens/animationPage';
@@ -33,6 +34,11 @@ import CreateConcertPage from './src/screens/admin/createConcert'
 import CreateCategoriesPage from './src/screens/admin/createCategories';
 import NewUserLoginPage from './src/screens/login/userLoginNew';
 import UserLoginOTPPage from './src/screens/login/userLoginOTP';
+import AdminDashboard from './src/screens/new/adminDashboard';
+import AdminCreateClub from './src/screens/new/adminCreateClub';
+import adminManageFanclub from './src/screens/new/adminManageFanclub';
+import adminManageFans from './src/screens/new/adminManageFans';
+import ManageActiveCodes from './src/screens/new/manageActiveCodes';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -103,52 +109,7 @@ export default function App() {
               component={UserRegistrationPage}
               options={{
                   headerShown: false
-              }} />
-
-          <Stack.Screen
-            name="viewConcertPage"
-            component={ViewConcertPage}
-            options={{
-              headerTitle: "HOME",
-            }}
-          />
-          <Stack.Screen
-            name="concertCategoryPage"
-            component={ConcertCategoryPage}
-            options={{
-              headerTitle: "RETURN",
-            }}
-          />
-          <Stack.Screen
-            name="UserLoginPage"
-            component={UserLoginPage}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="CreateCategoriesPage"
-            component={CreateCategoriesPage}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="UserRegistrationPage"
-            component={UserRegistrationPage}
-            options={{
-              headerShown: false,
-            }}
-          />
-
-          <Stack.Screen
-            name="accountSettingsPage"
-            component={AccountSettingsPage}
-            options={{
-              title: "Settings",
-              headerTitleAlign: "left",
-              headerShown: true,
-            }}
+              }} 
           />
           <Stack.Screen
             name="NotificationsPage"
@@ -218,9 +179,8 @@ const MyDrawer = ({ route, navigation }) => {
                                     resizeMode: 'contain',
                                 }} />
                         </Pressable>
-          ),
-        }}
-      />
+                }}
+          />
 
       {/* Navigation sidebar Verified Fans */}
       <Drawer.Screen name={"Fan Dashboard"} component={fanDashboard} />
@@ -443,7 +403,7 @@ const MyDrawer = ({ route, navigation }) => {
 
       <Drawer.Screen
         name={"New Registration Page"}
-        component={newUserRegister}
+        component={NewUserRegistrationPage}
         options={{ headerShown: false }}
       />
 

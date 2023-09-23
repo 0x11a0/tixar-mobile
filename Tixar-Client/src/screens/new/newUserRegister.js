@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import ConditionalButton from "../../components/new/conditionalButton";
+
 export default NewUserRegistrationPage = ({ navigation }) => {
   //states for text input fields
   const [firstNameField, setFirstName] = useState("");
