@@ -1,55 +1,38 @@
-import { useFonts } from "expo-font";
-import { React, useState, useEffect } from "react";
-import {
-  Pressable,
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  SafeAreaView,
-  ScrollView,
-  TextInput,
-} from "react-native";
-import { getHeaderTitle } from "@react-navigation/elements";
-import * as SplashScreen from "expo-splash-screen";
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from "react-native-safe-area-context";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { NavigationContainer } from "@react-navigation/native";
-import { createDrawerNavigator } from "@react-navigation/drawer";
-import ViewConcertPage from "./src/screens/viewConcert/viewConcertPage";
-import BrowseConcertPage from "./src/screens/browseConcertPage";
-import ConcertCategoryPage from "./src/screens/concertCategoryPage";
-import LoginPage from "./src/screens/login/loginPage";
-import ForgetPasswordPage from "./src/screens/login/forgetPassword";
-import SetPasswordPage from "./src/screens/login/setPassword";
-import RegisterPage from "./src/screens/login/registerPage";
-import { Directions } from "react-native-gesture-handler";
-import UserLoginPage from "./src/screens/login/userLogin";
-import UserRegistrationPage from "./src/screens/login/userRegister";
-import AccountSettingsPage from "./src/screens/accountSettingsPage";
-import GenerateFanCodePage from "./src/screens/vf/generateFanCodePage2";
-import AnimationPage from "./src/screens/animationPage";
-import userTicketsPage from "./src/screens/userTicketsPage";
-import RedemptionPage from "./src/screens/verifiedFan/redemptionPage";
-import fanDashboard from "./src/screens/verifiedFan/fanDashboard";
-import celebrityDashboard from "./src/screens/verifiedFan/celebrityDashboard";
-import UserProfilePage from "./src/screens/user/userprofile";
-import EditUserProfilePage from "./src/screens/user/editUserProfile";
-import generatedUserTicket from "./src/screens/generatedUserTicket";
-import eWallet from "./src/screens/eWallet/eWalletPage";
-import eWalletWithdrawPage from "./src/screens/eWallet/eWalletWithdrawPage";
-import CreateConcertPage from "./src/screens/admin/createConcert";
-import CreateCategoriesPage from "./src/screens/admin/createCategories";
-import newUserRegister from "./src/screens/new/newUserRegister";
-import AdminDashboard from "./src/screens/new/adminDashboard";
-import AdminCreateClub from "./src/screens/new/adminCreateClub";
-import ManageFanclub from "./src/screens/new/adminManageFanclub";
-import adminManageFanclub from "./src/screens/new/adminManageFanclub";
-import ManageFans from "./src/screens/new/adminManageFans";
-import manageActiveCodes from "./src/screens/new/manageActiveCodes";
+import { useFonts } from 'expo-font';
+import { React, useState, useEffect } from 'react';
+import { Pressable, View, Text, Image, StyleSheet, SafeAreaView, ScrollView, TextInput } from 'react-native';
+import { getHeaderTitle } from '@react-navigation/elements';
+import * as SplashScreen from 'expo-splash-screen';
+import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import ViewConcertPage from './src/screens/viewConcert/viewConcertPage';
+import BrowseConcertPage from './src/screens/browseConcertPage';
+import ConcertCategoryPage from './src/screens/concertCategoryPage';
+import LoginPage from './src/screens/login/loginPage';
+import ForgetPasswordPage from './src/screens/login/forgetPassword';
+import SetPasswordPage from './src/screens/login/setPassword';
+import RegisterPage from './src/screens/login/registerPage';
+import { Directions } from 'react-native-gesture-handler';
+import UserLoginPage from './src/screens/login/userLogin';
+import UserRegistrationPage from './src/screens/login/userRegister';
+import AccountSettingsPage from './src/screens/accountSettingsPage';
+import GenerateFanCodePage from './src/screens/vf/generateFanCodePage2';
+import AnimationPage from './src/screens/animationPage';
+import userTicketsPage from './src/screens/userTicketsPage';
+import RedemptionPage from './src/screens/verifiedFan/redemptionPage';
+import fanDashboard from './src/screens/verifiedFan/fanDashboard';
+import celebrityDashboard from './src/screens/verifiedFan/celebrityDashboard';
+import UserProfilePage from './src/screens/user/userprofile'
+import EditUserProfilePage from './src/screens/user/editUserProfile'
+import generatedUserTicket from './src/screens/generatedUserTicket';
+import eWallet from './src/screens/eWallet/eWalletPage';
+import eWalletWithdrawPage from './src/screens/eWallet/eWalletWithdrawPage';
+import CreateConcertPage from './src/screens/admin/createConcert'
+import CreateCategoriesPage from './src/screens/admin/createCategories';
+import NewUserLoginPage from './src/screens/login/userLoginNew';
+import UserLoginOTPPage from './src/screens/login/userLoginOTP';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -71,24 +54,56 @@ export default function App() {
 
   const Stack = createNativeStackNavigator();
 
-  return (
-    <SafeAreaProvider>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Drawer">
-          <Stack.Screen
-            name="Drawer"
-            component={MyDrawer}
-            options={{
-              headerShown: false,
-            }}
+    return (
+  <SafeAreaProvider>
+    <NavigationContainer>
+
+      <Stack.Navigator initialRouteName='Drawer'>
+          <Stack.Screen name='Drawer'
+              component={MyDrawer}
+              options={{
+                  headerShown: false,
+
+              }} />
+          <Stack.Screen name='userTicketsPage'
+              component={userTicketsPage}
+              options={{
+                  headerTitle: 'TEST'
+              }}
           />
-          <Stack.Screen
-            name="userTicketsPage"
-            component={userTicketsPage}
-            options={{
-              headerTitle: "TEST",
-            }}
+
+          <Stack.Screen name='viewConcertPage'
+              component={ViewConcertPage}
+              options={{
+                  headerTitle: 'HOME'
+              }}
           />
+          <Stack.Screen name='concertCategoryPage'
+              component={ConcertCategoryPage}
+              options={{
+                  headerTitle: 'RETURN'
+              }}
+          />
+          <Stack.Screen name='NewUserLoginPage'
+              component={NewUserLoginPage}
+              options={{
+                  headerShown: false,
+              }} />
+          <Stack.Screen name = 'UserLoginOTPPage'
+              component = {UserLoginOTPPage}
+              options = {{
+                  headerShown: false,
+              }} />
+           <Stack.Screen name='CreateCategoriesPage'
+              component={CreateCategoriesPage}
+              options={{
+                  headerShown: false
+              }} />
+          <Stack.Screen name='UserRegistrationPage'
+              component={UserRegistrationPage}
+              options={{
+                  headerShown: false
+              }} />
 
           <Stack.Screen
             name="viewConcertPage"
@@ -169,43 +184,40 @@ export default function App() {
 }
 
 const MyDrawer = ({ route, navigation }) => {
-  const Drawer = createDrawerNavigator();
-  return (
-    <Drawer.Navigator
-      initialRouteName="TIXAR"
-      screenOptions={{
-        headerTitleStyle: {
-          fontFamily: "Lato-Regular",
-          fontSize: 20,
-        },
-      }}
-    >
-      {/* Navigation sidebar TIXAR */}
-      <Drawer.Screen
-        name={"TIXAR"}
-        component={BrowseConcertPage}
-        options={{
-          headerRight: (props) => (
-            <Pressable
-              style={{
-                justifyContent: "center",
-                alignItems: "center",
-                marginRight: "7%",
-              }}
-              onPress={() => {
-                navigation.navigate("UserLoginPage");
-                console.log(route.name);
-              }}
-            >
-              <Image
-                source={require("./src/assets/soft-ui-pro-react-native-v1.1.1/users3x.png")}
-                style={{
-                  height: 25,
-                  width: 25,
-                  resizeMode: "contain",
-                }}
-              />
-            </Pressable>
+    const Drawer = createDrawerNavigator();
+    return (
+        <Drawer.Navigator
+            initialRouteName='TIXAR'
+            screenOptions={{
+                headerTitleStyle: {
+                    fontFamily: 'Lato-Regular',
+                    fontSize: 20,
+                }
+            }}
+        >
+            {/* Navigation sidebar TIXAR */}
+            <Drawer.Screen name={'TIXAR'}
+                component={BrowseConcertPage}
+
+                options={{
+                    headerRight: (props) =>
+                        <Pressable style={{
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            marginRight: '7%',
+                        }}
+                            onPress={() => {
+
+                                navigation.navigate('NewUserLoginPage'); 
+                                console.log(route.name);
+                            }}>
+                            <Image source={require('./src/assets/soft-ui-pro-react-native-v1.1.1/users3x.png')}
+                                style={{
+                                    height: 25,
+                                    width: 25,
+                                    resizeMode: 'contain',
+                                }} />
+                        </Pressable>
           ),
         }}
       />
