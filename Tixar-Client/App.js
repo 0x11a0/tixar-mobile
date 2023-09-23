@@ -49,6 +49,7 @@ import AdminCreateClub from "./src/screens/new/adminCreateClub";
 import ManageFanclub from "./src/screens/new/adminManageFanclub";
 import adminManageFanclub from "./src/screens/new/adminManageFanclub";
 import ManageFans from "./src/screens/new/adminManageFans";
+import manageActiveCodes from "./src/screens/new/manageActiveCodes";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -528,6 +529,36 @@ const MyDrawer = ({ route, navigation }) => {
 <Drawer.Screen
         name={"MANAGE FANS"}
         component={ManageFans}
+        options={{
+          headerRight: (props) => (
+            <Pressable
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                marginRight: "7%",
+                // backgroundColor: "red",
+              }}
+              onPress={() => {
+                navigation.navigate("CreateConcertPage");
+                console.log(route.name);
+              }}
+            >
+              <Image
+                source={require("./src/assets/soft-ui-pro-react-native-v1.1.1/users3x.png")}
+                style={{
+                  height: 25,
+                  width: 25,
+                  resizeMode: "contain",
+                }}
+              />
+            </Pressable>
+          ),
+        }}
+      />
+
+<Drawer.Screen
+        name={"MANAGE ACTIVE CODES"}
+        component={ManageActiveCodes}
         options={{
           headerRight: (props) => (
             <Pressable

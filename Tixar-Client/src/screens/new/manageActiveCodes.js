@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, SafeAreaView, ScrollView } from 'react-native';
-import FanCard from '../../components/new/manageFansCard';
+import ActiveCodeCard from '../../components/new/activeCodeCard';
 
-export default ManageFans = ({ navigation }) => { 
+export default ManageActiveCodes = ({ navigation }) => { 
 
     return (
         <SafeAreaView style={styles.container}>
@@ -10,9 +10,9 @@ export default ManageFans = ({ navigation }) => {
                 <ScrollView>
 
                     {/* Your FanCards go here */}
-                    <FanCard
-                        fanName={'John Doe'}
-                        fanPoints={'1000'}
+                    <ActiveCodeCard
+                        codeName={'12345678ABCDEF'}
+                        expirationDate={'10/06/2024'}
                     />
                 
                 </ScrollView>
