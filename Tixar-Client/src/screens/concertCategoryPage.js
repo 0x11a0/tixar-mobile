@@ -79,13 +79,15 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
             <View>
               <DatePicker
                 icon={require("../assets/soft-ui-pro-react-native-v1.1.1/calendar3x.png")}
+                minDate={new Date(2024, 0, 23)}
+                maxDate={new Date(2024, 0, 27)}
               />
             </View>
 
             {/* quantity selection */}
             <Text style={styles.subtitle}>Quantity</Text>
             <OptionFields
-              optionText={"01"}
+              optionText={"0"}
               icon={require("../assets/soft-ui-pro-react-native-v1.1.1/users3x.png")}
               onPressFunction={() => {
                 console.log("quantity option clicked");
@@ -107,7 +109,7 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
               onChangeTextFunction={(text) => {
                 setCategoryField(text);
               }}
-              keyboardType={"default"}
+              keyboardType={"numeric"}
             />
 
             <View style={{ height: 25 }} />
