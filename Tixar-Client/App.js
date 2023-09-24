@@ -66,30 +66,22 @@ export default function App() {
             <NavigationContainer>
 
                 <Stack.Navigator initialRouteName='newUserLoginPage'>
-                    <Stack.Screen name='drawer' component={MyDrawer}
+                    <Stack.Screen name='drawer' component={DrawerNav}
                         options={{
                             headerShown: false,
                         }} />
-                    {/* <Stack.Group>
-                        <Stack.Screen name='userTicketsPage' component={userTicketsPage}
+
+                    <Stack.Group>
+                        <Stack.Screen name='viewConcertPage' component={ViewConcertPage}
                             options={{
-                                headerTitle: 'User Tickets'
+                                headerTitle: 'View Concert'
                             }} />
-                        <Stack.Screen name='viewConcertPage'
-                            component={ViewConcertPage}
+                        <Stack.Screen name='concertCategoryPage' component={ConcertCategoryPage}
                             options={{
-                                headerTitle: 'HOME'
+                                headerTitle: 'Concert Category'
                             }} />
-                        <Stack.Screen name='concertCategoryPage'
-                            component={ConcertCategoryPage}
-                            options={{
-                                headerTitle: 'RETURN'
-                            }} />
-                        <Stack.Screen name='generatedUserTicketPage' component={GeneratedUserTicketPage}
-                            options={{
-                                headerTitle: 'Generate User Ticket'
-                            }} />
-                    </Stack.Group> */}
+
+                    </Stack.Group>
 
                     <Stack.Group screenOptions={{ headerShown: false, }} >
                         <Stack.Screen name='newUserLoginPage' component={NewUserLoginPage} />
@@ -97,21 +89,12 @@ export default function App() {
                         <Stack.Screen name='userRegistrationPage' component={NewUserRegistrationPage} />
                     </Stack.Group>
 
-                    <Stack.Screen name='notificationsPage' component={NotificationsPage}
-                        options={{
-                            headerTitle: 'Notifications',
-                        }} />
-                    <Stack.Screen name='generatedUserTicketPage' component={GeneratedUserTicketPage} />
-
-                    <Stack.Screen name='eWallet' component={ManageEWalletPage} />
-
-                    <Stack.Screen name='eWalletWithdraw' component={EWalletWithdrawPage} />
-
-                    <Stack.Screen name='redemptionPage' component={RedemptionPage}
-                        options={{
-                            headertitle: 'Redemption',
-                        }} />
-
+                    <Stack.Group>
+                        <Stack.Screen name='redemptionPage' component={RedemptionPage}
+                            options={{
+                                headertitle: 'Redemption',
+                            }} />
+                    </Stack.Group>
 
                     <Stack.Group>
                         <Stack.Screen name='userProfilePage' component={UserProfilePage}
@@ -126,21 +109,23 @@ export default function App() {
                             options={{
                                 headerTitle: 'Settings'
                             }} />
+                        <Stack.Screen name='notificationsPage' component={NotificationsPage}
+                            options={{
+                                headerTitle: 'Notifications',
+                            }} />
                         <Stack.Screen name='manageEWalletPage' component={ManageEWalletPage}
                             options={{
                                 headerTitle: 'Manage E-Wallet'
                             }} />
-
                         <Stack.Screen name='eWalletWithdrawPage' component={EWalletWithdrawPage}
                             options={{
                                 headerTitle: 'Transfer to Bank'
                             }} />
-
-                        {/* user's my tickets page navigation button */}
                         <Stack.Screen name='userTicketsPage' component={userTicketsPage}
                             options={{
                                 headerTitle: 'My Tickets'
                             }} />
+                        <Stack.Screen name='generatedUserTicketPage' component={GeneratedUserTicketPage} />
                     </Stack.Group>
 
 
@@ -148,8 +133,7 @@ export default function App() {
                         <Stack.Screen name='adminDashboard' component={AdminDashboard}
                             options={{
                                 headerTitle: 'Admin Dashboard',
-                            }}
-                        />
+                            }} />
                         <Stack.Screen name='adminClubPage' component={ManageFanclub}
                             options={{
                                 headerTitle: 'Admin Club Page',
@@ -166,26 +150,47 @@ export default function App() {
                             options={{
                                 headerTitle: 'Admin Create Club Page',
                             }} />
-
                         <Stack.Screen name='createCategoryPage' component={CreateCategoryPage}
                             options={{
                                 headerTitle: 'Create Category'
                             }} />
-
                         <Stack.Screen name='createConcertPage' component={CreateConcertPage}
                             options={{
                                 headerTitle: 'Create Concert'
                             }} />
                     </Stack.Group>
+
                 </Stack.Navigator>
             </NavigationContainer>
         </SafeAreaProvider>
     );
 }
 
-const MyDrawer = ({ route, navigation }) => {
+const DrawerNav = ({ route, navigation }) => {
     const Drawer = createDrawerNavigator();
     const token = 'Bearer ' + route.params.token;
+    const [userType, setUserType] = useState('');
+    console.log(userType);
+    const getUser = () => {
+        fetch('http://rt.tixar.sg/api/user', {
+            method: 'GET',
+            credentials: 'include',
+            headers: { 'Authorization': token }
+        }).then(response => response.json())
+            .then((data) => {
+                console.log(token);
+                console.log(data);
+                setUserType(data.type);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }
+    
+    useEffect(() => {
+        getUser();
+    }, []);
+
     return (
         <Drawer.Navigator initialRouteName='browseConcertPage'
             screenOptions={{
@@ -221,7 +226,9 @@ const MyDrawer = ({ route, navigation }) => {
                 return (
                     <DrawerContentScrollView {...props}>
                         <DrawerItemList {...props} />
-                        <DrawerItem label='ADMIN' onPress={() => props.navigation.navigate('adminDashboard', {token: token})} />
+                        {userType === 'admin' && (
+                            <DrawerItem label='ADMIN' onPress={() => props.navigation.navigate('adminDashboard', { token: token })} />)}
+
                     </DrawerContentScrollView>
                 )
             }} >

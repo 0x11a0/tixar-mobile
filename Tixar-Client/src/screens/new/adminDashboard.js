@@ -11,8 +11,7 @@ export default AdminDashboard = ({ route, navigation }) => {
             method: 'GET',
             credentials: 'include',
             headers: { 'Authorization': route.params.token }
-        })
-            .then(response => response.json())
+        }).then(response => response.json())
             .then((data) => {
                 setClubs(data);
             })
@@ -50,7 +49,7 @@ export default AdminDashboard = ({ route, navigation }) => {
                             />
                         );
                     })}
-                   
+
                 </ScrollView>
 
                 {/* Next Button */}

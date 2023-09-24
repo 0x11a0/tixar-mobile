@@ -6,14 +6,6 @@ import ConcertBlock from '../components/viewConcert/concertBlock';
 
 
 export default BrowseConcertPage = ({ route, navigation }) => {
-    console.log(route.name);
-    // useEffect(() => {
-    //     navigation.setOptions({
-            
-    //     });
-    // }, [navigation]);
-
-
     const [isNearbyFocused, setIsNearbyFocused] = useState(true);
     const [isTrendingFocused, setIsTrendingFocused] = useState(false);
 

@@ -37,7 +37,7 @@ export default AccountSettingsPage = () => {
                     </Text>
                     <ToggleSlider/>
                 </View>
-                <Pressable onPress={() => navigation.navigate('NotificationsPage')}>
+                <Pressable onPress={() => navigation.navigate('notificationsPage')}>
                     <View style={styles.cardRow}>
                             <Text style={styles.cardText}>
                                 Notifications

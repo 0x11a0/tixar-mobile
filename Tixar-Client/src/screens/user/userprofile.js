@@ -5,7 +5,8 @@ import HeaderBlock from './headerBlockUserProfile';
 const userEdit = ['Ewallet', 'Edit', 'Settings']
 
 export default UserProfile = ({ route, navigation }) => {
-    let [name, setName] = useState('');
+    let [firstName, setFirstName] = useState('');
+    let [lastName, setLastName] = useState('');
     let [email, setEmail] = useState('');
     let [phoneNumber, setPhoneNumber] = useState('');
 
@@ -15,14 +16,15 @@ export default UserProfile = ({ route, navigation }) => {
     }
 
     const getUser = () => {
-        fetch('http://vf.tixar.sg/api/fan', {
+        fetch('http://rt.tixar.sg/api/user', {
             method: 'GET',
             credentials: 'include',
             headers: { 'Authorization': route.params.token }
         })
             .then(response => response.json())
             .then((data) => {
-                setName(data.name);
+                setFirstName(data.firstName);
+                setLastName(data.lastName);
                 setEmail(data.email);
                 setPhoneNumber(data.phone);
             })
@@ -37,9 +39,16 @@ export default UserProfile = ({ route, navigation }) => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <HeaderBlock name={name}
+            <HeaderBlock name={firstName + ' ' + lastName}
                 walletOnPress={() => {
-                    navigation.navigate('manageEWalletPage', { token: route.params.token });
+                    navigation.navigate('manageEWalletPage',
+                        {
+                            token: route.params.token,
+                            firstName: firstName,
+                            lastName: lastName,
+                            email: email,
+                            phoneNumber: phoneNumber
+                        });
                 }}
                 editOnPress={() => {
                     navigation.navigate('editUserProfilePage', { token: route.params.token });

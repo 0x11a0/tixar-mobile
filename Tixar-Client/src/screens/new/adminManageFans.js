@@ -7,14 +7,13 @@ export default ManageFans = ({ route, navigation }) => {
     console.log(members);
     return (
         <SafeAreaView style={styles.container}>
-
             <ScrollView>
                 {/* Your FanCards go here */}
                 {members.map((member) => {
                     return (
                         <FanCard
-                            key={member}
-                            fanName={member}
+                            key={member._id}
+                            fanName={member.fanId.name}
                             fanPoints={'1000'}
                         />
                     );

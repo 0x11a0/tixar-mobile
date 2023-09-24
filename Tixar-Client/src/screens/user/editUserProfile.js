@@ -1,13 +1,20 @@
 import { React, useState } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, Image, Pressable, TextInput, FlatList , TouchableOpacity, Button, onPressLearnMore, Alert } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, Image, Pressable, TextInput, FlatList, TouchableOpacity, Button, onPressLearnMore, Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 
-export default EditUserProfile = () => {
-    const [nameField, setNameField] = useState('');
-    const handleName = (text) => {
-        setNameField(text);
+export default EditUserProfile = ({ route, navigation }) => {
+    const [firstNameField, setFirstNameField] = useState('');
+    const handleFirstName = (text) => {
+        setFirstNameField(text);
     };
+
+    const [lastNameField, setLastNameField] = useState('');
+    const handleLastName = (text) => {
+        setLastNameField(text);
+    };
+
+    let { firstName, lastName, phoneNumber, email, token } = route.params;
 
     const [emailField, setEmailField] = useState('');
     const handleEmail = (text) => {
@@ -18,6 +25,30 @@ export default EditUserProfile = () => {
     const handleNumber = (text) => {
         setNumberField(text);
     };
+
+    const handleUpdate = () => {
+        fetch('http://rt.tixar.sg/api/user', {
+            method: 'PUT',
+            credentials: 'include',
+            headers: {
+                "Content-Type": "application/json",
+                'Authorization': route.params.token
+            },
+            body: JSON.stringify({
+                "firstName": firstNameField === '' ? firstName : firstNameField,
+                "lastName": lastNameField === '' ? lastName : lastNameField,
+                "phone": numberField === '' ? phoneNumber : numberField,
+                "email": emailField === '' ? email : emailField,
+            }),
+        }).then((response) => {
+            if (response.ok) {
+                console.log("Update successful");
+            } else {
+                console.log("Update unsuccessful")
+            }
+        });
+    }
+
     return (
         <SafeAreaView style={styles.container}>
 
@@ -27,17 +58,33 @@ export default EditUserProfile = () => {
                 <Text style={styles.title}>TIXAR</Text>
             </View>
 
-            <View style={ styles.translucentBox}>
+            <View style={styles.translucentBox}>
                 <Text style={styles.subtitle}>Edit Profile</Text>
                 <Image source={require('../../assets/profilepicture.png')} style={styles.profileImage} />
                 <View style={styles.fieldBox}>
                     <TextInput
                         style={styles.fieldText}
-                        onChangeText={handleName}
-                        value={nameField}
-                        placeholder="Name"
+                        onChangeText={handleFirstName}
+                        value={firstNameField}
+                        placeholder="First name"
                     />
                 </View>
+                <View style={styles.fieldBox}>
+                    <TextInput
+                        style={styles.fieldText}
+                        onChangeText={handleLastName}
+                        value={lastNameField}
+                        placeholder="Last name"
+                    />
+                </View>
+                {/* <View style={styles.fieldBox}>
+                    <TextInput
+                        style={styles.fieldText}
+                        onChangeText={handleName}
+                        value={nameField}
+                        placeholder="First name"
+                    />
+                </View> */}
                 <View style={styles.fieldBox}>
                     <TextInput
                         style={styles.fieldText}
@@ -54,18 +101,24 @@ export default EditUserProfile = () => {
                         placeholder="Phone Number (Optional)"
                     />
                 </View>
-                <ResetButton 
-                    nameField={nameField} emailField={emailField} numberField ={numberField}
+                <ResetButton
+                    isValid={firstNameField !== '' || lastNameField !== '' || emailField !== '' || numberField !== ''}
+                    // isValid={nameField !== name || emailField !== email || numberField !== phoneNumber}
+                    onPressFunction={() => {
+                        handleUpdate();
+                        navigation.pop();
+                    }}
                 />
+
             </View>
-        <Text style={styles.footerText}>TIXAR</Text>
-        </SafeAreaView>
+            <Text style={styles.footerText}>TIXAR</Text>
+
+        </SafeAreaView >
     )
-    
+
 }
 
-const ResetButton = ({nameField, emailField , numberField}) => {
-    let isValid = nameField !== '' && emailField !== '';
+const ResetButton = ({ isValid, onPressFunction }) => {
     return (
         <LinearGradient colors={isValid ?
             ['#FF0080', '#7928CA']
@@ -74,15 +127,12 @@ const ResetButton = ({nameField, emailField , numberField}) => {
             start={[0, 0]} end={[1, 0]}>
             <Pressable style={styles.resetButton}
                 onPress={() => {
-                    console.log({ nameField, emailField, numberField });
-                    if (nameField === '' || emailField === '') {
-                        console.log('Not all fields entered');
-                    }
+                    onPressFunction();
                 }} >
                 <Text style={isValid ?
                     styles.resetTextEnabled
                     : styles.resetTextDisabled}>
-                    Reset My Password</Text>
+                    Update Profile</Text>
             </Pressable>
         </LinearGradient >
     )
@@ -94,7 +144,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'flex-start',
         zIndex: 1,
-
     },
     title: {
         fontSize: 35,
@@ -109,13 +158,13 @@ const styles = StyleSheet.create({
         borderRadius: 22,
         resizeMode: 'cover',
         position: 'absolute',
-    }, 
+    },
 
     profileImage: {
         flex: 0.5,
         width: 100,
         height: 100,
-        resizeMode: 'cover',        
+        resizeMode: 'cover',
         marginTop: 8,
     },
 
@@ -137,7 +186,7 @@ const styles = StyleSheet.create({
         color: '#394051',
         marginTop: 24,
     },
-    
+
     container: {
         flex: 1,
         backgroundColor: '#f2f2f2',
@@ -159,7 +208,7 @@ const styles = StyleSheet.create({
         borderColor: '#D2D6DA',
         borderWidth: 1,
         justifyContent: 'center',
-        marginTop: 26,
+        marginTop: 10,
     },
     fieldText: {
         left: '5%',
