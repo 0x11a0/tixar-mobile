@@ -15,7 +15,7 @@ import axios from "axios";
 const handleUpdateProfile = (
   firstNameField,
   lastNameField,
-  email,
+  emailField,
   navigation
 ) => {
   // Define the API endpoint for updating the user's profile (replace with your actual endpoint)
@@ -25,11 +25,12 @@ const handleUpdateProfile = (
   const requestData = {
     firstName: firstNameField,
     lastName: lastNameField,
-    // email: emailField,
+    email: emailField,
   };
 
   // Define the Bearer token (replace with your token)
-  const accessToken = "<Token>";
+  const accessToken =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MGYyMWY5M2I1ODc5MTI0NzYzNGQ0MiIsInR5cGUiOiJzdGFuZGFyZCIsInBob25lIjoiNjU5MTk2MjAxOCIsIm5hbWUiOiJKb2huIERvZSIsImlhdCI6MTY5NTU0NzM0MiwiZXhwIjoxNjk2MTUyMTQyfQ.R48V4EowcDIrda1LDznY70UkPl5TVgTUc2dqOE2u2I4";
 
   // Define headers with the Bearer token
   const headers = {

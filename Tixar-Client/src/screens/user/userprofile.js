@@ -10,7 +10,8 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import axios from "axios";
 
-const accessToken = "<Token>";
+const accessToken =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MGYyMWY5M2I1ODc5MTI0NzYzNGQ0MiIsInR5cGUiOiJzdGFuZGFyZCIsInBob25lIjoiNjU5MTk2MjAxOCIsIm5hbWUiOiJKb2huIERvZSIsImlhdCI6MTY5NTU0NzM0MiwiZXhwIjoxNjk2MTUyMTQyfQ.R48V4EowcDIrda1LDznY70UkPl5TVgTUc2dqOE2u2I4";
 
 const headers = {
   Authorization: `Bearer ${accessToken}`,
@@ -21,6 +22,7 @@ const headers = {
 export default UserProfile = ({ route, navigation }) => {
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
 
   useEffect(() => {
     // Define the URL for your GET request
@@ -36,8 +38,10 @@ export default UserProfile = ({ route, navigation }) => {
         const lastName = response.data.lastName;
         const fullName = firstName + " " + lastName;
         const phoneNumber = response.data.phone;
+        const email = response.data.email;
         setFullName(fullName); // Update state with full name
         setPhone(phoneNumber); // Update state with phone number
+        setEmail(email);
       })
       .catch(function (error) {
         // Handle error
@@ -69,7 +73,7 @@ export default UserProfile = ({ route, navigation }) => {
           <Text style={styles.label}>{phone}</Text>
 
           <Text style={styles.header}>Email</Text>
-          <Text style={styles.label}>charles@gmail.com</Text>
+          <Text style={styles.label}>{email}</Text>
         </View>
         <LinearGradient
           colors={["#FF0080", "#7928CA"]}
