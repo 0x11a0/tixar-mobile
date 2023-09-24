@@ -17,6 +17,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
 import HeaderBlock from "./headerBlockUserProfile";
 import { useIsFocused } from "@react-navigation/native"; // Import useIsFocused
+import nextButton from "../../components/viewConcert/nextButton";
 
 const userEdit = ["Ewallet", "Edit", "Settings"];
 
@@ -88,9 +89,20 @@ export default UserProfile = ({ route, navigation }) => {
         <Text style={styles.subtitle}>{email}</Text>
         <Text style={styles.text}>Phone Number</Text>
         <Text style={styles.subtitle}>{phoneNumber}</Text>
-        <TouchableOpacity style={{ marginTop: 50 }}>
-          <View style={buttonContainerStyle}>
-            <Button
+        <View style={styles.buttonContainerStyle}>
+          <NextButton
+            buttonText={"View Tickets"}
+            onPressFunction={() => {
+              navigation.navigate("userTicketsPage");
+            }}
+            buttonHeight={50}
+          />
+        </View>
+
+        {/* <TouchableOpacity style={{ marginTop: 50 }}> */}
+        {/* <View style={buttonContainerStyle}> */}
+
+        {/* <Button
               title="View My Tickets"
               accessibilityLabel="View Tickets"
               color={Platform.OS === "ios" ? "white" : "#AB2FCD"}
@@ -98,21 +110,26 @@ export default UserProfile = ({ route, navigation }) => {
                 // Alert.alert('Link to view tickets');
                 navigation.navigate("userTicketsPage");
               }}
-            />
-          </View>
-        </TouchableOpacity>
+            /> */}
+        {/* </View> */}
+        {/* </TouchableOpacity> */}
       </View>
 
       <Text style={styles.footerText}>TIXAR</Text>
     </SafeAreaView>
   );
 };
-const buttonContainerStyle =
-  Platform.OS === "ios"
-    ? { backgroundColor: "#AB2FCD" }
-    : { backgroundColor: "transparent" };
+// const buttonContainerStyle =
+//   Platform.OS === "ios"
+//     ? { backgroundColor: "#AB2FCD" }
+//     : { backgroundColor: "transparent" };
 
 const styles = StyleSheet.create({
+  buttonContainerStyle: {
+    flex: 1,
+    width: "100%",
+    marginTop: 100,
+  },
   translucentBox: {
     height: "50%",
     width: "85%",

@@ -14,6 +14,7 @@ import {
   Alert,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default EditUserProfile = ({ route, navigation }) => {
   const [firstNameField, setFirstNameField] = useState("");
@@ -56,7 +57,12 @@ export default EditUserProfile = ({ route, navigation }) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <KeyboardAwareScrollView
+      contentContainerStyle={styles.container}
+      extraScrollHeight={100}
+      enableOnAndroid={true}
+      keyboardShouldPersistTaps="handled"
+    >
       <View style={styles.headerBox}>
         <Image
           source={require("../../assets/soft-ui-pro-react-native-v1.1.1/background3x.png")}
@@ -106,7 +112,7 @@ export default EditUserProfile = ({ route, navigation }) => {
         />
       </View>
       <Text style={styles.footerText}>TIXAR</Text>
-    </SafeAreaView>
+    </KeyboardAwareScrollView>
   );
 };
 
