@@ -1,10 +1,28 @@
 import React, { useState, useRef } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, Pressable, Image, TextInput } from 'react-native';
 import ConditionalButton from '../../components/new/conditionalButton';
+import * as ImagePicker from 'expo-image-picker';
+import * as DocumentPicker from 'expo-document-picker';
 
 export default AdminCreateClub = ({ navigation }) => {
+    let image = require('../../../src/assets/thumbnail2.png');
+    const handleDocumentSelection = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            allowsEditing: true,
+        });
 
-    const [NameField, setNameField] = useState("");
+        // let result = await DocumentPicker.getDocumentAsync({
+        //     allowsEditing: true,
+        // });
+        console.log(result)
+
+        // if (!result.canceled) {
+        //     image = require({ uri: result.uri });
+        // }
+
+    };
+
+    const [nameField, setNameField] = useState("");
     const [descriptionField, setDescriptionField] = useState("");
 
     const [credentialCheck, setCredentialCheck] = useState(false);
@@ -22,13 +40,26 @@ export default AdminCreateClub = ({ navigation }) => {
     const handleDescriptionField = (text) => {
         setDescriptionField(text);
         setCredentialCheck(
-            text !== "" && NameField !== ""
+            text !== "" && nameField !== ""
         );
     }
 
     const handlePressFieldBox = (fieldRef) => {
         fieldRef.current && fieldRef.current.focus(); // Focus on the input field when the field box is pressed
     }
+
+    // const createClub = () => {
+    //     fetch('http://vf.tixar.sg/api/clubs', {
+    //         method: 'GET',
+    //         credentials: 'include',
+    //         headers: { 'Authorization': token }
+    //     })
+    //         .then(response => response.json())
+    //         .then((data) => {
+    //             setClubs(data);
+    //         })
+    //         .catch(error => console.error(error));
+    // }
 
     return (
 
@@ -37,17 +68,18 @@ export default AdminCreateClub = ({ navigation }) => {
             {/* picture upload field */}
             <Pressable style={styles.thumbnailBox}
                 onPress={() => {
-                alert("Upload pic!"); //todo: use express to upload
+                    // alert("Upload pic!"); //todo: use express to upload
+                    handleDocumentSelection();
                 }}>
 
                 <Image
-                    source={require("../../../src/assets/thumbnail2.png")}
+                    source={image}
                     style={{
                         height: 100,
                         aspectRatio: 1,
                         resizeMode: "contain",
                         // backgroundColor:"blue"
-                    }}/>
+                    }} />
 
                 <Text style={styles.thumbnail}>Add Thumbnail</Text>
 
@@ -64,7 +96,7 @@ export default AdminCreateClub = ({ navigation }) => {
                     <TextInput
                         style={styles.fieldText}
                         onChangeText={handleNameField}
-                        value={NameField}
+                        value={nameField}
                         placeholder="Club Name"
                         ref={nameFieldRef} // Assign the ref to the name input field
                     />
@@ -90,6 +122,10 @@ export default AdminCreateClub = ({ navigation }) => {
             <ConditionalButton
                 credentialCheck={credentialCheck}
                 navigation={navigation}
+                onPressFunction={() => {
+                    // createClub();
+                    console.log(nameField, descriptionField);
+                }}
             ></ConditionalButton>
 
         </SafeAreaView>

@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, SafeAreaView, Image, Pressable, TextInput, Flat
 import { LinearGradient } from 'expo-linear-gradient';
 
 
-export default UserProfile = () => {
+export default EditUserProfile = () => {
     const [nameField, setNameField] = useState('');
     const handleName = (text) => {
         setNameField(text);

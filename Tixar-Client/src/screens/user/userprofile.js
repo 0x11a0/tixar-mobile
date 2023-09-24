@@ -1,24 +1,67 @@
-import { React, useState } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, Image, Pressable, TextInput, FlatList , TouchableOpacity, Button, onPressLearnMore, Alert } from 'react-native';
+import { React, useState, useEffect } from 'react';
+import { View, Text, StyleSheet, SafeAreaView, Image, Pressable, TextInput, FlatList, TouchableOpacity, Button, onPressLearnMore, Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import HeaderBlock from './headerBlockUserProfile';
 const userEdit = ['Ewallet', 'Edit', 'Settings']
 
+export default UserProfile = ({ route, navigation }) => {
+    let [name, setName] = useState('');
+    let [email, setEmail] = useState('');
+    let [phoneNumber, setPhoneNumber] = useState('');
 
-export default UserProfile = () => {
+
+    const parsePhoneNumber = (phoneNum) => {
+        // convert phone number to formatter phone number
+    }
+
+    const getUser = () => {
+        fetch('http://vf.tixar.sg/api/fan', {
+            method: 'GET',
+            credentials: 'include',
+            headers: { 'Authorization': route.params.token }
+        })
+            .then(response => response.json())
+            .then((data) => {
+                setName(data.name);
+                setEmail(data.email);
+                setPhoneNumber(data.phone);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    };
+
+    useEffect(() => {
+        getUser();
+    }, []);
+
     return (
         <SafeAreaView style={styles.container}>
-            <HeaderBlock />
-        
-            <View style={ styles.translucentBox}>
-                <Text style = {styles.email}>Email</Text>
-                <Text style={styles.subtitle}>matthewglock@gmail.com</Text>
-                <Text style = {styles.text}>Phone Number</Text>
-                <Text style={styles.subtitle}>+ 65 9123 4567</Text>
-                <TouchableOpacity style = {{marginTop:50}}>
+            <HeaderBlock name={name}
+                walletOnPress={() => {
+                    navigation.navigate('manageEWalletPage', { token: route.params.token });
+                }}
+                editOnPress={() => {
+                    navigation.navigate('editUserProfilePage', { token: route.params.token });
+                }}
+                settingsOnPress={() => {
+                    navigation.navigate('settingsPage', { token: route.params.token });
+                }}
+            />
+
+            <View style={styles.translucentBox}>
+                <Text style={styles.email}>Email</Text>
+                <Text style={styles.subtitle}>{email}</Text>
+                <Text style={styles.text}>Phone Number</Text>
+                <Text style={styles.subtitle}>{phoneNumber}</Text>
+                <TouchableOpacity style={{ marginTop: 50 }}>
                     <View style={buttonContainerStyle}>
-                    <Button  onPress={() => Alert.alert('Link to view tickets')} title = "View My Tickets" accessibilityLabel="View Tickets"
-                    color={Platform.OS === 'ios' ? "white" : "#AB2FCD"} />
+                        <Button title="View My Tickets" accessibilityLabel="View Tickets"
+                            color={Platform.OS === 'ios' ? "white" : "#AB2FCD"}
+                            onPress={() => {
+                                // Alert.alert('Link to view tickets');
+                                navigation.navigate('userTicketsPage');
+                            }} />
                     </View>
                 </TouchableOpacity>
             </View>
@@ -26,14 +69,14 @@ export default UserProfile = () => {
             <Text style={styles.footerText}>TIXAR</Text>
         </SafeAreaView>
     )
-    
+
 }
 const buttonContainerStyle = Platform.OS === 'ios' ? { backgroundColor: "#AB2FCD" } : { backgroundColor: 'transparent' };
 
 const styles = StyleSheet.create({
-   
 
-      translucentBox: {
+
+    translucentBox: {
         height: '50%',
         width: '85%',
         position: 'absolute',
@@ -48,26 +91,26 @@ const styles = StyleSheet.create({
         marginTop: 20,
         fontFamily: 'Lato-Bold',
         fontSize: 20,
-        marginBottom:10,
-        marginRight:'auto'
+        marginBottom: 10,
+        marginRight: 'auto'
 
-    }, 
-      text: {
+    },
+    text: {
         marginTop: 20,
         fontFamily: 'Lato-Bold',
         fontSize: 20,
-        marginBottom:10,
-        marginRight:'auto'
+        marginBottom: 10,
+        marginRight: 'auto'
 
-      }, 
-      subtitle: {
+    },
+    subtitle: {
         fontFamily: 'Lato-Regular',
         fontSize: 15,
-        marginBottom:10,
-        marginRight:'auto'
+        marginBottom: 10,
+        marginRight: 'auto'
 
-      },
-    
+    },
+
     container: {
         flex: 1,
         backgroundColor: '#f2f2f2',
@@ -82,9 +125,9 @@ const styles = StyleSheet.create({
         position: 'absolute'
     },
 
-    viewTicketsButton:{
-        marginTop:50,
-        backgroundColor:'#B731D9',
+    viewTicketsButton: {
+        marginTop: 50,
+        backgroundColor: '#B731D9',
         borderWidth: 5,
         borderColor: '#fff'
     },

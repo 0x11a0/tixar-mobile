@@ -5,7 +5,8 @@ import { useNavigation } from '@react-navigation/native';
 export default ManageFanclubMiniCard = ({ 
     title,
     textDisplay,
-    navigationDestination // Receive the screen name prop
+    // navigationDestination // Receive the screen name prop
+    onPressFunction,
 }) => {
     const navigation = useNavigation();
     const [showDeleteButton, setShowDeleteButton] = useState(false);
@@ -16,7 +17,8 @@ export default ManageFanclubMiniCard = ({
                 style={styles.container}
                 onPress={() => {
                     // Use the navigationDestination prop as the screen name to navigate to
-                    navigation.navigate(navigationDestination);
+                    // navigation.navigate(navigationDestination);
+                    onPressFunction();
                 }}
             >
 
@@ -44,7 +46,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 20,
         color: '#252F40',
-        fontFamily: 'Lato-SemiBold',
+        fontFamily: 'Lato-Bold',
         lineHeight: 26, // Updated line height for title
         marginBottom: 5,
     },
@@ -60,7 +62,7 @@ const styles = StyleSheet.create({
     viewMore: { 
         fontSize: 13,
         color: '#7928CA',
-        fontFamily: 'Lato-light',
+        fontFamily: 'Lato-Regular',
         lineHeight: 18, // Updated line height for viewMore
     },
 

@@ -4,14 +4,20 @@ import { View, Text, StyleSheet, Image } from 'react-native';
 export default ManageFanclubCard = ({ 
     clubName,
     description,
+    imageUrl,
 }) => {
+
+    let image = require('../../assets/soft-ui-pro-react-native-v1.1.1/avatar23x.png');
+    if (imageUrl) {
+        image = { uri: imageUrl };
+    }
 
     return (
         <View style={(styles.container)}>
             
             {/* icon */}
             <Image
-                source={require("../../assets/soft-ui-pro-react-native-v1.1.1/avatar23x.png")}
+                source={image}
                 style={styles.icon}
                 resizeMode="cover"
             />
@@ -54,7 +60,7 @@ const styles = StyleSheet.create({
     description: {
         fontSize: 12,
         color: '#67748E',
-        fontFamily: 'Lato-Light',
+        fontFamily: 'Lato-Regular',
         lineHeight: 16,
     },
 

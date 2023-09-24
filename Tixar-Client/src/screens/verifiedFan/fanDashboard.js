@@ -65,40 +65,44 @@ const Artists = [
         artistDescription: 'Abel Makkonen Tesfaye (Amharic: አበል መኮነን ተስፋዬ; born February 16, 1990), known professionally as the Weeknd, is a Canadian singer, songwriter, and record producer.[2][3] He is noted for his unconventional music production, artistic reinventions, and his signature use of the falsetto register.[4][5] His accolades include 4 Grammy Awards, 20 Billboard Music Awards, 22 Juno Awards, 6 American Music Awards, 2 MTV Video Music Awards, a Latin Grammy Award, and nominations for an Academy Award and a Primetime Emmy Award.',
         artistIcon: require('../../assets/soft-ui-pro-react-native-v1.1.1/avatar23x.png'),
     },
-  ];
-  
+];
+
 //   Flatlist stuff
-  const Item = ({artistName, points, artistDescription, artistIcon}) => (
+const Item = ({ artistName, points, artistDescription, artistIcon }) => (
     <ArtistBlock artistName={artistName}
         points={points}
-        artistDescription={artistDescription}                    
+        artistDescription={artistDescription}
         artistIcon={artistIcon}
         // Can add the artist page here
         onPressFunction={() => {
-                        console.log(artistName + ' pressed');
-                        navigation.navigate('ArtistPage', {artistName: 'The Weeknd'});
-                    }} />
-  );
+            console.log(artistName + ' pressed');
+            navigation.navigate('ArtistPage', { artistName: 'The Weeknd' });
+        }} />
+);
 
-  const renderItem = ({item}) => (
-    <Item artistName = {item.artistName}
+const renderItem = ({ item }) => (
+    <Item artistName={item.artistName}
         points={item.points}
         artistDescription={item.artistDescription}
-        artistIcon={item.artistIcon}/>
-    );
+        artistIcon={item.artistIcon} />
+);
 
-export default FanDashboard = ({navigation, }) => {
+export default FanDashboard = ({ route, navigation }) => {
     return (
         <SafeAreaView style={{
             flex: 1,
             backgroundColor: "#F8F9FA",
         }}>
-                <RedeemButton navigation={navigation} />
+            <RedeemButton
+                onPressFunction={() => {
+                    console.log('Navigating to redemption page');
+                    navigation.navigate('redemptionPage');
+                }} />
 
             <FlatList style={styles.list}
                 data={Artists}
                 renderItem={renderItem}
-                keyExtractor={item => item.id}/>
+                keyExtractor={item => item.id} />
 
             <View>
                 <Text style={styles.footerText}>TIXAR</Text>
@@ -107,19 +111,18 @@ export default FanDashboard = ({navigation, }) => {
     );
 }
 
-const RedeemButton = ({navigation}) => {
+const RedeemButton = ({onPressFunction}) => {
     return (
         <LinearGradient colors={['#EBEFF4', '#CED4DA']}
             style={styles.redeemBackground}
-            start={[0, 0]} end = {[1, 0]}>
-            <Pressable style = {styles.redeemButton}
+            start={[0, 0]} end={[1, 0]}>
+            <Pressable style={styles.redeemButton}
                 onPress={() => {
-                    console.log('Navigating to redemption page');
-                    navigation.navigate('RedemptionPage');
+                    onPressFunction();
                 }}>
-                <Text style = {styles.redeemText}>Have a code? Redeem it here.</Text>
-            </Pressable>     
-        </LinearGradient>           
+                <Text style={styles.redeemText}>Have a code? Redeem it here.</Text>
+            </Pressable>
+        </LinearGradient>
     )
 }
 
@@ -160,6 +163,6 @@ const styles = StyleSheet.create({
         fontFamily: 'Lato-Regular',
         fontSize: 12,
         position: 'absolute',
-        alignSelf:'center',
+        alignSelf: 'center',
     },
 });

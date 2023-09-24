@@ -4,7 +4,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 export default ConditionalButton = ({ 
     credentialCheck, 
-    navigation
+    navigation,
+    onPressFunction,
 }) => {
     
     return (
@@ -19,18 +20,19 @@ export default ConditionalButton = ({
             
                 //on press function
                 onPress={() => {
-                    if (credentialCheck) {
+                    onPressFunction();
+                    // if (credentialCheck) {
 
-                        // link the create profile back end here
-                        console.log('Creating profile');
+                    //     // link the create profile back end here
+                    //     console.log('Creating profile');
 
-                        //navigate to page (change to dashboard page)
-                        navigation.navigate('accountSettingsPage');
+                    //     //navigate to page (change to dashboard page)
+                    //     navigation.navigate('accountSettingsPage');
                         
-                    } else {
-                        //button is disabled, cannot be pressed
-                        console.log('button disabled');
-                    }
+                    // } else {
+                    //     //button is disabled, cannot be pressed
+                    //     console.log('button disabled');
+                    // }
                 }} >
 
                 {/* button text */}

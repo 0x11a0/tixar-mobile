@@ -59,7 +59,7 @@ export default NewUserLoginPage = ({ navigation }) => {
       .then((data) => {
         // upon successful verification of phone number, navigate to OTP page
         console.log("Phone number valid, Navigating to OTP page")
-        navigation.navigate("UserLoginOTPPage", { phoneNumber: phoneNumber });
+        navigation.navigate("userLoginOTPPage", { phoneNumber: phoneNumber });
       })
       .catch((error) => {
         // upon unsuccessful verification of phone number, navigate to register page

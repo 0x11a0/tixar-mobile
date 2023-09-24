@@ -6,30 +6,45 @@ import ManageFanclubCard from '../../components/new/manageFanclubCard';
 import manageFanclubMiniCard from '../../components/new/manageFanclubMiniCard';
 import ManageFanclubMiniCard from '../../components/new/manageFanclubMiniCard';
 
-export default ManageFanClub = ({ navigation }) => { 
+export default ManageFanClub = ({ route, navigation }) => {
+    let club = route.params.club;
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#F2F2F2' }}>
             <View style={styles.container}>
 
                 <ManageFanclubCard
-                    clubName={'Taylor Swift'}
-                    description={'Taylor Swift Fanclub is the best fanclub in the world! blah blah blah blah blah hee hee hoo hoo hahh haah...I need more sleep.'}
+                    clubName={club.name}
+                    imageUrl={club.imageUrl}
+                    description={club.description}
                 />
 
-            <View style={styles.miniCardContainer}>
-                <ManageFanclubMiniCard
-                    navigationDestination={'NotificationsPage'} //place holder page, change to fans page
-                    title={'Fan Count'}
-                    textDisplay={'1000'}
-                />
+                <View style={styles.miniCardContainer}>
+                    <ManageFanclubMiniCard
+                        // navigationDestination={'NotificationsPage'} //place holder page, change to fans page
+                        onPressFunction={() => {
+                            console.log(club);
+                            navigation.navigate('adminFansPage', {
+                                clubId: club._id,
+                                members: club.members
+                            });
+                        }}
+                        title={'Fan Count'}
+                        textDisplay={club.members.length}
+                    />
 
-                <ManageFanclubMiniCard
-                    navigationDestination={'NotificationsPage'} //place holder page, change to codes page
-                    title={'Active Codes'}
-                    textDisplay={'1234'}
-                />
-            </View>
+                    <ManageFanclubMiniCard
+                        // navigationDestination={'adminCodesPage'} //place holder page, change to codes page
+                        onPressFunction={() => {
+                            navigation.navigate('adminCodesPage', {
+                                clubId: club._id,
+                                codes: club.codes
+                            });
+                        }}
+                        title={'Active Codes'}
+                        textDisplay={club.codes.length}
+                    />
+                </View>
 
                 {/* Next Button */}
                 <View style={styles.buttonContainer}>
@@ -57,7 +72,6 @@ const styles = StyleSheet.create({
     },
     miniCardContainer: {
         marginHorizontal: 20,
-        // backgroundColor: 'red',
         height: 100,
         flexDirection: 'row',
         justifyContent: 'space-between',

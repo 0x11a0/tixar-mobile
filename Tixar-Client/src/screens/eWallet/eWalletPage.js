@@ -4,9 +4,9 @@ import { View, Text, StyleSheet, ScrollView, Pressable, Image, SafeAreaViewBase,
 import CardWallet from '../../components/eWallet/cardWallet';
 import Card from '../../components/accountSettings/card';
 
-export default eWalletWithdraw = () => {
+export default EWalletPage = ({ route, navigation }) => {
+    let token = route.params.token;
 
-    const navigation = useNavigation();
 
     return (
         <SafeAreaView style={{
@@ -16,7 +16,7 @@ export default eWalletWithdraw = () => {
 
         }}>
             <View style={styles.eCardContainer}>
-                <CardWallet/>
+                <CardWallet />
             </View>
             <View style={{
                 flex: 3,
@@ -28,19 +28,19 @@ export default eWalletWithdraw = () => {
                             <Text style={styles.cardText}>
                                 Top Up
                             </Text>
-                            <Image source={require('../../assets/soft-ui-pro-react-native-v1.1.1/arrow3x.png')} style={styles.cardRightIcon}/>
+                            <Image source={require('../../assets/soft-ui-pro-react-native-v1.1.1/arrow3x.png')} style={styles.cardRightIcon} />
                         </View>
                         <View style={styles.cardRow}>
                             <Text style={styles.cardText}>
                                 Transfer to Bank
                             </Text>
-                            <Image source={require('../../assets/soft-ui-pro-react-native-v1.1.1/arrow3x.png')} style={styles.cardRightIcon}/>
+                            <Image source={require('../../assets/soft-ui-pro-react-native-v1.1.1/arrow3x.png')} style={styles.cardRightIcon} />
                         </View>
                     </Card>
                 </View>
                 <View style={styles.container}>
                     <Card>
-                        <View style={{alignItems: 'center'}}>
+                        <View style={{ alignItems: 'center' }}>
                             <Text>History</Text>
                         </View>
                         <View style={styles.cardRow}>
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
         flex: 3,
     },
     cardRow: {
-        flexDirection: 'row', 
+        flexDirection: 'row',
         alignItems: 'center',
         margin: 10,
         justifyContent: 'space-between'

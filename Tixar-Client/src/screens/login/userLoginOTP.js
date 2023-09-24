@@ -53,8 +53,8 @@ export default UserLoginOTPPage = ({ route, navigation }) => {
       })
       .then((data) => {
         console.log("OTP valid, login successful")
-        Alert.alert("Login successful", "Welcome");
-        // insert navigation to home screen here
+        // Alert.alert("Login successful", "Welcome");
+        navigation.navigate('drawer', {token: data.token});
       })
       .catch((error) => {
         console.log("OTP invalid, login unsuccessful")
@@ -138,7 +138,7 @@ export default UserLoginOTPPage = ({ route, navigation }) => {
                         <Pressable
                             style = {styles.continueButton}
                             onPress={() => {
-                                handleOTPLogin()
+                                handleOTPLogin();
                             }}>
                             <Text style = {styles.buttonText}>Continue</Text>
                         </Pressable>
