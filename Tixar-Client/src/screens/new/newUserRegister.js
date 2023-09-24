@@ -8,11 +8,17 @@ import {
   Pressable,
   TextInput,
   ImageBackground,
+  Alert,
+  TouchableWithoutFeedback,
+  Keyboard,
+  KeyboardAvoidingView,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import ConditionalButton from "../../components/new/conditionalButton";
+import BackButton from "../../components/new/backButton";
 
-export default NewUserRegistrationPage = ({ navigation }) => {
+export default NewUserRegistrationPage = ({ route, navigation }) => {
+  const {phoneNumber} = route.params;
   //states for text input fields
   const [firstNameField, setFirstName] = useState("");
   const [lastNameField, setlastName] = useState("");
@@ -21,7 +27,7 @@ export default NewUserRegistrationPage = ({ navigation }) => {
   //use to check if all fields are filled
   const [credentialCheck, setCredentialCheck] = useState(false);
 
-  // for each text input field, check if all fields are filledm if yes, set credentialCheck to true
+  // for each text input field, check if all fields are filled if yes, set credentialCheck to true
   const handleEmail = (text) => {
     setEmail(text);
     setCredentialCheck(
@@ -41,21 +47,69 @@ export default NewUserRegistrationPage = ({ navigation }) => {
     );
   };
 
+      // function to handle new user registration
+      const handleRegister = () => {
+        const endPoint = "http://rt.tixar.sg/api/register";
+        const payload = {
+          phone: phoneNumber,
+          firstName: firstNameField,
+          lastName: lastNameField,
+          email: emailField,
+        };
+    
+        fetch(endPoint, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        })
+          .then((response) => {
+            if (response.ok) {
+                console.log("Registration request successful");
+              return response.json();
+            } else {
+                console.log("Registration request unsuccessful")
+              throw new Error("Failed to login");
+            }
+          })
+          .then((data) => {
+            // upon successful verification of phone number, navigate to login
+            Alert.alert("Registration successful", "Please login with your details");
+            console.log("Registration successful, Navigating back to login page")
+            navigation.goBack();
+          })
+          .catch((error) => {
+            console.log("Registration failed, try again")
+            Alert.alert("Registration failed", error.message);
+            // insert navigation to register page here
+          });
+      };
+
   //rendered items
   return (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <ImageBackground
       source={require("../../assets/purpleConcertBackground.png")}
       style={styles.backgroundImage}
       blurRadius={5} // Adjust the blur radius as needed
     >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <SafeAreaView style={styles.container}>
+      
         {/* Translucent card */}
         <View style={styles.translucentCard}>
+        <BackButton navigation={navigation} />
+        
+        <KeyboardAvoidingView style={{width: '100%', height: '100%', alignItems: "center",}} behavior="padding">
+
           
+          {/* TIXAR header */}
+          <Text style={styles.cardTextHeader}>TIXAR</Text>
           <Text style={styles.cardText}>Create Your Profile.</Text>
 
           <View style={{ height: "10%" }}></View>
-
+          <Text style={styles.cardTextSubtle}>Creating an account for +{phoneNumber}</Text>
           {/* Email field */}
           <View style={styles.fieldBox}>
             <TextInput
@@ -90,14 +144,19 @@ export default NewUserRegistrationPage = ({ navigation }) => {
           {/* Continue Button HEEEEEREEEE THANKS HEHE */}
           <ConditionalButton
             credentialCheck={credentialCheck}
-            // emailField={emailField}
-            // firstNameField={firstNameField}
-            // lastNameField={lastNameField}
+            onPressFunction={handleRegister}
             navigation={navigation}
-          ></ConditionalButton>
+          />
+
+          </KeyboardAvoidingView>
         </View>
+        
+        
       </SafeAreaView>
+      </TouchableWithoutFeedback>
+      
     </ImageBackground>
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -121,13 +180,22 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
     paddingTop: "25%",
-    bottom: 40,
   },
 
+  cardTextHeader: {
+    fontSize: 64,
+    fontFamily: "Lato-Bold",
+    color: "#252F40",
+  },
   cardText: {
     fontSize: 20,
     fontWeight: "bold",
     fontFamily: "Lato-Bold",
+    color: "#252F40",
+  },
+  cardTextSubtle: {
+    fontSize: 16,
+    fontFamily: "Lato-Regular",
     color: "#252F40",
   },
 

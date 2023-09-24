@@ -20,19 +20,16 @@ export default ConditionalButton = ({
             
                 //on press function
                 onPress={() => {
-                    onPressFunction();
-                    // if (credentialCheck) {
-
-                    //     // link the create profile back end here
-                    //     console.log('Creating profile');
-
-                    //     //navigate to page (change to dashboard page)
-                    //     navigation.navigate('accountSettingsPage');
+                    if (credentialCheck) {
+                    
+                        // link the create profile back end here
+                        console.log('Creating profile');
+                        onPressFunction();
                         
-                    // } else {
-                    //     //button is disabled, cannot be pressed
-                    //     console.log('button disabled');
-                    // }
+                    } else {
+                        //button is disabled, cannot be pressed
+                        console.log('button disabled');
+                    }
                 }} >
 
                 {/* button text */}
