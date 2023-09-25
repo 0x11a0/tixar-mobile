@@ -1,14 +1,12 @@
-import { useNavigation } from '@react-navigation/native';
-import { React, useState, useContext } from 'react';
+import { React, useState, useContext, useRef } from 'react';
 import { View, 
          Text, 
          StyleSheet, 
-         ScrollView, 
-         Pressable, Image, 
-         SafeAreaViewBase, 
+         Pressable, 
+         Image, 
          SafeAreaView, 
          TextInput,
-         Alert } from 'react-native';
+         Alert, } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import card33x from '../../assets/images/card33x.png';
 import AuthContext from '../../../AuthContext';
@@ -19,6 +17,7 @@ export default RedemptionPage = ({navigation}) => {
     const [code, setCode] = useState('');
     const [canRedeem, setCanRedeem] = useState(false);
     const { token } = useContext(AuthContext);
+    const codeInputRef = useRef(null);
 
     const handleCode = (text) => {
         setCode(text);
@@ -36,6 +35,7 @@ export default RedemptionPage = ({navigation}) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
       },
       body: JSON.stringify(payload),
     })
@@ -51,7 +51,9 @@ export default RedemptionPage = ({navigation}) => {
       .then((data) => {
         // upon successful verification of code, let user know
         console.log("Code is valid, points added to account");
-        Alert.alert("Redemption successful!", "Points added to account");
+        Alert.alert("Redemption successful!", "Your points: " + data.updatedPoints.toString());
+        codeInputRef.current.clear();
+        handleCode("");
       })
       .catch((error) => {
         // upon unsuccessful verification of code, let user know
@@ -90,6 +92,7 @@ export default RedemptionPage = ({navigation}) => {
             {/* Redeem code stuff */}
             <View style={styles.fieldBox}>
                 <TextInput
+                    ref={codeInputRef}
                     style={styles.fieldText}
                     onChangeText={handleCode}
                     value={code}
@@ -139,7 +142,7 @@ const RedeemButton = ({ canRedeem, code, navigation , handleRedemption, token}) 
                 onPress={() => {
                     if (canRedeem) {
                         // Redeem code here
-                        // console.log("Token: " + token);
+                        console.log("Token: " + token);
                         console.log(' Attempting to redeem code: "' + code + '"');
                         handleRedemption();
                     } else {
@@ -217,6 +220,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Lato-Regular',
         color: '#8F8F8F',
         paddingRight: 35,
+        textAlign: 'center',
     },
 
     // Redeem button stuff
