@@ -41,6 +41,7 @@ import AnimationPage from "./src/screens/animationPage";
 import userTicketsPage from "./src/screens/userTicketsPage";
 import redemptionPage from "./src/screens/verifiedFan/redemptionPage";
 import fanDashboard from "./src/screens/user/fanDashboard";
+import allClubsDashboard from "./src/screens/user/viewAllFanClubs";
 import ViewFanclub from "./src/screens/user/viewFanclub";
 import celebrityDashboard from "./src/screens/verifiedFan/celebrityDashboard";
 import UserProfilePage from "./src/screens/user/userprofile";
@@ -111,6 +112,14 @@ export default function App() {
           <Stack.Screen
             name="fanDashboardPage"
             component={fanDashboard}
+            options={{
+              headerTitle: "Fan Dashboard",
+            }}
+          />
+
+          <Stack.Screen
+            name="viewAllClubs"
+            component={allClubsDashboard}
             options={{
               headerTitle: "Fan Dashboard",
             }}
@@ -326,9 +335,18 @@ const DrawerNav = ({ route, navigation }) => {
           <DrawerContentScrollView {...props}>
             <DrawerItemList {...props} />
             <DrawerItem
-              label="Verified Fans"
+              label="My Clubs"
               onPress={() => {
                 props.navigation.navigate("fanDashboardPage", { token: token });
+              }}
+            />
+
+            <DrawerItem
+              label="All Clubs"
+              onPress={() => {
+                props.navigation.navigate("viewAllClubs", {
+                  token: token,
+                });
               }}
             />
 
