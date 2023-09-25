@@ -108,6 +108,14 @@ export default function App() {
             />
           </Stack.Group>
 
+		<Stack.Screen name="fanDashboardPage"
+			component={fanDashboard}
+			options={{
+			headerTitle: "Fan Dashboard",
+			}}/>
+
+
+
           <Stack.Group screenOptions={{ headerShown: false }}>
             <Stack.Screen
               name="newUserLoginPage"
@@ -317,12 +325,19 @@ const DrawerNav = ({ route, navigation }) => {
         return (
           <DrawerContentScrollView {...props}>
             <DrawerItemList {...props} />
+			<Drawer Item 
+				label="Verified Fans"
+				onePress={() => {
+					props.navigation.navigate('fanDashboardPage', {token: token})
+				}}
+			/>
+
             {userType === "admin" && (
               <DrawerItem
                 label="ADMIN"
-                onPress={() =>
+                onPress={() =>{
                   props.navigation.navigate("adminDashboard", { token: token })
-                }
+                }}
               />
             )}
           </DrawerContentScrollView>
@@ -340,17 +355,7 @@ const DrawerNav = ({ route, navigation }) => {
       />
 
       {/* Navigation sidebar Verified Fans */}
-      <Drawer.Screen
-        name="fanDashboardPage"
-        component={fanDashboard}
-        options={{
-          headerTitle: "Fan Dashboard",
-          drawerLabel: "Verified Fans",
-        }}
-        initialParams={{ token: token }}
-      />
-
-      {/* Navigation sidebar Celebrity dashboard,
+           {/* Navigation sidebar Celebrity dashboard,
                 can replace to admin only if needed */}
       {/* <Drawer.Screen name='celebrityDashboardPage' component={celebrityDashboard}
                 options={{
