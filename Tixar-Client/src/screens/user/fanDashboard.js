@@ -15,17 +15,18 @@ import { LinearGradient } from "expo-linear-gradient";
 import ArtistBlock from "../../components/verifiedFans/artistBlock";
 import NextButton from "../../components/new/nextButton";
 
-export default FanDashboard = ({ initialParams, route, navigation }) => {
+export default FanDashboard = ({ route, navigation }) => {
   const [profiles, setProfiles] = useState([]);
 
   const getProfiles = () => {
     fetch("http://vf.tixar.sg/api/profiles", {
       method: "GET",
       credentials: "include",
-      headers: { Authorization: initialParams },
+      headers: { Authorization: route.params.token },
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         setProfiles(data);
       })
       .catch((error) => {
@@ -34,7 +35,7 @@ export default FanDashboard = ({ initialParams, route, navigation }) => {
   };
 
   useEffect(() => {
-    console.log("here is " + initialParams);
+    console.log("here is " + route.params.token);
     getProfiles();
     console.log(profiles);
   }, []);
@@ -111,25 +112,25 @@ export default FanDashboard = ({ initialParams, route, navigation }) => {
     },
   ];
 
-  //   Flatlist stuff
-  const Item = ({
-    navigation,
-    clubName,
-    points,
-    artistDescription,
-    artistIcon,
-  }) => (
-    <ArtistBlock
-      clubName={clubName} // Use clubName, not clubname
-      points={points}
-      artistDescription={artistDescription}
-      artistIcon={artistIcon}
-      onPressFunction={() => {
-        navigation.navigate("viewFanclubPage");
-        // navigation.navigate('ArtistPage', {clubName: 'The Weeknd'});  use this to add navigationability
-      }}
-    />
-  );
+  // //   Flatlist stuff
+  // const Item = ({
+  //   navigation,
+  //   clubName,
+  //   points,
+  //   artistDescription,
+  //   artistIcon,
+  // }) => (
+  //   <ArtistBlock
+  //     clubName={clubName} // Use clubName, not clubname
+  //     points={points}
+  //     artistDescription={artistDescription}
+  //     artistIcon={artistIcon}
+  //     onPressFunction={() => {
+  //       navigation.navigate("viewFanclubPage");
+  //       // navigation.navigate('ArtistPage', {clubName: 'The Weeknd'});  use this to add navigationability
+  //     }}
+  //   />
+  // );
 
   const renderItem = ({ item }) => (
     <Item
@@ -149,26 +150,47 @@ export default FanDashboard = ({ initialParams, route, navigation }) => {
       }}
     >
       <View style={styles.contentContainer}>
-        <View style={styles.flatListContainer}>
+        {/* <View style={styles.flatListContainer}>
           <FlatList
             style={styles.list}
             data={Artists}
             renderItem={renderItem}
             keyExtractor={(item) => item.id}
           />
-        </View>
+        </View> */}
+        <ScrollView>
+          {/* Your FanclubCards go here */}
+          {profiles.map((profile) => {
+            console.log(profile);
+            console.log(profile.points);
+            return (
+              <ArtistBlock
+                key={profile._id} // Add a unique key prop
+                points={profile.points}
+                clubName={profile.club.name} // Use clubName, not clubname
+                artistDescription={profile.club.description}
+                artistIcon={profile.imageUrl}
+                onPressFunction={() => {
+                  navigation.navigate("viewFanclubPage");
+                  // navigation.navigate('ArtistPage', {clubName: 'The Weeknd'});  use this to add navigationability
+                }}
+                // artistIcon: require("../../assets/soft-ui-pro-react-native-v1.1.1/avatar23x.png"),
+              />
+            );
+          })}
+        </ScrollView>
 
         <NextButton
           buttonText={"Redeem Fan Code Here!"}
           onPressFunction={() => {
             navigation.navigate("redemptionPage");
           }}
+          style={{ marginTop: -20 }} // Adjust the marginTop value as needed
         />
       </View>
 
-      <View>
-        <Text style={styles.footerText}>TIXAR</Text>
-      </View>
+      <View></View>
+      <Text style={styles.footerText}>TIXAR</Text>
     </SafeAreaView>
   );
 };
@@ -195,7 +217,6 @@ const styles = StyleSheet.create({
     fontFamily: "Lato-Bold",
     color: "#3A416F",
   },
-
   // list
   list: {
     width: "90%",
@@ -210,7 +231,7 @@ const styles = StyleSheet.create({
   },
 
   contentContainer: {
-    flex: 1,
+    flex: 0.97,
     backgroundColor: "#F8F9FA",
   },
 

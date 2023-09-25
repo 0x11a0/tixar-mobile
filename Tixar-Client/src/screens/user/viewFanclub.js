@@ -52,7 +52,7 @@ export default UserViewFanclub = ({ navigation }) => {
         <NextButton
           buttonText={"Redeem Fan Code Here!"}
           onPressFunction={() => {
-            navigation.navigate("YOUR FANCLUBS");
+            navigation.navigate("redemptionPage");
           }}
         />
       </View>

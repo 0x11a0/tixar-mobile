@@ -3,6 +3,7 @@ import { View, StyleSheet, SafeAreaView, ScrollView, FlatList } from 'react-nati
 import FanclubCard from '../../components/new/fanclubCard';
 import NextButton from '../../components/new/nextButton';
 
+
 export default AdminDashboard = ({ route, navigation }) => {
     const [clubs, setClubs] = useState([]);
 

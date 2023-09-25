@@ -39,7 +39,7 @@ import AccountSettingsPage from "./src/screens/accountSettingsPage";
 import GenerateFanCodePage from "./src/screens/vf/generateFanCodePage2";
 import AnimationPage from "./src/screens/animationPage";
 import userTicketsPage from "./src/screens/userTicketsPage";
-import RedemptionPage from "./src/screens/verifiedFan/redemptionPage";
+import redemptionPage from "./src/screens/verifiedFan/redemptionPage";
 import fanDashboard from "./src/screens/user/fanDashboard";
 import ViewFanclub from "./src/screens/user/viewFanclub";
 import celebrityDashboard from "./src/screens/verifiedFan/celebrityDashboard";
@@ -108,13 +108,13 @@ export default function App() {
             />
           </Stack.Group>
 
-		<Stack.Screen name="fanDashboardPage"
-			component={fanDashboard}
-			options={{
-			headerTitle: "Fan Dashboard",
-			}}/>
-
-
+          <Stack.Screen
+            name="fanDashboardPage"
+            component={fanDashboard}
+            options={{
+              headerTitle: "Fan Dashboard",
+            }}
+          />
 
           <Stack.Group screenOptions={{ headerShown: false }}>
             <Stack.Screen
@@ -134,9 +134,9 @@ export default function App() {
           <Stack.Group>
             <Stack.Screen
               name="redemptionPage"
-              component={RedemptionPage}
+              component={redemptionPage}
               options={{
-                headertitle: "Redemption",
+                headertitle: "redemptionPage",
               }}
             />
           </Stack.Group>
@@ -265,9 +265,9 @@ export default function App() {
 
 const DrawerNav = ({ route, navigation }) => {
   const Drawer = createDrawerNavigator();
-  // const token = "Bearer " + route.params.token;
+  const token = "Bearer " + route.params.token;
   const [userType, setUserType] = useState("");
-  const token = useRef("Bearer " + route.params.token).current;
+  // const token = useRef("Bearer " + route.params.token).current;
   console.log(userType);
   const getUser = () => {
     fetch("http://rt.tixar.sg/api/user", {
@@ -325,18 +325,18 @@ const DrawerNav = ({ route, navigation }) => {
         return (
           <DrawerContentScrollView {...props}>
             <DrawerItemList {...props} />
-			<Drawer Item 
-				label="Verified Fans"
-				onePress={() => {
-					props.navigation.navigate('fanDashboardPage', {token: token})
-				}}
-			/>
+            <DrawerItem
+              label="Verified Fans"
+              onPress={() => {
+                props.navigation.navigate("fanDashboardPage", { token: token });
+              }}
+            />
 
             {userType === "admin" && (
               <DrawerItem
                 label="ADMIN"
-                onPress={() =>{
-                  props.navigation.navigate("adminDashboard", { token: token })
+                onPress={() => {
+                  props.navigation.navigate("adminDashboard", { token: token });
                 }}
               />
             )}
@@ -355,7 +355,7 @@ const DrawerNav = ({ route, navigation }) => {
       />
 
       {/* Navigation sidebar Verified Fans */}
-           {/* Navigation sidebar Celebrity dashboard,
+      {/* Navigation sidebar Celebrity dashboard,
                 can replace to admin only if needed */}
       {/* <Drawer.Screen name='celebrityDashboardPage' component={celebrityDashboard}
                 options={{
