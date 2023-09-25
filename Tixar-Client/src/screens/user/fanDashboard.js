@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import {
   FlatList,
   View,
@@ -15,7 +15,30 @@ import { LinearGradient } from "expo-linear-gradient";
 import ArtistBlock from "../../components/verifiedFans/artistBlock";
 import NextButton from "../../components/new/nextButton";
 
-export default FanDashboard = ({ route, navigation }) => {
+export default FanDashboard = ({ initialParams, route, navigation }) => {
+  const [profiles, setProfiles] = useState([]);
+
+  const getProfiles = () => {
+    fetch("http://vf.tixar.sg/api/profiles", {
+      method: "GET",
+      credentials: "include",
+      headers: { Authorization: initialParams },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setProfiles(data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  useEffect(() => {
+    console.log("here is " + initialParams);
+    getProfiles();
+    console.log(profiles);
+  }, []);
+
   const Artists = [
     /* pass in 1. Artist Name
                 2. Artist Description

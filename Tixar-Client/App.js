@@ -1,5 +1,5 @@
 import { useFonts } from "expo-font";
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useRef } from "react";
 import {
   Pressable,
   View,
@@ -257,8 +257,9 @@ export default function App() {
 
 const DrawerNav = ({ route, navigation }) => {
   const Drawer = createDrawerNavigator();
-  const token = "Bearer " + route.params.token;
+  // const token = "Bearer " + route.params.token;
   const [userType, setUserType] = useState("");
+  const token = useRef("Bearer " + route.params.token).current;
   console.log(userType);
   const getUser = () => {
     fetch("http://rt.tixar.sg/api/user", {
@@ -346,6 +347,7 @@ const DrawerNav = ({ route, navigation }) => {
           headerTitle: "Fan Dashboard",
           drawerLabel: "Verified Fans",
         }}
+        initialParams={{ token: token }}
       />
 
       {/* Navigation sidebar Celebrity dashboard,
