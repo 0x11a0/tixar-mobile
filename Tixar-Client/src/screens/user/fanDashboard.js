@@ -61,7 +61,12 @@ export default FanDashboard = ({ route, navigation }) => {
                 artistDescription={profile.club.description}
                 artistIcon={profile.imageUrl}
                 onPressFunction={() => {
-                  navigation.navigate("viewFanclubPage");
+                  navigation.navigate("viewFanclubPage", {
+                    clubName: profile.club.name,
+                    artistDescription: profile.club.description,
+                    key: profile._id,
+                    token: route.params.token,
+                  });
                   // navigation.navigate('ArtistPage', {clubName: 'The Weeknd'});  use this to add navigationability
                 }}
                 // artistIcon: require("../../assets/soft-ui-pro-react-native-v1.1.1/avatar23x.png"),

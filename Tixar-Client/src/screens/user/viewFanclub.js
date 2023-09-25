@@ -10,13 +10,35 @@ import {
   SafeAreaViewBase,
   SafeAreaView,
   TextInput,
+  TouchableOpacity,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import StatisticBox from "../../components/verifiedFans/statisticBox";
 import ConcertBox from "../../components/verifiedFans/concertBox";
 import NextButton from "../../components/new/nextButton";
 
-export default UserViewFanclub = ({ navigation }) => {
+export default UserViewFanclub = ({ route, navigation }) => {
+  const { clubName, artistDescription, key, token } = route.params;
+
+  const handleDeletePress = () => {
+    console.log(key);
+    fetch(`http://vf.tixar.sg/api/club/${key}`, {
+      method: "DELETE",
+      credentials: "include",
+      headers: { Authorization: token },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("SUCCESSFUL");
+        console.log(data);
+        navigation.navigate("fanDashboardPage", { token: token });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+  console.log(clubName);
+  console.log(artistDescription);
   return (
     <SafeAreaView
       style={{
@@ -32,12 +54,20 @@ export default UserViewFanclub = ({ navigation }) => {
           alignSelf: "center",
         }}
       >
+        {/* <TouchableOpacity
+          style={styles.deleteButton}
+          onPress={console.log("pressed")}
+        >
+          <Image
+            source={require("../../assets/soft-ui-pro-react-native-v1.1.1/apple3x.png")} // Replace with your trash image
+            style={styles.trashIcon}
+          />
+        </TouchableOpacity> */}
+
         <StatisticBox
-          clubName={"Taylor"}
+          clubName={clubName}
           artistIcon={require("../../assets/taylorswifticon.png")}
-          artistDescription={
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla, mattis ligula consectetur, ultrices mauris."
-          }
+          artistDescription={artistDescription}
           points={"1002"}
         />
 
@@ -54,7 +84,14 @@ export default UserViewFanclub = ({ navigation }) => {
           onPressFunction={() => {
             navigation.navigate("redemptionPage");
           }}
+          style={(marginTop = 50)}
         />
+        <TouchableOpacity
+          style={styles.deleteButton}
+          onPress={handleDeletePress}
+        >
+          <Text style={styles.deleteButtonText}>Delete</Text>
+        </TouchableOpacity>
       </View>
 
       <View>
@@ -94,5 +131,16 @@ const styles = StyleSheet.create({
     fontSize: 12,
     position: "absolute",
     alignSelf: "center",
+  },
+  deleteButton: {
+    paddingVertical: 2,
+    borderRadius: 5,
+    marginTop: 20,
+  },
+  deleteButtonText: {
+    color: "blue",
+    fontSize: 14,
+    textAlign: "center",
+    textDecorationLine: "underline",
   },
 });

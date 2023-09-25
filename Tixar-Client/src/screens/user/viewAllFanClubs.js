@@ -58,13 +58,13 @@ export default AdminDashboard = ({ route, navigation }) => {
         </ScrollView>
 
         {/* Next Button */}
-        <View style={styles.buttonContainer}>
+        {/* <View style={styles.buttonContainer}>
           <NextButton
             buttonText={"Create New Fanclub"}
             onPressFunction={() => navigation.navigate("createClubPage")} //place holder destination, change to create new fanclub page
             buttonHeight={50}
           />
-        </View>
+        </View> */}
       </View>
     </SafeAreaView>
   );
