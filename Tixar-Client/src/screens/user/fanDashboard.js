@@ -53,13 +53,14 @@ export default FanDashboard = ({ route, navigation }) => {
           {profiles.map((profile) => {
             console.log(profile);
             console.log(profile.points);
+            console.log(profile.club.imageUrl);
             return (
               <ArtistBlock
                 key={profile._id} // Add a unique key prop
                 points={profile.points}
                 clubName={profile.club.name} // Use clubName, not clubname
                 artistDescription={profile.club.description}
-                artistIcon={profile.imageUrl}
+                artistIcon={profile.club.imageUrl}
                 onPressFunction={() => {
                   navigation.navigate("viewFanclubPage", {
                     clubName: profile.club.name,
