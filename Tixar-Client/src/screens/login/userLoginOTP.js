@@ -48,7 +48,8 @@ export default UserLoginOTPPage = ({ route, navigation }) => {
         if (response.ok) {
           return response.json();
         } else {
-          throw new Error("Failed to login");
+          console.log("Error code: " + response.status)
+          throw new Error(response.status);
         }
       })
       .then((data) => {
@@ -57,9 +58,18 @@ export default UserLoginOTPPage = ({ route, navigation }) => {
         navigation.navigate('drawer', {token: data.token});
       })
       .catch((error) => {
-        console.log("OTP invalid, login unsuccessful")
-        Alert.alert("Login failed", error.message);
-      });
+        console.log("OTP verification unsuccessful")
+        if (error.message === "400") {
+          console.log("OTP Expired")
+          Alert.alert("OTP Expired", "Please request for a new OTP");
+        } else if (error.message === "401") {
+          console.log("Invalid OTP")
+          Alert.alert("Invalid OTP", "Please enter a valid OTP");
+        } else {
+          console.log("Login failed, please try again");
+          Alert.alert("Login failed", "please try again");
+        }
+    });
   };
 
       // function to handle phone number authentication request
