@@ -18,19 +18,19 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import HeaderBlock from "../../components/login/headerBlock";
 import PhoneInput from "react-native-phone-number-input";
-import AuthContext from '../../../AuthContext';
+import AuthContext from "../../../AuthContext";
 
 export default UserLoginOTPPage = ({ route, navigation }) => {
-  const {phoneNumber} = route.params;
+  const { phoneNumber } = route.params;
   const [otp, setotp] = useState("");
   const { setToken } = useContext(AuthContext);
 
-    // function to handle OTP input as user types
+  // function to handle OTP input as user types
   const handleOTP = (number) => {
     setotp(number);
   };
 
-    // function to handle otp and login request
+  // function to handle otp and login request
   const handleOTPLogin = () => {
     const endPoint = "http://rt.tixar.sg/api/login";
     const payload = {
@@ -46,139 +46,137 @@ export default UserLoginOTPPage = ({ route, navigation }) => {
       body: JSON.stringify(payload),
     })
       .then((response) => {
-        console.log("attempting to authenticate OTP")
+        console.log("attempting to authenticate OTP");
         if (response.ok) {
           return response.json();
         } else {
-          console.log("Error code: " + response.status)
+          console.log("Error code: " + response.status);
           throw new Error(response.status);
         }
       })
       .then((data) => {
-        console.log("OTP valid, login successful")
-        console.log("Token: " + data.token)
-        setToken(data.token)
-        
+        console.log("OTP valid, login successful");
+        console.log("Token: " + data.token);
+        setToken(data.token);
+
         Alert.alert("Login successful", "Welcome");
-        navigation.navigate('drawer', {token: data.token});
+        navigation.navigate("drawer", { token: data.token });
       })
       .catch((error) => {
-        console.log("OTP verification unsuccessful")
+        console.log("OTP verification unsuccessful");
         if (error.message === "400") {
-          console.log("OTP Expired")
+          console.log("OTP Expired");
           Alert.alert("OTP Expired", "Please request for a new OTP");
         } else if (error.message === "401") {
-          console.log("Invalid OTP")
+          console.log("Invalid OTP");
           Alert.alert("Invalid OTP", "Please enter a valid OTP");
         } else {
           console.log("Login failed, please try again");
           Alert.alert("Login failed", "please try again");
         }
-    });
+      });
   };
 
-      // function to handle phone number authentication request
-      const handleOTPResend = () => {
-        const endPoint = "http://rt.tixar.sg/api/otp/request";
-        const payload = {
-          phone: phoneNumber,
-        };
-    
-        fetch(endPoint, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(payload),
-        })
-          .then((response) => {
-            if (response.ok) {
-                console.log("OTP resend request successful");
-              return response.json();
-            } else {
-                console.log("OTP resend unsuccessful")
-              throw new Error("Failed to login");
-            }
-          })
-          .then((data) => {
-            console.log("OTP resent Successfully")
-            Alert.alert("OTP resent", "Please check your phone for the OTP")
-          })
-          .catch((error) => {
-            console.log("OTP resend unsuccessful")
-            Alert.alert("Login failed", error.message);
-          });
-      };
+  // function to handle phone number authentication request
+  const handleOTPResend = () => {
+    const endPoint = "http://rt.tixar.sg/api/otp/request";
+    const payload = {
+      phone: phoneNumber,
+    };
+
+    fetch(endPoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log("OTP resend request successful");
+          return response.json();
+        } else {
+          console.log("OTP resend unsuccessful");
+          throw new Error("Failed to login");
+        }
+      })
+      .then((data) => {
+        console.log("OTP resent Successfully");
+        Alert.alert("OTP resent", "Please check your phone for the OTP");
+      })
+      .catch((error) => {
+        console.log("OTP resend unsuccessful");
+        Alert.alert("Login failed", error.message);
+      });
+  };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <ImageBackground
         source={require("../../assets/images/loginbackground.png")}
         style={styles.imageBackground}
       >
         {/* TIXAR header */}
-        <Text style={styles.headerText}>TIXAR</Text>
-        <Text style={styles.subHeaderText}>Get verified. Get priority.</Text>
+        <View style={styles.headerContainer}>
+          <Text style={styles.headerText}>TIXAR</Text>
+          <Text style={styles.subHeaderText}>Get verified. Get priority.</Text>
+        </View>
 
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <KeyboardAvoidingView style={styles.container} behavior="padding">
-                {/* Login form */}
-                <View style={styles.loginContainer}>
-                    <View style={{ height: 50 }}>
-                        <Text style={styles.loginHeader}>Enter the OTP sent to +{phoneNumber}</Text>
-                    </View>
-                    <View style={{ height: 20 }} />
+          <KeyboardAvoidingView style={styles.container} behavior="padding">
+            {/* Login form */}
+            <View style={styles.loginContainer}>
+              <Text style={styles.loginHeader}>
+                Enter the OTP sent to +{phoneNumber}
+              </Text>
 
-                    <View style={styles.loginLine}>
-                        {/* code */}
-                        <TextInput
-                            style={styles.OTPInput}
-                            placeholder="Enter OTP"
-                            placeholderTextColor="#252F40"
-                            keyboardType="numeric"
-                            maxLength={6}
-                            onChangeText={handleOTP}
-                        />
-                    </View>
+              <View style={styles.loginLine}>
+                {/* code */}
+                <TextInput
+                  style={styles.OTPInput}
+                  placeholder="Enter OTP"
+                  placeholderTextColor="#252F40"
+                  keyboardType="numeric"
+                  maxLength={6}
+                  onChangeText={handleOTP}
+                />
+              </View>
 
-                    {/* Buttons */}
-                    <View style={styles.buttonRow}>
-                        <Pressable
-                            style = {styles.backButton}
-                            onPress={() => {
-                                navigation.goBack()
-                            }}>
-                            <Text style = {styles.buttonText}>Back</Text>
-                        </Pressable>
-                        <Pressable
-                            style = {styles.continueButton}
-                            onPress={() => {
-                                handleOTPLogin();
-                            }}>
-                            <Text style = {styles.buttonText}>Continue</Text>
-                        </Pressable>
+              {/* Buttons */}
+              <View style={styles.buttonRow}>
+                <Pressable
+                  style={styles.button}
+                  onPress={() => {
+                    navigation.goBack();
+                  }}
+                >
+                  <Text style={styles.buttonText}>Back</Text>
+                </Pressable>
+                <Pressable
+                  style={styles.button}
+                  onPress={() => {
+                    handleOTPLogin();
+                  }}
+                >
+                  <Text style={styles.buttonText}>Continue</Text>
+                </Pressable>
+              </View>
 
-                    </View>
-
-                    <View style={styles.resendButton}>
-                    <Pressable
-                        style = {{flex: 1}}
-                        onPress={() => {
-                            handleOTPResend()
-                        }}>
-                        <Text style={styles.resendText}>Resend OTP</Text>
-                    </Pressable>
-                    </View>
-
-                </View>
-                <View style={{ height: 50 }} />
-            </KeyboardAvoidingView>
+              <View style={styles.resendButton}>
+                <Pressable
+                  // style={{ flex: 1 }}
+                  onPress={() => {
+                    handleOTPResend();
+                  }}
+                >
+                  <Text style={styles.resendText}>Resend OTP</Text>
+                </Pressable>
+              </View>
+            </View>
+          </KeyboardAvoidingView>
         </TouchableWithoutFeedback>
-
-        {/* TIXAR footer */}
-        <Text style={styles.footerText}>TIXAR</Text>
       </ImageBackground>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -186,83 +184,82 @@ const styles = StyleSheet.create({
   // CONTAINERS
   container: {
     flex: 1,
+    justifyContent: "flex-end",
+    // backgroundColor: "red",
   },
   imageBackground: {
     flex: 1,
+    
   },
   loginContainer: {
-    top: "75%",
-    height: "20%",
+    flexDirection: "column",
+    justifyContent: "flex-end",
+    marginBottom: "5%",
+    // backgroundColor: "blue",
   },
 
   // TIXAR HEADER
+  headerContainer: {
+    position: "absolute",
+    alignSelf: "center",
+    alignItems: "center",
+    top: "20%",
+    // backgroundColor: "green",
+  },
   headerText: {
     fontFamily: "Lato-Bold",
     fontSize: 75,
-    position: "absolute",
-    alignSelf: "center",
     color: "#FFFFFF",
-    top: "20%",
+    // backgroundColor: "red",
   },
   subHeaderText: {
     fontFamily: "Lato-Regular",
-    fontSize: 18,
-    position: "absolute",
-    alignSelf: "center",
+    fontSize: 20,
     color: "#FFFFFF",
-    top: "30%",
     lineHeight: 20,
+    // backgroundColor: "blue",
   },
 
   //BUTTONS
   buttonRow: {
-    width: '75%', 
-    height: 45, 
-    flexDirection: "row", 
-    top: 30,
-    alignSelf: 'center',
-    justifyContent: 'space-between',
+    width: "75%",
+    height: 45,
+    flexDirection: "row",
+    alignSelf: "center",
+    justifyContent: "space-between",
+    // backgroundColor: "green",
   },
-  backButton: {
+  button: {
     backgroundColor: "#FFFFFF",
     borderRadius: 50,
-    width: '47%',
+    width: "47%",
+    justifyContent: "center",
   },
-  continueButton: {
-    backgroundColor: "#FFFFFF",
-    borderRadius: 50,
-    width: '47%'
-  },
-    buttonText: {
+  buttonText: {
     fontSize: 15,
     fontFamily: "Lato-Bold",
     color: "#252F40",
     lineHeight: 20,
-    textAlign: 'center',
-    textAlignVertical: 'center',
-    height: '100%',
-    },
+    textAlign: "center",
+    // backgroundColor: "orange",
+  },
 
-    // OTP RESEND
-    OTPResend: {
-        flex: 1
-    },
-    resendButton: {
-        width: '20%', 
-        height: 25, 
-        flexDirection: "row", 
-        top: 40,
-        alignSelf: 'center',
-        alignItems: 'center',
-    },
-    resendText: {
-        fontFamily: "Lato-Regular",
-        fontSize: 12,
-        color: "#FFFFFF",
-        lineHeight: 20,
-        textAlign: 'center',
-        textDecorationLine: 'underline',
-    },
+  // OTP RESEND
+  OTPResend: {
+    flex: 1,
+  },
+  resendButton: {
+    marginTop: 20,
+    // backgroundColor: "purple",
+  },
+  resendText: {
+    fontFamily: "Lato-Regular",
+    fontSize: 12,
+    color: "#FFFFFF",
+    lineHeight: 20,
+    textAlign: "center",
+    textDecorationLine: "underline",
+  },
 
   //PHONE NUMBER INPUT
   OTPInput: {
@@ -274,34 +271,24 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     flex: 1,
     borderRadius: 50,
-    },
+  },
 
   // LOGIN LINE
   loginHeader: {
+    //the prompt text
     fontFamily: "Lato-Bold",
     fontSize: 18,
-    position: "absolute",
     alignSelf: "center",
     color: "#FFFFFF",
     lineHeight: 25,
   },
   loginLine: {
-    position: "absolute",
+    // container holding the otp input
     alignSelf: "center",
     width: "75%",
-    top: 40,
     height: 45,
     flexDirection: "row",
-    borderRadius: 50,
-  },
-
-  // TIXAR FOOTER
-  footerText: {
-    fontFamily: "Lato-Regular",
-    fontSize: 12,
-    position: "absolute",
-    alignSelf: "center",
-    bottom: "1%",
-    color: "#8F8F8F",
+    // backgroundColor: "purple",
+    marginVertical: 20,
   },
 });

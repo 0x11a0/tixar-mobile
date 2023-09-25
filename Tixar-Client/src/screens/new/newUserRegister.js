@@ -4,21 +4,19 @@ import {
   Text,
   StyleSheet,
   SafeAreaView,
-  Image,
-  Pressable,
   TextInput,
   ImageBackground,
   Alert,
   TouchableWithoutFeedback,
   Keyboard,
   KeyboardAvoidingView,
+  Pressable,
+  Image,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import ConditionalButton from "../../components/new/conditionalButton";
-import BackButton from "../../components/new/backButton";
 
 export default NewUserRegistrationPage = ({ route, navigation }) => {
-  const {phoneNumber} = route.params;
+  const { phoneNumber } = route.params;
   //states for text input fields
   const [firstNameField, setFirstName] = useState("");
   const [lastNameField, setlastName] = useState("");
@@ -47,115 +45,130 @@ export default NewUserRegistrationPage = ({ route, navigation }) => {
     );
   };
 
-      // function to handle new user registration
-      const handleRegister = () => {
-        const endPoint = "http://rt.tixar.sg/api/register";
-        const payload = {
-          phone: phoneNumber,
-          firstName: firstNameField,
-          lastName: lastNameField,
-          email: emailField,
-        };
-    
-        fetch(endPoint, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(payload),
-        })
-          .then((response) => {
-            if (response.ok) {
-                console.log("Registration request successful");
-              return response.json();
-            } else {
-                console.log("Registration request unsuccessful")
-              throw new Error("Failed to login");
-            }
-          })
-          .then((data) => {
-            // upon successful verification of phone number, navigate to login
-            Alert.alert("Registration successful", "Please login with your details");
-            console.log("Registration successful, Navigating back to login page")
-            navigation.goBack();
-          })
-          .catch((error) => {
-            console.log("Registration failed, try again")
-            Alert.alert("Registration failed", error.message);
-            // insert navigation to register page here
-          });
-      };
+  // function to handle new user registration
+  const handleRegister = () => {
+    const endPoint = "http://rt.tixar.sg/api/register";
+    const payload = {
+      phone: phoneNumber,
+      firstName: firstNameField,
+      lastName: lastNameField,
+      email: emailField,
+    };
+
+    fetch(endPoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log("Registration request successful");
+          return response.json();
+        } else {
+          console.log("Registration request unsuccessful");
+          throw new Error("Failed to login");
+        }
+      })
+      .then((data) => {
+        // upon successful verification of phone number, navigate to login
+        Alert.alert(
+          "Registration successful",
+          "Please login with your details"
+        );
+        console.log("Registration successful, Navigating back to login page");
+        navigation.goBack();
+      })
+      .catch((error) => {
+        console.log("Registration failed, try again");
+        Alert.alert("Registration failed", error.message);
+        // insert navigation to register page here
+      });
+  };
 
   //rendered items
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-    <ImageBackground
-      source={require("../../assets/purpleConcertBackground.png")}
-      style={styles.backgroundImage}
-      blurRadius={5} // Adjust the blur radius as needed
-    >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <SafeAreaView style={styles.container}>
-      
-        {/* Translucent card */}
-        <View style={styles.translucentCard}>
-        <BackButton navigation={navigation} />
-        
-        <KeyboardAvoidingView style={{width: '100%', height: '100%', alignItems: "center",}} behavior="padding">
+      <ImageBackground
+        source={require("../../assets/purpleConcertBackground.png")}
+        style={styles.backgroundImage}
+        blurRadius={5} // Adjust the blur radius as needed
+      >
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <SafeAreaView style={styles.container}>
+            {/* Translucent card */}
+            <View style={styles.translucentCard}>
+              {/* Back button*/}
+              <Pressable
+                //on press function
+                onPress={() => {
+                  console.log("returning to login page");
+                  navigation.goBack();
+                }}
+              >
+                <Image
+                  style={styles.backButtonContainer}
+                  source={require("../../assets/backArrowBlack.png")}
+                />
+              </Pressable>
 
-          
-          {/* TIXAR header */}
-          <Text style={styles.cardTextHeader}>TIXAR</Text>
-          <Text style={styles.cardText}>Create Your Profile.</Text>
+              <KeyboardAvoidingView
+                style={{ width: "100%", height: "100%", alignItems: "center" }}
+                behavior="padding"
+              >
+                {/* TIXAR header */}
+                <Text style={styles.cardTextHeader}>TIXAR</Text>
+                <Text style={styles.cardText}>Create Your Profile.</Text>
 
-          <View style={{ height: "10%" }}></View>
-          <Text style={styles.cardTextSubtle}>Creating an account for +{phoneNumber}</Text>
-          {/* Email field */}
-          <View style={styles.fieldBox}>
-            <TextInput
-              style={styles.fieldText}
-              onChangeText={handleEmail}
-              value={emailField}
-              placeholder="Email"
-              autoCapitalize="none"
-            />
-          </View>
+                <View style={{ height: "10%" }}></View>
+                <Text style={styles.cardTextSubtle}>
+                  Creating an account for +{phoneNumber}
+                </Text>
+                {/* Email field */}
+                <View style={styles.fieldBox}>
+                  <TextInput
+                    style={styles.fieldText}
+                    onChangeText={handleEmail}
+                    value={emailField}
+                    placeholder="Email"
+                    autoCapitalize="none"
+                  />
+                </View>
 
-          {/* First Name Input Field */}
-          <View style={styles.fieldBox}>
-            <TextInput
-              style={styles.fieldText}
-              onChangeText={handleFirstName}
-              value={firstNameField}
-              placeholder="First Name"
-            />
-          </View>
+                {/* First Name Input Field */}
+                <View style={styles.fieldBox}>
+                  <TextInput
+                    style={styles.fieldText}
+                    onChangeText={handleFirstName}
+                    value={firstNameField}
+                    placeholder="First Name"
+                  />
+                </View>
 
-          {/* Last Name Input Field */}
-          <View style={styles.fieldBox}>
-            <TextInput
-              style={styles.fieldText}
-              onChangeText={handleLastName}
-              value={lastNameField}
-              placeholder="Last Name"
-            />
-          </View>
+                {/* Last Name Input Field */}
+                <View style={styles.fieldBox}>
+                  <TextInput
+                    style={styles.fieldText}
+                    onChangeText={handleLastName}
+                    value={lastNameField}
+                    placeholder="Last Name"
+                  />
+                </View>
 
-          {/* Continue Button HEEEEEREEEE THANKS HEHE */}
-          <ConditionalButton
-            credentialCheck={credentialCheck}
-            onPressFunction={handleRegister}
-            navigation={navigation}
-          />
-
-          </KeyboardAvoidingView>
-        </View>
-        
-        
-      </SafeAreaView>
-      </TouchableWithoutFeedback>
-      
-    </ImageBackground>
+                {/* Continue Button HEEEEEREEEE THANKS HEHE */}
+                <View style={styles.conditionalButtonContainer}>
+                  <ConditionalButton
+                    credentialCheck={credentialCheck}
+                    onPressFunction={handleRegister}
+                    navigation={navigation}
+                  />
+                </View>
+              </KeyboardAvoidingView>
+            </View>
+          </SafeAreaView>
+        </TouchableWithoutFeedback>
+      </ImageBackground>
     </TouchableWithoutFeedback>
   );
 };
@@ -172,16 +185,29 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+
+  //translucent card for background
   translucentCard: {
-    height: "80%",
+    height: "90%",
     width: "85%",
     backgroundColor: "rgba(255, 255, 255, 0.75)",
     borderRadius: 15,
     alignItems: "center",
     justifyContent: "flex-start",
-    paddingTop: "25%",
+    paddingTop: 20,
   },
 
+  //back button
+  backButtonContainer: {
+    position: "relative",
+    left: "-40%",
+    width: 30,
+    height: 30,
+    resizeMode: "contain",
+    // backgroundColor: "red",
+  },
+
+  //header
   cardTextHeader: {
     fontSize: 64,
     fontFamily: "Lato-Bold",
@@ -203,11 +229,11 @@ const styles = StyleSheet.create({
   fieldBox: {
     flexDirection: "row",
     height: 56,
-    width: "86%",
+    width: "80%",
     borderRadius: 10,
     borderColor: "#1A1A1A",
     borderWidth: 1,
-    marginTop: 26,
+    marginTop: 25,
   },
   fieldText: {
     flex: 1,
@@ -216,5 +242,13 @@ const styles = StyleSheet.create({
     fontFamily: "Lato-Regular",
     color: "#8F8F8F",
     paddingRight: 35,
+  },
+
+  //conditional button
+  conditionalButtonContainer: {
+    marginTop: 20,
+    width: "100%",
+    alignItems: "center",
+    // backgroundColor: "red",
   },
 });

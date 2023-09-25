@@ -4,7 +4,6 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 export default ConditionalButton = ({ 
     credentialCheck, 
-    navigation,
     onPressFunction,
 }) => {
     
@@ -46,13 +45,13 @@ export default ConditionalButton = ({
 const styles = StyleSheet.create({
     
     buttonBackground: {
-        marginTop: 55,
+        // marginTop: 55,
         borderRadius: 8,
-        width: '86%',
+        width: '80%',
         height: 40,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'red',
+        // backgroundColor: 'red',
     },
 
     textEnabled: {
