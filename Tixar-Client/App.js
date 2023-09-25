@@ -39,6 +39,7 @@ import CreateClub from './src/screens/new/adminCreateClub';
 import ManageFanclub from './src/screens/new/adminManageFanclub';
 import adminManageFans from './src/screens/new/adminManageFans';
 import ManageActiveCodes from './src/screens/new/manageActiveCodes';
+import AuthContext from './AuthContext';
 
 export default function App() {
     const [fontsLoaded] = useFonts({
@@ -47,6 +48,7 @@ export default function App() {
         'Lato-Light': require('./src/assets/fonts/Lato/Lato-Light.ttf'),
     });
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [token, setToken] = useState(null);
 
     if (fontsLoaded) {
         console.log('fonts loaded');
@@ -62,6 +64,7 @@ export default function App() {
     const Stack = createNativeStackNavigator();
 
     return (
+        <AuthContext.Provider value={{ token, setToken }}>
         <SafeAreaProvider>
             <NavigationContainer>
 
@@ -163,6 +166,7 @@ export default function App() {
                 </Stack.Navigator>
             </NavigationContainer>
         </SafeAreaProvider>
+        </AuthContext.Provider>
     );
 }
 

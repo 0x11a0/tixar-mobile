@@ -1,4 +1,4 @@
-import { React, useState, useRef } from "react";
+import { React, useState, useRef, useContext } from "react";
 import {
   TouchableOpacity,
   Button,
@@ -18,10 +18,12 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import HeaderBlock from "../../components/login/headerBlock";
 import PhoneInput from "react-native-phone-number-input";
+import AuthContext from '../../../AuthContext';
 
 export default UserLoginOTPPage = ({ route, navigation }) => {
   const {phoneNumber} = route.params;
-    const [otp, setotp] = useState("");
+  const [otp, setotp] = useState("");
+  const { setToken } = useContext(AuthContext);
 
     // function to handle OTP input as user types
   const handleOTP = (number) => {
@@ -54,7 +56,10 @@ export default UserLoginOTPPage = ({ route, navigation }) => {
       })
       .then((data) => {
         console.log("OTP valid, login successful")
-        // Alert.alert("Login successful", "Welcome");
+        console.log("Token: " + data.token)
+        setToken(data.token)
+        
+        Alert.alert("Login successful", "Welcome");
         navigation.navigate('drawer', {token: data.token});
       })
       .catch((error) => {

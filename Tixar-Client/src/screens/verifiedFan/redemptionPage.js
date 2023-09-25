@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import { React, useState } from 'react';
+import { React, useState, useContext } from 'react';
 import { View, 
          Text, 
          StyleSheet, 
@@ -11,13 +11,14 @@ import { View,
          Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import card33x from '../../assets/images/card33x.png';
-
+import AuthContext from '../../../AuthContext';
 
 
 export default RedemptionPage = ({navigation}) => {
 
     const [code, setCode] = useState('');
     const [canRedeem, setCanRedeem] = useState(false);
+    const { token } = useContext(AuthContext);
 
     const handleCode = (text) => {
         setCode(text);
@@ -98,7 +99,8 @@ export default RedemptionPage = ({navigation}) => {
             {/* Redeem button */}
             <RedeemButton code={code} canRedeem={canRedeem}
                         navigation={navigation} 
-                        handleRedemption={handleRedemption}/>
+                        handleRedemption={handleRedemption}
+                        token = {token}/>
 
             {/* FAQ */}
             <Text style={styles.faqText}>
@@ -125,7 +127,7 @@ export default RedemptionPage = ({navigation}) => {
 
 }
 
-const RedeemButton = ({ canRedeem, code, navigation , handleRedemption}) => {
+const RedeemButton = ({ canRedeem, code, navigation , handleRedemption, token}) => {
     return (
         <LinearGradient colors={
             canRedeem ?
@@ -137,6 +139,7 @@ const RedeemButton = ({ canRedeem, code, navigation , handleRedemption}) => {
                 onPress={() => {
                     if (canRedeem) {
                         // Redeem code here
+                        // console.log("Token: " + token);
                         console.log(' Attempting to redeem code: "' + code + '"');
                         handleRedemption();
                     } else {
