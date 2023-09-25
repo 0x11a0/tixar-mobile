@@ -36,8 +36,8 @@ export default BackButton = ({ navigation }) => {
 styles = StyleSheet.create({
     backButton: {
         position: 'absolute',
-        top: "5%",
-        left: "5%",
+        top: '5%',
+        left: '5%',
     },
 
     backIcon: {
