@@ -40,6 +40,7 @@ export default AdminDashboard = ({ route, navigation }) => {
           {clubs.map((club) => {
             return (
               <ClubsCard
+                key={club._id}
                 clubId={club._id}
                 onPressFunction={() => {
                   console.log("pressed");
