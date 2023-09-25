@@ -1,17 +1,11 @@
 import { React, useState, useEffect } from "react";
 import {
-  FlatList,
   View,
   Text,
   StyleSheet,
   ScrollView,
-  Pressable,
-  Image,
-  SafeAreaViewBase,
   SafeAreaView,
-  TextInput,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import ArtistBlock from "../../components/verifiedFans/artistBlock";
 import NextButton from "../../components/new/nextButton";
 
@@ -68,7 +62,6 @@ export default FanDashboard = ({ route, navigation }) => {
                     key: profile._id,
                     token: route.params.token,
                   });
-                  // navigation.navigate('ArtistPage', {clubName: 'The Weeknd'});  use this to add navigationability
                 }}
                 // artistIcon: require("../../assets/soft-ui-pro-react-native-v1.1.1/avatar23x.png"),
               />
@@ -85,58 +78,20 @@ export default FanDashboard = ({ route, navigation }) => {
         />
       </View>
 
-      <View></View>
-      <Text style={styles.footerText}>TIXAR</Text>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  // redeem button
-  redeemBackground: {
-    width: "86%",
-    height: 50,
-    borderRadius: 8,
-    marginTop: 15,
-    alignSelf: "center",
-  },
-  redeemButton: {
-    width: "100%",
-    height: 50,
-    borderRadius: 8,
-    alignItems: "center",
-    justifyContent: "center",
-    alignSelf: "center",
-  },
-  redeemText: {
-    fontSize: 15,
-    fontFamily: "Lato-Bold",
-    color: "#3A416F",
-  },
-  // list
-  list: {
-    width: "90%",
-    alignSelf: "center",
-    marginTop: 15,
-    marginBottom: 15,
-  },
 
+  // list
   flatListContainer: {
     // backgroundColor: "red",
-    height: "89%",
+    height: "85%",
   },
 
   contentContainer: {
     flex: 0.97,
     backgroundColor: "#F8F9FA",
-  },
-
-  // footer
-  footerText: {
-    bottom: 15,
-    fontFamily: "Lato-Regular",
-    fontSize: 12,
-    position: "absolute",
-    alignSelf: "center",
   },
 });

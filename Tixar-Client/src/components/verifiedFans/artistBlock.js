@@ -1,4 +1,5 @@
 import { View, Image, Text, Pressable, StyleSheet } from "react-native";
+import { useState } from "react";
 
 export default ArtistBlock = ({
   clubName,
@@ -7,6 +8,16 @@ export default ArtistBlock = ({
   artistIcon,
   onPressFunction,
 }) => {
+  const [isPressed, setIsPressed] = useState(false);
+
+  const handleHeartPress = () => {
+    // Toggle the isPressed state here
+    setIsPressed(!isPressed);
+
+    // You can add your logic for favoriting/unfavoriting here
+    // For now, I'm just toggling the isPressed state
+  };
+
   return (
     <Pressable
       style={styles.container}
@@ -24,29 +35,34 @@ export default ArtistBlock = ({
         <View style={styles.artistTextContainer}>
           {/* SPLITS INTO TITLE ROW AND DESCRIPTION ROW */}
           <View style={{ flexDirection: "column" }}>
-            {/* TITLE ROW, SPLITS INTO ARTIST NAME AND POINTS */}
-            <View style={{ flexDirection: "row" }}>
-              <Text style={styles.clubName} numberOfLines={1}>
-                {clubName}
-              </Text>
+            <Text style={styles.clubName} numberOfLines={1}>
+              {clubName}
+            </Text>
 
-              <Text style={styles.pointText}>Your points: {points}</Text>
-            </View>
-
-            {/* BUFFER BETWEEN ROWS */}
-            <View style={{ height: 5 }} />
+            <Text style={styles.pointText} numberOfLines={1}>
+              Your points: {points}
+            </Text>
 
             {/* DESCRIPTION ROW */}
-            <View style={{ flexDirection: "row" }}>
-              <Text style={styles.artistDescription} numberOfLines={2}>
-                {artistDescription}
-              </Text>
-              <View style={styles.iconBox}>
+            <View style={styles.textConainer}>
+              <View style={styles.descriptionContainer}>
+                <Text style={styles.artistDescription} numberOfLines={2}>
+                  {artistDescription}
+                </Text>
+              </View>
+
+              {/* FAVORITE ICON */}
+              <Pressable onPress={handleHeartPress} style={styles.iconBox}>
+                {/* <View style={styles.iconBox}> */}
                 <Image
-                  style={styles.favoriteIcon}
+                  style={[
+                    styles.favoriteIcon,
+                    { tintColor: isPressed ? "red" : "#252F40" },
+                  ]}
                   source={require("../../assets/favoriteiconfilled.png")}
                 />
-              </View>
+                {/* </View> */}
+              </Pressable>
             </View>
           </View>
         </View>
@@ -57,8 +73,8 @@ export default ArtistBlock = ({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#E0E4EA",
-    height: 80,
+    backgroundColor: "white",
+    height: 100,
     borderRadius: 20,
     paddingTop: 5,
     width: "100%",
@@ -83,32 +99,47 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontFamily: "Lato-Bold",
     color: "#252F40",
-    flex: 1,
+    marginRight: 15,
+    // backgroundColor: "yellow",
   },
   pointText: {
-    fontSize: 15,
-    fontFamily: "Lato-Bold",
+    fontSize: 14,
+    fontFamily: "Lato-Light",
     color: "#252F40",
-    alignSelf: "flex-end",
-    textAlign: "right",
+    textAlign: "left",
     marginRight: 15,
-    flex: 1,
+    marginTop: 5,
+    // backgroundColor: "red",
   },
+
+  // description row + icon
+  textConainer: {
+    marginTop: 8,
+    flexDirection: "row",
+    height: 40,
+    // backgroundColor: "blue",
+  },
+
+  descriptionContainer: {
+    flex: 8,
+    // backgroundColor: "yellow",
+  },
+
   artistDescription: {
     fontFamily: "Lato-Regular",
     color: "#252F40",
-    width: "80%",
     flex: 8,
-    marginRight: 15,
   },
+
+  // favourite icon
   iconBox: {
-    flex: 1,
-    alignItems: "flex-end",
-    justifyContent: "flex-end",
+    flex: 2,
+    alignItems: "center",
+    justifyContent: "center",
+    // backgroundColor: "red",
   },
   favoriteIcon: {
     width: 15,
     height: 15,
-    marginRight: 15,
   },
 });
