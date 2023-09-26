@@ -67,6 +67,11 @@ export default RedemptionPage = ({navigation}) => {
             flex: 1,
             backgroundColor: "#F8F9FA",
         }}
+      >
+        <Text
+          style={
+            canRedeem ? styles.redeemTextEnabled : styles.redeemTextDisabled
+          }
         >
             {/* Header box stuff */}
             <View style={styles.headerContainer}>
@@ -154,7 +159,7 @@ const RedeemButton = ({ canRedeem, code, navigation , handleRedemption, token}) 
                     : styles.redeemTextDisabled}>
                     Redeem</Text>
             </Pressable>
-        </LinearGradient >
+        </LinearGradient>
     )
 }
 
