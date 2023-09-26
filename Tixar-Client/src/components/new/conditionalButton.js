@@ -4,7 +4,6 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 export default ConditionalButton = ({ 
     credentialCheck, 
-    navigation,
     onPressFunction,
 }) => {
     
@@ -20,19 +19,16 @@ export default ConditionalButton = ({
             
                 //on press function
                 onPress={() => {
-                    onPressFunction();
-                    // if (credentialCheck) {
-
-                    //     // link the create profile back end here
-                    //     console.log('Creating profile');
-
-                    //     //navigate to page (change to dashboard page)
-                    //     navigation.navigate('accountSettingsPage');
+                    if (credentialCheck) {
+                    
+                        // link the create profile back end here
+                        console.log('Creating profile');
+                        onPressFunction();
                         
-                    // } else {
-                    //     //button is disabled, cannot be pressed
-                    //     console.log('button disabled');
-                    // }
+                    } else {
+                        //button is disabled, cannot be pressed
+                        console.log('button disabled');
+                    }
                 }} >
 
                 {/* button text */}
@@ -49,13 +45,13 @@ export default ConditionalButton = ({
 const styles = StyleSheet.create({
     
     buttonBackground: {
-        marginTop: 55,
+        // marginTop: 55,
         borderRadius: 8,
-        width: '86%',
+        width: '80%',
         height: 40,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'red',
+        // backgroundColor: 'red',
     },
 
     textEnabled: {
