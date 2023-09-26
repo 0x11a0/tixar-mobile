@@ -16,18 +16,35 @@ import {
 import { useFocusEffect } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
 import HeaderBlock from "./headerBlockUserProfile";
-import { useIsFocused } from "@react-navigation/native"; // Import useIsFocused
+import { useIsFocused, useNavigation } from "@react-navigation/native"; // Import useIsFocused
 import nextButton from "../../components/viewConcert/nextButton";
+// import { useNavigation } from "react-navigation-hooks";
 
 const userEdit = ["Ewallet", "Edit", "Settings"];
 
 export default UserProfile = ({ route, navigation }) => {
+  console.log("user profile");
   let [firstName, setFirstName] = useState("");
   let [lastName, setLastName] = useState("");
   let [email, setEmail] = useState("");
   let [phoneNumber, setPhoneNumber] = useState("");
 
-  const isFocused = useIsFocused(); // Use useIsFocused to check if the screen is focused
+  // const isFocused = useIsFocused(); // Use useIsFocused to check if the screen is focused
+  // console.log("HERE");
+  // useEffect(() => {
+  //   console.log("use effect");
+  //   if (isFocused) {
+  //     console.log("running get user");
+  //     getUser(); // Fetch data when the screen is focused
+  //   }
+  // }, [isFocused]); // Use isFocused as a dependency in useEffect
+
+  useEffect(() => {
+    navigation.addListener("focus", () => {
+      console.log("reloaded");
+      getUser();
+    });
+  }, [navigation]);
 
   const parsePhoneNumber = (phoneNum) => {
     // convert phone number to formatter phone number
@@ -54,12 +71,6 @@ export default UserProfile = ({ route, navigation }) => {
         console.error(error);
       });
   };
-
-  useEffect(() => {
-    if (isFocused) {
-      getUser(); // Fetch data when the screen is focused
-    }
-  }, [isFocused]); // Use isFocused as a dependency in useEffect
 
   return (
     <SafeAreaView style={styles.container}>
