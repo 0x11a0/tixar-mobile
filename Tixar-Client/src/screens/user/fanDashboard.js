@@ -22,11 +22,18 @@ export default FanDashboard = ({ route, navigation }) => {
       });
   };
 
+  // useEffect(() => {
+  //   // console.log("here is " + route.params.token);
+  //   getProfiles();
+  //   // console.log(profiles);
+  // }, []);
+
   useEffect(() => {
-    // console.log("here is " + route.params.token);
-    getProfiles();
-    // console.log(profiles);
-  }, []);
+    navigation.addListener("focus", () => {
+      console.log("reloaded");
+      getProfiles();
+    });
+  }, [navigation]);
 
   return (
     <SafeAreaView

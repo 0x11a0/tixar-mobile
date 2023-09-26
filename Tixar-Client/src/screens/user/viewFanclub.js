@@ -22,7 +22,7 @@ export default UserViewFanclub = ({ route, navigation }) => {
 
   const handleDeletePress = () => {
     console.log(key);
-    fetch(`http://vf.tixar.sg/api/club/${key}`, {
+    fetch(`http://vf.tixar.sg/api/profile/${key}`, {
       method: "DELETE",
       credentials: "include",
       headers: { Authorization: token },
