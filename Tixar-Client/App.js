@@ -42,11 +42,6 @@ import allClubsDashboard from './src/screens/user/viewAllFanClubs';
 import redemptionPage from './src/screens/verifiedFan/redemptionPage';
 import ViewFanclub from './src/screens/user/viewFanclub';
 import AuthContext from './AuthContext';
-import CreateClub from "./src/screens/new/adminCreateClub";
-import ManageFanclub from "./src/screens/new/adminManageFanclub";
-import adminManageFans from "./src/screens/new/adminManageFans";
-import ManageActiveCodes from "./src/screens/new/manageActiveCodes";
-import GenerateFanCodePage from './src/screens/vf/generateFanCodePage2';
 import ConfirmFanCodePage from './src/screens/vf/generateFanCodePage1';
 
 export default function App() {
