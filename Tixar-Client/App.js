@@ -36,7 +36,7 @@ import UserLoginPage from "./src/screens/login/userLogin";
 import UserRegistrationPage from "./src/screens/login/userRegister";
 import NewUserRegistrationPage from "./src/screens/new/newUserRegister";
 import AccountSettingsPage from "./src/screens/accountSettingsPage";
-import GenerateFanCodePage from "./src/screens/vf/generateFanCodePage2";
+
 import AnimationPage from "./src/screens/animationPage";
 import userTicketsPage from "./src/screens/userTicketsPage";
 import RedemptionPage from "./src/screens/verifiedFan/redemptionPage";
@@ -57,6 +57,8 @@ import CreateClub from "./src/screens/new/adminCreateClub";
 import ManageFanclub from "./src/screens/new/adminManageFanclub";
 import adminManageFans from "./src/screens/new/adminManageFans";
 import ManageActiveCodes from "./src/screens/new/manageActiveCodes";
+import GenerateFanCodePage from './src/screens/vf/generateFanCodePage2';
+import ConfirmFanCodePage from './src/screens/vf/generateFanCodePage1';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -82,7 +84,7 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="newUserLoginPage">
+        <Stack.Navigator initialRouteName="adminDashboard">
           <Stack.Screen
             name="drawer"
             component={DrawerNav}
@@ -248,6 +250,21 @@ export default function App() {
                 headerTitle: "Create Concert",
               }}
             />
+			<Stack.Screen
+              name="generateCodePage"
+              component={GenerateFanCodePage}
+              options={{
+                headerTitle: "Generate Fan Code",
+              }}
+            />
+			<Stack.Screen
+              name="confirmCodePage"
+              component={ConfirmFanCodePage}
+              options={{
+                headerTitle: "Confirm Fan Code",
+              }}
+            />
+
           </Stack.Group>
         </Stack.Navigator>
       </NavigationContainer>

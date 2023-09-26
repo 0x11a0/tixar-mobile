@@ -4,7 +4,7 @@ import ConditionalButton from '../../components/new/conditionalButton';
 import * as ImagePicker from 'expo-image-picker';
 import * as DocumentPicker from 'expo-document-picker';
 
-export default AdminCreateClub = ({ navigation }) => {
+export default AdminCreateClub = ({ route, navigation }) => {
     let image = require('../../../src/assets/thumbnail2.png');
     const handleDocumentSelection = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({

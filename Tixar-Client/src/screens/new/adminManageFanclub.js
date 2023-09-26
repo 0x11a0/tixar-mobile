@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, StyleSheet, SafeAreaView, ScrollView } from 'react-native';
+import {React, useState, useEffect} from 'react';
+import { View, StyleSheet, SafeAreaView, ScrollView, Text } from 'react-native';
 import FanclubCard from '../../components/new/fanclubCard';
 import NextButton from '../../components/new/nextButton';
 import ManageFanclubCard from '../../components/new/manageFanclubCard';
@@ -7,7 +7,58 @@ import manageFanclubMiniCard from '../../components/new/manageFanclubMiniCard';
 import ManageFanclubMiniCard from '../../components/new/manageFanclubMiniCard';
 
 export default ManageFanClub = ({ route, navigation }) => {
-    let club = route.params.club;
+	const token = route.params.token;
+    const clubId = route.params.clubId;
+	const [club, setClub] = useState();
+	const [isLoading, setIsLoading] = useState(true);
+
+	const [codes, setCodes] = useState([]);
+
+	const getCodes = () => {
+		fetch('http://vf.tixar.sg/api/codes', {
+			method: 'GET',
+			credentials: 'include',
+			headers: { 'Authorization':  token}	
+			
+		}).then(response => response.json())
+		.then(data => setCodes(data.filter(entry => entry.club._id === clubId))).catch(error => console.error(error));
+	}
+
+	const getClub = () => {
+         fetch('http://vf.tixar.sg/api/club/' + clubId, {
+            method: 'GET',
+            credentials: 'include',
+            headers: { 'Authorization':  token}	
+        }).then(response => response.json())
+            .then((data) => {
+				setClub(data);				
+            })
+            .catch(error => {
+                console.error(error);
+            }).then(() => {
+				console.log('club is ' + club);
+				setIsLoading(false);});
+	}
+
+
+	useEffect(() => {
+		getCodes();
+        getClub();
+    }, []);
+	
+	if (isLoading) {
+		return (
+			<SafeAreaView style={{
+				flex: 1,
+				backgroundColor: '#F2F2F2',
+				justifyContent: 'center',
+				alignItems: 'center'
+			}}>
+				<Text>Loading ...</Text>
+			</SafeAreaView>
+		);
+	}
+
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#F2F2F2' }}>
@@ -23,10 +74,10 @@ export default ManageFanClub = ({ route, navigation }) => {
                     <ManageFanclubMiniCard
                         // navigationDestination={'NotificationsPage'} //place holder page, change to fans page
                         onPressFunction={() => {
-                            console.log(club);
                             navigation.navigate('adminFansPage', {
-                                clubId: club._id,
-                                members: club.members
+								token: token,
+                                
+								clubId: clubId,
                             });
                         }}
                         title={'Fan Count'}
@@ -38,11 +89,11 @@ export default ManageFanClub = ({ route, navigation }) => {
                         onPressFunction={() => {
                             navigation.navigate('adminCodesPage', {
                                 clubId: club._id,
-                                codes: club.codes
+                                codes: codes
                             });
                         }}
                         title={'Active Codes'}
-                        textDisplay={club.codes.length}
+                        textDisplay={codes.length}
                     />
                 </View>
 
@@ -50,7 +101,12 @@ export default ManageFanClub = ({ route, navigation }) => {
                 <View style={styles.buttonContainer}>
                     <NextButton
                         buttonText={'Generate a Fan Code'}
-                        onPressFunction={() => navigation.navigate('NotificationsPage')} //place holder destination, change to create new fanclub page
+                        onPressFunction={() => navigation.navigate('generateCodePage', {
+							token: token,
+							name: club.name,
+							clubId: club._id
+
+						})} //place holder destination, change to create new fanclub page
                         buttonHeight={50}
                     />
                 </View>

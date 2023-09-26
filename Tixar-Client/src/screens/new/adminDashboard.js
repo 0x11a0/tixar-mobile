@@ -1,19 +1,34 @@
 import { React, useState, useRef, useEffect } from 'react';
-import { View, StyleSheet, SafeAreaView, ScrollView, FlatList } from 'react-native';
+import { View, StyleSheet, SafeAreaView, ScrollView, FlatList, Text } from 'react-native';
 import FanclubCard from '../../components/new/fanclubCard';
 import NextButton from '../../components/new/nextButton';
 
 export default AdminDashboard = ({ route, navigation }) => {
-    const [clubs, setClubs] = useState([]);
+    const token = route.params.token;
+	const [clubs, setClubs] = useState([]);
+	const [isLoading, setIsLoading] = useState(true);
+	const [codes, setCodes] = useState([]);
+	const getCodes = () => {
+		fetch('http://vf.tixar.sg/api/codes', {
+			method: 'GET',
+			credentials: 'include',
+			headers: { 'Authorization':  token}	
+			
+		}).then(response => response.json())
+		.then(data => setCodes(data)).catch(error => console.error(error));
+	}
 
     const getClubs = () => {
-        fetch('http://vf.tixar.sg/api/clubs', {
+          fetch('http://vf.tixar.sg/api/clubs', {
             method: 'GET',
             credentials: 'include',
-            headers: { 'Authorization': route.params.token }
+            headers: { 'Authorization': token}
         }).then(response => response.json())
             .then((data) => {
+				console.log(data);
                 setClubs(data);
+				setIsLoading(false);
+
             })
             .catch(error => {
                 console.error(error);
@@ -21,10 +36,22 @@ export default AdminDashboard = ({ route, navigation }) => {
     };
 
     useEffect(() => {
-        getClubs();
-        console.log(clubs);
+		getCodes();
+		getClubs();
     }, []);
-
+	
+	if (isLoading) {
+		return (
+			<SafeAreaView style={{
+				flex: 1,
+				backgroundColor: '#F2F2F2',
+				justifyContent: 'center',
+				alignItems: 'center'
+			}}>
+				<Text>Loading ...</Text>
+			</SafeAreaView>
+		);
+	}
 
 
     return (
@@ -37,14 +64,14 @@ export default AdminDashboard = ({ route, navigation }) => {
                             <FanclubCard
                                 key={club._id}
                                 onPressFunction={() => {
-                                    console.log(club);
                                     navigation.navigate('adminClubPage', {
-                                        club: club
+										clubId: club._id,
+										token: token
                                     })
                                 }}
                                 clubName={club.name}
                                 fanNumber={club.members.length}
-                                codesActive={club.codes.length}
+                                codesActive={codes.filter((entry) => entry.club._id === club._id).length}
                                 imageUrl={club.imageUrl}
                             />
                         );
