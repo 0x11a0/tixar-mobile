@@ -42,7 +42,8 @@
     "react-native-safe-area-view": "^1.1.1",
     "react-native-screens": "~3.22.0",
     "react-native-svg": "13.9.0",
-    "react-native-svg-charts": "^5.4.0"
+    "react-native-svg-charts": "^5.4.0",
+    "react-navigation-hooks": "^1.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

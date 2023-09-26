@@ -1,27 +1,78 @@
-import { useNavigation } from '@react-navigation/native';
-import { React, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, Pressable, Image, SafeAreaViewBase, SafeAreaView, TextInput } from 'react-native';
+import { React, useState, useContext, useRef } from 'react';
+import { View, 
+         Text, 
+         StyleSheet, 
+         Pressable, 
+         Image, 
+         SafeAreaView, 
+         TextInput,
+         Alert, } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import card33x from '../../assets/images/card33x.png';
-
+import AuthContext from '../../../AuthContext';
 
 
 export default RedemptionPage = ({navigation}) => {
 
     const [code, setCode] = useState('');
     const [canRedeem, setCanRedeem] = useState(false);
+    const { token } = useContext(AuthContext);
+    const codeInputRef = useRef(null);
 
     const handleCode = (text) => {
         setCode(text);
         setCanRedeem(text !== '');
     };
 
+    // function to handle code redemption request
+  const handleRedemption = () => {
+    const endPoint = "http://vf.tixar.sg/api/profile/redeem";
+    const payload = {
+      code: code
+    };
+
+    fetch(endPoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify(payload),
+    })
+      .then((response) => {
+        if (response.ok) {
+            console.log("Redemption request successful");
+          return response.json();
+        } else {
+            console.log("Redemption request unsuccessful")
+          throw new Error("Failed to login");
+        }
+      })
+      .then((data) => {
+        // upon successful verification of code, let user know
+        console.log("Code is valid, points added to account");
+        Alert.alert("Redemption successful!", "Your points: " + data.updatedPoints.toString());
+        codeInputRef.current.clear();
+        handleCode("");
+      })
+      .catch((error) => {
+        // upon unsuccessful verification of code, let user know
+        console.log("Code is invalid");
+        Alert.alert("Redemption unsuccessful", "Please try again");
+      });
+  };
+
     return (
         <SafeAreaView style={{
             flex: 1,
             backgroundColor: "#F8F9FA",
         }}
-        >
+      >
+        <Text
+          style={
+            canRedeem ? styles.redeemTextEnabled : styles.redeemTextDisabled
+          }
+        />
             {/* Header box stuff */}
             <View style={styles.headerContainer}>
                 <Image source={card33x}
@@ -30,8 +81,7 @@ export default RedemptionPage = ({navigation}) => {
                     TIXAR FAN CODES
                 </Text>
                 <Text style={styles.subtitleText}>
-                    Follow your favorite artists.{`\n`}
-                    Be rewarded.
+                    Get verified. Get priority.
                 </Text>
             </View>
 
@@ -47,6 +97,7 @@ export default RedemptionPage = ({navigation}) => {
             {/* Redeem code stuff */}
             <View style={styles.fieldBox}>
                 <TextInput
+                    ref={codeInputRef}
                     style={styles.fieldText}
                     onChangeText={handleCode}
                     value={code}
@@ -55,7 +106,9 @@ export default RedemptionPage = ({navigation}) => {
 
             {/* Redeem button */}
             <RedeemButton code={code} canRedeem={canRedeem}
-                        navigation={navigation} />
+                        navigation={navigation} 
+                        handleRedemption={handleRedemption}
+                        token = {token}/>
 
             {/* FAQ */}
             <Text style={styles.faqText}>
@@ -82,7 +135,7 @@ export default RedemptionPage = ({navigation}) => {
 
 }
 
-const RedeemButton = ({ canRedeem, code, navigation }) => {
+const RedeemButton = ({ canRedeem, code, navigation , handleRedemption, token}) => {
     return (
         <LinearGradient colors={
             canRedeem ?
@@ -94,8 +147,9 @@ const RedeemButton = ({ canRedeem, code, navigation }) => {
                 onPress={() => {
                     if (canRedeem) {
                         // Redeem code here
-                        console.log('Redeemed code: "' + code + '"');
-                        navigation.pop();
+                        console.log("Token: " + token);
+                        console.log(' Attempting to redeem code: "' + code + '"');
+                        handleRedemption();
                     } else {
                         console.log('button disabled');
                     }
@@ -105,7 +159,7 @@ const RedeemButton = ({ canRedeem, code, navigation }) => {
                     : styles.redeemTextDisabled}>
                     Redeem</Text>
             </Pressable>
-        </LinearGradient >
+        </LinearGradient>
     )
 }
 
@@ -171,6 +225,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Lato-Regular',
         color: '#8F8F8F',
         paddingRight: 35,
+        textAlign: 'center',
     },
 
     // Redeem button stuff

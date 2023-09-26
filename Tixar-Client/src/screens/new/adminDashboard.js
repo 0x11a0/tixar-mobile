@@ -3,6 +3,7 @@ import { View, StyleSheet, SafeAreaView, ScrollView, FlatList, Text } from 'reac
 import FanclubCard from '../../components/new/fanclubCard';
 import NextButton from '../../components/new/nextButton';
 
+
 export default AdminDashboard = ({ route, navigation }) => {
     const token = route.params.token;
 	const [clubs, setClubs] = useState([]);

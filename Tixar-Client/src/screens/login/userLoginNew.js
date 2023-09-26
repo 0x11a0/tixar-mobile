@@ -1,23 +1,17 @@
 import { React, useState, useRef } from "react";
 import {
-  TouchableOpacity,
-  Button,
   View,
   Text,
   StyleSheet,
   SafeAreaView,
-  Image,
   Pressable,
-  TextInput,
   ImageBackground,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Keyboard,
-  Alert,
-  navigation,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import HeaderBlock from "../../components/login/headerBlock";
+// import HeaderBlock from "../../components/login/headerBlock";
 import PhoneInput from "react-native-phone-number-input";
 
 export default NewUserLoginPage = ({ navigation }) => {
@@ -58,25 +52,30 @@ export default NewUserLoginPage = ({ navigation }) => {
       })
       .then((data) => {
         // upon successful verification of phone number, navigate to OTP page
-        console.log("Phone number valid, Navigating to OTP page")
+        console.log("Phone number valid and in system, Navigating to OTP page")
         navigation.navigate("userLoginOTPPage", { phoneNumber: phoneNumber });
       })
       .catch((error) => {
         // upon unsuccessful verification of phone number, navigate to register page
-        Alert.alert("Login failed", error.message);
+        console.log("Phone number valid but not in system, Navigating to register page")
+        navigation.navigate("userRegistrationPage", { phoneNumber: phoneNumber })
         // insert navigation to register page here
       });
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <ImageBackground
         source={require("../../assets/images/loginbackground.png")}
         style={styles.imageBackground}
+        // blurRadius={50}
       >
         {/* TIXAR header */}
-        <Text style={styles.headerText}>TIXAR</Text>
-        <Text style={styles.subHeaderText}>Get verified. Get priority.</Text>
+        <View style={styles.headerContainer}>
+          <Text style={styles.headerText}>TIXAR</Text>
+          <Text style={styles.subHeaderText}>Get verified. Get priority.</Text>
+        </View>
+        
 
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <KeyboardAvoidingView style={styles.container} behavior="padding">
@@ -120,9 +119,9 @@ export default NewUserLoginPage = ({ navigation }) => {
         </TouchableWithoutFeedback>
 
         {/* TIXAR footer */}
-        <Text style={styles.footerText}>TIXAR</Text>
+        {/* <Text style={styles.footerText}>TIXAR</Text> */}
       </ImageBackground>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -172,22 +171,25 @@ const styles = StyleSheet.create({
   },
 
   // TIXAR HEADER
+  headerContainer: {
+    position: "absolute",
+    alignSelf: "center",
+    alignItems: "center",
+    top: "20%",
+    // backgroundColor: "green",
+  },
   headerText: {
     fontFamily: "Lato-Bold",
     fontSize: 75,
-    position: "absolute",
-    alignSelf: "center",
     color: "#FFFFFF",
-    top: "20%",
+    // backgroundColor: "red",
   },
   subHeaderText: {
     fontFamily: "Lato-Regular",
-    fontSize: 18,
-    position: "absolute",
-    alignSelf: "center",
+    fontSize: 20,
     color: "#FFFFFF",
-    top: "30%",
     lineHeight: 20,
+    // backgroundColor: "blue",
   },
 
   //PHONE NUMBER INPUT
@@ -197,36 +199,40 @@ const styles = StyleSheet.create({
     textAlignVertical: "center",
     fontFamily: "Lato-Regular",
     color: "#252F40",
-    height: "300%",
+    height: 45, //this should be absolute value to prevent changing on different screen sizes
+    // backgroundColor: "blue",
   },
   codeTextStyle: {
     fontSize: 15,
     textAlign: "center",
-    textAlignVertical: "center",
+    // textAlignVertical: "center", //not sure this property does not change anything
     fontFamily: "Lato-Regular",
     color: "#252F40",
-    height: "160%",
+    // backgroundColor: "red",
+    height: 20, //set this to absolute value to prevent changing on different screen sizes
   },
   containerStyle: {
-    flex: 1,
+    flex: 1, // fill up the container height
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 50,
+    // backgroundColor: "blue", //big container for the whole line
   },
   textContainerStyle: {
     width: "75%",
-    height: "100%",
+    height: "100%", // fill up the container height, it is flex row so need 100% height
     borderRadius: 50,
     alignItems: "center",
     justifyContent: "center",
-    alignSelf: "flex-end",
+    // backgroundColor: "green", //small container for all the text
   },
   countryPickerButtonStyle: {
     borderRadius: 50,
     width: "25%",
+    // backgroundColor: "yellow", //small container for the flag
   },
 
-  // LOGIN LINE
+  // LOGIN PROMT TEXT LINE
   loginHeader: {
     fontFamily: "Lato-Bold",
     fontSize: 24,
@@ -240,9 +246,9 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     width: "75%",
     top: 40,
-    height: 45,
+    height: 50,
     flexDirection: "row",
-    borderRadius: 50,
+    // backgroundColor: "purple",
   },
 
   // Login button stuff
