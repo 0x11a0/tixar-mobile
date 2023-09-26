@@ -18,7 +18,7 @@ import ConcertBox from "../../components/verifiedFans/concertBox";
 import NextButton from "../../components/new/nextButton";
 
 export default UserViewFanclub = ({ route, navigation }) => {
-  const { clubName, artistDescription, key, token } = route.params;
+  const { clubName, artistDescription, key, token, imageUrl } = route.params;
 
   const handleDeletePress = () => {
     console.log(key);
@@ -37,8 +37,16 @@ export default UserViewFanclub = ({ route, navigation }) => {
         console.error(error);
       });
   };
+
   console.log(clubName);
   console.log(artistDescription);
+  console.log(imageUrl);
+
+  let image = require("../../assets/soft-ui-pro-react-native-v1.1.1/avatar23x.png");
+  if (imageUrl) {
+    image = { uri: imageUrl };
+  }
+
   return (
     <SafeAreaView
       style={{
@@ -54,19 +62,10 @@ export default UserViewFanclub = ({ route, navigation }) => {
           alignSelf: "center",
         }}
       >
-        {/* <TouchableOpacity
-          style={styles.deleteButton}
-          onPress={console.log("pressed")}
-        >
-          <Image
-            source={require("../../assets/soft-ui-pro-react-native-v1.1.1/apple3x.png")} // Replace with your trash image
-            style={styles.trashIcon}
-          />
-        </TouchableOpacity> */}
-
         <StatisticBox
           clubName={clubName}
-          artistIcon={require("../../assets/taylorswifticon.png")}
+          // artistIcon={require("../../assets/taylorswifticon.png")}
+          artistIcon={image}
           artistDescription={artistDescription}
           points={"1002"}
         />

@@ -55,6 +55,7 @@ export default FanDashboard = ({ route, navigation }) => {
                     artistDescription: profile.club.description,
                     key: profile._id,
                     token: route.params.token,
+                    imageUrl: profile.club.imageUrl,
                   });
                 }}
                 // artistIcon: require("../../assets/soft-ui-pro-react-native-v1.1.1/avatar23x.png"),
