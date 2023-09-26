@@ -22,8 +22,7 @@ import AccountSettingsPage from './src/screens/accountSettingsPage';
 import GenerateFanCodePage from './src/screens/vf/generateFanCodePage2';
 import AnimationPage from './src/screens/animationPage';
 import userTicketsPage from './src/screens/userTicketsPage';
-import RedemptionPage from './src/screens/verifiedFan/redemptionPage';
-import fanDashboard from './src/screens/verifiedFan/fanDashboard';
+import fanDashboard from './src/screens/user/fanDashboard';
 import celebrityDashboard from './src/screens/verifiedFan/celebrityDashboard';
 import UserProfilePage from './src/screens/user/userprofile'
 import EditUserProfilePage from './src/screens/user/editUserProfile'
@@ -39,6 +38,9 @@ import CreateClub from './src/screens/new/adminCreateClub';
 import ManageFanclub from './src/screens/new/adminManageFanclub';
 import adminManageFans from './src/screens/new/adminManageFans';
 import ManageActiveCodes from './src/screens/new/manageActiveCodes';
+import allClubsDashboard from './src/screens/user/viewAllFanClubs';
+import redemptionPage from './src/screens/verifiedFan/redemptionPage';
+import ViewFanclub from './src/screens/user/viewFanclub';
 import AuthContext from './AuthContext';
 
 export default function App() {
@@ -74,7 +76,7 @@ export default function App() {
                             headerShown: false,
                         }} />
 
-                    <Stack.Group>
+                    {/* <Stack.Group>
                         <Stack.Screen name='viewConcertPage' component={ViewConcertPage}
                             options={{
                                 headerTitle: 'View Concert'
@@ -82,7 +84,7 @@ export default function App() {
                         <Stack.Screen name='concertCategoryPage' component={ConcertCategoryPage}
                             options={{
                                 headerTitle: 'Concert Category'
-                            }} />
+                            }} /> */}
 
           <Stack.Group>
             <Stack.Screen

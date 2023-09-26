@@ -162,6 +162,7 @@ export default NewUserRegistrationPage = ({ route, navigation }) => {
                     credentialCheck={credentialCheck}
                     onPressFunction={handleRegister}
                     navigation={navigation}
+                    borderRadius={50}
                   />
                 </View>
               </KeyboardAvoidingView>
@@ -190,7 +191,7 @@ const styles = StyleSheet.create({
   translucentCard: {
     height: "90%",
     width: "85%",
-    backgroundColor: "rgba(255, 255, 255, 0.75)",
+    backgroundColor: "rgba(255, 255, 255, 0.25)",
     borderRadius: 15,
     alignItems: "center",
     justifyContent: "flex-start",
@@ -204,6 +205,7 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     resizeMode: "contain",
+    tintColor: "white",
     // backgroundColor: "red",
   },
 
@@ -211,18 +213,18 @@ const styles = StyleSheet.create({
   cardTextHeader: {
     fontSize: 64,
     fontFamily: "Lato-Bold",
-    color: "#252F40",
+    color: "white",
   },
   cardText: {
     fontSize: 20,
     fontWeight: "bold",
     fontFamily: "Lato-Bold",
-    color: "#252F40",
+    color: "white",
   },
   cardTextSubtle: {
     fontSize: 16,
     fontFamily: "Lato-Regular",
-    color: "#252F40",
+    color: "white",
   },
 
   //text input field styles
@@ -230,9 +232,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     height: 56,
     width: "80%",
-    borderRadius: 10,
-    borderColor: "#1A1A1A",
-    borderWidth: 1,
+    borderRadius: 50,
+    // borderColor: "#1A1A1A",
+    backgroundColor: "white",
+    // borderWidth: 1,
     marginTop: 25,
   },
   fieldText: {
@@ -241,7 +244,8 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: "Lato-Regular",
     color: "#8F8F8F",
-    paddingRight: 35,
+    paddingLeft: 15,
+    // backgroundColor: "red",
   },
 
   //conditional button

@@ -68,6 +68,7 @@ export default NewUserLoginPage = ({ navigation }) => {
       <ImageBackground
         source={require("../../assets/images/loginbackground.png")}
         style={styles.imageBackground}
+        // blurRadius={50}
       >
         {/* TIXAR header */}
         <View style={styles.headerContainer}>

@@ -72,7 +72,7 @@ export default RedemptionPage = ({navigation}) => {
           style={
             canRedeem ? styles.redeemTextEnabled : styles.redeemTextDisabled
           }
-        >
+        />
             {/* Header box stuff */}
             <View style={styles.headerContainer}>
                 <Image source={card33x}
