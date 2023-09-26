@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, Pressable, Image } from 'react-native';
+import React, { useState, useRef } from 'react';
+import { View, Text, StyleSheet, Pressable, Image, Animated} from 'react-native';
 
 export default FanCard = ({ 
     fanName,
     fanPoints,
+	onPressFunction
 }) => {
+
+	const viewScale = useRef(new Animated.Value(1)).current;
 
     const [showDeleteButton, setShowDeleteButton] = useState(false);
 
@@ -12,16 +15,36 @@ export default FanCard = ({
         setShowDeleteButton(!showDeleteButton);
     }
 
+	const animate = () => {
+		Animated.timing(viewScale , {
+			toValue: 0,
+			useNativeDriver: true,
+			duration: 200,
+
+		}).start();
+	}
+
     const handleDeletePress = () => {
         // Handle the delete action here
         // You can add your logic to delete the item
-        console.log('Delete button pressed');
-    }
+		// console.log('Delete button pressed');
+		animate();
+		onPressFunction();
+	}
 
     return (
-        <View>
+        <Animated.View style={styles.container, {transform: [
+													{scaleY: viewScale}
+			], height: 70, paddingHorizontal: 10}}>
             <Pressable 
-                style={styles.container}
+                style={{height: '100%',
+				flexDirection: "row",
+				alignItems: "center",
+				backgroundColor: "white",
+				borderRadius: 15,
+				marginHoriztonal: 10,
+				padding: 10,
+				}}
             >
 
                 {/* information */}
@@ -63,7 +86,7 @@ export default FanCard = ({
                     </Pressable>
                 )}
             </Pressable>
-        </View>
+        </Animated.View>
     );
 }
 
@@ -73,12 +96,8 @@ const styles = StyleSheet.create({
         alignItems: "center",
         backgroundColor: "white",
         borderRadius: 15,
-        height: 70,
-        marginTop: 5,
-        marginBottom: 5,
-        marginHorizontal: 10,
-        padding: 10,
-    },
+//		overflow: 'hidden'
+	},
 
     title: {
         fontSize: 20,
