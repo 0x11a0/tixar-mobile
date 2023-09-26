@@ -5,12 +5,23 @@ import NextButton from '../../components/vf/nextButton';
 import TextInputField from '../../components/vf/textInputField';
 import DatePicker from '../../components/vf/datePicker';
 
-export default GenerateFanCodePage2 = () => {
-    const code = 'AFUHE12';
-
-    const [title, setTitle] = useState('');
+export default GenerateFanCodePage2 = ({route, navigation}) => {
+    const [code, setCode] = useState('');
     const [points, setPoints] = useState('');
     const [expiryDate, setExpiryDate] = useState(new Date());
+
+	
+	const padTo2Digits = (num) => {
+		return num.toString().padStart(2, '0');
+	}
+
+	const formatDate = (date) => {
+		 return [
+			date.getFullYear(),
+			padTo2Digits(date.getMonth() + 1),
+			padTo2Digits(date.getDate()),
+		].join('-');
+	} 
 
     return (
         <View style={styles.container}>
@@ -18,19 +29,12 @@ export default GenerateFanCodePage2 = () => {
             <View style={styles.upperBlock}>
                 <Text style={styles.title}>Generate Fan Code</Text>
 
-                <Text style={{
-                    fontFamily: 'Lato-Bold',
-                    fontSize: 30,
-                }}>
-                    {code}
-                </Text>
-
                 <View style={{ height: 20 }} />
 
                 <TextInputField
-                    value={title}
-                    placeholder={'Title'}
-                    onChangeTextFunction={(text) => { setTitle(text); }}
+                    value={code}
+                    placeholder={'Code'}
+                    onChangeTextFunction={(text) => { setCode(text); }}
                     keyboardType={'default'}
                 />
 
@@ -56,13 +60,18 @@ export default GenerateFanCodePage2 = () => {
 
             <NextButton buttonText={'Generate Code'}
                 onPressFunction={() => {
-                    console.log('title: ' + title);
-                    console.log('point: ' + points);
-                    console.log('date: ' + expiryDate.toString());
+                    navigation.navigate('confirmCodePage',{
+						code: code,
+						points: points,
+						expiryDate: formatDate(expiryDate),
+						token: route.params.token,
+						name: route.params.name,
+						clubId: route.params.clubId,
+					});
                 }
                 }
                 buttonHeight={50}
-                enableCondition={title !== '' && points !== ''}
+                enableCondition={code !== '' && points !== ''}
             />
             <FooterBlock />
         </View>

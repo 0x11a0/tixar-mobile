@@ -1,12 +1,11 @@
-import { View, Text, StyleSheet, Animated, Easing } from 'react-native';
+import { View, Text, StyleSheet, Animated, Easing, Dimensions } from 'react-native';
 import { useState, useRef, useEffect } from 'react';
 import FooterBlock from '../../components/viewConcert/footerBlock';
 import NextButton from '../../components/vf/nextButton';
 import ProgressCircle from '../../components/vf/progressCircle';
 import * as Clipboard from 'expo-clipboard';
 
-export default GenerateFanCodePage1 = () => {
-    const code = 'AFUHE12';
+export default GenerateFanCodePage1 = ({route, navigation}) => {
     const [isAnimating, setIsAnimating] = useState(false);
     const [rotateRightPercent, setRotateRightPercent] = useState(new Animated.Value(0));
     const [circleOpacity, setCircleOpacity] = useState(new Animated.Value(1));
@@ -29,14 +28,38 @@ export default GenerateFanCodePage1 = () => {
         ]).start(() => {
             setCircleOpacity(new Animated.Value(0));
             textFadeIn();
-            Clipboard.setStringAsync(code);
+            Clipboard.setStringAsync(route.params.code);
             setRotateLeftPercent(new Animated.Value(0));
             setRotateRightPercent(new Animated.Value(0));
             setIsAnimating(false);
+			navigation.pop(2);
         }
         )
     };
 
+	const generateCode = () => {
+		let club = {
+			_id: route.params.clubId,
+			name: route.params.name
+		};
+		let body = {
+			code: route.params.code,
+			club: club,
+			value: route.params.points,
+			expires: route.params.expiryDate,
+			status: 'active',
+		};
+		console.log(body);
+		fetch('http://vf.tixar.sg/api/code', {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 
+				'Content-Type': 'application/json',
+				'Authorization':  'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MGZlYjU2ZmYwYmE1NjMxYzY1NTQ1MCIsInR5cGUiOiJhZG1pbiIsInBob25lIjoiNjU5NzMxMTUzMCIsIm5hbWUiOiJTVyBPcCIsImlhdCI6MTY5NTYwMDUxOCwiZXhwIjoxNjk2MjA1MzE4fQ.TZmGbZf1P7S1XkQewcBc83CnyrfgWiE2pu1LgiJFRK8'},
+			body: JSON.stringify(body),
+        }).then((response) => console.log(response.json()))
+            .catch(error => console.error(error));
+	}
 
     const textFadeIn = () => {
         Animated.timing(textOpacity, {
@@ -68,28 +91,43 @@ export default GenerateFanCodePage1 = () => {
         <View style={styles.container}>
 
             <View style={styles.upperBlock}>
-                <Text style={styles.title}>Generate Fan Code</Text>
-
+                <Text style={styles.title}>Confirm code details</Text>
+				<View style={{ height: 20 }} />
                 <ProgressCircle
                     rotateRightPercent={rotateRightPercent}
                     rotateLeftPercent={rotateLeftPercent}
                     circleOpacity={circleOpacity}
                     textOpacity={textOpacity}
-                    code={code}
+                    code={'Success'}
                 />
+				<View style={{ height: 20 }} />
+				<View style={styles.fieldBox}>
+					<Text style={styles.fieldText}>
+					{route.params.code}</Text>
+				</View>
+				<View style={{ height: 20 }} />
+				<View style={styles.fieldBox}>
+					<Text style={styles.fieldText}>
+					{route.params.points}</Text>
+				</View>
+                <View style={{ height: 20 }} />			
+				<View style={styles.fieldBox}>
+					<Text style={styles.fieldText}>
+					{route.params.expiryDate}</Text>
+				</View>
             </View>
 
             <View style={{ height: 20 }} />
 
-            <NextButton buttonText={'Generate Code'}
-                onPressFunction={() => {
+            <NextButton buttonText={'Confirm'}
+                onPressFunction={() => {	
                     setIsAnimating(true);
-                    textFadeOut();
-                    console.log('code copied to clipboard');
+					generateCode();
+					textFadeOut();
+					
                 }
                 }
-                buttonHeight={50}
-                enableCondition={!isAnimating}
+                enableCondition={true}
             />
             <FooterBlock />
         </View>
@@ -106,8 +144,9 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
     },
     upperBlock: {
-        height: '55%',
+        // height: '80%',
         width: '100%',
+		justifyContent: 'flex-start',
         alignItems: 'center',
         backgroundColor: 'white',
         borderRadius: 15,
@@ -118,6 +157,20 @@ const styles = StyleSheet.create({
         fontFamily: 'Lato-Bold',
         fontSize: 20,
         color: '#252F40',
-        height: '25%',
+	},
+	fieldBox: {
+        height: 56,
+        width: Dimensions.get('window').width * 0.70,
+        borderRadius: 10,
+        borderColor: '#D2D6DA',
+        borderWidth: 1,
+        justifyContent: 'center',
+    },
+    fieldText: {
+        left: '5%',
+        fontSize: 18,
+        fontFamily: 'Lato-Regular',
+        color: '#8F8F8F',
+        paddingRight: 35,
     },
 });
