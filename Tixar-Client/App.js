@@ -335,18 +335,17 @@ const DrawerNav = ({ route, navigation }) => {
           <DrawerContentScrollView {...props}>
             <DrawerItemList {...props} />
             <DrawerItem
-              label="My Clubs"
-              onPress={() => {
-                props.navigation.navigate("fanDashboardPage", { token: token });
-              }}
-            />
-
-            <DrawerItem
               label="All Clubs"
               onPress={() => {
                 props.navigation.navigate("viewAllClubs", {
                   token: token,
                 });
+              }}
+            />
+            <DrawerItem
+              label="My Clubs"
+              onPress={() => {
+                props.navigation.navigate("fanDashboardPage", { token: token });
               }}
             />
 

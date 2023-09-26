@@ -1,11 +1,5 @@
 import { React, useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  SafeAreaView,
-} from "react-native";
+import { View, Text, StyleSheet, ScrollView, SafeAreaView } from "react-native";
 import ArtistBlock from "../../components/verifiedFans/artistBlock";
 import NextButton from "../../components/new/nextButton";
 
@@ -20,7 +14,7 @@ export default FanDashboard = ({ route, navigation }) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         setProfiles(data);
       })
       .catch((error) => {
@@ -29,9 +23,9 @@ export default FanDashboard = ({ route, navigation }) => {
   };
 
   useEffect(() => {
-    console.log("here is " + route.params.token);
+    // console.log("here is " + route.params.token);
     getProfiles();
-    console.log(profiles);
+    // console.log(profiles);
   }, []);
 
   return (
@@ -45,9 +39,9 @@ export default FanDashboard = ({ route, navigation }) => {
         <ScrollView>
           {/* Your FanclubCards go here */}
           {profiles.map((profile) => {
-            console.log(profile);
-            console.log(profile.points);
-            console.log(profile.club.imageUrl);
+            // console.log(profile);
+            // console.log(profile.points);
+            // console.log(profile.club.imageUrl);
             return (
               <ArtistBlock
                 key={profile._id} // Add a unique key prop
@@ -77,13 +71,11 @@ export default FanDashboard = ({ route, navigation }) => {
           style={{ marginTop: -20 }} // Adjust the marginTop value as needed
         />
       </View>
-
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-
   // list
   flatListContainer: {
     // backgroundColor: "red",

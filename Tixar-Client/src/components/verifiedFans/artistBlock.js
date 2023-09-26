@@ -18,6 +18,11 @@ export default ArtistBlock = ({
     // For now, I'm just toggling the isPressed state
   };
 
+  let image = require("../../assets/soft-ui-pro-react-native-v1.1.1/avatar23x.png");
+  if (artistIcon) {
+    image = { uri: artistIcon };
+  }
+
   return (
     <Pressable
       style={styles.container}
@@ -25,11 +30,13 @@ export default ArtistBlock = ({
         onPressFunction
           ? onPressFunction()
           : console.log(artistName + " pressed");
+        console.log("HERE" + clubName);
+        console.log("HERE" + artistIcon);
       }}
     >
       <View style={styles.artistBlock}>
         {/* ICON */}
-        <Image source={artistIcon} style={styles.artistIcon} />
+        <Image source={image} style={styles.artistIcon} resizeMode="cover" />
 
         {/* TEXT CONTAINER */}
         <View style={styles.artistTextContainer}>
@@ -87,6 +94,7 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     marginRight: 10,
   },
+
   artistBlock: {
     flexDirection: "row",
   },
