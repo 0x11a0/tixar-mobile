@@ -12,10 +12,10 @@ import { React, useState } from 'react';
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
-import FooterBlock from "../components/viewConcert/footerBlock";
-import NextButton from "../components/viewConcert/nextButton";
-import OptionFields from "../components/concertCategory/optionFields";
-import DatePicker from "../components/concertCategory/datePicker";
+import FooterBlock from "../../components/viewConcert/footerBlock";
+import NextButton from "../../components/viewConcert/nextButton";
+import OptionFields from "../../components/concertCategory/optionFields";
+import DatePicker from "../../components/concertCategory/datePicker";
 
 export default ConcertCategoryPage = ({ route, navigation }) => {
   // STATE VARIABLES to store the text input from the user for quantity and category
@@ -58,7 +58,7 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
 
           {/* image of the concert's category layout */}
           <Image
-            source={require("../assets/images/concertLayout.png")}
+            source={require("../../assets/images/concertLayout.png")}
             style={styles.layoutImage}
           />
 
@@ -78,7 +78,7 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
             <Text style={styles.subtitle}>Date</Text>
             <View>
               <DatePicker
-                icon={require("../assets/soft-ui-pro-react-native-v1.1.1/calendar3x.png")}
+                icon={require("../../assets/soft-ui-pro-react-native-v1.1.1/calendar3x.png")}
                 minDate={new Date(2024, 0, 23)}
                 maxDate={new Date(2024, 0, 27)}
               />
@@ -88,7 +88,7 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
             <Text style={styles.subtitle}>Quantity</Text>
             <OptionFields
               optionText={"0"}
-              icon={require("../assets/soft-ui-pro-react-native-v1.1.1/users3x.png")}
+              icon={require("../../assets/soft-ui-pro-react-native-v1.1.1/users3x.png")}
               onPressFunction={() => {
                 console.log("quantity option clicked");
               }}
@@ -102,7 +102,7 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
             <Text style={styles.subtitle}>Seat Category</Text>
             <OptionFields
               optionText={"Category 1"}
-              icon={require("../assets/soft-ui-pro-react-native-v1.1.1/components3x.png")}
+              icon={require("../../assets/soft-ui-pro-react-native-v1.1.1/components3x.png")}
               onPressFunction={() => {
                 console.log("category option clicked");
               }}

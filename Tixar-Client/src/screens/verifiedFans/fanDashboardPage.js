@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView, SafeAreaView } from "react-native";
 import ArtistBlock from "../../components/verifiedFans/artistBlock";
 import NextButton from "../../components/new/nextButton";
 
-export default FanDashboard = ({ route, navigation }) => {
+export default FanDashboardPage = ({ route, navigation }) => {
   const [profiles, setProfiles] = useState([]);
 
   const getProfiles = () => {
@@ -57,7 +57,7 @@ export default FanDashboard = ({ route, navigation }) => {
                 artistDescription={profile.club.description}
                 artistIcon={profile.club.imageUrl}
                 onPressFunction={() => {
-                  navigation.navigate("viewFanclubPage", {
+                  navigation.navigate("viewClubPage", {
                     clubName: profile.club.name,
                     artistDescription: profile.club.description,
                     key: profile._id,

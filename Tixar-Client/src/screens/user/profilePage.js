@@ -15,15 +15,15 @@ import {
 } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
-import HeaderBlock from "./headerBlockUserProfile";
+import HeaderBlock from "../../components/user/headerBlockUserProfile";
 import { useIsFocused, useNavigation } from "@react-navigation/native"; // Import useIsFocused
 import nextButton from "../../components/viewConcert/nextButton";
 // import { useNavigation } from "react-navigation-hooks";
 
 const userEdit = ["Ewallet", "Edit", "Settings"];
 
-export default UserProfile = ({ route, navigation }) => {
-  console.log("user profile");
+export default ProfilePage = ({ route, navigation }) => {
+//   console.log("user profile");
   let [firstName, setFirstName] = useState("");
   let [lastName, setLastName] = useState("");
   let [email, setEmail] = useState("");
@@ -51,7 +51,7 @@ export default UserProfile = ({ route, navigation }) => {
   };
 
   const getUser = () => {
-    console.log("GET REQUEST");
+    // console.log("GET REQUEST");
     fetch("http://rt.tixar.sg/api/user", {
       method: "GET",
       credentials: "include",
@@ -86,12 +86,12 @@ export default UserProfile = ({ route, navigation }) => {
           });
         }}
         editOnPress={() => {
-          navigation.navigate("editUserProfilePage", {
+          navigation.navigate("editProfilePage", {
             token: route.params.token,
           });
         }}
         settingsOnPress={() => {
-          navigation.navigate("settingsPage", { token: route.params.token });
+          navigation.navigate("accountSettingsPage", { token: route.params.token });
         }}
       />
 

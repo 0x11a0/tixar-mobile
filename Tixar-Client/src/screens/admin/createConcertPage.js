@@ -10,9 +10,9 @@ import {
   TextInput,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import DatePicker from "./datePicker";
+import DatePicker from "../../components/admin/datePicker";
 
-export default CreateConcert = ({ route, navigation }) => {
+export default CreateConcertPage = ({ route, navigation }) => {
   const [nameField, setNameField] = useState("");
   const handleName = (text) => {
     setNameField(text);

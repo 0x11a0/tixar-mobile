@@ -9,7 +9,7 @@ import {
 import ClubsCard from "../../components/new/userFanclub";
 import NextButton from "../../components/new/nextButton";
 
-export default AdminDashboard = ({ route, navigation }) => {
+export default ViewAllClubsPage = ({ route, navigation }) => {
   const [clubs, setClubs] = useState([]);
 
   const getClubs = () => {
@@ -29,7 +29,7 @@ export default AdminDashboard = ({ route, navigation }) => {
 
   useEffect(() => {
     getClubs();
-    console.log(clubs);
+    // console.log(clubs);
   }, []);
 
   return (
@@ -43,7 +43,7 @@ export default AdminDashboard = ({ route, navigation }) => {
                 key={club._id}
                 clubId={club._id}
                 onPressFunction={() => {
-                  console.log("pressed");
+                //   console.log("pressed");
                   //   navigation.navigate("adminClubPage", {
                   //     club: club,
                   //   });

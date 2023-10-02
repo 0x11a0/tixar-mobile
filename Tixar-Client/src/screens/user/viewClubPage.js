@@ -17,11 +17,11 @@ import StatisticBox from "../../components/verifiedFans/statisticBox";
 import ConcertBox from "../../components/verifiedFans/concertBox";
 import NextButton from "../../components/new/nextButton";
 
-export default UserViewFanclub = ({ route, navigation }) => {
+export default ViewClubPage = ({ route, navigation }) => {
   const { clubName, artistDescription, key, token, imageUrl } = route.params;
 
   const handleDeletePress = () => {
-    console.log(key);
+    // console.log(key);
     fetch(`http://vf.tixar.sg/api/profile/${key}`, {
       method: "DELETE",
       credentials: "include",
@@ -29,9 +29,9 @@ export default UserViewFanclub = ({ route, navigation }) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("SUCCESSFUL");
-        console.log(data);
-        navigation.navigate("fanDashboardPage", { token: token });
+        // console.log("SUCCESSFUL");
+        // console.log(data);
+        navigation.navigate("vfDashboardPage", { token: token });
       })
       .catch((error) => {
         console.error(error);

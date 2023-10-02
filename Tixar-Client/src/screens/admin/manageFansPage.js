@@ -3,7 +3,7 @@ import { StyleSheet, SafeAreaView, ScrollView, FlatList, Text, View, Animated } 
 import FanCard from '../../components/new/manageFansCard';
 import ConfirmAlert from '../../components/verifiedFans/confirmAlert' 
 
-export default ManageFans = ({ route, navigation }) => {
+export default ManageFansPage = ({ route, navigation }) => {
 	const [members, setMembers] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 
@@ -14,8 +14,8 @@ export default ManageFans = ({ route, navigation }) => {
 				    headers: { 'Authorization': route.params.token }
 			}).then(response => response.json())
             .then((data) => {
-				console.log(data);
-				console.log(data.members);
+				// console.log(data);
+				// console.log(data.members);
 				setMembers(data.members);
             })
             .catch(error => {

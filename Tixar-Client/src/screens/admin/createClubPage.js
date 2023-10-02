@@ -12,7 +12,7 @@ import ConditionalButton from "../../components/new/conditionalButton";
 import * as ImagePicker from "expo-image-picker";
 import * as DocumentPicker from "expo-document-picker";
 
-export default AdminCreateClub = ({ route, navigation }) => {
+export default CreateClubPage = ({ route, navigation }) => {
   let image = require("../../../src/assets/thumbnail2.png");
   const handleDocumentSelection = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -22,7 +22,7 @@ export default AdminCreateClub = ({ route, navigation }) => {
     // let result = await DocumentPicker.getDocumentAsync({
     //     allowsEditing: true,
     // });
-    console.log(result);
+    // console.log(result);
 
     // if (!result.canceled) {
     //     image = require({ uri: result.uri });
@@ -128,7 +128,7 @@ export default AdminCreateClub = ({ route, navigation }) => {
         navigation={navigation}
         onPressFunction={() => {
           createClub();
-          console.log(nameField, descriptionField);
+        //   console.log(nameField, descriptionField);
         }}
       ></ConditionalButton>
     </SafeAreaView>

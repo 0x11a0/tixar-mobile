@@ -7,16 +7,15 @@ import NextButton from '../../components/login/nextButton.js';
 import TextInputField from '../../components/login/textInputField.js';
 import BlurBlock from '../../components/login/blurBlock.js';
 import FilterButton from '../../components/login/filterButton.js';
-import forgetPassword from './forgetPassword.js';
+import forgetPassword from '../login/forgetPasswordPage.js';
 import OutLogin from '../../components/login/outLogin.js';
-import CheckBoxBlock from '../../components/login/checkBoxBlock.js';
 
 
-export default RegisterPage = ({ route, navigation }) => {
-    const [nameField, setNameField] = useState('');
+export default LoginPage = ({ route, navigation }) => {
+    console.log(route.name);
     const [emailField, setEmailField] = useState('');
     const [passwordField, setPasswordField] = useState('');
-    const [isTCChecked, setTCChecked] = useState(false);
+
     const insets = useSafeAreaInsets();
 
     return (
@@ -45,22 +44,17 @@ export default RegisterPage = ({ route, navigation }) => {
                     alignContent: 'center',
                 }}>
                     <FilterButton buttonText={'Login'}
+                        isFocused={true}
+                        isLeft={true} />
+
+                    <FilterButton buttonText={'Register'}
                         isFocused={false}
                         onPressFunction={() => {
                             navigation.navigate('registerPage');
                         }}
-                        isLeft={true} />
-
-                    <FilterButton buttonText={'Register'}
-                        isFocused={true}
                         isLeft={false} />
                 </View>
 
-                <View style={{ height: 25 }} />
-
-                <TextInputField value={nameField}
-                    placeholder={"Name"}
-                    onChangeTextFunction={(text) => { setNameField(text); }} />
 
                 <View style={{ height: 25 }} />
 
@@ -74,28 +68,64 @@ export default RegisterPage = ({ route, navigation }) => {
                     placeholder={"Password"}
                     onChangeTextFunction={(text) => { setPasswordField(text); }} />
 
-                <View style={{ height: 55 }} />
+                <View style={{ height: 15 }} />
 
-                <CheckBoxBlock text={'I agree to the '}
-                    boldedText={'Terms and Conditions'}
-                    isChecked={isTCChecked}
-                    setIsChecked={setTCChecked} />
+                <Pressable style={{
+                    alignSelf: 'flex-start',
+                    marginLeft: '7%',
+                }}
+                    onPress={() => {
+                        navigation.navigate('forgetPasswordPage');
+                    }}
+                >
+                    <Text style={{
+                        color: '#5EAEE9',
+                        textDecorationLine: 'underline'
+                    }}>
+                        Forget Password?
+                    </Text>
+                </Pressable>
 
-                <View style={{ height: 40 }} />
+                <View style={{ height: 20 }} />
 
-                <NextButton buttonText={"Create Account"}
-                    enableCondition={nameField !== '' && emailField !== ''
-                        && passwordField !== '' && isTCChecked}
+                <NextButton buttonText={"Login"}
+                    enableCondition={emailField !== '' && passwordField != ''}
                     onPressFunction={() => {
-                        if (nameField === '' || emailField === '' || passwordField === '') {
+                        if (emailField === '' || passwordField === '') {
                             console.log('Not all fields entered');
                         } else {
-                            console.log({ nameField: nameField, emailField: emailField, passwordField: passwordField });
+                            console.log({ emailField: emailField, passwordField: passwordField });
                             navigation.navigate('browseConcertPage');
                         }
                     }}
                 />
 
+                <View style={{ height: 15 }} />
+
+                <Text style={{
+                    fontFamily: 'Lato-Regular'
+                }}>
+                    or
+                </Text>
+
+                <View style={{ height: 15 }} />
+                <View style={{
+                    flexDirection: 'row',
+
+                }}>
+                    <OutLogin imageIcon={require('../../assets/soft-ui-pro-react-native-v1.1.1/facebook3x.png')}
+                        onPressFunction={() => {
+                            console.log('facebook login clicked');
+                        }} />
+                    <OutLogin imageIcon={require('../../assets/soft-ui-pro-react-native-v1.1.1/apple3x.png')}
+                        onPressFunction={() => {
+                            console.log('apple login clicked');
+                        }} />
+                    <OutLogin imageIcon={require('../../assets/soft-ui-pro-react-native-v1.1.1/google3x.png')}
+                        onPressFunction={() => {
+                            console.log('google login clicked');
+                        }} />
+                </View>
 
                 <FooterBlock />
 

@@ -6,7 +6,7 @@ import StatisticBox from '../../components/verifiedFans/statisticBox';
 import ConcertBox from '../../components/verifiedFans/concertBox'; 
 import ActiveCodeBox from '../../components/verifiedFans/activeCodeBox';
 
-export default CelebrityDashboard = ({navigation}) => {
+export default AllDashboardPage = ({navigation}) => {
 
     return (
         <SafeAreaView style={{

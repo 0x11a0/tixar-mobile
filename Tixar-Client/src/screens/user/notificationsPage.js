@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native'
 import { View, Text, StyleSheet, ScrollView, Pressable, Image, SafeAreaViewBase, SafeAreaView } from 'react-native';
 
-import Card from '../components/accountSettings/card.js';
-import ToggleSlider from '../components/accountSettings/toggleSlider.js';
+import Card from '../../components/accountSettings/card.js';
+import ToggleSlider from '../../components/accountSettings/toggleSlider.js';
 
 export default NotificationsPage = () => {
 
@@ -16,7 +16,7 @@ export default NotificationsPage = () => {
         }}>
             <Card>
                 <View style={styles.cardHeaderRow}>
-                    <Image source={require('../assets/icon.png')} style={styles.cardIcon}/>
+                    <Image source={require('../../assets/icon.png')} style={styles.cardIcon}/>
                     <Text style={styles.cardTitle}>
                         Notification
                     </Text>

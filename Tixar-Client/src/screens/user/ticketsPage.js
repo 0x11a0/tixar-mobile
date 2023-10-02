@@ -8,15 +8,15 @@ import {
   } from "react-native";
   import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
-  import SearchField from '../components/browseConcert/searchField';
-  import TicketCard from '../components/userTickets/ticketCard';
-  import FilterButton from '../components/userTickets/filterButton';
+  import SearchField from '../../components/browseConcert/searchField';
+  import TicketCard from '../../components/userTickets/ticketCard';
+  import FilterButton from '../../components/userTickets/filterButton';
   
-  export default UserTicketsPage = ({ route, navigation }) => {
+  export default TicketsPage = ({ route, navigation }) => {
 
     // Function to handle the press event of the first ticket
     const firstTicketPress = () => {
-        console.log("first ticket pressed");
+        // console.log("first ticket pressed");
         navigation.navigate("viewConcertPage"); //change this to haris's view ticket page
     };
   

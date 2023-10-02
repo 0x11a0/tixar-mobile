@@ -2,12 +2,12 @@ import { useNavigation } from '@react-navigation/native'
 import { View, Text, StyleSheet, ScrollView, Pressable, Image, SafeAreaViewBase, SafeAreaView } from 'react-native';
 import { Barcode } from 'expo-barcode-generator';
 
-import HeaderBlock from '../components/generatedUserTicket/headerBlock';
-import Card from '../components/generatedUserTicket/card';
-import GradientText from '../components/generatedUserTicket/gradientText';
+import HeaderBlock from '../../components/generatedUserTicket/headerBlock';
+import Card from '../../components/generatedUserTicket/card';
+import GradientText from '../../components/generatedUserTicket/gradientText';
 import DashedLine from 'react-native-dashed-line';
 
-export default GeneratedUserTicketPage = () => {
+export default GenerateTicketPage = () => {
 
     const navigation = useNavigation();
 

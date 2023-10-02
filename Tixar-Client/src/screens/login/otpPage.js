@@ -20,7 +20,7 @@ import HeaderBlock from "../../components/login/headerBlock";
 import PhoneInput from "react-native-phone-number-input";
 import AuthContext from "../../../AuthContext";
 
-export default UserLoginOTPPage = ({ route, navigation }) => {
+export default OTPPage = ({ route, navigation }) => {
   const { phoneNumber } = route.params;
   const [otp, setotp] = useState("");
   const { setToken } = useContext(AuthContext);
@@ -59,7 +59,7 @@ export default UserLoginOTPPage = ({ route, navigation }) => {
         console.log("Token: " + data.token);
         setToken(data.token);
 
-        Alert.alert("Login successful", "Welcome");
+        // Alert.alert("Login successful", "Welcome");
         navigation.navigate("drawer", { token: data.token });
       })
       .catch((error) => {

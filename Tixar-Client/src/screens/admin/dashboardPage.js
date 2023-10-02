@@ -10,7 +10,7 @@ import {
 import FanclubCard from "../../components/new/fanclubCard";
 import NextButton from "../../components/new/nextButton";
 
-export default AdminDashboard = ({ route, navigation }) => {
+export default DashboardPage = ({ route, navigation }) => {
   const token = route.params.token;
   const [clubs, setClubs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -34,7 +34,7 @@ export default AdminDashboard = ({ route, navigation }) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         setClubs(data);
         setIsLoading(false);
       })

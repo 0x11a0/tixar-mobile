@@ -50,14 +50,14 @@ export default RedemptionPage = ({navigation}) => {
       })
       .then((data) => {
         // upon successful verification of code, let user know
-        console.log("Code is valid, points added to account");
+        // console.log("Code is valid, points added to account");
         Alert.alert("Redemption successful!", "Your points: " + data.updatedPoints.toString());
         codeInputRef.current.clear();
         handleCode("");
       })
       .catch((error) => {
         // upon unsuccessful verification of code, let user know
-        console.log("Code is invalid");
+        // console.log("Code is invalid");
         Alert.alert("Redemption unsuccessful", "Please try again");
       });
   };
@@ -147,8 +147,8 @@ const RedeemButton = ({ canRedeem, code, navigation , handleRedemption, token}) 
                 onPress={() => {
                     if (canRedeem) {
                         // Redeem code here
-                        console.log("Token: " + token);
-                        console.log(' Attempting to redeem code: "' + code + '"');
+                        // console.log("Token: " + token);
+                        // console.log(' Attempting to redeem code: "' + code + '"');
                         handleRedemption();
                     } else {
                         console.log('button disabled');

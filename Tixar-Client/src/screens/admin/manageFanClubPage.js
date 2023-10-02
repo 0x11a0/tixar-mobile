@@ -6,7 +6,7 @@ import ManageFanclubCard from '../../components/new/manageFanclubCard';
 import manageFanclubMiniCard from '../../components/new/manageFanclubMiniCard';
 import ManageFanclubMiniCard from '../../components/new/manageFanclubMiniCard';
 
-export default ManageFanClub = ({ route, navigation }) => {
+export default ManageFanClubPage = ({ route, navigation }) => {
 	const token = route.params.token;
     const clubId = route.params.clubId;
 	const [club, setClub] = useState();
@@ -36,7 +36,7 @@ export default ManageFanClub = ({ route, navigation }) => {
             .catch(error => {
                 console.error(error);
             }).then(() => {
-				console.log('club is ' + club);
+				// console.log('club is ' + club);
 				setIsLoading(false);});
 	}
 

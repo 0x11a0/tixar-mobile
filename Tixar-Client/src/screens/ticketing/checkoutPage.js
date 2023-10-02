@@ -5,7 +5,7 @@ import NextButton from '../../components/viewConcert/nextButton';
 import OptionFields from '../login/optionFields';
 import CheckoutBlock from '../../components/viewConcert/checkoutBlock';
 
-export default ViewConcertPage = () => {
+export default CheckoutPage = () => {
     const insets = useSafeAreaInsets();
 
     return (

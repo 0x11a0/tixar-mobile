@@ -5,7 +5,7 @@ import NextButton from '../../components/vf/nextButton';
 import ProgressCircle from '../../components/vf/progressCircle';
 import * as Clipboard from 'expo-clipboard';
 
-export default GenerateFanCodePage1 = ({route, navigation}) => {
+export default ConfirmCodePage = ({ route, navigation }) => {
     const [isAnimating, setIsAnimating] = useState(false);
     const [rotateRightPercent, setRotateRightPercent] = useState(new Animated.Value(0));
     const [circleOpacity, setCircleOpacity] = useState(new Animated.Value(1));
@@ -32,34 +32,36 @@ export default GenerateFanCodePage1 = ({route, navigation}) => {
             setRotateLeftPercent(new Animated.Value(0));
             setRotateRightPercent(new Animated.Value(0));
             setIsAnimating(false);
-			navigation.pop(2);
+            navigation.pop(2);
         }
         )
     };
 
-	const generateCode = () => {
-		let club = {
-			_id: route.params.clubId,
-			name: route.params.name
-		};
-		let body = {
-			code: route.params.code,
-			club: club,
-			value: route.params.points,
-			expires: route.params.expiryDate,
-			status: 'active',
-		};
-		console.log(body);
-		fetch('http://vf.tixar.sg/api/code', {
+    const generateCode = () => {
+        const body = {
+            code: route.params.code,
+            club: route.params.clubId,
+            value: route.params.points,
+            expires: route.params.expiryDate,
+            status: 'active'
+        }
+        console.log(JSON.stringify(body));
+        fetch('http://vf.tixar.sg/api/code', {
             method: 'POST',
             credentials: 'include',
-            headers: { 
-				'Content-Type': 'application/json',
-				'Authorization':  'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MGZlYjU2ZmYwYmE1NjMxYzY1NTQ1MCIsInR5cGUiOiJhZG1pbiIsInBob25lIjoiNjU5NzMxMTUzMCIsIm5hbWUiOiJTVyBPcCIsImlhdCI6MTY5NTYwMDUxOCwiZXhwIjoxNjk2MjA1MzE4fQ.TZmGbZf1P7S1XkQewcBc83CnyrfgWiE2pu1LgiJFRK8'},
-			body: JSON.stringify(body),
-        }).then((response) => console.log(response.json()))
-            .catch(error => console.error(error));
-	}
+            headers: {
+               "Content-Type": "application/json",
+                Authorization: route.params.token
+            },
+            body: JSON.stringify(body),
+        }).then((response) => {
+            if (response.ok) {
+                console.log('success');
+            } else {
+                console.log("Error code: " + response.status);
+            }
+        }).catch(error => console.error(error));
+    }
 
     const textFadeIn = () => {
         Animated.timing(textOpacity, {
@@ -92,7 +94,7 @@ export default GenerateFanCodePage1 = ({route, navigation}) => {
 
             <View style={styles.upperBlock}>
                 <Text style={styles.title}>Confirm code details</Text>
-				<View style={{ height: 20 }} />
+                <View style={{ height: 20 }} />
                 <ProgressCircle
                     rotateRightPercent={rotateRightPercent}
                     rotateLeftPercent={rotateLeftPercent}
@@ -100,31 +102,31 @@ export default GenerateFanCodePage1 = ({route, navigation}) => {
                     textOpacity={textOpacity}
                     code={'Success'}
                 />
-				<View style={{ height: 20 }} />
-				<View style={styles.fieldBox}>
-					<Text style={styles.fieldText}>
-					{route.params.code}</Text>
-				</View>
-				<View style={{ height: 20 }} />
-				<View style={styles.fieldBox}>
-					<Text style={styles.fieldText}>
-					{route.params.points}</Text>
-				</View>
-                <View style={{ height: 20 }} />			
-				<View style={styles.fieldBox}>
-					<Text style={styles.fieldText}>
-					{route.params.expiryDate}</Text>
-				</View>
+                <View style={{ height: 20 }} />
+                <View style={styles.fieldBox}>
+                    <Text style={styles.fieldText}>
+                        {route.params.code}</Text>
+                </View>
+                <View style={{ height: 20 }} />
+                <View style={styles.fieldBox}>
+                    <Text style={styles.fieldText}>
+                        {route.params.points}</Text>
+                </View>
+                <View style={{ height: 20 }} />
+                <View style={styles.fieldBox}>
+                    <Text style={styles.fieldText}>
+                        {route.params.expiryDate}</Text>
+                </View>
             </View>
 
             <View style={{ height: 20 }} />
 
             <NextButton buttonText={'Confirm'}
-                onPressFunction={() => {	
+                onPressFunction={() => {
                     setIsAnimating(true);
-					generateCode();
-					textFadeOut();
-					
+                    generateCode();
+                    textFadeOut();
+
                 }
                 }
                 enableCondition={true}
@@ -146,7 +148,7 @@ const styles = StyleSheet.create({
     upperBlock: {
         // height: '80%',
         width: '100%',
-		justifyContent: 'flex-start',
+        justifyContent: 'flex-start',
         alignItems: 'center',
         backgroundColor: 'white',
         borderRadius: 15,
@@ -157,8 +159,8 @@ const styles = StyleSheet.create({
         fontFamily: 'Lato-Bold',
         fontSize: 20,
         color: '#252F40',
-	},
-	fieldBox: {
+    },
+    fieldBox: {
         height: 56,
         width: Dimensions.get('window').width * 0.70,
         borderRadius: 10,

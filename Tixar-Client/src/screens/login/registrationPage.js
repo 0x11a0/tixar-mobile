@@ -15,7 +15,7 @@ import {
 } from "react-native";
 import ConditionalButton from "../../components/new/conditionalButton";
 
-export default NewUserRegistrationPage = ({ route, navigation }) => {
+export default RegistrationPage = ({ route, navigation }) => {
   const { phoneNumber } = route.params;
   //states for text input fields
   const [firstNameField, setFirstName] = useState("");

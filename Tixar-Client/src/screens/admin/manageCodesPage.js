@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, SafeAreaView, ScrollView } from 'react-native';
 import ActiveCodeCard from '../../components/new/activeCodeCard';
 
-export default ManageActiveCodes = ({ route, navigation }) => {
+export default ManageCodesPage = ({ route, navigation }) => {
     let { clubId, codes } = route.params;
     return (
         <SafeAreaView style={styles.container}>
@@ -12,6 +12,7 @@ export default ManageActiveCodes = ({ route, navigation }) => {
                 {codes.map((code) => {
                     return (
                         <ActiveCodeCard
+                            key={code._id}
                             codeName={code.code}
                             expirationDate={code.expires}
                         />

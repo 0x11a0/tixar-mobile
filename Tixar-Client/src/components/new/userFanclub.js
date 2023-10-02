@@ -48,7 +48,7 @@ export default FanclubCard = ({
         // setClubs(data);
         console.log("SUCCESSFUL");
         console.log(data);
-        navigation.navigate("fanDashboardPage", { token: token });
+        navigation.navigate("vfDashboardPage", { token: token });
         setshowOptionalButton(false);
       })
       .catch((error) => {

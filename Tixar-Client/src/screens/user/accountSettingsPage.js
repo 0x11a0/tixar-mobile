@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native'
 import { View, Text, StyleSheet, ScrollView, Pressable, Image, SafeAreaViewBase, SafeAreaView } from 'react-native';
 
-import Card from '../components/accountSettings/card.js';
-import ToggleSlider from '../components/accountSettings/toggleSlider.js';
+import Card from '../../components/accountSettings/card.js';
+import ToggleSlider from '../../components/accountSettings/toggleSlider.js';
 import NotificationsPage from './notificationsPage.js';
 
 export default AccountSettingsPage = () => {
@@ -18,7 +18,7 @@ export default AccountSettingsPage = () => {
             {/* Recommended Settings */}
             <Card>
                 <View style={styles.cardHeaderRow}>
-                    <Image source={require('../assets/icon.png')}
+                    <Image source={require('../../assets/icon.png')}
                         style={styles.cardIcon}
                     />
                     <Text style={styles.cardTitle}>
@@ -42,7 +42,7 @@ export default AccountSettingsPage = () => {
                             <Text style={styles.cardText}>
                                 Notifications
                             </Text>
-                            <Image source={require('../assets/soft-ui-pro-react-native-v1.1.1/arrow3x.png')} style={styles.cardRightIcon}/>
+                            <Image source={require('../../assets/soft-ui-pro-react-native-v1.1.1/arrow3x.png')} style={styles.cardRightIcon}/>
                     </View>
                 </Pressable>
             </Card>
@@ -50,7 +50,7 @@ export default AccountSettingsPage = () => {
             {/* Payment */}
             <Card>
                 <View style={styles.cardHeaderRow}>
-                    <Image source={require('../assets/icon.png')}
+                    <Image source={require('../../assets/icon.png')}
                         style={styles.cardIcon}
                     />
                     <Text style={styles.cardTitle}>
@@ -61,20 +61,20 @@ export default AccountSettingsPage = () => {
                     <Text style={styles.cardText}>
                         Manage E-wallet
                     </Text>
-                    <Image source={require('../assets/soft-ui-pro-react-native-v1.1.1/arrow3x.png')} style={styles.cardRightIcon}/>
+                    <Image source={require('../../assets/soft-ui-pro-react-native-v1.1.1/arrow3x.png')} style={styles.cardRightIcon}/>
                 </View>
                 <View style={styles.cardRow}>
                     <Text style={styles.cardText}>
                         Manage Gift Cards
                     </Text>
-                    <Image source={require('../assets/soft-ui-pro-react-native-v1.1.1/arrow3x.png')} style={styles.cardRightIcon}/>
+                    <Image source={require('../../assets/soft-ui-pro-react-native-v1.1.1/arrow3x.png')} style={styles.cardRightIcon}/>
                 </View>
             </Card>
 
             {/* Payment */}
             <Card>
                 <View style={styles.cardHeaderRow}>
-                    <Image source={require('../assets/icon.png')}
+                    <Image source={require('../../assets/icon.png')}
                         style={styles.cardIcon}
                     />
                     <Text style={styles.cardTitle}>
@@ -85,20 +85,20 @@ export default AccountSettingsPage = () => {
                     <Text style={styles.cardText}>
                         User Agreement
                     </Text>
-                    <Image source={require('../assets/soft-ui-pro-react-native-v1.1.1/arrow3x.png')} style={styles.cardRightIcon}/>
+                    <Image source={require('../../assets/soft-ui-pro-react-native-v1.1.1/arrow3x.png')} style={styles.cardRightIcon}/>
                 </View>
                 <View style={styles.cardRow}>
                     <Text style={styles.cardText}>
                         Privacy
                     </Text>
-                    <Image source={require('../assets/soft-ui-pro-react-native-v1.1.1/arrow3x.png')} style={styles.cardRightIcon}/>
+                    <Image source={require('../../assets/soft-ui-pro-react-native-v1.1.1/arrow3x.png')} style={styles.cardRightIcon}/>
                 </View>
                 <View style={styles.cardRow}>
 
                     <Text style={styles.cardText}>
                         About
                     </Text>
-                    <Image source={require('../assets/soft-ui-pro-react-native-v1.1.1/arrow3x.png')} style={styles.cardRightIcon}/>
+                    <Image source={require('../../assets/soft-ui-pro-react-native-v1.1.1/arrow3x.png')} style={styles.cardRightIcon}/>
                 </View>
             </Card>
         </SafeAreaView>

@@ -5,23 +5,23 @@ import NextButton from '../../components/vf/nextButton';
 import TextInputField from '../../components/vf/textInputField';
 import DatePicker from '../../components/vf/datePicker';
 
-export default GenerateFanCodePage2 = ({route, navigation}) => {
+export default GenerateCodePage = ({ route, navigation }) => {
     const [code, setCode] = useState('');
     const [points, setPoints] = useState('');
     const [expiryDate, setExpiryDate] = useState(new Date());
 
-	
-	const padTo2Digits = (num) => {
-		return num.toString().padStart(2, '0');
-	}
 
-	const formatDate = (date) => {
-		 return [
-			date.getFullYear(),
-			padTo2Digits(date.getMonth() + 1),
-			padTo2Digits(date.getDate()),
-		].join('-');
-	} 
+    const padTo2Digits = (num) => {
+        return num.toString().padStart(2, '0');
+    }
+
+    const formatDate = (date) => {
+        return [
+            date.getFullYear(),
+            padTo2Digits(date.getMonth() + 1),
+            padTo2Digits(date.getDate()),
+        ].join('-');
+    }
 
     return (
         <View style={styles.container}>
@@ -60,14 +60,14 @@ export default GenerateFanCodePage2 = ({route, navigation}) => {
 
             <NextButton buttonText={'Generate Code'}
                 onPressFunction={() => {
-                    navigation.navigate('confirmCodePage',{
-						code: code,
-						points: points,
-						expiryDate: formatDate(expiryDate),
-						token: route.params.token,
-						name: route.params.name,
-						clubId: route.params.clubId,
-					});
+                    navigation.navigate('confirmCodePage', {
+                        code: code,
+                        points: points,
+                        expiryDate: formatDate(expiryDate),
+                        token: route.params.token,
+                        name: route.params.name,
+                        clubId: route.params.clubId,
+                    });
                 }
                 }
                 buttonHeight={50}

@@ -12,7 +12,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Dropdown } from "react-native-element-dropdown";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
-export default CreateConcert = ({ route, navigation }) => {
+export default CreateCategoryPage = ({ route, navigation }) => {
   const data = [
     { label: "1", value: "01" },
     { label: "2", value: "02" },
@@ -229,11 +229,11 @@ const SubmitButton = ({
       <Pressable
         style={styles.submitButton}
         onPress={() => {
-          console.log({
-            numberOfCategoryField,
-            categories,
-            descriptionField,
-          });
+        //   console.log({
+        //     numberOfCategoryField,
+        //     categories,
+        //     descriptionField,
+        //   });
 
           if (!isValid) {
             console.log("Not all fields entered");
@@ -241,7 +241,7 @@ const SubmitButton = ({
             errorMessages.forEach((message) => alert(message));
           }
 
-          console.log(route.name);
+        //   console.log(route.name);
         }}
       >
         <Text
