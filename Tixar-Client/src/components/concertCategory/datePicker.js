@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { Pressable, Platform, Text, StyleSheet, TextInput, View, Image} from "react-native";
+import { Pressable, Platform, Text, StyleSheet, TextInput, View, Image } from "react-native";
 
 export default DatePicker = ({
     icon,
+    minDate,
+    maxDate
 }) => {
 
     // STATE VARIABLES
-    const [date, setDate] = useState(new Date()); // initialise date to todays date
+    const [date, setDate] = useState(minDate); // initialise date to first day
     const [showPicker, setShowPicker] = useState(false); // initialise showPicker to be invisible
 
     // FUNCTIONS
@@ -33,7 +35,7 @@ export default DatePicker = ({
     // RENDERED ELEMENTS
     return (
         <View>
-            
+
             {/* show the date picker only when use has clicked text box (showPicker is true) */}
             {showPicker && (
                 <DateTimePicker
@@ -42,31 +44,35 @@ export default DatePicker = ({
                     display="spinner"
                     onChange={onChange}
                     style={styles.datePicker}
+                    minimumDate={minDate}
+                    maximumDate={maxDate}
                 />
             )}
 
             {/* show the confirm button only when user has clicked date picker on ios platform */}
             {showPicker && Platform.OS === 'ios' && (
-            <View
-                style={{ flexDirection: "row", 
-                justifyContent: "space-around" }}
-            >
-                {/* confirm button updates the date variable state and toggles visibility of date picker */}
-                <Pressable 
-                style={styles.dateButton}
-                onPress={onChange}> 
-                    <Text style={styles.optionText}>Confirm</Text>
-                </Pressable>
+                <View
+                    style={{
+                        flexDirection: "row",
+                        justifyContent: "space-around"
+                    }}
+                >
+                    {/* confirm button updates the date variable state and toggles visibility of date picker */}
+                    <Pressable
+                        style={styles.dateButton}
+                        onPress={onChange}>
+                        <Text style={styles.optionText}>Confirm</Text>
+                    </Pressable>
 
-            </View>
+                </View>
             )}
 
 
             {/* show the the date input box only when user has not clicked */}
-            {!showPicker && (    
-                <Pressable 
-                onPress={toggleDatePicker} 
-                style={styles.container}
+            {!showPicker && (
+                <Pressable
+                    onPress={toggleDatePicker}
+                    style={styles.container}
                 >
                     {/* displays icon from icon prop */}
                     <Image source={icon} style={styles.icon} />
@@ -112,16 +118,17 @@ const styles = StyleSheet.create({
         marginTop: -10,
     },
 
-    dateButton: {flexDirection: "row",
-    height: 30,
-    width: "20%",
-    backgroundColor: "#F2F2F2",
-    borderRadius: 10,
-    alignItems: "center",
-    justifyContent: "center",
-    paddingHorizontal: "2%",
-    // backgroundColor: 'blue',
-  },
+    dateButton: {
+        flexDirection: "row",
+        height: 30,
+        width: "20%",
+        backgroundColor: "#F2F2F2",
+        borderRadius: 10,
+        alignItems: "center",
+        justifyContent: "center",
+        paddingHorizontal: "2%",
+        // backgroundColor: 'blue',
+    },
 
     icon: {
         width: 22,
@@ -129,7 +136,7 @@ const styles = StyleSheet.create({
         resizeMode: "contain",
         tintColor: "#252F40",
         // backgroundColor: 'red',
-      },
+    },
 
     input: {
         fontFamily: "Lato-Regular",
