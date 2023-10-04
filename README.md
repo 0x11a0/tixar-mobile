@@ -4,7 +4,7 @@ Welcome to the Tixar! This guide will help you understand how to launch the Tixa
 ## Running React Native Interface
 - cd into Tixar-Client
 - Download dependencies `yarn install`
-- Run `npx expo start` to start local developmental server
+- Run `yarn start` to start local developmental server
 
 ## View the React Native Interface
 1. Download the expo application on your phone
