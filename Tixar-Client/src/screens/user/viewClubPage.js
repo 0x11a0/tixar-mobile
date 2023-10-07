@@ -1,16 +1,11 @@
-import { React, useState } from "react";
+import React, { useState } from "react";
 import {
-  FlatList,
   View,
   Text,
   StyleSheet,
   ScrollView,
-  Pressable,
-  Image,
-  SafeAreaViewBase,
-  SafeAreaView,
-  TextInput,
   TouchableOpacity,
+  SafeAreaView,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import StatisticBox from "../../components/verifiedFans/statisticBox";
@@ -21,7 +16,6 @@ export default ViewClubPage = ({ route, navigation }) => {
   const { clubName, artistDescription, key, token, imageUrl } = route.params;
 
   const handleDeletePress = () => {
-    // console.log(key);
     fetch(`http://vf.tixar.sg/api/profile/${key}`, {
       method: "DELETE",
       credentials: "include",
@@ -29,8 +23,6 @@ export default ViewClubPage = ({ route, navigation }) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        // console.log("SUCCESSFUL");
-        // console.log(data);
         navigation.navigate("vfDashboardPage", { token: token });
       })
       .catch((error) => {
@@ -38,67 +30,57 @@ export default ViewClubPage = ({ route, navigation }) => {
       });
   };
 
-  console.log(clubName);
-  console.log(artistDescription);
-  console.log(imageUrl);
-
   let image = require("../../assets/soft-ui-pro-react-native-v1.1.1/avatar23x.png");
   if (imageUrl) {
     image = { uri: imageUrl };
   }
 
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        backgroundColor: "#F2F2F2",
-      }}
-    >
-      <View
-        style={{
-          flex: 1,
-          width: "90%",
-          alignItems: "center",
-          alignSelf: "center",
-        }}
-      >
-        <StatisticBox
-          clubName={clubName}
-          // artistIcon={require("../../assets/taylorswifticon.png")}
-          artistIcon={image}
-          artistDescription={artistDescription}
-          points={"1002"}
-        />
-
-        <ConcertBox
-          clubName={"Taylor"}
-          monthlyInteractions={40123}
-          newFans={16452}
-          totalFans={131239543}
-          artistIcon={require("../../assets/nationalstadiumicon.png")}
-        />
-
-        <NextButton
-          buttonText={"Redeem Fan Code Here!"}
-          onPressFunction={() => {
-            navigation.navigate("redemptionPage");
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#F2F2F2" }}>
+      <ScrollView style={{ flex: 1 }}>
+        <View
+          style={{
+            width: "90%",
+            alignItems: "center",
+            alignSelf: "center",
           }}
-          style={(marginTop = 50)}
-        />
-        <TouchableOpacity
-          style={styles.deleteButton}
-          onPress={handleDeletePress}
         >
-          <Text style={styles.deleteButtonText}>Delete</Text>
-        </TouchableOpacity>
-      </View>
+          <StatisticBox
+            clubName={clubName}
+            artistIcon={image}
+            artistDescription={artistDescription}
+            points={"1002"}
+          />
 
-      <View>
-        <Text style={styles.footerText}>TIXAR</Text>
-      </View>
+          <ConcertBox
+            clubName={"Taylor"}
+            monthlyInteractions={40123}
+            newFans={16452}
+            totalFans={131239543}
+            artistIcon={require("../../assets/nationalstadiumicon.png")}
+          />
+          
+          {/* buffer */}
+          <View style={{marginTop: 5}}/>
+
+          <NextButton
+            buttonText={"Redeem Fan Code Here!"}
+            onPressFunction={() => {
+              navigation.navigate("redemptionPage");
+            }}
+          />
+          <TouchableOpacity
+            style={styles.deleteButton}
+            onPress={handleDeletePress}
+          >
+            <Text style={styles.deleteButtonText}>Remove Fanclub From My List</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
+
 
 const styles = StyleSheet.create({
   // generate button
@@ -134,7 +116,7 @@ const styles = StyleSheet.create({
   deleteButton: {
     paddingVertical: 2,
     borderRadius: 5,
-    marginTop: 20,
+    marginVertical: 30,
   },
   deleteButtonText: {
     color: "blue",
