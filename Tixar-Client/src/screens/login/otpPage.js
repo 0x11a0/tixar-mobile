@@ -23,11 +23,13 @@ import AuthContext from "../../../AuthContext";
 export default OTPPage = ({ route, navigation }) => {
   const { phoneNumber } = route.params;
   const [otp, setotp] = useState("");
+  const [valid, setValid] = useState(false);
   const { setToken } = useContext(AuthContext);
 
   // function to handle OTP input as user types
   const handleOTP = (number) => {
     setotp(number);
+    setValid(number.length === 6);
   };
 
   // function to handle otp and login request
@@ -152,14 +154,11 @@ export default OTPPage = ({ route, navigation }) => {
                 >
                   <Text style={styles.buttonText}>Back</Text>
                 </Pressable>
-                <Pressable
-                  style={styles.button}
-                  onPress={() => {
-                    handleOTPLogin();
-                  }}
-                >
-                  <Text style={styles.buttonText}>Continue</Text>
-                </Pressable>
+                <ContinueButton
+                  valid={valid}
+                  otp={otp}
+                  handleOTPLogin={handleOTPLogin}
+                />
               </View>
 
               <View style={styles.resendButton}>
@@ -177,6 +176,39 @@ export default OTPPage = ({ route, navigation }) => {
         </TouchableWithoutFeedback>
       </ImageBackground>
     </View>
+  );
+};
+
+const ContinueButton = ({ valid, handleOTPLogin, otp }) => {
+  return (
+    <LinearGradient
+      colors={valid ? ["#FF0080", "#7928CA"] : ["#E8ECEF", "#E8ECEF"]}
+      style={styles.loginBackgroundEnabled}
+      start={[0, 0]}
+      end={[1, 0]}
+    >
+      <Pressable
+        style={styles.loginButton}
+        onPress={() => {
+          if (valid) {
+            // Add login auth here
+            console.log(
+              "attempting to login with OTP: " + otp
+            );
+            handleOTPLogin();
+          } else {
+            console.log("button disabled");
+            Alert.alert("Invalid OTP", "Please enter a valid OTP");
+          }
+        }}
+      >
+        <Text
+          style={valid ? styles.loginTextEnabled : styles.loginTextDisabled}
+        >
+          Continue
+        </Text>
+      </Pressable>
+    </LinearGradient>
   );
 };
 
@@ -230,7 +262,7 @@ const styles = StyleSheet.create({
     // backgroundColor: "green",
   },
   button: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#E8ECEF",
     borderRadius: 50,
     width: "47%",
     justifyContent: "center",
@@ -242,6 +274,35 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     textAlign: "center",
     // backgroundColor: "orange",
+  },
+
+  // LOGIN BUTTON
+  loginButton: {
+    width: "47%",
+    height: 45,
+    alignItems: "center",
+    justifyContent: "center",
+    alignSelf: "center",
+  },
+  loginBackgroundEnabled: {
+    borderRadius: 50,
+    width: "47%",
+    height: 45,
+    alignItems: "center",
+    justifyContent: "center",
+    alignSelf: "center",
+  },
+  loginTextEnabled: {
+    fontSize: 15,
+    fontFamily: "Lato-Bold",
+    color: "white",
+    lineHeight: 20,
+  },
+  loginTextDisabled: {
+    fontSize: 15,
+    fontFamily: "Lato-Bold",
+    color: "#252F40",
+    lineHeight: 20,
   },
 
   // OTP RESEND

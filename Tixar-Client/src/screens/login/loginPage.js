@@ -125,7 +125,7 @@ export default LoginPage = ({ navigation }) => {
   );
 };
 
-const LoginButton = ({ valid, phoneNumber, navigation, handleLogin }) => {
+const LoginButton = ({ valid, phoneNumber, handleLogin }) => {
   return (
     <LinearGradient
       colors={valid ? ["#FF0080", "#7928CA"] : ["#E8ECEF", "#E8ECEF"]}
