@@ -52,7 +52,8 @@ export default GenerateCodePage = ({ route, navigation }) => {
 
                 <DatePicker
                     date={expiryDate}
-                    setDate={setExpiryDate} />
+                    setDate={setExpiryDate}
+                     />
 
             </View>
 
@@ -88,7 +89,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
     },
     upperBlock: {
-        height: '55%',
+        height: '75%',
         width: '100%',
         alignItems: 'center',
         backgroundColor: 'white',

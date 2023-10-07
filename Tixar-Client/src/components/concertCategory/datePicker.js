@@ -4,13 +4,16 @@ import { Pressable, Platform, Text, StyleSheet, TextInput, View, Image } from "r
 
 export default DatePicker = ({
     icon,
-    minDate,
+    minDate, // You can remove the minDate prop
     maxDate
 }) => {
 
+    // Calculate the minimum date (today)
+    const today = new Date();
+
     // STATE VARIABLES
-    const [date, setDate] = useState(minDate); // initialise date to first day
-    const [showPicker, setShowPicker] = useState(false); // initialise showPicker to be invisible
+    const [date, setDate] = useState(today); // initialize date to today
+    const [showPicker, setShowPicker] = useState(false); // initialize showPicker to be invisible
 
     // FUNCTIONS
     // toggle the date picker
@@ -44,7 +47,7 @@ export default DatePicker = ({
                     display="spinner"
                     onChange={onChange}
                     style={styles.datePicker}
-                    minimumDate={minDate}
+                    minimumDate={today} // Set the minimum date to today
                     maximumDate={maxDate}
                 />
             )}
@@ -66,7 +69,6 @@ export default DatePicker = ({
 
                 </View>
             )}
-
 
             {/* show the the date input box only when user has not clicked */}
             {!showPicker && (
@@ -97,10 +99,8 @@ export default DatePicker = ({
     );
 };
 
-
 // STYLES
 const styles = StyleSheet.create({
-
     container: {
         flexDirection: "row",
         height: 50,
@@ -111,6 +111,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "flex-start",
         paddingHorizontal: "5%",
+        // backgroundColor: "red",
     },
 
     datePicker: {
@@ -127,7 +128,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         paddingHorizontal: "2%",
-        // backgroundColor: 'blue',
     },
 
     icon: {
@@ -135,7 +135,6 @@ const styles = StyleSheet.create({
         height: 22,
         resizeMode: "contain",
         tintColor: "#252F40",
-        // backgroundColor: 'red',
     },
 
     input: {

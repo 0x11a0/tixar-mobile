@@ -4,6 +4,8 @@ import { Pressable, Platform, Text, StyleSheet, View, Dimensions } from "react-n
 
 export default DatePicker = ({ date, setDate }) => {
 
+    const today = new Date();
+
     // STATE VARIABLES
 
     const [showPicker, setShowPicker] = useState(false); // initialise showPicker to be invisible
@@ -40,6 +42,7 @@ export default DatePicker = ({ date, setDate }) => {
                     display="spinner"
                     onChange={onChange}
                     style={styles.datePicker}
+                    minimumDate={today}
                 />
             )}
 
