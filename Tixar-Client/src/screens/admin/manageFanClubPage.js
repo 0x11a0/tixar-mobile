@@ -120,6 +120,7 @@ export default ManageFanClubPage = ({ route, navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        // backgroundColor: "red"
     },
     buttonContainer: {
         justifyContent: 'flex-end',
@@ -131,5 +132,6 @@ const styles = StyleSheet.create({
         height: 100,
         flexDirection: 'row',
         justifyContent: 'space-between',
+        // backgroundColor: 'blue',
     }
 });

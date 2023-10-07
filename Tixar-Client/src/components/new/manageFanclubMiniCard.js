@@ -40,7 +40,8 @@ const styles = StyleSheet.create({
         backgroundColor: "white",
         borderRadius: 15,
         height: '100%',
-        width: 190,
+        width: 160,
+        // backgroundColor: 'yellow',
     },
 
     title: {
