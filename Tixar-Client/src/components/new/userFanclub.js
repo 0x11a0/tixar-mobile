@@ -71,8 +71,12 @@ export default FanclubCard = ({
           onPressFunction();
         }}
       >
-        {/* icon */}
-        <Image source={image} style={styles.icon} resizeMode="cover" />
+
+        <View style={styles.imageContainer}>
+          {/* icon */}
+          <Image source={image} style={styles.icon} resizeMode="cover" />
+        </View>
+        
 
         {/* information */}
         <View style={styles.information}>
@@ -100,12 +104,12 @@ export default FanclubCard = ({
         {/* hamburger menu icon, it dissapears when delete button is visible */}
         {!showOptionalButton && (
           <Pressable
-            style={styles.hamburgerMenuContainer}
+            style={styles.plusContainer}
             onPress={handleHamburgerPress}
           >
             <Image
-              source={require("../../assets/hamburgerMenu.png")}
-              style={styles.hamburgerMenuIcon}
+              source={require("../../assets/plus.png")}
+              style={styles.plusIcon}
               resizeMode="cover"
             />
           </Pressable>
@@ -144,9 +148,13 @@ const styles = StyleSheet.create({
   },
 
   icon: {
-    width: 80,
-    height: 80,
+    height: "100%",
+    aspectRatio: 1,
     borderRadius: 15,
+  },
+
+  imageContainer: {
+    // backgroundColor: "blue"
   },
 
   title: {
@@ -176,14 +184,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "flex-start",
     paddingLeft: 10,
+    // backgroundColor: "red"
   },
 
-  hamburgerMenuContainer: {
+  plusContainer: {
     padding: 5,
     borderRadius: 5,
   },
 
-  hamburgerMenuIcon: {
+  plusIcon: {
     width: 30,
     height: 30,
     alignSelf: "center",
