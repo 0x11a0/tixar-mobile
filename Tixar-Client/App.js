@@ -76,7 +76,12 @@ export default function App() {
             <SafeAreaProvider>
                 <NavigationContainer>
 
-                    <Stack.Navigator initialRouteName='loginPage'>
+                    <Stack.Navigator initialRouteName='loginPage'
+                        screenOptions={({ navigation }) => ({
+                            headerRight: () => (
+                                <HeaderIcon navigation={navigation} token={token} />
+                            )
+                        })}>
                         <Stack.Screen name='drawer' component={DrawerNav}
                             options={{
                                 headerShown: false,
@@ -149,7 +154,9 @@ export default function App() {
                             />
                         </Stack.Group>
 
-                        <Stack.Group>
+                        <Stack.Group screenOptions={{
+                            headerRight: null
+                        }}>
                             <Stack.Screen
                                 name="userProfilePage"
                                 component={UserProfilePage}
@@ -274,7 +281,7 @@ export default function App() {
                     </Stack.Navigator>
                 </NavigationContainer>
             </SafeAreaProvider>
-        </AuthContext.Provider>
+        </AuthContext.Provider >
     );
 }
 
@@ -313,27 +320,8 @@ const DrawerNav = ({ route, navigation }) => {
                     fontFamily: "Lato-Regular",
                     fontSize: 20,
                 },
-
-                headerRight: (props) => (
-                    <Pressable
-                        style={{
-                            justifyContent: "center",
-                            alignItems: "center",
-                            marginRight: "7%",
-                        }}
-                        onPress={() => {
-                            navigation.navigate("userProfilePage", { token: token });
-                        }}
-                    >
-                        <Image
-                            source={require("./src/assets/soft-ui-pro-react-native-v1.1.1/users3x.png")}
-                            style={{
-                                height: 25,
-                                width: 25,
-                                resizeMode: "contain",
-                            }}
-                        />
-                    </Pressable>
+                headerRight: () => (
+                    <HeaderIcon navigation={navigation} token={token} />
                 ),
             }}
             drawerContent={(props) => {
@@ -387,3 +375,27 @@ const DrawerNav = ({ route, navigation }) => {
         </Drawer.Navigator>
     );
 };
+
+const HeaderIcon = ({ navigation, token }) => {
+    return (
+        <Pressable
+            style={{
+                justifyContent: "center",
+                alignItems: "center",
+                marginRight: "7%",
+            }}
+            onPress={() => {
+                navigation.navigate("userProfilePage", { token: token });
+            }}
+        >
+            <Image
+                source={require("./src/assets/soft-ui-pro-react-native-v1.1.1/users3x.png")}
+                style={{
+                    height: 25,
+                    width: 25,
+                    resizeMode: "contain",
+                }}
+            />
+        </Pressable>
+    );
+}
