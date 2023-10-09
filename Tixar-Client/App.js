@@ -140,7 +140,7 @@ export default function App() {
                                 name="redemptionPage"
                                 component={RedemptionPage}
                                 options={{
-                                    headertitle: "Redemption Page",
+                                    headerTitle: "Redemption Page",
                                 }}
                             />
                         </Stack.Group>
@@ -149,7 +149,8 @@ export default function App() {
                                 name="viewClubPage"
                                 component={ViewClubPage}
                                 options={{
-                                    headertitle: "View Fan Club",
+                                    // headerShown: false
+                                    headerTitle: "View Fan Club",
                                 }}
                             />
                         </Stack.Group>
