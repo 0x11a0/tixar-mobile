@@ -46,8 +46,8 @@ export default FanDashboardPage = ({ route, navigation }) => {
         <ScrollView>
           {/* Your FanclubCards go here */}
           {profiles.map((profile) => {
-            // console.log(profile);
-            // console.log(profile.points);
+            console.log(profile);
+            console.log(profile.points);
             // console.log(profile.club.imageUrl);
             return (
               <ArtistBlock
@@ -63,6 +63,7 @@ export default FanDashboardPage = ({ route, navigation }) => {
                     key: profile._id,
                     token: route.params.token,
                     imageUrl: profile.club.imageUrl,
+                    points: profile.points,
                   });
                 }}
                 // artistIcon: require("../../assets/soft-ui-pro-react-native-v1.1.1/avatar23x.png"),

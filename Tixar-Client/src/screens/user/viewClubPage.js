@@ -18,7 +18,8 @@ import ConcertBox from "../../components/verifiedFans/concertBox";
 import NextButton from "../../components/new/nextButton";
 
 export default ViewClubPage = ({ route, navigation }) => {
-  const { clubName, artistDescription, key, token, imageUrl } = route.params;
+  const { clubName, artistDescription, key, token, imageUrl, points } =
+    route.params;
 
   const handleDeletePress = () => {
     // console.log(key);
@@ -67,7 +68,7 @@ export default ViewClubPage = ({ route, navigation }) => {
           // artistIcon={require("../../assets/taylorswifticon.png")}
           artistIcon={image}
           artistDescription={artistDescription}
-          points={"1002"}
+          points={points}
         />
 
         <ConcertBox
