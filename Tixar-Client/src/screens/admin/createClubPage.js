@@ -128,6 +128,7 @@ export default CreateClubPage = ({ route, navigation }) => {
         navigation={navigation}
         onPressFunction={() => {
           createClub();
+          navigation.pop();
         //   console.log(nameField, descriptionField);
         }}
       ></ConditionalButton>

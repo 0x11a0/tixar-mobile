@@ -9,6 +9,7 @@ export default FanclubCard = ({
     navigationDestination, // Receive the screen name prop
     imageUrl,
     onPressFunction,
+    deleteFunction
 }) => {
     const navigation = useNavigation();
     const [showDeleteButton, setShowDeleteButton] = useState(false);
@@ -21,6 +22,7 @@ export default FanclubCard = ({
         // Handle the delete action here
         // You can add your logic to delete the item
         console.log('Delete button pressed');
+        deleteFunction();
     }
 
     let image = require('../../assets/soft-ui-pro-react-native-v1.1.1/avatar23x.png');
