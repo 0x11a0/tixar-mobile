@@ -80,7 +80,8 @@ export default function App() {
                         screenOptions={({ navigation }) => ({
                             headerRight: () => (
                                 <HeaderIcon navigation={navigation} token={token} />
-                            )
+                            ),
+                            headerBackTitle: ''
                         })}>
                         <Stack.Screen name='drawer' component={DrawerNav}
                             options={{
@@ -149,8 +150,8 @@ export default function App() {
                                 name="viewClubPage"
                                 component={ViewClubPage}
                                 options={{
-                                    // headerShown: false
                                     headerTitle: "View Fan Club",
+                                    
                                 }}
                             />
                         </Stack.Group>
