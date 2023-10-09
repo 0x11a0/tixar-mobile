@@ -1,4 +1,4 @@
-import {React, useState, useEffect} from 'react';
+import { React, useState, useEffect } from 'react';
 import { View, StyleSheet, SafeAreaView, ScrollView, Text } from 'react-native';
 import FanclubCard from '../../components/new/fanclubCard';
 import NextButton from '../../components/new/nextButton';
@@ -7,58 +7,63 @@ import manageFanclubMiniCard from '../../components/new/manageFanclubMiniCard';
 import ManageFanclubMiniCard from '../../components/new/manageFanclubMiniCard';
 
 export default ManageFanClubPage = ({ route, navigation }) => {
-	const token = route.params.token;
+    const token = route.params.token;
     const clubId = route.params.clubId;
-	const [club, setClub] = useState();
-	const [isLoading, setIsLoading] = useState(true);
+    const [club, setClub] = useState();
+    const [codes, setCodes] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
-	const [codes, setCodes] = useState([]);
-
-	const getCodes = () => {
-		fetch('http://vf.tixar.sg/api/codes', {
-			method: 'GET',
-			credentials: 'include',
-			headers: { 'Authorization':  token}	
-			
-		}).then(response => response.json())
-		.then(data => setCodes(data.filter(entry => entry.club._id === clubId))).catch(error => console.error(error));
-	}
-
-	const getClub = () => {
-         fetch('http://vf.tixar.sg/api/club/' + clubId, {
+    const getCodes = () => {
+        fetch('http://vf.tixar.sg/api/codes', {
             method: 'GET',
             credentials: 'include',
-            headers: { 'Authorization':  token}	
+            headers: { 'Authorization': token }
+
+        }).then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw Error(response.json());
+            }
+        }).then((data) => {setCodes(data.filter(entry => entry.club._id === clubId))})
+        .catch(error => console.error(error));
+    }
+
+    const getClub = () => {
+        fetch('http://vf.tixar.sg/api/club/' + clubId, {
+            method: 'GET',
+            credentials: 'include',
+            headers: { 'Authorization': token }
         }).then(response => response.json())
             .then((data) => {
-				setClub(data);				
+                setClub(data);
             })
             .catch(error => {
                 console.error(error);
             }).then(() => {
-				// console.log('club is ' + club);
-				setIsLoading(false);});
-	}
+                setIsLoading(false);
+            });
+    }
 
 
-	useEffect(() => {
-		getCodes();
+    useEffect(() => {
+        getCodes();
         getClub();
     }, []);
-	
-	if (isLoading) {
-		return (
-			<SafeAreaView style={{
-				flex: 1,
-				backgroundColor: '#F2F2F2',
-				justifyContent: 'center',
-				alignItems: 'center'
-			}}>
-				<Text>Loading ...</Text>
-			</SafeAreaView>
-		);
-	}
 
+    navigation.addListener('focus', () => {
+        getCodes();
+        getClub();
+    });
+
+    if (isLoading) {
+        return (
+            <SafeAreaView style={{ flex: 1, backgroundColor: '#F2F2F2' }}>
+                <View style={[styles.container, { justifyContent: 'center', alignItems: 'center' }]}>
+                    <Text>Loading...</Text>
+                </View>
+            </SafeAreaView >);
+    }
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#F2F2F2' }}>
@@ -75,9 +80,8 @@ export default ManageFanClubPage = ({ route, navigation }) => {
                         // navigationDestination={'NotificationsPage'} //place holder page, change to fans page
                         onPressFunction={() => {
                             navigation.navigate('adminFansPage', {
-								token: token,
-                                
-								clubId: clubId,
+                                token: token,
+                                clubId: clubId,
                             });
                         }}
                         title={'Fan Count'}
@@ -89,7 +93,8 @@ export default ManageFanClubPage = ({ route, navigation }) => {
                         onPressFunction={() => {
                             navigation.navigate('adminCodesPage', {
                                 clubId: club._id,
-                                codes: codes
+                                codes: codes,
+                                token: token
                             });
                         }}
                         title={'Active Codes'}
@@ -102,11 +107,11 @@ export default ManageFanClubPage = ({ route, navigation }) => {
                     <NextButton
                         buttonText={'Generate a Fan Code'}
                         onPressFunction={() => navigation.navigate('generateCodePage', {
-							token: token,
-							name: club.name,
-							clubId: club._id
+                            token: token,
+                            name: club.name,
+                            clubId: club._id
 
-						})} //place holder destination, change to create new fanclub page
+                        })} //place holder destination, change to create new fanclub page
                         buttonHeight={50}
                     />
                 </View>

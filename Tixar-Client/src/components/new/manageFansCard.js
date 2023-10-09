@@ -1,13 +1,13 @@
 import React, { useState, useRef } from 'react';
-import { View, Text, StyleSheet, Pressable, Image, Animated} from 'react-native';
+import { View, Text, StyleSheet, Pressable, Image, Animated } from 'react-native';
 
-export default FanCard = ({ 
+export default FanCard = ({
     fanName,
     fanPoints,
-	onPressFunction
+    onPressFunction
 }) => {
 
-	const viewScale = useRef(new Animated.Value(1)).current;
+    const viewScale = useRef(new Animated.Value(1)).current;
 
     const [showDeleteButton, setShowDeleteButton] = useState(false);
 
@@ -15,36 +15,34 @@ export default FanCard = ({
         setShowDeleteButton(!showDeleteButton);
     }
 
-	const animate = () => {
-		Animated.timing(viewScale , {
-			toValue: 0,
-			useNativeDriver: true,
-			duration: 200,
+    const animate = () => {
+        Animated.timing(viewScale, {
+            toValue: 0,
+            useNativeDriver: true,
+            duration: 200,
 
-		}).start();
-	}
+        }).start();
+    }
 
     const handleDeletePress = () => {
         // Handle the delete action here
         // You can add your logic to delete the item
-		// console.log('Delete button pressed');
-		animate();
-		onPressFunction();
-	}
+        // console.log('Delete button pressed');
+        onPressFunction();
+    }
 
     return (
-        <Animated.View style={styles.container, {transform: [
-													{scaleY: viewScale}
-			], height: 70, paddingHorizontal: 10}}>
-            <Pressable 
-                style={{height: '100%',
-				flexDirection: "row",
-				alignItems: "center",
-				backgroundColor: "white",
-				borderRadius: 15,
-				marginHoriztonal: 10,
-				padding: 10,
-				}}
+        <View style={[styles.container, { height: 70, paddingHorizontal: 10 }]}>
+            <Pressable
+                style={{
+                    height: '100%',
+                    flexDirection: "row",
+                    alignItems: "center",
+                    backgroundColor: "white",
+                    borderRadius: 15,
+                    marginHoriztonal: 10,
+                    padding: 10,
+                }}
             >
 
                 {/* information */}
@@ -55,18 +53,18 @@ export default FanCard = ({
 
                 {/* hamburger menu icon, it dissapears when delete button is visible */}
                 {!showDeleteButton && (
-                       <Pressable
-                       style={styles.hamburgerMenuContainer}
-                       onPress={handleHamburgerPress}
-                   >
-                       <Image
-                           source={require("../../assets/hamburgerMenu.png")}
-                           style={styles.hamburgerMenuIcon}
-                           resizeMode="cover"
-                       />
-                   </Pressable>
+                    <Pressable
+                        style={styles.hamburgerMenuContainer}
+                        onPress={handleHamburgerPress}
+                    >
+                        <Image
+                            source={require("../../assets/hamburgerMenu.png")}
+                            style={styles.hamburgerMenuIcon}
+                            resizeMode="cover"
+                        />
+                    </Pressable>
                 )}
-             
+
 
                 {/* Transparent overlay covering the entire screen when delete button is shown */}
                 {showDeleteButton && (
@@ -86,7 +84,7 @@ export default FanCard = ({
                     </Pressable>
                 )}
             </Pressable>
-        </Animated.View>
+        </View>
     );
 }
 
@@ -96,8 +94,8 @@ const styles = StyleSheet.create({
         alignItems: "center",
         backgroundColor: "white",
         borderRadius: 15,
-//		overflow: 'hidden'
-	},
+        //		overflow: 'hidden'
+    },
 
     title: {
         fontSize: 20,
@@ -145,7 +143,7 @@ const styles = StyleSheet.create({
 
     overlay: {
         position: 'absolute', // Position the overlay on the parent view with starting coordinates (0, 0, 0, 0)
-        top: 0, 
+        top: 0,
         left: 0,
         right: 0,
         bottom: 0,

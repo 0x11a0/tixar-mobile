@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import FanclubCard from "../../components/new/fanclubCard";
 import NextButton from "../../components/new/nextButton";
+import ConfirmAlert from "../../components/verifiedFans/confirmAlert";
 
 export default DashboardPage = ({ route, navigation }) => {
     const token = route.params.token;
@@ -51,8 +52,8 @@ export default DashboardPage = ({ route, navigation }) => {
             .then((response) => {
                 if (response.ok) {
                     console.log("Club deleted");
-                    for (let i = 0; i < clubs.length; i++){
-                        if (clubs[i]._id === clubId){
+                    for (let i = 0; i < clubs.length; i++) {
+                        if (clubs[i]._id === clubId) {
                             clubs.splice(i, 1);
                             setRefresh(!refresh);
                             break;
@@ -98,9 +99,13 @@ export default DashboardPage = ({ route, navigation }) => {
                             }
                             imageUrl={item.imageUrl}
                             deleteFunction={() => {
-                                if (deleteClub(item._id)) {
-
-                                }
+                                ConfirmAlert({
+                                    title: 'Delete club',
+                                    message: 'Action cannot be undone!',
+                                    positiveFunction: () => {
+                                        deleteClub(item._id);
+                                    }
+                                });
                             }}
                         />
                     }

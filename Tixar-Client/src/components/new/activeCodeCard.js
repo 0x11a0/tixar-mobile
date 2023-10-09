@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Pressable, Image } from 'react-native';
+import ConfirmAlert from '../verifiedFans/confirmAlert';
 
 export default ActiveCodeCard = ({ 
     codeName,
     expirationDate,
+    deleteFunction
 }) => {
 
     const [showDeleteButton, setShowDeleteButton] = useState(false);
@@ -15,7 +17,8 @@ export default ActiveCodeCard = ({
     const handleDeletePress = () => {
         // Handle the delete action here
         // You can add your logic to delete the item
-        console.log('Delete button pressed');
+        deleteFunction();
+        // console.log('Delete button pressed');
     }
 
     return (
