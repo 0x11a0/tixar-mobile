@@ -1,17 +1,13 @@
-// import { LinearGradient } from "expo-linear-gradient";
 import { Pressable, Text, StyleSheet } from "react-native";
+import { colors } from '../../colors';
+
 
 export default Button = ({ buttonText, enableCondition, onPressFunction }) => {
     return (
-        // <LinearGradient colors={enableCondition ?
-        //     ['#FF0080', '#7928CA']
-        //     : ['#E8ECEF', '#E8ECEF']}
-        //     style={styles.container}
-        //     start={[0, 0]} end={[1, 0]}>
 
             <Pressable 
                 style={styles.button}
-                backgroundColor={enableCondition ? 'white' : 'grey'}
+                backgroundColor={enableCondition ? colors.buttonEnabled : colors.buttonDisabled}
                 onPress={enableCondition
                     ? (() => { onPressFunction(); })
                     : (() => { console.log('button disabled') })} >
@@ -19,7 +15,7 @@ export default Button = ({ buttonText, enableCondition, onPressFunction }) => {
                 <Text style={{
                     fontSize: 15,
                     fontFamily: 'Lato-Bold',
-                    color: enableCondition ? 'green' : 'red',
+                    color: enableCondition ? colors.textAccent : colors.textDisabled,
                 }}>
                     {buttonText}
                 </Text>

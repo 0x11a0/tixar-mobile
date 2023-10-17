@@ -3,16 +3,16 @@ import {
   View,
   Text,
   StyleSheet,
-  Pressable,
   ImageBackground,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
-// import HeaderBlock from "../../components/login/headerBlock";
 import PhoneInput from "react-native-phone-number-input";
 import Button from "../../../components/newApp/button";
+
+//import global color palatte
+import { colors } from '../../../colors';
 
 export default LoginPage = ({ navigation }) => {
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -114,7 +114,7 @@ export default LoginPage = ({ navigation }) => {
               {/* Login Button */}
               <View style={styles.buttonContainer}>
                 <Button
-                  buttonText={"test"}
+                  buttonText={"LOG IN"}
                   enableCondition={valid}
                   onPressFunction={() => {
                     handleLogin(phoneNumber);
@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 20,
     margin: "5%",
-    backgroundColor: "#212124",
+    backgroundColor: colors.primary,
   },
 
   // TIXAR HEADER
@@ -239,13 +239,4 @@ const styles = StyleSheet.create({
     // backgroundColor:'red',
   },
 
-  // TIXAR FOOTER
-  footerText: {
-    fontFamily: "Lato-Regular",
-    fontSize: 12,
-    position: "absolute",
-    alignSelf: "center",
-    bottom: "1%",
-    color: "#8F8F8F",
-  },
 });
