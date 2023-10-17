@@ -10,6 +10,7 @@ export const colors = {
     primary: '#212124',
     secondary: '#818181',
     background: '#161618',
+    accent: '#bf94f7',
 
 
     // Text

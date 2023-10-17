@@ -13,11 +13,15 @@ import Button from "../../../components/newApp/button";
 
 //import global color palatte
 import { colors } from '../../../colors';
+import TextInputField from "../../../components/newApp/textInputField";
 
 export default LoginPage = ({ navigation }) => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [valid, setValid] = useState(false);
   const phoneInput = useRef(null);
+
+  const [value, setValue] = useState("");
+
 
   // function to handle phone number input as user types
   const handlePhoneInput = (number) => {
@@ -121,6 +125,7 @@ export default LoginPage = ({ navigation }) => {
                   }}
                 />
               </View>
+
             </View>
           </KeyboardAvoidingView>
         </TouchableWithoutFeedback>
