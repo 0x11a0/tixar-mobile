@@ -22,7 +22,8 @@ import ManageFansPage from './src/screens/admin/manageFansPage';
 
 // Login
 import RegistrationPage from './src/screens/login/registrationPage';
-import LoginPage from './src/screens/login/loginPage';
+// import LoginPage from './src/screens/login/loginPage';
+import LoginPage from './src/screens/newApp/login/loginPage';
 import OTPPage from './src/screens/login/otpPage';
 
 // VF
