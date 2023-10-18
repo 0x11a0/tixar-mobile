@@ -9,7 +9,7 @@ import { View,
          Alert, } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import card33x from '../../assets/images/card33x.png';
-import AuthContext from '../../../AuthContext';
+import AuthContext from '../../../context';
 
 
 export default RedemptionPage = ({navigation}) => {

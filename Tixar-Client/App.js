@@ -1,15 +1,15 @@
 import { useFonts } from 'expo-font';
-import { React, useState, useEffect } from 'react';
-import { Pressable, View, Text, Image, StyleSheet, SafeAreaView, ScrollView, TextInput } from 'react-native';
-import { getHeaderTitle } from '@react-navigation/elements';
+import { React, useState, useEffect, useContext } from 'react';
+import { Pressable, Image, useColorScheme } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
-import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
-import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { AntDesign } from '@expo/vector-icons';
 
 // Misc
-import AuthContext from './AuthContext';
+import { AuthContext, ColorContext } from './context';
 
 // Admin
 import CreateConcertPage from './src/screens/admin/createConcertPage'
@@ -49,6 +49,8 @@ import ViewClubPage from './src/screens/user/viewClubPage';
 // eWallet
 import ManageEWalletPage from './src/screens/eWallet/eWalletPage';
 import EWalletWithdrawPage from './src/screens/eWallet/eWalletWithdrawPage';
+import ColorTheme from './src/colorScheme';
+import { StatusBar } from 'expo-status-bar';
 
 export default function App() {
     const [fontsLoaded] = useFonts({
@@ -57,8 +59,19 @@ export default function App() {
         'Lato-Light': require('./src/assets/fonts/Lato/Lato-Light.ttf'),
     });
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [token, setToken] = useState(null);
+    const [token, setToken] = useState('Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MGZlYjU2ZmYwYmE1NjMxYzY1NTQ1MCIsInR5cGUiOiJhZG1pbiIsInBob25lIjoiNjU5NzMxMTUzMCIsIm5hbWUiOiJTVyBPcCIsImlhdCI6MTY5NzU5NDE1MywiZXhwIjoxNjk4MTk4OTUzfQ.ndn_VnqOOhhDduFITVts4vqBqCrfAdTefVaIdliXbG8');
+    const [colors, setColors] = useState(ColorTheme.dark);
+    const [theme, setTheme] = useState(useColorScheme());
 
+    useEffect(() => {
+        if (theme === 'light') {
+            setColors(ColorTheme.dark);
+        } else {
+            setColors(ColorTheme.dark);
+        }
+    }, [theme])
+
+    console.log(theme);
     if (fontsLoaded) {
         console.log("fonts loaded");
         const hideSplash = async () => {
@@ -72,219 +85,233 @@ export default function App() {
 
     const Stack = createNativeStackNavigator();
 
+    const backIcon = () => {
+        return (
+            <AntDesign name='arrowLeft' size={20} color={colors.textPrimary} />
+        );
+    }
+
     return (
         <AuthContext.Provider value={{ token, setToken }}>
-            <SafeAreaProvider>
-                <NavigationContainer>
+            <ColorContext.Provider value={{ colors, setColors }}>
+                <SafeAreaProvider>
 
-                    <Stack.Navigator initialRouteName='loginPage'>
-                        <Stack.Screen name='drawer' component={DrawerNav}
-                            options={{
-                                headerShown: false,
-                            }} />
+                    <NavigationContainer>
 
-                        <Stack.Group>
-                            <Stack.Screen
-                                name="viewConcertPage"
-                                component={ViewConcertPage}
-                                options={{
-                                    headerTitle: "View Concert",
-                                }}
-                            />
-                            <Stack.Screen
-                                name="concertCategoryPage"
-                                component={ConcertCategoryPage}
-                                options={{
-                                    headerTitle: "Concert Category",
-                                }}
-                            />
-                        </Stack.Group>
+                        <Stack.Navigator initialRouteName='drawer'
+                            screenOptions={{
+                                headerStyle: {
+                                    backgroundColor: colors.background,
+                                },
+                                headerTitle: 'TIXAR',
+                                headerTitleAlign: 'center',
+                                headerTintColor: colors.textPrimary
 
-                        <Stack.Screen
-                            name="vfDashboardPage"
-                            component={VFDashboardPage}
-                            options={{
-                                headerTitle: "My Fan Clubs",
                             }}
-                        />
 
-                        <Stack.Screen
-                            name="viewAllClubsPage"
-                            component={ViewAllClubsPage}
-                            options={{
-                                headerTitle: "Browse Fan Clubs",
-                            }}
-                        />
+                        >
+                            <Stack.Screen name='drawer' component={DrawerNav}
+                                options={{
+                                    headerShown: false,
+                                }} />
 
-                        <Stack.Group screenOptions={{ headerShown: false }}>
-                            <Stack.Screen
-                                name="loginPage"
-                                component={LoginPage}
-                            />
-                            <Stack.Screen
-                                name="otpPage"
-                                component={OTPPage}
-                            />
-                            <Stack.Screen
-                                name="registrationPage"
-                                component={RegistrationPage}
-                            />
-                        </Stack.Group>
+                            <Stack.Group>
+                                <Stack.Screen
+                                    name="viewConcertPage"
+                                    component={ViewConcertPage}
+                                    options={{
+                                        headerTitle: "View Concert",
+                                    }}
+                                />
+                                <Stack.Screen
+                                    name="concertCategoryPage"
+                                    component={ConcertCategoryPage}
+                                    options={{
+                                        headerTitle: "Concert Category",
+                                    }}
+                                />
+                            </Stack.Group>
 
-                        <Stack.Group>
                             <Stack.Screen
-                                name="redemptionPage"
-                                component={RedemptionPage}
+                                name="vfDashboardPage"
+                                component={VFDashboardPage}
                                 options={{
-                                    headertitle: "Redemption Page",
-                                }}
-                            />
-                        </Stack.Group>
-                        <Stack.Group>
-                            <Stack.Screen
-                                name="viewClubPage"
-                                component={ViewClubPage}
-                                options={{
-                                    headertitle: "View Fan Club",
-                                }}
-                            />
-                        </Stack.Group>
-
-                        <Stack.Group>
-                            <Stack.Screen
-                                name="userProfilePage"
-                                component={UserProfilePage}
-                                options={{
-                                    headerTitle: "User Profile",
-                                }}
-                            />
-                            <Stack.Screen
-                                name="editProfilePage"
-                                component={EditProfilePage}
-                                options={{
-                                    headerTitle: "Edit User Profile",
-                                }}
-                            />
-                            <Stack.Screen
-                                name="accountSettingsPage"
-                                component={AccountSettingsPage}
-                                options={{
-                                    headerTitle: "Settings",
-                                }}
-                            />
-                            <Stack.Screen
-                                name="notificationsPage"
-                                component={NotificationsPage}
-                                options={{
-                                    headerTitle: "Notifications",
-                                }}
-                            />
-                            <Stack.Screen
-                                name="manageEWalletPage"
-                                component={ManageEWalletPage}
-                                options={{
-                                    headerTitle: "Manage E-Wallet",
-                                }}
-                            />
-                            <Stack.Screen
-                                name="eWalletWithdrawPage"
-                                component={EWalletWithdrawPage}
-                                options={{
-                                    headerTitle: "Transfer to Bank",
-                                }}
-                            />
-                            <Stack.Screen
-                                name="userTicketsPage"
-                                component={UserTicketsPage}
-                                options={{
-                                    headerTitle: "My Tickets",
-                                }}
-                            />
-                            <Stack.Screen
-                                name="generatedUserTicketPage"
-                                component={GeneratedUserTicketPage}
-                            />
-                        </Stack.Group>
-
-                        <Stack.Group>
-                            <Stack.Screen
-                                name="adminDashboardPage"
-                                component={AdminDashboardPage}
-                                options={{
-                                    headerTitle: "Admin Dashboard",
-                                }}
-                            />
-                            <Stack.Screen
-                                name="adminClubPage"
-                                component={ManageFanClubPage}
-                                options={{
-                                    headerTitle: "Admin Club Page",
-                                }}
-                            />
-                            <Stack.Screen
-                                name="adminCodesPage"
-                                component={ManageCodesPage}
-                                options={{
-                                    headerTitle: "Admin Codes Page",
-                                }}
-                            />
-                            <Stack.Screen
-                                name="adminFansPage"
-                                component={ManageFansPage}
-                                options={{
-                                    headerTitle: "Admin Fans Page",
-                                }}
-                            />
-                            <Stack.Screen
-                                name="createClubPage"
-                                component={CreateClubPage}
-                                options={{
-                                    headerTitle: "Admin Create Club Page",
-                                }}
-                            />
-                            <Stack.Screen
-                                name="createCategoryPage"
-                                component={CreateCategoryPage}
-                                options={{
-                                    headerTitle: "Create Category",
-                                }}
-                            />
-                            <Stack.Screen
-                                name="createConcertPage"
-                                component={CreateConcertPage}
-                                options={{
-                                    headerTitle: "Create Concert",
-                                }}
-                            />
-                            <Stack.Screen
-                                name="generateCodePage"
-                                component={GenerateFanCodePage}
-                                options={{
-                                    headerTitle: "Generate Fan Code",
-                                }}
-                            />
-                            <Stack.Screen
-                                name="confirmCodePage"
-                                component={ConfirmCodePage}
-                                options={{
-                                    headerTitle: "Confirm Fan Code",
+                                    headerTitle: "My Fan Clubs",
                                 }}
                             />
 
-                        </Stack.Group>
-                    </Stack.Navigator>
-                </NavigationContainer>
-            </SafeAreaProvider>
+                            <Stack.Group screenOptions={{ headerShown: false }}>
+                                <Stack.Screen
+                                    name="loginPage"
+                                    component={LoginPage}
+                                />
+                                <Stack.Screen
+                                    name="otpPage"
+                                    component={OTPPage}
+                                />
+                                <Stack.Screen
+                                    name="registrationPage"
+                                    component={RegistrationPage}
+                                />
+                            </Stack.Group>
+
+                            <Stack.Group>
+                                <Stack.Screen
+                                    name="redemptionPage"
+                                    component={RedemptionPage}
+                                    options={{
+                                        headertitle: "Redemption Page",
+                                    }}
+                                />
+                            </Stack.Group>
+                            <Stack.Group>
+                                <Stack.Screen
+                                    name="viewClubPage"
+                                    component={ViewClubPage}
+                                    options={{
+                                        headertitle: "View Fan Club",
+                                    }}
+                                />
+                            </Stack.Group>
+
+                            <Stack.Group>
+                                <Stack.Screen
+                                    name="userProfilePage"
+                                    component={UserProfilePage}
+                                    options={{
+                                        headerTitle: "User Profile",
+                                    }}
+                                />
+                                <Stack.Screen
+                                    name="editProfilePage"
+                                    component={EditProfilePage}
+                                    options={{
+                                        headerTitle: "Edit User Profile",
+                                    }}
+                                />
+                                <Stack.Screen
+                                    name="accountSettingsPage"
+                                    component={AccountSettingsPage}
+                                    options={{
+                                        headerTitle: "Settings",
+                                    }}
+                                />
+                                <Stack.Screen
+                                    name="notificationsPage"
+                                    component={NotificationsPage}
+                                    options={{
+                                        headerTitle: "Notifications",
+                                    }}
+                                />
+                                <Stack.Screen
+                                    name="manageEWalletPage"
+                                    component={ManageEWalletPage}
+                                    options={{
+                                        headerTitle: "Manage E-Wallet",
+                                    }}
+                                />
+                                <Stack.Screen
+                                    name="eWalletWithdrawPage"
+                                    component={EWalletWithdrawPage}
+                                    options={{
+                                        headerTitle: "Transfer to Bank",
+                                    }}
+                                />
+                                <Stack.Screen
+                                    name="userTicketsPage"
+                                    component={UserTicketsPage}
+                                    options={{
+                                        headerTitle: "My Tickets",
+                                    }}
+                                />
+                                <Stack.Screen
+                                    name="generatedUserTicketPage"
+                                    component={GeneratedUserTicketPage}
+                                />
+                            </Stack.Group>
+
+                            <Stack.Group>
+                                <Stack.Screen
+                                    name="adminDashboardPage"
+                                    component={AdminDashboardPage}
+                                    options={{
+                                        headerTitle: "Admin Dashboard",
+                                    }}
+                                />
+                                <Stack.Screen
+                                    name="adminClubPage"
+                                    component={ManageFanClubPage}
+                                    options={{
+                                        headerTitle: "Admin Club Page",
+                                    }}
+                                />
+                                <Stack.Screen
+                                    name="adminCodesPage"
+                                    component={ManageCodesPage}
+                                    options={{
+                                        headerTitle: "Admin Codes Page",
+                                    }}
+                                />
+                                <Stack.Screen
+                                    name="adminFansPage"
+                                    component={ManageFansPage}
+                                    options={{
+                                        headerTitle: "Admin Fans Page",
+                                    }}
+                                />
+                                <Stack.Screen
+                                    name="createClubPage"
+                                    component={CreateClubPage}
+                                    options={{
+                                        headerTitle: "Admin Create Club Page",
+                                    }}
+                                />
+                                <Stack.Screen
+                                    name="createCategoryPage"
+                                    component={CreateCategoryPage}
+                                    options={{
+                                        headerTitle: "Create Category",
+                                    }}
+                                />
+                                <Stack.Screen
+                                    name="createConcertPage"
+                                    component={CreateConcertPage}
+                                    options={{
+                                        headerTitle: "Create Concert",
+                                    }}
+                                />
+                                <Stack.Screen
+                                    name="generateCodePage"
+                                    component={GenerateFanCodePage}
+                                    options={{
+                                        headerTitle: "Generate Fan Code",
+                                    }}
+                                />
+                                <Stack.Screen
+                                    name="confirmCodePage"
+                                    component={ConfirmCodePage}
+                                    options={{
+                                        headerTitle: "Confirm Fan Code",
+                                    }}
+                                />
+
+                            </Stack.Group>
+                        </Stack.Navigator>
+                    </NavigationContainer>
+                    <StatusBar style='light' />
+                </SafeAreaProvider>
+            </ColorContext.Provider>
         </AuthContext.Provider>
     );
 }
 
 const DrawerNav = ({ route, navigation }) => {
+    const { colors } = useContext(ColorContext);
     const Drawer = createDrawerNavigator();
-    const token = "Bearer " + route.params.token;
+    // const token = "Bearer " + route.params.token;
+    const token = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MGZlYjU2ZmYwYmE1NjMxYzY1NTQ1MCIsInR5cGUiOiJhZG1pbiIsInBob25lIjoiNjU5NzMxMTUzMCIsIm5hbWUiOiJTVyBPcCIsImlhdCI6MTY5NzU5NDE1MywiZXhwIjoxNjk4MTk4OTUzfQ.ndn_VnqOOhhDduFITVts4vqBqCrfAdTefVaIdliXbG8'
     const [userType, setUserType] = useState("");
     // const token = useRef("Bearer " + route.params.token).current;
-    console.log(userType);
     const getUser = () => {
         fetch("http://rt.tixar.sg/api/user", {
             method: "GET",
@@ -323,68 +350,61 @@ const DrawerNav = ({ route, navigation }) => {
                             marginRight: "7%",
                         }}
                         onPress={() => {
-                            navigation.navigate("userProfilePage", { token: token });
+                            navigation.navigate("userProfilePage");
                         }}
                     >
-                        <Image
-                            source={require("./src/assets/soft-ui-pro-react-native-v1.1.1/users3x.png")}
-                            style={{
-                                height: 25,
-                                width: 25,
-                                resizeMode: "contain",
-                            }}
-                        />
+                        <AntDesign name='team' size={25} color={colors.textPrimary} />
                     </Pressable>
                 ),
-            }}
-            drawerContent={(props) => {
-                return (
-                    <DrawerContentScrollView {...props}>
-                        <DrawerItemList {...props} />
-                        <DrawerItem
-                            label="All Clubs"
-                            onPress={() => {
-                                props.navigation.navigate("viewAllClubsPage", {
-                                    token: token,
-                                });
-                            }}
-                        />
-                        <DrawerItem
-                            label="My Clubs"
-                            onPress={() => {
-                                props.navigation.navigate("vfDashboardPage", { token: token });
-                            }}
-                        />
+                headerStyle: {
+                    backgroundColor: colors.background,
 
-                        {userType === "admin" && (
-                            <DrawerItem
-                                label="ADMIN"
-                                onPress={() => {
-                                    props.navigation.navigate("adminDashboardPage", { token: token });
-                                }}
-                            />
-                        )}
-                    </DrawerContentScrollView>
-                );
+                },
+                headerTitleAlign: 'center',
+                headerTintColor: colors.textPrimary,
+                headerShadowVisible: false,
+                drawerStyle: {
+                    backgroundColor: colors.background,
+                },
+                drawerActiveTintColor: colors.textPrimary,
+                drawerInactiveTintColor: colors.textPrimary,
             }}
         >
             {/* Navigation sidebar TIXAR */}
-            <Drawer.Screen
-                name="browseConcertPage"
-                component={BrowseConcertPage}
-                options={{
-                    headerTitle: "TIXAR",
-                    drawerLabel: "Home",
-                }}
-            />
+            <Drawer.Group
+                screenOptions={{ headerTitle: 'TIXAR' }}>
+                <Drawer.Screen
+                    name="browseConcertPage"
+                    component={BrowseConcertPage}
+                    options={{
+                        drawerLabel: "Home",
+                    }}
+                />
 
-            {/* Navigation sidebar Verified Fans */}
-            {/* Navigation sidebar Celebrity dashboard,
-                can replace to admin only if needed */}
-            {/* <Drawer.Screen name='celebrityDashboardPage' component={celebrityDashboard}
-                options={{
-                    headerTitle: 'Celebrity Dashboard'
-                }} /> */}
+                <Drawer.Screen
+                    name="viewAllClubsPage"
+                    component={ViewAllClubsPage}
+                    options={{
+                        drawerLabel: "Browse Fan Clubs"
+                    }}
+                />
+
+                <Drawer.Screen
+                    name="vfDashboardPage"
+                    component={VFDashboardPage}
+                    options={{
+                        drawerLabel: "My Clubs"
+                    }}
+                />
+                {userType === 'admin' && <Drawer.Screen
+                    name="adminDashboardPage"
+                    component={AdminDashboardPage}
+                    options={{
+                        drawerLabel: "ADMIN"
+                    }}
+                />}
+
+            </Drawer.Group>
         </Drawer.Navigator>
     );
 };

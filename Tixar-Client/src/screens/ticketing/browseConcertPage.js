@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import {
     View,
     Text,
@@ -7,15 +7,18 @@ import {
     Pressable,
     Image,
 } from "react-native";
+import { ColorContext } from "../../../context";
+import { StatusBar } from "expo-status-bar";
+
 import SearchField from "../../components/browseConcert/searchField";
 import FilterButton from "../../components/browseConcert/filterButton";
 import ConcertBlock from "../../components/viewConcert/concertBlock";
 
 export default BrowseConcertPage = ({ route, navigation }) => {
+    const {colors} = useContext(ColorContext);
     const [isNearbyFocused, setIsNearbyFocused] = useState(true);
     const [isTrendingFocused, setIsTrendingFocused] = useState(false);
-
-    const filterIcon = require("../../assets/soft-ui-pro-react-native-v1.1.1/location3x.png");
+    const [searchText, setSearchText] = useState('');
     const artistIcon = require("../../assets/soft-ui-pro-react-native-v1.1.1/avatar23x.png");
     const imageBackground = require("../../assets/soft-ui-pro-react-native-v1.1.1/background3x.png");
 
@@ -33,27 +36,29 @@ export default BrowseConcertPage = ({ route, navigation }) => {
 
     return (
         <View style={styles.container}>
-            <View
-                style={{
-                    backgroundColor: "white",
-                    paddingBottom: 13,
-                }}
+            <View style={{
+                backgroundColor: colors.background,
+                paddingBottom: 13,
+            }}
             >
-                <SearchField />
+                <SearchField searchText={searchText} setSearchText={setSearchText} />
 
                 <View style={{ height: 16 }} />
 
-                <View
-                    style={{
-                        flexDirection: "row",
-                        justifyContent: "center",
-                        alignItems: "center",
-                    }}
+                <View style={{
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    paddingTop: 5,
+                    borderTopWidth: 0.5,
+                    borderColor: colors.textPrimary,
+                    paddingTop: 10,
+                }}
                 >
                     <View style={styles.rowBox}>
                         <FilterButton
                             buttonText={"Nearby"}
-                            imageSource={filterIcon}
+                            iconName='enviromento'
                             isFocused={isNearbyFocused}
                             onPressFunction={handleNearbyPress}
                             isLeft={true}
@@ -63,15 +68,16 @@ export default BrowseConcertPage = ({ route, navigation }) => {
                     <View style={styles.rowBox}>
                         <FilterButton
                             buttonText={"Trending"}
-                            imageSource={filterIcon}
+                            iconName='linechart'
                             isFocused={isTrendingFocused}
                             onPressFunction={handleTrendingPress}
                             isLeft={false}
                         />
                     </View>
+
                 </View>
             </View>
-            <ScrollView style={styles.scrollView}>
+            <ScrollView style={[styles.scrollView, { backgroundColor: colors.background }]}>
                 <ConcertBlock
                     concertName={"Music of the Spheres"}
                     venueName={"National Singapore Stadium"}
@@ -105,6 +111,7 @@ export default BrowseConcertPage = ({ route, navigation }) => {
                     imageBackground={imageBackground}
                 />
             </ScrollView>
+            <StatusBar style="light" />
         </View>
     );
 };
@@ -115,7 +122,6 @@ const styles = StyleSheet.create({
         justifyContent: "flex-start",
     },
     scrollView: {
-        backgroundColor: "#F2F2F2",
         paddingHorizontal: 15,
     },
     rowBox: {
