@@ -1,5 +1,7 @@
 import React from "react";
-import { Pressable, Text, StyleSheet, Image, View, TextInput, KeyboardAvoidingView } from "react-native";
+import { Pressable, StyleSheet, Image, View, TextInput, KeyboardAvoidingView } from "react-native";
+import { ColorContext } from "../../../context";
+import { useContext } from "react";
 
 export default OptionField = ({
   value,
@@ -9,6 +11,32 @@ export default OptionField = ({
   onPressFunction,
   keyboardType,
 }) => {
+  const {colors} = useContext(ColorContext);
+
+  const styles = StyleSheet.create({
+    container: {
+      flexDirection: "row",
+      height: 50,
+      backgroundColor: colors.secondary,
+      borderRadius: 10,
+      alignItems: "center",
+      justifyContent: "flex-start",
+      paddingHorizontal: "5%",
+    },
+    optionText: {
+      fontFamily: "Lato-Regular",
+      color: colors.textPrimary,
+      fontSize: 17,
+      width: "90%",
+    },
+    icon: {
+      width: 22,
+      height: 22,
+      resizeMode: "contain",
+      tintColor: "#252F40",
+    },
+  });
+
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
@@ -31,6 +59,7 @@ export default OptionField = ({
           }}
           value={value}
           placeholder={optionText}
+          placeholderTextColor={colors.textDisabled}
           keyboardType={keyboardType}
         />
       </Pressable>
@@ -38,28 +67,4 @@ export default OptionField = ({
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    height: 50,
-    backgroundColor: "white",
-    borderRadius: 10,
-    borderColor: "#D2D6DA",
-    borderWidth: 1,
-    alignItems: "center",
-    justifyContent: "flex-start",
-    paddingHorizontal: "5%",
-  },
-  optionText: {
-    fontFamily: "Lato-Regular",
-    color: "#9398A0",
-    fontSize: 17,
-    width: "90%",
-  },
-  icon: {
-    width: 22,
-    height: 22,
-    resizeMode: "contain",
-    tintColor: "#252F40",
-  },
-});
+
