@@ -335,7 +335,7 @@ const DrawerNav = ({ route, navigation }) => {
 
     return (
         <Drawer.Navigator
-            initialRouteName="browseConcertPage"
+            initialRouteName="browseConcertPage" //bypass straight to browseConcertPage
             screenOptions={{
                 headerTitleStyle: {
                     fontFamily: "Lato-Regular",

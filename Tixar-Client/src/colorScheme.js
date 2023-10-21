@@ -43,3 +43,10 @@ export default ColorScheme = {
         buttonEnabled: '#bf94f7'
     }
 };
+
+
+// import { ColorContext } from "../../../context";
+// import { useState, useEffect, useContext } from "react";
+
+
+// const {colors} = useContext(ColorContext);
