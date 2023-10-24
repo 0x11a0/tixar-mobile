@@ -179,6 +179,7 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
                         <Button buttonText={"BOOK NOW"}
                             onPressFunction={() => {
                                 console.log("Book button clicked");
+                                navigation.navigate('checkoutPage')
                             }}
                             enableCondition={isButtonEnabled} // condition to be set  when all fields are filled and available
                         />

@@ -405,6 +405,15 @@ const DrawerNav = ({ route, navigation }) => {
                     }}
                 />
 
+                {/* temp */}
+                <Drawer.Screen
+                    name="userTicketsPage"
+                    component={UserTicketsPage}
+                    options={{
+                        drawerLabel: "My Tickets"
+                    }}
+                />
+
                 {userType === 'admin' && <Drawer.Screen
                     name="adminDashboardPage"
                     component={AdminDashboardPage}
