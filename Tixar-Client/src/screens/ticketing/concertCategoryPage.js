@@ -6,13 +6,13 @@ import {
     Image,
 } from "react-native";
 
-import { React, useState } from 'react';
+import { React, useEffect, useState } from 'react';
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { ColorContext } from "../../../context";
 import { useContext } from "react";
 import Button from '../../components/newApp/button';
-
+import { AntDesign } from '@expo/vector-icons'
 import FooterBlock from "../../components/viewConcert/footerBlock";
 import OptionFields from "../../components/concertCategory/optionFields";
 import DatePicker from "../../components/concertCategory/datePicker";
@@ -22,29 +22,28 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
     const insets = useSafeAreaInsets();
     const { colors } = useContext(ColorContext);
     // STATE VARIABLES to store the text input from the user for quantity and category
-    const [quantityField, setQuantityField] = useState("");
-    const [categoryField, setCategoryField] = useState("");
-
     const [isButtonEnabled, setIsButtonEnabled] = useState(false);
+    
+    const dates = [
+        '1st January 2024', '2nd January 2024',
+        '5th January 2024', '6th January 2024'
+    ]
 
-    const handleQuantityChange = (text) => {
-        setQuantityField(text);
-        // updateButtonEnableStatus(); // Call a function to update the enable status
-        setIsButtonEnabled(text !== "" && categoryField !== "");
-    };
+    const quantities = [
+        '1', '2', '3', '4', '5'
+    ]
 
-    const handleCategoryChange = (text) => {
-        setCategoryField(text);
-        // updateButtonEnableStatus(); // Call a function to update the enable status
-        setIsButtonEnabled(quantityField !== "" && text !== "");
-    };
+    const categories = [
+        'A', 'B', 'C', 'D'
+    ]
 
-    // const updateButtonEnableStatus = () => {
-    //     // Check if both quantityField and categoryField have values
-    //     setIsButtonEnabled(quantityField !== "" && categoryField !== "");
-    // };
-    //do not use this function as there is an issue with the state variable being updated too slowly
+    const [date, setDate] = useState('Date');
+    const [quantity, setQuantity] = useState('Quantity');
+    const [category, setCategory] = useState('Category');
 
+    useEffect(() => {
+        setIsButtonEnabled(date !== 'Date' && quantity !== 'Quantity' && category !== 'Category')
+    }, [date, quantity, category]);
 
     const styles = StyleSheet.create({
         container: {
@@ -119,17 +118,24 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
                 >
                     {/* date picker that works on both iOS and Android */}
                     <Text style={styles.subtitle}>Date</Text>
-                    <View>
+                    {/* <View>
                         <DatePicker
                             icon={require("../../assets/soft-ui-pro-react-native-v1.1.1/calendar3x.png")}
                             minDate={new Date()}
                         // maxDate={new Date(2024, 0, 27)}
                         />
-                    </View>
+                    </View> */}
+
+                    <OptionFields
+                        optionText={date}
+                        setOption={setDate}
+                        antIconName='calendar'
+                        options={dates}
+                    />
 
                     {/* quantity selection */}
                     <Text style={styles.subtitle}>Quantity</Text>
-                    <OptionFields
+                    {/* <OptionFields
                         optionText={"0"}
                         icon={require("../../assets/soft-ui-pro-react-native-v1.1.1/users3x.png")}
                         onPressFunction={() => {
@@ -139,11 +145,17 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
                             handleQuantityChange(text);
                         }}
                         keyboardType={"numeric"}
+                    /> */}
+                    <OptionFields
+                        optionText={quantity}
+                        setOption={setQuantity}
+                        materialIconName={'format-list-numbered'}
+                        options={quantities}
                     />
 
                     {/* seat category selection */}
                     <Text style={styles.subtitle}>Seat Category</Text>
-                    <OptionFields
+                    {/* <OptionFields
                         optionText={"Category 1"}
                         icon={require("../../assets/soft-ui-pro-react-native-v1.1.1/components3x.png")}
                         onPressFunction={() => {
@@ -153,17 +165,20 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
                             handleCategoryChange(text);
                         }}
                         keyboardType={"numeric"}
+                    /> */}
+                    <OptionFields
+                        optionText={category}
+                        setOption={setCategory}
+                        antIconName={'tag'}
+                        options={categories}
                     />
-
 
                     {/* button that brings you to the purchase confirmation page */}
 
                     <View style={styles.buttonContainer}>
-                        <Button
-                            buttonText={"BOOK NOW"}
+                        <Button buttonText={"BOOK NOW"}
                             onPressFunction={() => {
                                 console.log("Book button clicked");
-                                navigation.navigate("checkoutPage");
                             }}
                             enableCondition={isButtonEnabled} // condition to be set  when all fields are filled and available
                         />
