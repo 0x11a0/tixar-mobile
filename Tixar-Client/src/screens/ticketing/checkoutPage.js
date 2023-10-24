@@ -1,17 +1,69 @@
-import { View, Text, StyleSheet, SafeAreaView, Image, ScrollView, Pressable } from 'react-native';
+import { View, StyleSheet, SafeAreaView, ScrollView, Pressable} from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import FooterBlock from '../../components/viewConcert/footerBlock';
-import NextButton from '../../components/viewConcert/nextButton';
-import OptionFields from '../login/optionFields';
 import CheckoutBlock from '../../components/viewConcert/checkoutBlock';
+import { ColorContext } from "../../../context";
+import { useContext } from "react";
+import { FontAwesome } from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons';
 
-export default CheckoutPage = () => {
+export default CheckoutPage = ({navigation}) => {
     const insets = useSafeAreaInsets();
+    const {colors} = useContext(ColorContext);
+
+    const styles = StyleSheet.create({
+        scrollContainer: {
+            flex: 1,
+            width: '100%',
+            // backgroundColor: 'blue',
+        },
+
+        Container: {
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+            padding: 20,
+            // backgroundColor: 'red',
+        },
+
+        paymentContainer: {
+            width: '100%',
+            height: 100,
+            flexDirection: 'row',
+            marginTop: 20,
+            // backgroundColor: 'green',
+        },
+
+        paymentMode: {
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center',
+            // borderWidth: 1,
+            // borderColor: 'black',
+            // backgroundColor: 'yellow',
+        },
+
+        ewalletContainer: {
+            width: 85,
+            height: 62,
+            backgroundColor: colors.accent,
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderRadius: 5,
+        },
+       
+        subtitle: {
+            fontSize: 16,
+            fontFamily: 'Lato-Bold',
+            color: '#252F40',
+            paddingVertical: '5%',
+        },
+    
+    });
 
     return (
         <SafeAreaView style={{
             flex: 1,
-            backgroundColor: '#F2F2F2',
+            backgroundColor: colors.background,
             alignItems: 'center',
             justifyContent: 'flex-start',
             paddingTop: insets.top,
@@ -19,90 +71,43 @@ export default CheckoutPage = () => {
             paddingLeft: insets.left,
             paddingRight: insets.right,
         }}>
-            <ScrollView style={{ width: '100%', }}
-                contentContainerStyle={styles.container}>
-                
-                <CheckoutBlock />
-                
-                {/* <View style={{ height: 17 }} />
-                <Image source={require('../../assets/images/concertLayout.png')}
-                    style={styles.layoutImage} />
+            <ScrollView style={styles.scrollContainer}>
+                <View style={styles.Container}>
 
-                <View style={{ height: 30 }} />
+                    <CheckoutBlock />
 
-                <View style={{
-                    width: '100%',
+                    <View style={styles.paymentContainer}>
 
-                    borderRadius: 20,
-                    backgroundColor: 'white',
-                    zIndex: 1,
-                    paddingHorizontal: '5%',
-                }}>
-                    <Text style={styles.subtitle}>
-                        Availibility
-                    </Text>
+                        {/* visa */}
+                        <Pressable 
+                        style={styles.paymentMode}
+                        onPress={() => navigation.navigate("browseConcertPage")}>
+                            <FontAwesome name="cc-visa" size={70} color={colors.accent} />
+                        </Pressable>
 
-                    <OptionFields optionText={"Select date"}
-                        icon={require('../../assets/soft-ui-pro-react-native-v1.1.1/calendar3x.png')} />
+                        {/* master */}
+                        <Pressable 
+                        style={styles.paymentMode}
+                        onPress={() => navigation.navigate("browseConcertPage")}>
+                            <FontAwesome name="cc-mastercard" size={70} color={colors.accent} />
+                        </Pressable>
 
-                    <Text style={styles.subtitle}>
-                        Quantity
-                    </Text>
+                        {/* eWallet */}
+                        <Pressable 
+                        style={styles.paymentMode}
+                        onPress={() => navigation.navigate("browseConcertPage")}>
+                            <View style={styles.ewalletContainer}>
+                                <Entypo name="wallet" size={55} color={colors.background}/>
+                            </View>
+                        </Pressable>
 
-                    <OptionFields optionText={"01"}
-                        icon={require('../../assets/soft-ui-pro-react-native-v1.1.1/users3x.png')} />
+                    </View>
 
-                    <Text style={styles.subtitle}>
-                        Seat Category
-                    </Text>
-
-                    <OptionFields optionText={"Category 1"}
-                        icon={require('../../assets/soft-ui-pro-react-native-v1.1.1/hotel3x.png')} />
-
-                    <View style={{ height: 25 }} />
-
-                    <NextButton buttonText={"BOOK NOW"}
-                        onPressFunction={() => {
-                            console.log('Check availibilty clicked');
-                        }}
-                        buttonHeight={50}
-                    />
-
-                    <View style={{ height: 20 }} />
                 </View>
-
-
-
-
-
-                <View style={{ height: 20 }} /> */}
-                <FooterBlock />
             </ScrollView>
         </SafeAreaView>
     );
 }
 
-const styles = StyleSheet.create({
-    container: {
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        // width: '90%',
-        // backgroundColor: 'blue',
-        // paddingHorizontal: 20,
-    },
-    layoutImage: {
-        // backgroundColor: 'green',
-        width: '90%',
-        resizeMode: 'contain',
-        alignSelf: 'center',
 
-    },
-    subtitle: {
-        fontSize: 16,
-        fontFamily: 'Lato-Bold',
-        color: '#252F40',
-        paddingVertical: '5%',
-    },
-
-});
 

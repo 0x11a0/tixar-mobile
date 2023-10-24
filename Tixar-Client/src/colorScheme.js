@@ -1,6 +1,4 @@
 // color palatte for global use
-//import { colors } from '../../../colors';
-
 export default ColorScheme = {
 
     // all cards should be primary colour

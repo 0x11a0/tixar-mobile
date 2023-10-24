@@ -39,10 +39,11 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
         setIsButtonEnabled(quantityField !== "" && text !== "");
     };
 
-    const updateButtonEnableStatus = () => {
-        // Check if both quantityField and categoryField have values
-        setIsButtonEnabled(quantityField !== "" && categoryField !== "");
-    };
+    // const updateButtonEnableStatus = () => {
+    //     // Check if both quantityField and categoryField have values
+    //     setIsButtonEnabled(quantityField !== "" && categoryField !== "");
+    // };
+    //do not use this function as there is an issue with the state variable being updated too slowly
 
 
     const styles = StyleSheet.create({
@@ -162,6 +163,7 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
                             buttonText={"BOOK NOW"}
                             onPressFunction={() => {
                                 console.log("Book button clicked");
+                                navigation.navigate("checkoutPage");
                             }}
                             enableCondition={isButtonEnabled} // condition to be set  when all fields are filled and available
                         />

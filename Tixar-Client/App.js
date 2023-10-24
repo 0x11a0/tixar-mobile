@@ -37,6 +37,7 @@ import ViewConcertPage from './src/screens/ticketing/viewConcertPage';
 import BrowseConcertPage from './src/screens/ticketing/browseConcertPage';
 import ConcertCategoryPage from './src/screens/ticketing/concertCategoryPage';
 import GeneratedUserTicketPage from './src/screens/ticketing/generateTicketPage';
+import CheckoutPage from './src/screens/ticketing/checkoutPage';
 
 // User
 import UserTicketsPage from './src/screens/user/ticketsPage';
@@ -128,6 +129,13 @@ export default function App() {
                                     component={ConcertCategoryPage}
                                     options={{
                                         headerTitle: "Concert Category",
+                                    }}
+                                />
+                                <Stack.Screen
+                                    name="checkoutPage"
+                                    component={CheckoutPage}
+                                    options={{
+                                        drawerLabel: "Checkout Page"
                                     }}
                                 />
                             </Stack.Group>
@@ -396,6 +404,7 @@ const DrawerNav = ({ route, navigation }) => {
                         drawerLabel: "My Clubs"
                     }}
                 />
+
                 {userType === 'admin' && <Drawer.Screen
                     name="adminDashboardPage"
                     component={AdminDashboardPage}
