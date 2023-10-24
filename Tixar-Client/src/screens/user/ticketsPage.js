@@ -1,12 +1,7 @@
 import {
   View,
-  Text,
   StyleSheet,
-  SafeAreaView,
-  Image,
-  Pressable,
 } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import SearchField from "../../components/browseConcert/searchField";
 import TicketCard from "../../components/userTickets/ticketCard";
@@ -15,14 +10,9 @@ import { ColorContext } from "../../../context";
 import { useContext } from "react";
 import { ScrollView } from "react-native-gesture-handler";
 
-export default TicketsPage = ({ route, navigation }) => {
+export default TicketsPage = ({ navigation }) => {
   const { colors } = useContext(ColorContext);
 
-  // Function to handle the press event of the first ticket
-  const firstTicketPress = () => {
-    // console.log("first ticket pressed");
-    navigation.navigate("viewConcertPage"); //change this to haris's view ticket page
-  };
 
   const styles = StyleSheet.create({
     container: {
@@ -60,7 +50,7 @@ export default TicketsPage = ({ route, navigation }) => {
             concertCategory={"Category: 1"}
             concertReference={"Reference No. 123456789"}
             onPress={() => {
-              firstTicketPress();
+                navigation.navigate("generatedUserTicketPage");
             }}
           />
 
@@ -69,6 +59,9 @@ export default TicketsPage = ({ route, navigation }) => {
             concertName={"Coldplay Concert"}
             concertCategory={"Category: 1"}
             concertReference={"Reference No. 123456789"}
+            onPress={() => {
+                navigation.navigate("generatedUserTicketPage");
+            }}
           />
         </View>
       </ScrollView>
