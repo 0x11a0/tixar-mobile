@@ -11,14 +11,39 @@ import {
   import SearchField from '../../components/browseConcert/searchField';
   import TicketCard from '../../components/userTickets/ticketCard';
   import FilterButton from '../../components/userTickets/filterButton';
+
+  import { ColorContext } from "../../../context";
+  import { useContext } from "react"; 
+
   
   export default TicketsPage = ({ route, navigation }) => {
+
+    const {colors} = useContext(ColorContext);
 
     // Function to handle the press event of the first ticket
     const firstTicketPress = () => {
         // console.log("first ticket pressed");
         navigation.navigate("viewConcertPage"); //change this to haris's view ticket page
     };
+
+    const styles = StyleSheet.create({
+        container: {
+            flex: 1,
+            justifyContent: 'flex-start',
+            backgroundColor: colors.background,
+        },
+    
+        searchContainer: {
+            backgroundColor: colors.background,
+            marginVertical: 20,
+        },
+        ticketContainer: {
+            flex: 1, //grow and take up the space of the parent container
+            justifyContent: 'flex-start',
+            flexDirection: 'column',
+            backgroundColor: colors.background,
+        }
+    });
   
     return (
 
@@ -26,18 +51,10 @@ import {
         <View style={styles.container}>
 
             {/* container for search bar and filter button */}
-            <View style={{
-                // backgroundColor: 'red',
-                paddingVertical: 5,
-            }}>
+            <View style={styles.searchContainer}>
                 
                 {/* search field imported from browseConcert components */}
                 <SearchField />
-
-                <View style={{ height: 16 }} />
-
-                {/* filter button */}
-                <FilterButton />
                 
             </View>        
 
@@ -64,16 +81,3 @@ import {
     );
 };
   
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'flex-start',
-    },
-
-    ticketContainer: {
-        flex: 1, //grow and take up the space of the parent container
-        justifyContent: 'flex-start',
-        flexDirection: 'column',
-        // backgroundColor: 'blue',
-    }
-});
