@@ -98,7 +98,7 @@ export default function App() {
         <SafeAreaProvider>
           <NavigationContainer>
             <Stack.Navigator
-              initialRouteName="drawer"
+              initialRouteName="loginPage" //brings you to login page first, if need to test other pages, change this (BYPASS)
               screenOptions={{
                 headerStyle: {
                   backgroundColor: colors.background,
@@ -337,7 +337,7 @@ const DrawerNav = ({ route, navigation }) => {
 
   return (
     <Drawer.Navigator
-      initialRouteName="browseConcertPage" //bypass straight to browseConcertPage
+      initialRouteName="browseConcertPage" //first page loaded in drawer navigator
       screenOptions={{
         headerTitleStyle: {
           fontFamily: "Lato-Regular",
@@ -373,6 +373,7 @@ const DrawerNav = ({ route, navigation }) => {
     >
       {/* Navigation sidebar TIXAR */}
       <Drawer.Group screenOptions={{ headerTitle: "TIXAR" }}>
+
         <Drawer.Screen
           name="browseConcertPage"
           component={BrowseConcertPage}
