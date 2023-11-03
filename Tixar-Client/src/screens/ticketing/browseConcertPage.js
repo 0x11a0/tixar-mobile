@@ -34,7 +34,8 @@ export default BrowseConcertPage = ({ route, navigation }) => {
       .then((response) => response.json())
       .then((data) => {
         setConcerts(data);
-        console.log(data);
+        const extractedSessions = concert.map((item) => item.sessions);
+        console.log(extractedSessions);
       })
       .catch((error) => {
         console.error(error);
@@ -115,10 +116,10 @@ export default BrowseConcertPage = ({ route, navigation }) => {
             return (
               <ConcertBlock
                 concertName={concert.name}
-                venueName={concert.sessions.venue}
+                venueName={extractedSessions.venue}
                 startDate={concert.start}
                 endDate={concert.end}
-                artistName={"Coldplay"} //temporary, waiting for backend
+                artistName={concert.artistName}
                 artistDescription={"Lorem ipsum dolor sit amet consectetur"}
                 artistIcon={artistIcon}
                 imageBackground={imageBackground}
