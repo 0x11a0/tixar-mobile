@@ -15,7 +15,7 @@ export default ManageFanClubPage = ({ route, navigation }) => {
 	const [codes, setCodes] = useState([]);
 
 	const getCodes = () => {
-		fetch('http://vf.tixar.sg/api/codes', {
+		fetch('http://vf.tixar.sg:3001/api/codes', {
 			method: 'GET',
 			credentials: 'include',
 			headers: { 'Authorization':  token}	
@@ -25,7 +25,7 @@ export default ManageFanClubPage = ({ route, navigation }) => {
 	}
 
 	const getClub = () => {
-         fetch('http://vf.tixar.sg/api/club/' + clubId, {
+         fetch('http://vf.tixar.sg:3001/api/club/' + clubId, {
             method: 'GET',
             credentials: 'include',
             headers: { 'Authorization':  token}	

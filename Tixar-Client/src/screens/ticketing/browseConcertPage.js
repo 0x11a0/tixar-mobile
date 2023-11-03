@@ -34,8 +34,6 @@ export default BrowseConcertPage = ({ route, navigation }) => {
       .then((response) => response.json())
       .then((data) => {
         setConcerts(data);
-        const extractedSessions = concert.map((item) => item.sessions);
-        console.log(extractedSessions);
       })
       .catch((error) => {
         console.error(error);
@@ -113,12 +111,17 @@ export default BrowseConcertPage = ({ route, navigation }) => {
         <ScrollView>
           {/* Your FanclubCards go here */}
           {concerts.map((concert) => {
+            const session = concert.sessions[0];
+            const venueName = session.venue;
+            const startDate = session.start;
+            const endDate = session.end;
             return (
               <ConcertBlock
+                key={concert._id}
                 concertName={concert.name}
-                venueName={extractedSessions.venue}
-                startDate={concert.start}
-                endDate={concert.end}
+                venueName={venueName}
+                startDate={startDate}
+                endDate={endDate}
                 artistName={concert.artistName}
                 artistDescription={"Lorem ipsum dolor sit amet consectetur"}
                 artistIcon={artistIcon}

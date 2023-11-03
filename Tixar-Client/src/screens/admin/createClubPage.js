@@ -57,7 +57,7 @@ export default CreateClubPage = ({ route, navigation }) => {
   };
 
   const createClub = () => {
-    fetch("http://vf.tixar.sg/api/club", {
+    fetch("http://vf.tixar.sg:3001/api/club", {
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json", Authorization: token },
