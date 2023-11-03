@@ -315,7 +315,7 @@ const DrawerNav = ({ route, navigation }) => {
   const [userType, setUserType] = useState("");
   // const token = useRef("Bearer " + route.params.token).current;
   const getUser = () => {
-    fetch("http://rt.tixar.sg/api/user", {
+    fetch("http://rt.tixar.sg:3000/api/user", {
       method: "GET",
       credentials: "include",
       headers: { Authorization: token },
@@ -373,7 +373,6 @@ const DrawerNav = ({ route, navigation }) => {
     >
       {/* Navigation sidebar TIXAR */}
       <Drawer.Group screenOptions={{ headerTitle: "TIXAR" }}>
-
         <Drawer.Screen
           name="browseConcertPage"
           component={BrowseConcertPage}
