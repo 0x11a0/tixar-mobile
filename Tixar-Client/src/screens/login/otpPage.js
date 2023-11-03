@@ -32,7 +32,7 @@ export default OTPPage = ({ route, navigation }) => {
 
   // function to handle otp and login request
   const handleOTPLogin = () => {
-    const endPoint = "http://rt.tixar.sg/api/login";
+    const endPoint = "http://rt.tixar.sg:3000/api/login";
     const payload = {
       phone: phoneNumber,
       otp: otp,
@@ -189,7 +189,6 @@ const styles = StyleSheet.create({
   },
   imageBackground: {
     flex: 1,
-    
   },
   loginContainer: {
     flexDirection: "column",

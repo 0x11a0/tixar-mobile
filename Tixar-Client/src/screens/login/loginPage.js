@@ -27,9 +27,9 @@ export default LoginPage = ({ navigation }) => {
     setPhoneNumber(cleanedNumber);
   };
 
-    // function to handle phone number authentication request
+  // function to handle phone number authentication request
   const handleLogin = () => {
-    const endPoint = "http://rt.tixar.sg/api/otp/request";
+    const endPoint = "http://rt.tixar.sg:3000/api/otp/request";
     const payload = {
       phone: phoneNumber,
     };
@@ -43,22 +43,24 @@ export default LoginPage = ({ navigation }) => {
     })
       .then((response) => {
         if (response.ok) {
-            console.log("Login request successful");
+          console.log("Login request successful");
           return response.json();
         } else {
-            console.log("Login request unsuccessful")
+          console.log("Login request unsuccessful");
           throw new Error("Failed to login");
         }
       })
       .then((data) => {
         // upon successful verification of phone number, navigate to OTP page
-        console.log("Phone number valid and in system, Navigating to OTP page")
+        console.log("Phone number valid and in system, Navigating to OTP page");
         navigation.navigate("otpPage", { phoneNumber: phoneNumber });
       })
       .catch((error) => {
         // upon unsuccessful verification of phone number, navigate to register page
-        console.log("Phone number valid but not in system, Navigating to register page")
-        navigation.navigate("registrationPage", { phoneNumber: phoneNumber })
+        console.log(
+          "Phone number valid but not in system, Navigating to register page"
+        );
+        navigation.navigate("registrationPage", { phoneNumber: phoneNumber });
         // insert navigation to register page here
       });
   };
@@ -75,7 +77,6 @@ export default LoginPage = ({ navigation }) => {
           <Text style={styles.headerText}>TIXAR</Text>
           <Text style={styles.subHeaderText}>Get verified. Get priority.</Text>
         </View>
-        
 
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <KeyboardAvoidingView style={styles.container} behavior="padding">
