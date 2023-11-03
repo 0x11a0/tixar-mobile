@@ -68,7 +68,7 @@ export default RegistrationPage = ({ route, navigation }) => {
           return response.json();
         } else {
           console.log("Registration request unsuccessful");
-          throw new Error("Failed to login");
+          throw new Error("Failed to register");
         }
       })
       .then((data) => {

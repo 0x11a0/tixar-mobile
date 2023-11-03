@@ -2,14 +2,23 @@ import { View, Text, StyleSheet, SafeAreaView, Image, ScrollView } from 'react-n
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import FooterBlock from '../../components/viewConcert/footerBlock';
 import { ColorContext } from "../../../context";
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import Button from '../../components/newApp/button';
+import { AuthContext } from "../../../context";
 
 
 export default ViewConcertPage = ({route, navigation}) => {
 
     const {colors} = useContext(ColorContext);
     const insets = useSafeAreaInsets();
+    const { token } = useContext(AuthContext);
+    const concert = route.params.concert;
+
+    const startDate = new Date(concert.sessions[0].start);
+    const formattedStartDate = startDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    const endDate = new Date(concert.sessions[0].start);
+    const formattedEndDate = endDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
     const styles = StyleSheet.create({
 
         // main container
@@ -98,17 +107,17 @@ export default ViewConcertPage = ({route, navigation}) => {
 
                 {/* Venue from DB */}
                 <Text style={styles.venueText}>
-                    National Singapore Stadium 
+                    {concert.sessions[0].venue}
                 </Text>
 
                 {/* Concert Title from DB */}
                 <Text style={styles.concertTitle}>
-                    Music of the Spheres
+                    {concert.name}
                 </Text>
 
                 {/* Description from DB */}
                 <Text style={styles.ticketCategoryDescription}>
-                    Description of the performance and things to look out for or point out.
+                    Hosted by {concert.artistName}, {concert.name} runs from {formattedStartDate} to {formattedEndDate}.
                 </Text>
 
                 {/* Concert Category Image from DB */}
