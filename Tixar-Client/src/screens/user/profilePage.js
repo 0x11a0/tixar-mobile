@@ -25,11 +25,12 @@ export default ProfilePage = ({ route, navigation }) => {
   };
 
   const getUser = () => {
+    console.log("token is here " + token);
     fetch("http://rt.tixar.sg:3000/api/user", {
       method: "GET",
       credentials: "include",
       headers: {
-        Authorization: token,
+        Authorization: `Bearer ${token}`,
         "Cache-Control": "no-cache",
       },
     })
