@@ -60,9 +60,9 @@ export default function App() {
     "Lato-Light": require("./src/assets/fonts/Lato/Lato-Light.ttf"),
   });
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [token, setToken] = useState(
-    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MGZlYjU2ZmYwYmE1NjMxYzY1NTQ1MCIsInR5cGUiOiJhZG1pbiIsInBob25lIjoiNjU5NzMxMTUzMCIsIm5hbWUiOiJTVyBPcCIsImlhdCI6MTY5NzU5NDE1MywiZXhwIjoxNjk4MTk4OTUzfQ.ndn_VnqOOhhDduFITVts4vqBqCrfAdTefVaIdliXbG8"
-  );
+  const [token, setToken] = useState( null );
+  //"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MGZlYjU2ZmYwYmE1NjMxYzY1NTQ1MCIsInR5cGUiOiJhZG1pbiIsInBob25lIjoiNjU5NzMxMTUzMCIsIm5hbWUiOiJTVyBPcCIsImlhdCI6MTY5NzU5NDE1MywiZXhwIjoxNjk4MTk4OTUzfQ.ndn_VnqOOhhDduFITVts4vqBqCrfAdTefVaIdliXbG8"
+
   const [colors, setColors] = useState(ColorTheme.dark);
   const [theme, setTheme] = useState(useColorScheme());
 
