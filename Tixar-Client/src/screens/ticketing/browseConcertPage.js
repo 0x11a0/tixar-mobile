@@ -111,16 +111,35 @@ export default BrowseConcertPage = ({ route, navigation }) => {
         <ScrollView>
           {/* Your FanclubCards go here */}
           {concerts.map((concert) => {
+            //retrieve session information from each concert
             const session = concert.sessions[0];
             const venueName = session.venue;
             const startDate = session.start;
             const endDate = session.end;
+
+            //function to format dates
+            function formatDate(dateString) {
+              const dateObject = new Date(dateString);
+              const day = dateObject.getUTCDate();
+              const month = dateObject.toLocaleString("default", {
+                month: "long",
+              });
+              const year = dateObject.getUTCFullYear();
+              return `${day} ${month} ${year}`;
+            }
+
+            const formattedStartDate = formatDate(startDate);
+            const formattedEndDate = formatDate(endDate);
+
+            console.log("Start Date: " + formattedStartDate);
+            console.log("End Date: " + formattedEndDate);
+
             return (
               <ConcertBlock
                 key={concert._id}
                 concertName={concert.name}
                 venueName={venueName}
-                startDate={startDate}
+                startDate={formattedStartDate}
                 endDate={endDate}
                 artistName={concert.artistName}
                 artistDescription={"Lorem ipsum dolor sit amet consectetur"}

@@ -15,7 +15,7 @@ export default FanDashboardPage = ({ route, navigation }) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        // console.log(data);
+        console.log(data);
         setProfiles(data);
       })
       .catch((error) => {
