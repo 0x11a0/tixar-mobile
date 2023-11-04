@@ -309,11 +309,8 @@ export default function App() {
 const DrawerNav = ({ route, navigation }) => {
   const { colors } = useContext(ColorContext);
   const Drawer = createDrawerNavigator();
-  const token = "Bearer " + route.params.token;
-  // const token =
-  //   "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MGZlYjU2ZmYwYmE1NjMxYzY1NTQ1MCIsInR5cGUiOiJhZG1pbiIsInBob25lIjoiNjU5NzMxMTUzMCIsIm5hbWUiOiJTVyBPcCIsImlhdCI6MTY5NzU5NDE1MywiZXhwIjoxNjk4MTk4OTUzfQ.ndn_VnqOOhhDduFITVts4vqBqCrfAdTefVaIdliXbG8";
+  const token = useContext(AuthContext).token;
   const [userType, setUserType] = useState("");
-  // const token = useRef("Bearer " + route.params.token).current;
   const getUser = () => {
     fetch("http://rt.tixar.sg:3000/api/user", {
       method: "GET",
