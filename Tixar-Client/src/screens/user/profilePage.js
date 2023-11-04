@@ -29,7 +29,7 @@ export default ProfilePage = ({ route, navigation }) => {
       method: "GET",
       credentials: "include",
       headers: {
-        Authorization: token,
+        Authorization: `Bearer ${token}`,
         "Cache-Control": "no-cache",
       },
     })

@@ -1,20 +1,21 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useContext } from "react";
 import { View, Text, StyleSheet, ScrollView, SafeAreaView } from "react-native";
 import ArtistBlock from "../../components/verifiedFans/artistBlock";
 import NextButton from "../../components/new/nextButton";
+import { AuthContext } from "../../../context";
 
 export default FanDashboardPage = ({ route, navigation }) => {
   const [profiles, setProfiles] = useState([]);
-
+  const { token } = useContext(AuthContext);
   const getProfiles = () => {
-    fetch("http://vf.tixar.sg/api/profiles", {
+    fetch("http://vf.tixar.sg:3001/api/profiles", {
       method: "GET",
       credentials: "include",
-      headers: { Authorization: route.params.token },
+      headers: { Authorization: `Bearer ${token}` },
     })
       .then((response) => response.json())
       .then((data) => {
-        // console.log(data);
+        console.log(data);
         setProfiles(data);
       })
       .catch((error) => {

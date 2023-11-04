@@ -46,7 +46,7 @@ export default ConfirmCodePage = ({ route, navigation }) => {
             status: 'active'
         }
         console.log(JSON.stringify(body));
-        fetch('http://vf.tixar.sg/api/code', {
+        fetch('http://vf.tixar.sg:3001/api/code', {
             method: 'POST',
             credentials: 'include',
             headers: {

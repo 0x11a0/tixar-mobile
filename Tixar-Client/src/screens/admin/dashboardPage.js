@@ -16,7 +16,7 @@ export default DashboardPage = ({ route, navigation }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [codes, setCodes] = useState([]);
   const getCodes = () => {
-    fetch("http://vf.tixar.sg/api/codes", {
+    fetch("http://vf.tixar.sg:3001/api/codes", {
       method: "GET",
       credentials: "include",
       headers: { Authorization: token },
@@ -27,7 +27,7 @@ export default DashboardPage = ({ route, navigation }) => {
   };
 
   const getClubs = () => {
-    fetch("http://vf.tixar.sg/api/clubs", {
+    fetch("http://vf.tixar.sg:3001/api/clubs", {
       method: "GET",
       credentials: "include",
       headers: { Authorization: token },

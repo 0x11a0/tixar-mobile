@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useContext } from "react";
 import {
   View,
   Text,
@@ -15,6 +15,7 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { AuthContext } from "../../../context";
 
 export default EditProfilePage = ({ route, navigation }) => {
   const [firstNameField, setFirstNameField] = useState("");
@@ -22,12 +23,13 @@ export default EditProfilePage = ({ route, navigation }) => {
     setFirstNameField(text);
   };
 
+  const { token } = useContext(AuthContext);
   const [lastNameField, setLastNameField] = useState("");
   const handleLastName = (text) => {
     setLastNameField(text);
   };
 
-  let { firstName, lastName, phoneNumber, email, token } = route.params;
+  let { firstName, lastName, phoneNumber, email } = route.params;
 
   const [emailField, setEmailField] = useState("");
   const handleEmail = (text) => {
@@ -40,7 +42,7 @@ export default EditProfilePage = ({ route, navigation }) => {
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
-        Authorization: route.params.token,
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
         firstName: firstNameField === "" ? firstName : firstNameField,

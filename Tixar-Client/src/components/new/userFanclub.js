@@ -37,7 +37,7 @@ export default FanclubCard = ({
       raw: "",
       // Add more key-value pairs as needed
     };
-    fetch(`http://vf.tixar.sg/api/club/${clubId}/join`, {
+    fetch(`http://vf.tixar.sg:3001/api/club/${clubId}/join`, {
       method: "POST",
       credentials: "include",
       headers: { Authorization: token },

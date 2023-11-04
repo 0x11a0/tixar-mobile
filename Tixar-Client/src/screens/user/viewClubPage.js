@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useContext } from "react";
 import {
   FlatList,
   View,
@@ -16,16 +16,18 @@ import { LinearGradient } from "expo-linear-gradient";
 import StatisticBox from "../../components/verifiedFans/statisticBox";
 import ConcertBox from "../../components/verifiedFans/concertBox";
 import NextButton from "../../components/new/nextButton";
+import { AuthContext } from "../../../context";
 
 export default ViewClubPage = ({ route, navigation }) => {
-  const { clubName, artistDescription, key, token, imageUrl } = route.params;
+  const { clubName, artistDescription, key, imageUrl } = route.params;
+  const { token } = useContext(AuthContext);
 
   const handleDeletePress = () => {
     // console.log(key);
-    fetch(`http://vf.tixar.sg/api/profile/${key}`, {
+    fetch(`http://vf.tixar.sg:3001/api/profile/${key}`, {
       method: "DELETE",
       credentials: "include",
-      headers: { Authorization: token },
+      headers: { Authorization: `Bearer ${token}` },
     })
       .then((response) => response.json())
       .then((data) => {

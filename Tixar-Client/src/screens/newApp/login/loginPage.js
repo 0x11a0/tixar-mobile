@@ -50,6 +50,7 @@ export default LoginPage = ({ navigation }) => {
       .then((response) => {
         if (response.ok) {
           console.log("Login request successful");
+          console.log("NEW APP LOGIN");
           return response.json();
         } else {
           console.log("Login request unsuccessful");
