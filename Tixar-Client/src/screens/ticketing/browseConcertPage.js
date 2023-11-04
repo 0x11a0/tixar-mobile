@@ -82,6 +82,8 @@ export default BrowseConcertPage = ({ route, navigation }) => {
             paddingTop: 10,
           }}
         >
+
+          {/* Nearby button */}
           <View style={styles.rowBox}>
             <FilterButton
               buttonText={"Nearby"}
@@ -92,6 +94,7 @@ export default BrowseConcertPage = ({ route, navigation }) => {
             />
           </View>
 
+          {/* Trending button */}
           <View style={styles.rowBox}>
             <FilterButton
               buttonText={"Trending"}
@@ -146,9 +149,14 @@ export default BrowseConcertPage = ({ route, navigation }) => {
                 artistIcon={artistIcon}
                 imageBackground={imageBackground}
                 onPressFunction={() => {
-                  navigation.navigate("viewConcertPage", {
-                    id: concert._id,
-                  });
+                  if (concert._id) {
+                    console.log("Switching to concert page, \n" + concert._id);
+                    navigation.navigate("viewConcertPage", {
+                      concert: concert,
+                    });
+                  } else {
+                    console.log('concert._id is undefined');
+                  }
                 }}
               />
             );
@@ -170,6 +178,8 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 0.97,
+    width: "95%",
+    alignSelf: "center",
     backgroundColor: "#F8F9FA",
   },
   scrollView: {
