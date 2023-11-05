@@ -14,10 +14,21 @@ export default ViewConcertPage = ({route, navigation}) => {
     const { token } = useContext(AuthContext);
     const concert = route.params.concert;
 
+                //function to format dates
+    function formatDate(dateString) {
+        const dateObject = new Date(dateString);
+        const day = dateObject.getUTCDate();
+        const month = dateObject.toLocaleString("default", {
+            month: "long",
+        });
+        const year = dateObject.getUTCFullYear();
+        return `${day} ${month} ${year}`;
+    }
+
     const startDate = new Date(concert.sessions[0].start);
-    const formattedStartDate = startDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    const formattedStartDate = formatDate(startDate);
     const endDate = new Date(concert.sessions[0].end);
-    const formattedEndDate = endDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    const formattedEndDate = formatDate(endDate);
 
     const styles = StyleSheet.create({
 
