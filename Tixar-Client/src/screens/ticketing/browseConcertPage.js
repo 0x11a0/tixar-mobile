@@ -83,9 +83,6 @@ export default BrowseConcertPage = ({ route, navigation }) => {
             const formattedStartDate = formatDate(startDate);
             const formattedEndDate = formatDate(endDate);
 
-            console.log("Start Date: " + formattedStartDate);
-            console.log("End Date: " + formattedEndDate);
-
             return (
               <ConcertBlock
                 key={concert._id}

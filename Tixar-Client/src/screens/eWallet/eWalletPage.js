@@ -12,13 +12,41 @@ import {
 
 import CardWallet from "../../components/eWallet/cardWallet";
 import Card from "../../components/accountSettings/card";
-import { AuthContext } from "../../../context";
-import { useContext } from "react";
-import { ColorContext } from "../../../context";
+import { AuthContext, ColorContext } from "../../../context";
+import { useContext, useState, useEffect } from "react";
 
 export default EWalletPage = ({ route, navigation }) => {
-  const token = useContext(AuthContext);
-  const { colors } = useContext(ColorContext);
+    const { token } = useContext(AuthContext);
+    const { colors } = useContext(ColorContext);
+    let [user, setUser] = useState({});
+
+    useEffect(() => {
+        navigation.addListener("focus", () => {
+        console.log("reloaded");
+            getUser();
+        });
+    }, [navigation]);
+
+    const getUser = () => {
+        console.log("getting user profile")
+        fetch("http://rt.tixar.sg:3000/api/user", {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Cache-Control": "no-cache",
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            setUser(data);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      };
+
+
 
   // Define an array of transaction items, change as needed for integration team!!
   const transactionHistory = [
@@ -75,7 +103,10 @@ export default EWalletPage = ({ route, navigation }) => {
       }}
     >
       <View style={styles.eCardContainer}>
-        <CardWallet />
+        <CardWallet 
+            firstName={user.firstName}
+            lastName={user.lastName}
+            balance={user.eWalletBalance}/>
       </View>
       <View
         style={{
