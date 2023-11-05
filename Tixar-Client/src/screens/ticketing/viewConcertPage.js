@@ -16,7 +16,7 @@ export default ViewConcertPage = ({route, navigation}) => {
 
     const startDate = new Date(concert.sessions[0].start);
     const formattedStartDate = startDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-    const endDate = new Date(concert.sessions[0].start);
+    const endDate = new Date(concert.sessions[0].end);
     const formattedEndDate = endDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
     const styles = StyleSheet.create({
@@ -117,7 +117,9 @@ export default ViewConcertPage = ({route, navigation}) => {
 
                 {/* Description from DB */}
                 <Text style={styles.ticketCategoryDescription}>
-                    Hosted by {concert.artistName}, {concert.name} runs from {formattedStartDate} to {formattedEndDate}.
+                    Hosted by {concert.artistName}, {concert.name} {formattedStartDate === formattedEndDate 
+                                                                      ? `runs on ${formattedStartDate}` 
+                                                                      : `runs from ${formattedStartDate} to ${formattedEndDate}`}.
                 </Text>
 
                 {/* Concert Category Image from DB */}

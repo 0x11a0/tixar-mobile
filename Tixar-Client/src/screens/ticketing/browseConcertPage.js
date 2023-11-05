@@ -17,8 +17,6 @@ import { AuthContext } from "../../../context";
 
 export default BrowseConcertPage = ({ route, navigation }) => {
   const { colors } = useContext(ColorContext);
-  const [isNearbyFocused, setIsNearbyFocused] = useState(true);
-  const [isTrendingFocused, setIsTrendingFocused] = useState(false);
   const [searchText, setSearchText] = useState("");
   const artistIcon = require("../../assets/soft-ui-pro-react-native-v1.1.1/avatar23x.png");
   const imageBackground = require("../../assets/soft-ui-pro-react-native-v1.1.1/background3x.png");
@@ -46,18 +44,6 @@ export default BrowseConcertPage = ({ route, navigation }) => {
       getAllConcerts();
     });
   }, [navigation]);
-
-  const handleNearbyPress = () => {
-    setIsNearbyFocused(true);
-    setIsTrendingFocused(false);
-    console.log("display nearby");
-  };
-
-  const handleTrendingPress = () => {
-    setIsNearbyFocused(false);
-    setIsTrendingFocused(true);
-    console.log("display trending");
-  };
 
   return (
     <View style={[styles.container, {backgroundColor: colors.primary}]}>
