@@ -8,10 +8,7 @@ import { AuthContext } from "../../../context";
 export default ProfilePage = ({ route, navigation }) => {
   const { colors } = useContext(ColorContext);
   const { token } = useContext(AuthContext);
-  let [firstName, setFirstName] = useState("");
-  let [lastName, setLastName] = useState("");
-  let [email, setEmail] = useState("");
-  let [phoneNumber, setPhoneNumber] = useState("");
+  let [user, setUser] = useState({});
 
   useEffect(() => {
     navigation.addListener("focus", () => {
@@ -20,11 +17,8 @@ export default ProfilePage = ({ route, navigation }) => {
     });
   }, [navigation]);
 
-  const parsePhoneNumber = (phoneNum) => {
-    // convert phone number to formatter phone number
-  };
-
   const getUser = () => {
+    console.log("getting user profile")
     fetch("http://rt.tixar.sg:3000/api/user", {
       method: "GET",
       credentials: "include",
@@ -35,10 +29,7 @@ export default ProfilePage = ({ route, navigation }) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        setFirstName(data.firstName);
-        setLastName(data.lastName);
-        setEmail(data.email);
-        setPhoneNumber(data.phone);
+        setUser(data);
       })
       .catch((error) => {
         console.error(error);
@@ -50,7 +41,7 @@ export default ProfilePage = ({ route, navigation }) => {
       style={[styles.container, { backgroundColor: colors.background }]}
     >
       <HeaderBlock
-        name={firstName + " " + lastName}
+        name={user.firstName + " " + user.lastName}
         walletOnPress={() => {
           navigation.navigate("manageEWalletPage");
         }}
@@ -70,13 +61,13 @@ export default ProfilePage = ({ route, navigation }) => {
       <View style={styles.translucentBox}>
         <Text style={[styles.title, { color: colors.textPrimary }]}>Email</Text>
         <Text style={[styles.subtitle, { color: colors.textPrimary }]}>
-          {email}
+          {user.email}
         </Text>
         <Text style={[styles.title, { color: colors.textPrimary }]}>
           Phone Number
         </Text>
         <Text style={[styles.subtitle, { color: colors.textPrimary }]}>
-          {phoneNumber}
+          {user.phone}
         </Text>
         <View style={styles.buttonContainerStyle}>
           <Button

@@ -4,7 +4,7 @@ import { Entypo } from '@expo/vector-icons';
 import { creditcardicon } from '../../assets/creditcardicon.png';
 
 
-export default cardWallet = ({name}) => {
+export default cardWallet = ({ firstName, lastName, balance }) => {
 
     return (
             <View style={styles.container}>
@@ -13,7 +13,7 @@ export default cardWallet = ({name}) => {
                 <View style={styles.overlayContainer}>
                     <View style={styles.nameContainer}>
                         <View>
-                            <Text style={styles.eCardTitle}>{name}</Text>
+                            <Text style={styles.eCardTitle}>{firstName} {lastName}</Text>
                         </View>
                         <View style = {{}}>
                             <Image source={require('../../assets/creditcardicon.png')}
@@ -26,7 +26,7 @@ export default cardWallet = ({name}) => {
                         </View>
                         <View style = {{justifyContent: 'flex-end'}}>
                             <Text style={styles.balanceText}>Balance</Text>
-                            <Text style={styles.balanceAmount}>$1000.88</Text>
+                            <Text style={styles.balanceAmount}>${balance}</Text>
                         </View>
                     </View>
                 </View>
