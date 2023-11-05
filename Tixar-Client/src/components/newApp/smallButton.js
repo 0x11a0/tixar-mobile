@@ -51,7 +51,7 @@ export default SmallButton = ({ buttonText, enableCondition, onPressFunction }) 
 const styles = StyleSheet.create({
     button: {
         borderRadius: 25,
-        width: 150,
+        width: '47%',
         height: 40,
         alignItems: 'center',
         justifyContent: 'center',
