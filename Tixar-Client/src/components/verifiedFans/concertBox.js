@@ -1,12 +1,15 @@
+import { useContext } from "react";
 import { View, Image, Text, Pressable, StyleSheet } from "react-native";
+import { ColorContext } from "../../../context";
 
 export default ConcertBlock = ({ artistIcon }) => {
-  return (
-    <View style={styles.container}>
+  const { colors } = useContext(ColorContext);
+    return (
+    <View style={[styles.container, {backgroundColor: colors.primary}]}>
       <View style={styles.concertBlock}>
         <Image source={artistIcon} style={styles.artistIcon} />
-        <Text style={styles.Ttile}>Upcoming Concerts</Text>
-        <Text style={styles.artistDescription}>
+        <Text style={[styles.Title, {color: colors.textSecondary}]}>Upcoming Concerts</Text>
+        <Text style={[styles.artistDescription, {color: colors.textSecondary}]}>
           There are no upcoming concerts. Check back later!
         </Text>
       </View>
@@ -40,7 +43,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     flex: 1,
   },
-  Ttile: {
+  Title: {
     fontSize: 20,
     fontFamily: "Lato-Bold",
     color: "#252F40",

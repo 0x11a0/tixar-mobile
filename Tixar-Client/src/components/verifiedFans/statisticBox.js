@@ -1,4 +1,6 @@
+import { useContext } from "react";
 import { View, Image, Text, Pressable, StyleSheet } from "react-native";
+import { ColorContext } from "../../../context";
 
 export default ArtistBlock = ({
   clubName,
@@ -10,6 +12,8 @@ export default ArtistBlock = ({
   artistDescription,
   points,
 }) => {
+    const { colors } = useContext(ColorContext);
+
   return (
     // <Pressable style={styles.container}
     //     onPress={() => {
@@ -18,13 +22,13 @@ export default ArtistBlock = ({
     //             : console.log(clubName + ' statistic box pressed');
     //     }}>
 
-    <View style={styles.container}>
+    <View style={[styles.container, {backgroundColor: colors.primary}]}>
       <View style={styles.artistBlock}>
         {/* ICON */}
         <Image source={artistIcon} style={styles.artistIcon} />
 
         {/* POINTS */}
-        <Text style={styles.points}>Your VF Points: {points}</Text>
+      {points !== null && <Text style={[styles.points, {color: colors.textSecondary}]}>Your VF Points: {points}</Text> }
 
         {/* TEXT CONTAINER */}
         <View style={styles.artistTextContainer}>
@@ -32,7 +36,7 @@ export default ArtistBlock = ({
           <View style={{ flexDirection: "column" }}>
             {/* TITLE ROW, ARTIST NAME*/}
             <View style={{ flexDirection: "row" }}>
-              <Text style={styles.clubName} numberOfLines={1}>
+              <Text style={[styles.clubName, {color: colors.textSecondary}]} numberOfLines={1}>
                 {clubName}
               </Text>
             </View>
@@ -43,7 +47,7 @@ export default ArtistBlock = ({
             <View style={{ height: 3 }} />
 
             {/* NEW CLUB DESCRIPTION */}
-            <Text style={styles.artistDescription}>{artistDescription}</Text>
+            <Text style={[styles.artistDescription, {color: colors.textSecondary}]}>{artistDescription}</Text>
           </View>
 
           {/* DESCRIPTION ROW _old card with stats_ */}
