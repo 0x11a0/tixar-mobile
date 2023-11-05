@@ -7,11 +7,12 @@ import {
   FlatList,
 } from "react-native";
 import ClubsCard from "../../components/new/userFanclub";
-import { AuthContext } from "../../../context";
+import { AuthContext, ColorContext } from "../../../context";
 
 export default ViewAllClubsPage = ({ route, navigation }) => {
   const { token } = useContext(AuthContext);
-  const [clubs, setClubs] = useState([]);
+  const { colors } = useContext(ColorContext);
+    const [clubs, setClubs] = useState([]);
 
   const getClubs = () => {
     fetch("http://vf.tixar.sg:3001/api/clubs", {
@@ -34,7 +35,7 @@ export default ViewAllClubsPage = ({ route, navigation }) => {
   }, []);
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#F2F2F2" }}>
+    <View style={{ flex: 1, backgroundColor: colors.background }}>
       <View style={styles.container}>
         <ScrollView>
           {/* Your FanclubCards go here */}
@@ -68,7 +69,7 @@ export default ViewAllClubsPage = ({ route, navigation }) => {
           />
         </View> */}
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 
