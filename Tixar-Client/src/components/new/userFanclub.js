@@ -18,7 +18,6 @@ export default FanclubCard = ({
   codesActive,
   navigationDestination, // Receive the screen name prop
   imageUrl,
-  token,
   onPressFunction,
 }) => {
   const navigation = useNavigation();
