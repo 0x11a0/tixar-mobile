@@ -1,7 +1,6 @@
 import { React, useState, useEffect, useContext } from "react";
 import { View, Text, StyleSheet, SafeAreaView } from "react-native";
 import HeaderBlock from "../../components/user/headerBlockUserProfile";
-import Button from "../../components/newApp/button";
 import { ColorContext } from "../../../context";
 import { AuthContext } from "../../../context";
 
@@ -69,20 +68,8 @@ export default ProfilePage = ({ route, navigation }) => {
         <Text style={[styles.subtitle, { color: colors.textPrimary }]}>
           {user.phone}
         </Text>
-        <View style={styles.buttonContainerStyle}>
-          <Button
-            buttonText={"View Tickets"}
-            enableCondition={true}
-            onPressFunction={() => {
-              navigation.navigate("userTicketsPage");
-            }}
-          />
-        </View>
+    
       </View>
-
-      <Text style={[styles.footerText, { color: colors.textPrimary }]}>
-        TIXAR
-      </Text>
     </SafeAreaView>
   );
 };
@@ -91,7 +78,7 @@ const styles = StyleSheet.create({
   buttonContainerStyle: {
     flex: 1,
     width: "100%",
-    marginTop: 100,
+    marginTop: 20,
   },
   translucentBox: {
     height: "50%",
@@ -103,6 +90,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
     alignSelf: "center",
+    // backgroundColor: 'white',
   },
   title: {
     marginTop: 20,
@@ -132,7 +120,6 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   viewTicketsButton: {
-    marginTop: 50,
     backgroundColor: "#B731D9",
     borderWidth: 5,
     borderColor: "#fff",
