@@ -9,12 +9,91 @@ import {
   TextInput,
 } from "react-native";
 import ConditionalButton from "../../components/new/conditionalButton";
+import Button from "../../components/newApp/button";
 import * as ImagePicker from "expo-image-picker";
 import * as DocumentPicker from "expo-document-picker";
 import { AuthContext } from "../../../context";
 import { useContext } from "react";
+import { ColorContext } from "../../../context";
 
 export default CreateClubPage = ({ route, navigation }) => {
+  const { colors } = useContext(ColorContext);
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      flexDirection: "column",
+      justifyContent: "flex-start",
+      alignItems: "center",
+      backgroundColor: colors.background,
+    },
+
+    thumbnailBox: {
+      marginTop: 20,
+      width: "50%",
+      aspectRatio: 1,
+      backgroundColor: colors.primary,
+      borderRadius: 15,
+      alignItems: "center",
+      justifyContent: "center",
+    },
+
+    thumbnail: {
+      fontSize: 15,
+      fontFamily: "Lato-Bold",
+      color: colors.textDisabled,
+      // backgroundColor:"green"
+    },
+
+    inputContainer: {
+      flex: 1,
+      width: "100%",
+      backgroundColor: colors.primary,
+      borderRadius: 15,
+      width: "90%",
+      marginTop: 20,
+      flexDirection: "column",
+      justifyContent: "flex-start",
+      alignItems: "center",
+      paddingVertical: 20, // Add paddingBottom to create space at the bottom
+    },
+
+    // text input field styles
+    clubNameFieldBox: {
+      flexDirection: "row",
+      height: 56,
+      width: "86%",
+      borderRadius: 10,
+      backgroundColor: colors.secondary,
+    },
+
+    descriptionFieldBox: {
+      flex: 1, // Let the description field box take up the remaining space
+      width: "86%",
+      borderRadius: 10,
+      backgroundColor: colors.secondary,
+      marginTop: 20,
+      alignItems: "flex-start", // Align text input to the start (top-left)
+      paddingBottom: 20, // Add paddingBottom to create space at the bottom
+    },
+
+    fieldText: {
+      height: 50,
+      paddingLeft: 20,
+      fontSize: 18,
+      fontFamily: "Lato-Regular",
+      color: colors.textPrimary,
+    },
+
+    // descriptionFieldText: {
+    //   flex: 1,
+    //   paddingLeft: 20,
+    //   fontSize: 18,
+    //   fontFamily: "Lato-Regular",
+    //   color: colors.textPrimary,
+    //   textAlignVertical: "top", // Align text to the top-left
+    // },
+  });
+
   const { token } = useContext(AuthContext);
 
   let image = require("../../../src/assets/thumbnail2.png");
@@ -109,6 +188,7 @@ export default CreateClubPage = ({ route, navigation }) => {
             onChangeText={handleNameField}
             value={nameField}
             placeholder="Club Name"
+            placeholderTextColor={colors.textDisabled}
             ref={nameFieldRef} // Assign the ref to the name input field
           />
         </Pressable>
@@ -123,89 +203,30 @@ export default CreateClubPage = ({ route, navigation }) => {
             onChangeText={handleDescriptionField}
             value={descriptionField}
             placeholder="Description..."
+            placeholderTextColor={colors.textDisabled}
             ref={descriptionFieldRef} // Assign the ref to the description input field
+            multiline={true} // Allow multiple lines
           />
         </Pressable>
       </View>
 
       {/* Next Button */}
-      <ConditionalButton
+      <Button
+        buttonText={"Continue"}
+        onPressFunction={() => {
+          createClub();
+          navigation.navigate("adminDashboardPage");
+        }}
+        enableCondition={credentialCheck}
+      />
+      {/* <ConditionalButton
         credentialCheck={credentialCheck}
         navigation={navigation}
         onPressFunction={() => {
           createClub();
           //   console.log(nameField, descriptionField);
         }}
-      ></ConditionalButton>
+      ></ConditionalButton> */}
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: "column",
-    justifyContent: "flex-start",
-    alignItems: "center",
-    backgroundColor: "#F2F2F2",
-  },
-
-  thumbnailBox: {
-    marginTop: 20,
-    width: "50%",
-    aspectRatio: 1,
-    backgroundColor: "rgba(255, 255, 255, 0.95)",
-    borderRadius: 15,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-
-  thumbnail: {
-    fontSize: 15,
-    fontFamily: "Lato-Bold",
-    color: "#66748E",
-    // backgroundColor:"green"
-  },
-
-  inputContainer: {
-    flex: 1,
-    width: "100%",
-    backgroundColor: "white",
-    borderRadius: 15,
-    width: "90%",
-    marginTop: 20,
-    flexDirection: "column",
-    justifyContent: "flex-start",
-    alignItems: "center",
-    paddingVertical: 20, // Add paddingBottom to create space at the bottom
-  },
-
-  // text input field styles
-  clubNameFieldBox: {
-    flexDirection: "row",
-    height: 56,
-    width: "86%",
-    borderRadius: 10,
-    borderColor: "#1A1A1A",
-    borderWidth: 1,
-  },
-
-  descriptionFieldBox: {
-    flex: 1, // Let the description field box take up the remaining space
-    width: "86%",
-    borderRadius: 10,
-    borderColor: "#1A1A1A",
-    borderWidth: 1,
-    marginTop: 20,
-    alignItems: "flex-start", // Align text input to the start (top-left)
-    paddingBottom: 20, // Add paddingBottom to create space at the bottom
-  },
-
-  fieldText: {
-    height: 50,
-    paddingLeft: 20,
-    fontSize: 18,
-    fontFamily: "Lato-Regular",
-    color: "#8F8F8F",
-  },
-});

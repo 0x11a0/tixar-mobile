@@ -8,7 +8,6 @@ import {
   Text,
 } from "react-native";
 import FanclubCard from "../../components/new/fanclubCard";
-import NextButton from "../../components/new/nextButton";
 import Button from "../../components/newApp/button";
 import { ColorContext } from "../../../context";
 import { AuthContext } from "../../../context";
@@ -69,7 +68,7 @@ export default DashboardPage = ({ route, navigation }) => {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: colors.primary }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
       <View style={styles.container}>
         <ScrollView>
           {/* Your FanclubCards go here */}
