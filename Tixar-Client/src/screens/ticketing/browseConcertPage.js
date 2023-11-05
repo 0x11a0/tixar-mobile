@@ -61,6 +61,7 @@ export default BrowseConcertPage = ({ route, navigation }) => {
 
   return (
     <View style={[styles.container, {backgroundColor: colors.primary}]}>
+
       <View
         style={{
           backgroundColor: colors.background,
@@ -69,45 +70,8 @@ export default BrowseConcertPage = ({ route, navigation }) => {
       >
         <SearchField searchText={searchText} setSearchText={setSearchText} />
 
-        <View style={{ height: 16 }} />
-
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center",
-            paddingTop: 5,
-            borderTopWidth: 0.5,
-            borderColor: colors.textPrimary,
-            paddingTop: 10,
-          }}
-        >
-          {/* Nearby button */}
-          <View style={styles.rowBox}>
-            <FilterButton
-              buttonText={"Nearby"}
-              iconName="enviromento"
-              isFocused={isNearbyFocused}
-              onPressFunction={handleNearbyPress}
-              isLeft={true}
-            />
-          </View>
-
-          {/* Trending button */}
-          <View style={styles.rowBox}>
-            <FilterButton
-              buttonText={"Trending"}
-              iconName="linechart"
-              isFocused={isTrendingFocused}
-              onPressFunction={handleTrendingPress}
-              isLeft={false}
-            />
-          </View>
-        </View>
       </View>
-      {/* <ScrollView
-        style={[styles.scrollView, { backgroundColor: colors.background }]}
-      > */}
+  
 
       <View style={[styles.contentContainer, {backgroundColor: colors.primary}]}>
         <ScrollView style={{backgroundColor: colors.primary}}>
@@ -177,11 +141,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 1,
-    // width: "95%",
-    alignSelf: "center",
-  },
-  scrollView: {
-    // paddingHorizontal: 15,
+    width: "100%",
   },
   rowBox: {
     flexDirection: "row",

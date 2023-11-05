@@ -71,11 +71,13 @@ export default ConcertBlock = ({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "green",
+    // backgroundColor: "green",
     height: 240,
-    borderRadius: 20,
-    marginVertical: 13,
-    paddingVertical: 15,
+    width: "95%",
+    borderRadius: 10,
+    marginVertical: 10,
+    paddingVertical: 10,
+    alignSelf: "center",
     overflow: "hidden",
   },
   title: {

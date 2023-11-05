@@ -11,9 +11,7 @@ import {
   Keyboard,
   Alert,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
-import HeaderBlock from "../../components/login/headerBlock";
-import PhoneInput from "react-native-phone-number-input";
+
 import { AuthContext } from "../../../context";
 import SmallButton from "../../components/newApp/smallButton";
 
