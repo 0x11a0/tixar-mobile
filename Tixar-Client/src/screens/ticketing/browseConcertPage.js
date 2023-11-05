@@ -60,7 +60,7 @@ export default BrowseConcertPage = ({ route, navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {backgroundColor: colors.primary}]}>
       <View
         style={{
           backgroundColor: colors.background,
@@ -110,8 +110,8 @@ export default BrowseConcertPage = ({ route, navigation }) => {
         style={[styles.scrollView, { backgroundColor: colors.background }]}
       > */}
 
-      <View style={styles.contentContainer}>
-        <ScrollView>
+      <View style={[styles.contentContainer, {backgroundColor: colors.primary}]}>
+        <ScrollView style={{backgroundColor: colors.primary}}>
           {/* Your FanclubCards go here */}
           {concerts.map((concert) => {
             //retrieve session information from each concert
@@ -177,13 +177,12 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
   },
   contentContainer: {
-    flex: 0.97,
-    width: "95%",
+    flex: 1,
+    // width: "95%",
     alignSelf: "center",
-    backgroundColor: "#F8F9FA",
   },
   scrollView: {
-    paddingHorizontal: 15,
+    // paddingHorizontal: 15,
   },
   rowBox: {
     flexDirection: "row",

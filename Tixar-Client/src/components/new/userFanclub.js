@@ -8,7 +8,7 @@ import {
   Dimensions,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { AuthContext } from "../../../context";
+import { AuthContext, ColorContext } from "../../../context";
 import { useContext } from "react";
 
 export default FanclubCard = ({
@@ -23,7 +23,7 @@ export default FanclubCard = ({
   const navigation = useNavigation();
   const [showOptionalButton, setshowOptionalButton] = useState(false);
   const { token } = useContext(AuthContext);
-
+    const { colors } = useContext(ColorContext);
   const handleHamburgerPress = () => {
     setshowOptionalButton(!showOptionalButton);
   };
@@ -66,7 +66,7 @@ export default FanclubCard = ({
   return (
     <View>
       <Pressable
-        style={styles.container}
+        style={[styles.container, {backgroundColor: colors.primary}]}
         onPress={() => {
           // Use the screenName prop as the screen name to navigate to
           // navigation.navigate(navigationDestination);
@@ -78,15 +78,19 @@ export default FanclubCard = ({
 
         {/* information */}
         <View style={styles.information}>
+      <View style={}>
+
           <Text
-            style={styles.title}
+            style={[styles.title, {color: colors.textSecondary}]}
             adjustsFontSizeToFit={true}
             numberOfLines={1}
           >
             {" "}
             {clubName}{" "}
           </Text>
-          <View
+
+      </View>
+      <View
             style={{
               justifyContent: "flex-end",
             }}
@@ -136,7 +140,6 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "white",
     borderRadius: 15,
     height: Dimensions.get("window").height * 0.12,
     marginVertical: 5,
