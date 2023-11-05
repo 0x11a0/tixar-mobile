@@ -9,10 +9,13 @@ import {
 } from "react-native";
 import FanclubCard from "../../components/new/fanclubCard";
 import NextButton from "../../components/new/nextButton";
+import Button from "../../components/newApp/button";
+import { ColorContext } from "../../../context";
 import { AuthContext } from "../../../context";
 import { useContext } from "react";
 
 export default DashboardPage = ({ route, navigation }) => {
+  const { colors } = useContext(ColorContext);
   const { token } = useContext(AuthContext);
   const [clubs, setClubs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -55,7 +58,7 @@ export default DashboardPage = ({ route, navigation }) => {
       <SafeAreaView
         style={{
           flex: 1,
-          backgroundColor: "#F2F2F2",
+          backgroundColor: colors.primary,
           justifyContent: "center",
           alignItems: "center",
         }}
@@ -66,7 +69,7 @@ export default DashboardPage = ({ route, navigation }) => {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#F2F2F2" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.primary }}>
       <View style={styles.container}>
         <ScrollView>
           {/* Your FanclubCards go here */}
@@ -93,13 +96,16 @@ export default DashboardPage = ({ route, navigation }) => {
 
         {/* Next Button */}
         <View style={styles.buttonContainer}>
-          <NextButton
+
+          <Button
             buttonText={"Create New Fanclub"}
             onPressFunction={() =>
               navigation.navigate("createClubPage", { token: token })
-            } //place holder destination, change to create new fanclub page
-            buttonHeight={50}
+            } 
+            enableCondition={true}
           />
+
+  
         </View>
       </View>
     </SafeAreaView>
