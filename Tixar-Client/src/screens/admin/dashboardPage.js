@@ -70,7 +70,7 @@ export default DashboardPage = ({ route, navigation }) => {
       <View style={styles.container}>
         <ScrollView>
           {/* Your FanclubCards go here */}
-          {clubs.map((club) => {
+          {clubs.length > 0 && clubs.map((club) => { // If there are clubs, map each club to a FanclubCard
             return (
               <FanclubCard
                 key={club._id}
