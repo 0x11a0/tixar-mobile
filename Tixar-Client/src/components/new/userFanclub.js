@@ -8,6 +8,8 @@ import {
   Dimensions,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { AuthContext } from "../../../context";
+import { useContext } from "react";
 
 export default FanclubCard = ({
   clubId,
@@ -21,6 +23,7 @@ export default FanclubCard = ({
 }) => {
   const navigation = useNavigation();
   const [showOptionalButton, setshowOptionalButton] = useState(false);
+  const { token } = useContext(AuthContext);
 
   const handleHamburgerPress = () => {
     setshowOptionalButton(!showOptionalButton);
@@ -40,7 +43,7 @@ export default FanclubCard = ({
     fetch(`http://vf.tixar.sg:3001/api/club/${clubId}/join`, {
       method: "POST",
       credentials: "include",
-      headers: { Authorization: token },
+      headers: { Authorization: `Bearer ${token}` },
       body: JSON.stringify(requestBody),
     })
       .then((response) => response.json())

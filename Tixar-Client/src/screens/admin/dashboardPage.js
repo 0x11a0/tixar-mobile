@@ -9,9 +9,11 @@ import {
 } from "react-native";
 import FanclubCard from "../../components/new/fanclubCard";
 import NextButton from "../../components/new/nextButton";
+import { AuthContext } from "../../../context";
+import { useContext } from "react";
 
 export default DashboardPage = ({ route, navigation }) => {
-  const token = route.params.token;
+  const { token } = useContext(AuthContext);
   const [clubs, setClubs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [codes, setCodes] = useState([]);
@@ -19,7 +21,7 @@ export default DashboardPage = ({ route, navigation }) => {
     fetch("http://vf.tixar.sg:3001/api/codes", {
       method: "GET",
       credentials: "include",
-      headers: { Authorization: token },
+      headers: { Authorization: `Bearer ${token}` },
     })
       .then((response) => response.json())
       .then((data) => setCodes(data))
@@ -30,7 +32,7 @@ export default DashboardPage = ({ route, navigation }) => {
     fetch("http://vf.tixar.sg:3001/api/clubs", {
       method: "GET",
       credentials: "include",
-      headers: { Authorization: token },
+      headers: { Authorization: `Bearer ${token}` },
     })
       .then((response) => response.json())
       .then((data) => {
