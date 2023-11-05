@@ -19,7 +19,7 @@ import NextButton from "../../components/new/nextButton";
 import { AuthContext } from "../../../context";
 
 export default ViewClubPage = ({ route, navigation }) => {
-  const { clubName, artistDescription, key, imageUrl } = route.params;
+  const { clubName, artistDescription, key, imageUrl, points } = route.params;
   const { token } = useContext(AuthContext);
 
   const handleDeletePress = () => {
@@ -32,7 +32,7 @@ export default ViewClubPage = ({ route, navigation }) => {
       .then((response) => response.json())
       .then((data) => {
         // console.log("SUCCESSFUL");
-        // console.log(data);
+        console.log(data);
         navigation.navigate("vfDashboardPage", { token: token });
       })
       .catch((error) => {
@@ -43,6 +43,7 @@ export default ViewClubPage = ({ route, navigation }) => {
   console.log(clubName);
   console.log(artistDescription);
   console.log(imageUrl);
+  console.log(points);
 
   let image = require("../../assets/soft-ui-pro-react-native-v1.1.1/avatar23x.png");
   if (imageUrl) {
@@ -69,7 +70,7 @@ export default ViewClubPage = ({ route, navigation }) => {
           // artistIcon={require("../../assets/taylorswifticon.png")}
           artistIcon={image}
           artistDescription={artistDescription}
-          points={"1002"}
+          points={points}
         />
 
         <ConcertBox
