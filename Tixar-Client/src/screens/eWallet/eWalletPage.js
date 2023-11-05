@@ -1,11 +1,20 @@
 import { useNavigation } from '@react-navigation/native'
-import { View, Text, StyleSheet, ScrollView, Pressable, Image, SafeAreaViewBase, SafeAreaView } from 'react-native';
+import { View, 
+        Text, 
+        StyleSheet, 
+        ScrollView, 
+        Pressable, 
+        Image, 
+        SafeAreaViewBase, 
+        SafeAreaView } from 'react-native';
 
 import CardWallet from '../../components/eWallet/cardWallet';
 import Card from '../../components/accountSettings/card';
+import { AuthContext } from '../../../context';
+import { useContext } from 'react';
 
 export default EWalletPage = ({ route, navigation }) => {
-    let token = route.params.token;
+    const token = useContext(AuthContext);
 
 
     return (
