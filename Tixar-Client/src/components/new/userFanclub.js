@@ -78,7 +78,7 @@ export default FanclubCard = ({
 
         {/* information */}
         <View style={styles.information}>
-      <View style={}>
+      <View style = {[]}>
 
           <Text
             style={[styles.title, {color: colors.textSecondary}]}

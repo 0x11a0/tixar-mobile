@@ -1,11 +1,8 @@
 import { React, useState, useRef, useContext } from "react";
 import {
-  TouchableOpacity,
   View,
   Text,
   StyleSheet,
-  SafeAreaView,
-  Image,
   Pressable,
   TextInput,
   ImageBackground,
@@ -146,7 +143,6 @@ export default OTPPage = ({ route, navigation }) => {
 
               {/* Buttons */}
               <View style={styles.buttonRow}>
-                <View style={styles.buttonContainer}>
                   <SmallButton
                     buttonText={"Back"}
                     enableCondition={true}
@@ -154,8 +150,6 @@ export default OTPPage = ({ route, navigation }) => {
                       navigation.goBack();
                     }}
                   />
-                </View>
-                <View style={styles.buttonContainer}>
                   <SmallButton
                     buttonText={"Continue"}
                     enableCondition={valid}
@@ -163,7 +157,6 @@ export default OTPPage = ({ route, navigation }) => {
                       handleOTPLogin(otp);
                     }}
                   />
-                </View>
               </View>
 
               <View style={styles.resendButton}>
