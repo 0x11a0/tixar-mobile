@@ -82,7 +82,6 @@ export default BrowseConcertPage = ({ route, navigation }) => {
             paddingTop: 10,
           }}
         >
-
           {/* Nearby button */}
           <View style={styles.rowBox}>
             <FilterButton
@@ -143,7 +142,7 @@ export default BrowseConcertPage = ({ route, navigation }) => {
                 concertName={concert.name}
                 venueName={venueName}
                 startDate={formattedStartDate}
-                endDate={endDate}
+                endDate={formattedEndDate}
                 artistName={concert.artistName}
                 artistDescription={"Lorem ipsum dolor sit amet consectetur"}
                 artistIcon={artistIcon}
@@ -155,7 +154,7 @@ export default BrowseConcertPage = ({ route, navigation }) => {
                       concert: concert,
                     });
                   } else {
-                    console.log('concert._id is undefined');
+                    console.log("concert._id is undefined");
                   }
                 }}
               />
