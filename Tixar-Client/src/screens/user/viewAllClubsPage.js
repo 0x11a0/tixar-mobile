@@ -21,6 +21,7 @@ export default ViewAllClubsPage = ({ route, navigation }) => {
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         setClubs(data);
       })
       .catch((error) => {

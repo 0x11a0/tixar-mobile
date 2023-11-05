@@ -11,8 +11,12 @@ import {
 import ConditionalButton from "../../components/new/conditionalButton";
 import * as ImagePicker from "expo-image-picker";
 import * as DocumentPicker from "expo-document-picker";
+import { AuthContext } from "../../../context";
+import { useContext } from "react";
 
 export default CreateClubPage = ({ route, navigation }) => {
+  const { token } = useContext(AuthContext);
+
   let image = require("../../../src/assets/thumbnail2.png");
   const handleDocumentSelection = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -28,7 +32,6 @@ export default CreateClubPage = ({ route, navigation }) => {
     //     image = require({ uri: result.uri });
     // }
   };
-  const token = route.params.token;
   const [nameField, setNameField] = useState("");
   const [descriptionField, setDescriptionField] = useState("");
 
@@ -60,7 +63,10 @@ export default CreateClubPage = ({ route, navigation }) => {
     fetch("http://vf.tixar.sg:3001/api/club", {
       method: "POST",
       credentials: "include",
-      headers: { "Content-Type": "application/json", Authorization: token },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
       body: JSON.stringify(body),
     })
       .then((response) => response.json())
@@ -128,7 +134,7 @@ export default CreateClubPage = ({ route, navigation }) => {
         navigation={navigation}
         onPressFunction={() => {
           createClub();
-        //   console.log(nameField, descriptionField);
+          //   console.log(nameField, descriptionField);
         }}
       ></ConditionalButton>
     </SafeAreaView>

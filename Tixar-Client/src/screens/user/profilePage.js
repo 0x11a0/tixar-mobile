@@ -52,15 +52,15 @@ export default ProfilePage = ({ route, navigation }) => {
       <HeaderBlock
         name={firstName + " " + lastName}
         walletOnPress={() => {
-          navigation.navigate("manageEWalletPage", {
+          navigation.navigate("manageEWalletPage");
+        }}
+        editOnPress={() => {
+          navigation.navigate("editProfilePage", {
             firstName: firstName,
             lastName: lastName,
             email: email,
             phoneNumber: phoneNumber,
           });
-        }}
-        editOnPress={() => {
-          navigation.navigate("editProfilePage");
         }}
         settingsOnPress={() => {
           navigation.navigate("accountSettingsPage");

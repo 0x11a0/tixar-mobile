@@ -29,14 +29,25 @@ export default EditProfilePage = ({ route, navigation }) => {
     setLastNameField(text);
   };
 
-  let { firstName, lastName, phoneNumber, email } = route.params;
-
-  const [emailField, setEmailField] = useState("");
+  const validateEmail = (email) => {
+    // Regular expression pattern to validate email
+    const pattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    return pattern.test(email);
+  };
+  const [isValidEmail, setIsValidEmail] = useState(true);
+  const [emailField, setEmail] = useState("");
   const handleEmail = (text) => {
-    setEmailField(text);
+    setEmail(text);
+    setIsValidEmail(validateEmail(text));
   };
 
+  let { firstName, lastName, phoneNumber, email } = route.params;
+
   const handleUpdate = () => {
+    if (!validateEmail(emailField)) {
+      Alert.alert("Invalid Email", "Please enter a valid email address.");
+      return;
+    }
     fetch("http://rt.tixar.sg:3000/api/user", {
       method: "PUT",
       credentials: "include",

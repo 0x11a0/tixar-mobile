@@ -62,7 +62,6 @@ export default FanDashboardPage = ({ route, navigation }) => {
                     clubName: profile.club.name,
                     artistDescription: profile.club.description,
                     key: profile._id,
-                    token: route.params.token,
                     imageUrl: profile.club.imageUrl,
                   });
                 }}
