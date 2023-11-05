@@ -3,20 +3,21 @@ import { View, Image, TextInput, StyleSheet } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { ColorContext } from '../../../context';
 
-export default SearchField = ({ searchText, setSearchText }) => {
+export default SearchField = ({ searchText, setSearchText, onBlurFunction }) => {
     const { colors } = useContext(ColorContext);
     const [focusedText, setFocused] = useState(false);
-
+    const [currentText, setCurrentText] = useState(searchText);
     return (
         <View style={[styles.container, { backgroundColor: colors.secondary }]}>
             <AntDesign name='search1' size={20} color={focusedText ? colors.textAccent : colors.textPrimary} />
 
             <TextInput style={[styles.searchFieldText, { color: focusedText ? colors.textAccent : colors.textPrimary }]}
-                onChangeText={(newText) => { setSearchText(newText) }}
+                onChangeText={setCurrentText}
                 onEndEditing={() => {
-                    console.log('search text => "' + searchText + '"');
+                    setSearchText(currentText);
+                    console.log(currentText);
                 }}
-                value={searchText}
+                value={currentText}
                 placeholder={"Search"}
                 placeholderTextColor={focusedText ? colors.textAccent : colors.textPrimary}
                 onFocus={() => { setFocused(true) }}
