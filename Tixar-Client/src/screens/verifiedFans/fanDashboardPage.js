@@ -2,12 +2,13 @@ import { React, useState, useEffect, useContext } from "react";
 import { View, Text, StyleSheet, ScrollView, SafeAreaView } from "react-native";
 import ArtistBlock from "../../components/verifiedFans/artistBlock";
 import NextButton from "../../components/new/nextButton";
-import { AuthContext } from "../../../context";
+import { AuthContext, ColorContext } from "../../../context";
 
 export default FanDashboardPage = ({ route, navigation }) => {
   const [profiles, setProfiles] = useState([]);
   const { token } = useContext(AuthContext);
-  const getProfiles = () => {
+  const { colors } = useContext(ColorContext);
+    const getProfiles = () => {
     fetch("http://vf.tixar.sg:3001/api/profiles", {
       method: "GET",
       credentials: "include",
@@ -37,13 +38,7 @@ export default FanDashboardPage = ({ route, navigation }) => {
   }, [navigation]);
 
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        backgroundColor: "#F8F9FA",
-      }}
-    >
-      <View style={styles.contentContainer}>
+    <View style={{ flex: 1, paddingBottom: 20, backgroundColor: colors.primary}} >
         <ScrollView>
           {/* Your FanclubCards go here */}
           {profiles.map((profile) => {
@@ -79,8 +74,7 @@ export default FanDashboardPage = ({ route, navigation }) => {
           }}
           style={{ marginTop: -20 }} // Adjust the marginTop value as needed
         />
-      </View>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -89,10 +83,5 @@ const styles = StyleSheet.create({
   flatListContainer: {
     // backgroundColor: "red",
     height: "85%",
-  },
-
-  contentContainer: {
-    flex: 0.97,
-    backgroundColor: "#F8F9FA",
   },
 });
