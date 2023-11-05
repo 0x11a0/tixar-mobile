@@ -44,7 +44,7 @@ export default ViewAllClubsPage = ({ route, navigation }) => {
                 key={club._id}
                 clubId={club._id}
                 onPressFunction={() => {
-                  //   console.log("pressed");
+                  console.log("pressed");
                   //   navigation.navigate("adminClubPage", {
                   //     club: club,
                   //   });
@@ -53,7 +53,6 @@ export default ViewAllClubsPage = ({ route, navigation }) => {
                 fanNumber={club.members.length}
                 codesActive={club.codes.length}
                 imageUrl={club.imageUrl}
-                token={token}
               />
             );
           })}
