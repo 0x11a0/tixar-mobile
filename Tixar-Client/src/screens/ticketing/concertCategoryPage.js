@@ -97,11 +97,19 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
   const [date, setDate] = useState(null);
   const [quantity, setQuantity] = useState(quantities);
   const [category, setCategory] = useState(null);
+  const [availableQuantity, setAvailableQuantity] = useState(null);
 
   useEffect(() => {
     setIsButtonEnabled(date !== null && quantity !== null && category !== null);
   }, [date, quantity, category]);
 
+  const handleDateChange = (selectedDate) => {
+    getQuantity(category, selectedDate);
+  };
+
+  const handleCategoryChange = (selectedCategory) => {
+    getQuantity(selectedCategory, date);
+  };
   const getQuantity = (selectedCategory, selectedDate) => {
     if (selectedCategory != null && selectedDate != null) {
       const selectedDateSessions = concert.sessions.filter((session) => {
@@ -117,16 +125,12 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
           );
           if (selectedCapacity) {
             console.log(selectedCapacity.available);
+            setAvailableQuantity(selectedCapacity.available);
             return selectedCapacity.available;
           }
         }
       });
-      if (selectedDateSessions.length > 0) {
-        // assuming all sessions have the same available quantity, you can take the first one
-        return selectedDateSessions[0].capacity[0].available;
-      }
     }
-    return null;
   };
 
   const styles = StyleSheet.create({
@@ -203,7 +207,10 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
           <View>
             <Picker
               selectedValue={date}
-              onValueChange={(itemValue) => setDate(itemValue)}
+              onValueChange={(itemValue) => {
+                setDate(itemValue);
+                handleDateChange(itemValue); // Call handleDateChange when the user selects a date
+              }}
             >
               {dateList.map((date, index) => (
                 <Picker.Item key={index} label={date} value={date} />
@@ -216,7 +223,10 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
           <View>
             <Picker
               selectedValue={category}
-              onValueChange={(itemValue) => setCategory(itemValue)}
+              onValueChange={(itemValue) => {
+                setCategory(itemValue);
+                handleCategoryChange(itemValue); // Call handleCategoryChange when the user selects a category
+              }}
             >
               {categoryAndPrice.map((category, index) => (
                 <Picker.Item key={index} label={category} value={category} />
@@ -225,7 +235,7 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
           </View>
 
           <Text style={{ color: "gray", fontSize: 12, marginTop: 5 }}>
-            Available Quantity: {getQuantity(category, date)}
+            Available Quantity: {availableQuantity}
           </Text>
 
           {/* quantity selection */}
