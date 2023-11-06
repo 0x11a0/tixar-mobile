@@ -157,6 +157,32 @@ export default EWalletPage = ({ route, navigation }) => {
             </View>
           </Card>
         </View>
+
+        <View style={styles.transactionContainer}>
+          <Card>
+            {/* Top Up link */}
+            <View style={styles.cardRow}>
+              <Text style={styles.cardText}>Add/Update Credit Card</Text>
+              <Pressable
+                style={{
+                  width: 20,
+                  alignItems: "flex-end",
+                }}
+                onPress={() => {
+                  navigation.navigate("creditCardPage", { card: user.card });
+                  console.log("Top Up");
+                }}
+              >
+                <Image
+                  source={require("../../assets/soft-ui-pro-react-native-v1.1.1/arrow3x.png")}
+                  style={styles.cardRightIcon}
+                />
+              </Pressable>
+            </View>
+          </Card>
+        </View>
+
+
         <View style={styles.container}>
           <Card>
             <View style={{ alignItems: "center" }}>
