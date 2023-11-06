@@ -50,6 +50,7 @@ import ViewClubPage from "./src/screens/user/viewClubPage";
 
 // eWallet
 import ManageEWalletPage from "./src/screens/eWallet/eWalletPage";
+import EWalletTopupPage from "./src/screens/eWallet/eWalletTopupPage";
 import EWalletWithdrawPage from "./src/screens/eWallet/eWalletWithdrawPage";
 import CreditCardPage from "./src/screens/eWallet/creditCardPage";
 import ColorTheme from "./src/colorScheme";
@@ -100,8 +101,8 @@ export default function App() {
         <SafeAreaProvider>
           <NavigationContainer>
             <Stack.Navigator
-              initialRouteName="loginPage" //brings you to login page first, if need to test other pages, change this (BYPASS)
-              // initialRouteName="browseConcertPage"
+              // initialRouteName="loginPage" //brings you to login page first, if need to test other pages, change this (BYPASS)
+              initialRouteName="browseConcertPage"
               screenOptions={{
                 headerStyle: {
                   backgroundColor: colors.background,
@@ -220,6 +221,13 @@ export default function App() {
                   component={ManageEWalletPage}
                   options={{
                     headerTitle: "Manage E-Wallet",
+                  }}
+                />
+                <Stack.Screen
+                  name="eWalletTopupPage"
+                  component={EWalletTopupPage}
+                  options={{
+                    headerTitle: "Top up E-Wallet",
                   }}
                 />
                 <Stack.Screen

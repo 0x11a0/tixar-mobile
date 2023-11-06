@@ -3,15 +3,17 @@ import {
   Text,
   StyleSheet,
   SafeAreaView,
-  Image,
+  Pressable,
   ScrollView,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import FooterBlock from "../../components/viewConcert/footerBlock";
 import { ColorContext } from "../../../context";
-import { useContext, useState, useEffect } from "react";
+import { useContext } from "react";
 import Button from "../../components/newApp/button";
 import { AuthContext } from "../../../context";
+import { FontAwesome } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
 
 export default ViewConcertPage = ({ route, navigation }) => {
   const { colors } = useContext(ColorContext);
@@ -67,6 +69,7 @@ export default ViewConcertPage = ({ route, navigation }) => {
     // main container
     container: {
       alignItems: "center",
+      height: "100%",
       backgroundColor: colors.background,
       paddingHorizontal: 20,
     },
@@ -144,6 +147,31 @@ export default ViewConcertPage = ({ route, navigation }) => {
       marginVertical: 20,
       // backgroundColor: 'red',
     },
+
+    paymentContainer: {
+      width: "100%",
+      height: 100,
+      flexDirection: "row",
+      // backgroundColor: "green",
+    },
+
+    paymentMode: {
+      flex: 1,
+      alignItems: "center",
+      justifyContent: "center",
+      // borderWidth: 1,
+      // borderColor: 'black',
+      // backgroundColor: 'yellow',
+    },
+
+    ewalletContainer: {
+      width: 85,
+      height: 62,
+      backgroundColor: colors.accent,
+      alignItems: "center",
+      justifyContent: "center",
+      borderRadius: 5,
+    },
   });
 
   return (
@@ -219,13 +247,43 @@ export default ViewConcertPage = ({ route, navigation }) => {
 
         {/* <Text style={{ color: colors.textPrimary }}>price ID: {priceID}</Text> */}
 
-        <Button
+        {/* <Button
           buttonText={"Ewallet"}
           onPressFunction={() => {
             purchaseTicket();
           }}
           enableCondition={true} //change to enable condition based on account verified fan status and access
-        />
+        /> */}
+        <View style={styles.paymentContainer}>
+          {/* visa */}
+          <Pressable
+            style={styles.paymentMode}
+            onPress={() => navigation.navigate("browseConcertPage")}
+          >
+            <FontAwesome name="cc-visa" size={70} color={colors.accent} />
+          </Pressable>
+
+          {/* master */}
+          <Pressable
+            style={styles.paymentMode}
+            onPress={() => navigation.navigate("browseConcertPage")}
+          >
+            <FontAwesome name="cc-mastercard" size={70} color={colors.accent} />
+          </Pressable>
+
+          {/* eWallet */}
+          <Pressable
+            style={styles.paymentMode}
+            onPress={() => {
+              navigation.navigate("browseConcertPage");
+              purchaseTicket();
+            }}
+          >
+            <View style={styles.ewalletContainer}>
+              <Entypo name="wallet" size={55} color={colors.background} />
+            </View>
+          </Pressable>
+        </View>
 
         {/* Ticket Category Button */}
         <View style={styles.buttonContainer}>

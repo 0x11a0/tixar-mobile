@@ -125,7 +125,7 @@ export default EWalletPage = ({ route, navigation }) => {
                   alignItems: "flex-end",
                 }}
                 onPress={() => {
-                  // Navigate to the relevant screen when the right arrow is pressed
+                  navigation.navigate("eWalletTopupPage", { card: user.card, eWalletBalance: user.eWalletBalance });
                   console.log("Top Up");
                 }}
               >
@@ -147,6 +147,7 @@ export default EWalletPage = ({ route, navigation }) => {
                 onPress={() => {
                   // Navigate to the relevant screen when the right arrow is pressed
                   console.log("Transfer to Bank");
+                  navigation.navigate("eWalletWithdrawPage");
                 }}
               >
                 <Image
