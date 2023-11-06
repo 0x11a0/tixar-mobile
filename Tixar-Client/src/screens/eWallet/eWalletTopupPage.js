@@ -90,7 +90,7 @@ export default EWalletTopupPage = ({ route, navigation }) => {
         <View style = {{height: 40}}/>
 
         <Text style = {{color: colors.textPrimary}}> 
-            Update card details </Text>
+            Top up your E-Wallet </Text>
 
             <View style={{backgroundColor: "white"}}>
                   <TextInput
