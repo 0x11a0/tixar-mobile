@@ -5,6 +5,8 @@ import {
   SafeAreaView,
   Image,
   Alert,
+  Platform,
+  TouchableOpacity,
 } from "react-native";
 
 import moment from "moment";
@@ -131,6 +133,72 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
       });
     }
   };
+  const [isDatePickerVisible, setDatePickerVisible] = useState(false);
+  const [isCategoryPickerVisible, setCategoryPickerVisible] = useState(false);
+  const [isQuantityPickerVisible, setQuantityPickerVisible] = useState(false);
+
+  const handleDatePickerButtonPress = () => {
+    setDatePickerVisible(!isDatePickerVisible);
+    // Close other pickers when this one opens
+    setCategoryPickerVisible(false);
+    setQuantityPickerVisible(false);
+  };
+
+  const handleCategoryPickerButtonPress = () => {
+    setCategoryPickerVisible(!isCategoryPickerVisible);
+    // Close other pickers when this one opens
+    setDatePickerVisible(false);
+    setQuantityPickerVisible(false);
+  };
+
+  const handleQuantityPickerButtonPress = () => {
+    setQuantityPickerVisible(!isQuantityPickerVisible);
+    // Close other pickers when this one opens
+    setDatePickerVisible(false);
+    setCategoryPickerVisible(false);
+  };
+
+  useEffect(() => {
+    // Close all pickers when the user taps anywhere else
+    if (!isButtonEnabled) {
+      setDatePickerVisible(false);
+      setCategoryPickerVisible(false);
+      setQuantityPickerVisible(false);
+    }
+  }, [isButtonEnabled]);
+
+  const renderButtons = () => {
+    if (Platform.OS === "ios") {
+      return (
+        <>
+          <TouchableOpacity
+            onPress={handleDatePickerButtonPress}
+            style={styles.pickerButton}
+          >
+            <Text style={styles.pickerButtonText}>
+              {date ? date : "Select Date"}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={handleCategoryPickerButtonPress}
+            style={styles.pickerButton}
+          >
+            <Text style={styles.pickerButtonText}>
+              {category ? category : "Select Seat Category"}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={handleQuantityPickerButtonPress}
+            style={styles.pickerButton}
+          >
+            <Text style={styles.pickerButtonText}>
+              {quantity ? quantity : "Select Quantity"}
+            </Text>
+          </TouchableOpacity>
+        </>
+      );
+    }
+  };
 
   const styles = StyleSheet.create({
     container: {
@@ -152,12 +220,27 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
       fontFamily: "Lato-Bold",
       color: colors.textPrimary,
       paddingVertical: 10,
+      marginTop: 10,
     },
     buttonContainer: {
       width: "100%",
       alignItems: "center",
       justifyContent: "center",
       marginTop: 30,
+    },
+    pickerButton: {
+      backgroundColor: colors.secondary, // Set the background color for the button
+      padding: 10,
+      borderRadius: 10,
+    },
+    pickerButtonText: {
+      fontFamily: "Lato-Regular",
+      color: colors.textPrimary,
+    },
+    quantityContainer: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      // backgroundColor:"red"
     },
   });
 
@@ -204,50 +287,87 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
           {/* date picker that works on both iOS and Android */}
           <Text style={styles.subtitle}>Date</Text>
           <View>
-            <Picker
-              selectedValue={date}
-              onValueChange={(itemValue) => {
-                setDate(itemValue);
-                handleDateChange(itemValue); // Call handleDateChange when the user selects a date
-              }}
+            <TouchableOpacity
+              onPress={handleDatePickerButtonPress}
+              style={styles.pickerButton}
             >
-              {dateList.map((date, index) => (
-                <Picker.Item key={index} label={date} value={date} />
-              ))}
-            </Picker>
+              <Text style={styles.pickerButtonText}>
+                {date ? date : "Select Date"}
+              </Text>
+            </TouchableOpacity>
+            {isDatePickerVisible && (
+              <Picker
+                selectedValue={date}
+                onValueChange={(itemValue) => {
+                  setDate(itemValue);
+                  handleDateChange(itemValue);
+                }}
+                itemStyle={{ color: colors.textPrimary }}
+              >
+                {dateList.map((date, index) => (
+                  <Picker.Item key={index} label={date} value={date} />
+                ))}
+              </Picker>
+            )}
           </View>
 
           {/* seat category selection */}
           <Text style={styles.subtitle}>Seat Category</Text>
           <View>
-            <Picker
-              selectedValue={category}
-              onValueChange={(itemValue) => {
-                setCategory(itemValue);
-                handleCategoryChange(itemValue); // Call handleCategoryChange when the user selects a category
-              }}
+            <TouchableOpacity
+              onPress={handleCategoryPickerButtonPress}
+              style={styles.pickerButton}
             >
-              {categoryAndPrice.map((category, index) => (
-                <Picker.Item key={index} label={category} value={category} />
-              ))}
-            </Picker>
+              <Text style={styles.pickerButtonText}>
+                {category ? category : "Select Seat Category"}
+              </Text>
+            </TouchableOpacity>
+            {isCategoryPickerVisible && (
+              <Picker
+                selectedValue={category}
+                onValueChange={(itemValue) => {
+                  setCategory(itemValue);
+                  handleCategoryChange(itemValue);
+                }}
+                itemStyle={{ color: colors.textPrimary }}
+              >
+                {categoryAndPrice.map((category, index) => (
+                  <Picker.Item key={index} label={category} value={category} />
+                ))}
+              </Picker>
+            )}
           </View>
 
-          <Text style={{ color: colors.textPrimary, fontSize: 12, marginTop: 5 }}>
-            Available Quantity: {availableQuantity}
-          </Text>
-
           {/* quantity selection */}
-          <Text style={styles.subtitle}>Quantity</Text>
-          <View>
-            <Picker
-              selectedValue={quantity}
-              onValueChange={(itemValue) => setQuantity(itemValue)}
+          <View style={styles.quantityContainer}>
+            <Text style={styles.subtitle}>Quantity</Text>
+            <Text
+              style={{ color: colors.textPrimary, fontSize: 12, alignSelf:"flex-end"}}
             >
-              {quantities.map((qty, index) => (
-                <Picker.Item key={index} label={qty} value={qty} />
-              ))}
-            </Picker>
+              Available Quantity: {availableQuantity}
+            </Text>
+          </View>
+          <View>
+            <TouchableOpacity
+              onPress={handleQuantityPickerButtonPress}
+              style={styles.pickerButton}
+            >
+              <Text style={styles.pickerButtonText}>
+                {quantity ? quantity : "Select Quantity"}
+              </Text>
+            </TouchableOpacity>
+            {isQuantityPickerVisible && (
+              <Picker
+                selectedValue={quantity}
+                onValueChange={(itemValue) => setQuantity(itemValue)}
+                itemStyle={{ color: colors.textPrimary }}
+                pickerStyleType="drowdown"
+              >
+                {quantities.map((qty, index) => (
+                  <Picker.Item key={index} label={qty} value={qty} />
+                ))}
+              </Picker>
+            )}
           </View>
 
           {/* <OptionFields
