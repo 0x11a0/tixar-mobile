@@ -5,6 +5,7 @@ import {
   SafeAreaView,
   Pressable,
   ScrollView,
+  Alert,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import FooterBlock from "../../components/viewConcert/footerBlock";
@@ -58,8 +59,10 @@ export default ViewConcertPage = ({ route, navigation }) => {
       body: JSON.stringify(requestBody),
     }).then((response) => {
       if (response.ok) {
+        Alert.alert("Purchase Successful!");
         console.log("Update successful");
       } else {
+        Alert.alert("Purchase Failed!");
         console.log("Update unsuccessful");
       }
     });
