@@ -43,7 +43,6 @@ export default BrowseConcertPage = ({ route, navigation }) => {
 
   return (
     <View style={[styles.container, {backgroundColor: colors.background}]}>
-
       <View
         style={{
           backgroundColor: colors.background,
@@ -51,9 +50,7 @@ export default BrowseConcertPage = ({ route, navigation }) => {
         }}
       >
         <SearchField searchText={searchText} setSearchText={setSearchText} />
-
       </View>
-  
 
       <View style={[styles.contentContainer, {backgroundColor: colors.background}]}>
         <ScrollView style={{backgroundColor: colors.background}}>
@@ -88,8 +85,8 @@ export default BrowseConcertPage = ({ route, navigation }) => {
                 endDate={formattedEndDate}
                 artistName={concert.artistName}
                 artistDescription={"Lorem ipsum dolor sit amet consectetur"}
-                artistIcon={artistIcon}
-                imageBackground={imageBackground}
+                artistImage={concert.artistImage}
+                imageBackground={concert.concertImage}
                 onPressFunction={() => {
                   if (concert._id) {
                     console.log("Switching to concert page, \n" + concert._id);
