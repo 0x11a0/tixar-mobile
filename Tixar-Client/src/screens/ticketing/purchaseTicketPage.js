@@ -69,10 +69,19 @@ export default ViewConcertPage = ({ route, navigation }) => {
   const styles = StyleSheet.create({
     // main container
     container: {
-      justifyContent: "flex-start",
-      alignItems: "flex-start",
+      alignItems: "center",
       backgroundColor: colors.background,
       paddingHorizontal: 20,
+    },
+    contentContainer: {
+      width: "100%",
+      borderRadius: 10,
+      justifyContent: "flex-start",
+      alignItems: "flex-start",
+      backgroundColor: colors.primary,
+      padding: 20,
+      margin: 20,
+      // backgroundColor: 'red',
     },
 
     // images
@@ -93,7 +102,14 @@ export default ViewConcertPage = ({ route, navigation }) => {
     },
 
     // text
-    venueText: {
+    cardTitle: {
+      fontSize: 20,
+      color: colors.textPrimary,
+      fontFamily: "Lato-Bold",
+      marginBottom: 30,
+      alignSelf: "center",
+    },
+    bodyText: {
       fontSize: 17,
       color: colors.textPrimary,
       fontFamily: "Lato-Regular",
@@ -150,37 +166,61 @@ export default ViewConcertPage = ({ route, navigation }) => {
         style={{ width: "100%" }}
         contentContainerStyle={styles.container}
       >
-        <Text style={{ color: colors.textPrimary }}>Confirm Purchase</Text>
+        {/* content container */}
+        <View style={styles.contentContainer}>
+          <Text style={styles.cardTitle}>Confirm Purchase</Text>
 
-        <Text style={{ color: colors.textPrimary }}>
-          Reference Number: 3E12F89C68
-        </Text>
+          <Text style={styles.concertTitle}>{concertName}</Text>
 
-        <Text style={{ color: colors.textPrimary }}>{concertName}</Text>
+          <Text style={styles.bodyText}>Reference Number: 3E12F89C68</Text>
 
-        <Text style={{ color: colors.textPrimary }}>{artist}</Text>
+          <Text
+            style={{
+              color: colors.textPrimary,
+              fontFamily: "Lato-Regular",
+              marginBottom: 15,
+            }}
+          >
+            {date}
+          </Text>
 
-        <Text style={{ color: colors.textPrimary }}>{date}</Text>
+          <Text
+            style={{
+              color: colors.textPrimary,
+              fontFamily: "Lato-Regular",
+              marginBottom: 15,
+            }}
+          >
+            {categoryValue}
+          </Text>
+          <Text
+            style={{
+              color: colors.textPrimary,
+              fontFamily: "Lato-Regular",
+              marginBottom: 15,
+            }}
+          >
+            Quantity: {quantity}
+          </Text>
 
-        <Text style={{ color: colors.textPrimary }}>
-          Category: {categoryValue}
-        </Text>
+          <Text
+            style={{ color: colors.textPrimary, fontFamily: "Lato-Regular" }}
+          >
+            Total Price: ${totalPrice}
+          </Text>
+        </View>
 
-        <Text style={{ color: colors.textPrimary }}>Price: {price}</Text>
+        {/* <Text style={{ color: colors.textPrimary }}>{artist}</Text> */}
 
-        <Text style={{ color: colors.textPrimary }}>Quantity: {quantity}</Text>
+        {/* <Text style={{ color: colors.textPrimary }}>Price: {price}</Text> */}
 
-        <Text style={{ color: colors.textPrimary }}>
-          Total Price: ${totalPrice}
-        </Text>
+        {/* <Text style={{ color: colors.textPrimary }}>event ID: {eventID}</Text> */}
 
-        <Text style={{ color: colors.textPrimary }}>event ID: {eventID}</Text>
-
-        <Text style={{ color: colors.textPrimary }}>
+        {/* <Text style={{ color: colors.textPrimary }}>
           sales round ID: {salesRoundID}
-        </Text>
+        </Text> */}
 
-        <Text style={{ color: colors.textPrimary }}>price ID: {priceID}</Text>
+        {/* <Text style={{ color: colors.textPrimary }}>price ID: {priceID}</Text> */}
 
         <Button
           buttonText={"Ewallet"}
@@ -201,9 +241,8 @@ export default ViewConcertPage = ({ route, navigation }) => {
           />
         </View>
 
-        <View style={{ height: 20 }} />
+        
 
-        <FooterBlock />
       </ScrollView>
     </SafeAreaView>
   );
