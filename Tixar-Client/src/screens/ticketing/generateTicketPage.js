@@ -15,8 +15,14 @@ import DashedLine from "react-native-dashed-line";
 import { ColorContext } from "../../../context";
 import { useContext } from "react";
 
-export default GenerateTicketPage = ({navigation}) => {
+export default GenerateTicketPage = ({ route, navigation}) => {
   const { colors } = useContext(ColorContext);
+  const { datePurchased,
+          eventID,
+          sessionID,
+          transactionID,
+          capacityID,
+          category, } = route.params;
 
   const styles = StyleSheet.create({
     backgroundImage: {

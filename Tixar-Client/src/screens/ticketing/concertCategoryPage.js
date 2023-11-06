@@ -40,7 +40,8 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
   const currentDate = new Date();
   const salesRounds = concert.salesRound;
 
-  //check which round it is now, if current round is public and within the current date, set true
+  //check which round it is now, if current round is public and within the current date, 
+  //set true
   let anySalesRoundMatchesConditions = false;
   const filteredSalesRound = salesRounds.map((salesRound) => {
     const salesRoundStartDate = new Date(salesRound.start);
@@ -101,6 +102,8 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
   const [availableQuantity, setAvailableQuantity] = useState(null);
   const [eventID, setEventID] = useState(null);
   const [salesRoundID, setSalesRoundID] = useState(null);
+  const [sessionID, setSessionID] = useState(null);
+  const [capacityID, setCapacityID] = useState(null);
   const [priceID, setPriceID] = useState(null);
 
   useEffect(() => {
@@ -129,6 +132,8 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
           );
           if (selectedCapacity) {
             setAvailableQuantity(selectedCapacity.available);
+            setSessionID(session._id);
+            setCapacityID(selectedCapacity._id);
             return selectedCapacity.available;
           }
         }
@@ -443,6 +448,8 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
                     eventID: eventID,
                     salesRoundID: salesRoundID,
                     priceID: priceID, // Pass the priceID to the next screen
+                    sessionID: sessionID,
+                    capacityID: capacityID,
                   });
                 } else {
                   console.error("Price ID not found.");
