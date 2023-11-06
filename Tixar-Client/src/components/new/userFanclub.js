@@ -28,10 +28,8 @@ export default FanclubCard = ({
     const { token } = useContext(AuthContext);
     const { colors } = useContext(ColorContext);
     const [pressed, setPressed] = useState(isMember);
-   
 
     const handleAddPress = () => {
-        setIsLoading(true);
         // Handle the delete action here
         // You can add your logic to delete the item
         const requestBody = {
@@ -51,7 +49,9 @@ export default FanclubCard = ({
                 console.log("SUCCESSFUL");
                 console.log(data);
                 //navigation.navigate("vfDashboardPage", { token: token });
-            }).then(() => setIsLoading(true))
+            }).then(() => {
+                setPressed(true);
+            })
             .catch((error) => {
                 console.error(error);
             });

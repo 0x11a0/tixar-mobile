@@ -1,14 +1,17 @@
-import { React, useState, useContext, useEffect } from "react";
+import { React, useState, useContext, useEffect, useRef } from "react";
 import {
-  View,
-  StyleSheet,
-  SafeAreaView,
-  ScrollView,
-  FlatList,
+    View,
+    StyleSheet,
+    SafeAreaView,
+    ScrollView,
+    FlatList,
+    Animated,
+    Text
 } from "react-native";
 import ClubsCard from "../../components/new/userFanclub";
 import { AuthContext, ColorContext } from "../../../context";
 import SearchField from "../../components/browseConcert/searchField";
+import { useFocusEffect } from "expo-router";
 
 export default ViewAllClubsPage = ({ route, navigation }) => {
     const { token } = useContext(AuthContext);
@@ -19,27 +22,10 @@ export default ViewAllClubsPage = ({ route, navigation }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [profiles, setProfiles] = useState([]);
     const [allProfiles, setAllProfiles] = useState([]);
-    const [updating, setIsUpdating] = useState(false);
 
-    const getClubs = () => {
-        fetch("http://vf.tixar.sg:3001/api/clubs", {
-            method: "GET",
-            credentials: "include",
-            headers: { Authorization: 'Bearer ' + token },
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                console.log(data);
-                setClubs(data);
-                setAllClubs(data);
-            }).then(() => setIsLoading(false))
-            .catch((error) => {
-                console.error("error at clubs " + error);
-            });
-    };
 
-    const getProfiles = () => {
-        fetch('http://vf.tixar.sg:3001/api/profiles', {
+    const getProfiles = async () => {
+        await fetch('http://vf.tixar.sg:3001/api/profiles', {
             method: "GET",
             credentials: "include",
             headers: { Authorization: 'Bearer ' + token },
@@ -47,16 +33,31 @@ export default ViewAllClubsPage = ({ route, navigation }) => {
             .then(data => {
                 setProfiles(data.map(profile => profile.club._id));
                 setAllProfiles(data);
-            }).then(() => getClubs())
-            .catch(error => console.log("error at profiles" + error));
-    }
-
+            }).catch(error => console.log("error at profiles" + error));
+        
+        await fetch("http://vf.tixar.sg:3001/api/clubs", {
+            method: "GET",
+            credentials: "include",
+            headers: { Authorization: 'Bearer ' + token },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                setClubs(data.sort((e1, e2) => e1.name.localeCompare(e2.name)));
+                setAllClubs(data);
+            })
+            .then(() => setIsLoading(false))
+            .catch((error) => {
+                console.error("error at clubs " + error);
+            });
+    };
     useEffect(() => {
-        navigation.addListener('focus', () => {
+        const navFunc = navigation.addListener('focus', () => {
+            setIsLoading(true);
             getProfiles();
         });
+        return navFunc;
     }, [navigation]);
-
+    
     useEffect(() => {
         if (isLoading){
             return;
@@ -68,17 +69,27 @@ export default ViewAllClubsPage = ({ route, navigation }) => {
         setClubs(allClubs.filter(club => club.name.toLowerCase().includes(query)));
     }, [searchText]);
 
-    if (isLoading){
+
+     if (isLoading){
         return (
             <View style={{ flex: 1, backgroundColor: colors.background }}>
 
             <SearchField searchText={searchText}
             setSearchText={setSearchText} />
-
+            <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
+            <Text style={{color: colors.textSecondary}}>Loading</Text>
+            
+            <Text style={{color: colors.textSecondary}}> .</Text>
+            
+            <Text style={{color: colors.textSecondary}}> .</Text>
+            
+            <Text style={{color: colors.textSecondary}}> .</Text>
+            
+            </View>
             </View>
         );
-    }
-
+     }
+    
     return (
         <View style={{ flex: 1, backgroundColor: colors.background }}>
         <SearchField searchText={searchText}
@@ -87,6 +98,7 @@ export default ViewAllClubsPage = ({ route, navigation }) => {
         data={clubs}
         keyExtractor={item => item._id}
         renderItem={({item}) => {
+
             return (
                 <View>
                 <View style={{height: 5}}/>
@@ -99,14 +111,13 @@ export default ViewAllClubsPage = ({ route, navigation }) => {
                             artistDescription: item.description,
                             key: item._id,
                             imageUrl: item.imageUrl,
-                            points: profiles.includes(item._id) ? allProfiles.filter(x => x.club._id === item._id)[0].points : null
+                            points: profiles.includes(item._id) ? allProfiles.filter(x => x.club._id === item._id)[0].points : null,
                         });
                     }
                 }}
+
                 setIsLoading={setIsLoading}
                 isMember={profiles.includes(item._id)}
-                positiveFunction={() => console.log("pos")}
-                negativeFunction={() => console.log("neg")}
                 clubName={item.name}
                 fanNumber={item.members.length}
                 codesActive={item.codes.length}
@@ -119,6 +130,7 @@ export default ViewAllClubsPage = ({ route, navigation }) => {
 
         </View>
     );
+    
 };
 
 const styles = StyleSheet.create({

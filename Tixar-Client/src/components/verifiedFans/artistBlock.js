@@ -83,13 +83,13 @@ export default ArtistBlock = ({
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "white",
         height: 100,
         borderRadius: 20,
         paddingTop: 5,
         width: "95%",
         marginTop: 15,
-        justifyContent: 'center'
+        justifyContent: 'center',
+        alignSelf: 'center'
     },
     artistIcon: {
         width: 70,

@@ -22,22 +22,19 @@ export default ViewClubPage = ({ route, navigation }) => {
     const { clubName, artistDescription, key, imageUrl, points } = route.params;
     const { token } = useContext(AuthContext);
     const { colors } = useContext(ColorContext);
+    
     const handleDeletePress = () => {
         fetch(`http://vf.tixar.sg:3001/api/profile/${key}`, {
             method: "DELETE",
             credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
-        })
-            .then(() => navigation.pop())
+        }).then(() => {
+                navigation.pop();
+            })
             .catch((error) => {
                 console.error(error);
             });
     };
-
-    console.log(clubName);
-    console.log(artistDescription);
-    console.log(imageUrl);
-    // console.log(points);
 
     let image = require("../../assets/soft-ui-pro-react-native-v1.1.1/avatar23x.png");
     if (imageUrl) {
@@ -55,7 +52,6 @@ export default ViewClubPage = ({ route, navigation }) => {
 
         <StatisticBox
         clubName={clubName}
-        // artistIcon={require("../../assets/taylorswifticon.png")}
         artistIcon={image}
         artistDescription={artistDescription}
         points={points}

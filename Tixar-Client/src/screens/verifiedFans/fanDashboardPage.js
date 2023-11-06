@@ -1,5 +1,5 @@
-import { React, useState, useEffect, useContext } from "react";
-import { View, Text, StyleSheet, ScrollView, SafeAreaView } from "react-native";
+import { React, useState, useEffect, useContext, useRef } from "react";
+import { View, Text, Animated, StyleSheet, ScrollView, SafeAreaView } from "react-native";
 import ArtistBlock from "../../components/verifiedFans/artistBlock";
 import NextButton from "../../components/new/nextButton";
 import { AuthContext, ColorContext } from "../../../context";
@@ -14,6 +14,7 @@ export default FanDashboardPage = ({ route, navigation }) => {
 
     const { token } = useContext(AuthContext);
     const { colors } = useContext(ColorContext);
+ 
     const getProfiles = () => {
         fetch("http://vf.tixar.sg:3001/api/profiles", {
             method: "GET",
@@ -22,20 +23,22 @@ export default FanDashboardPage = ({ route, navigation }) => {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log(data);
                 setProfiles(data);
                 setSortedProfiles(data);
-            }).then(() => { setIsLoading(false); })
+            }).then(() => { 
+                setIsLoading(false);
+            })
             .catch((error) => {
                 console.error(error);
             });
     };
 
     useEffect(() => {
-        navigation.addListener("focus", () => {
-            console.log("reloaded");
+        const navFunc = navigation.addListener("focus", () => {
+            setIsLoading(true);
             getProfiles();
         });
+        return navFunc;
     }, [navigation]);
 
     useEffect(() => {
@@ -48,28 +51,64 @@ export default FanDashboardPage = ({ route, navigation }) => {
         let query = searchText.toLowerCase();
         setSortedProfiles(profiles.filter(profile => profile.club.name.toLowerCase().includes(query)));
     }, [searchText]);
+   
+    const duration = 300;
+    const animate1 = useRef(new Animated.Value(0)).current;
+    const animate2 = useRef(new Animated.Value(0)).current;
+    const animate3 = useRef(new Animated.Value(0)).current;
 
 
+    const loadingAnimation = () => {
+        Animated.sequence([
+            Animated.timing(animate1, {
+                toValue: 1,
+                duration: duration,
+                useNativeDriver: true,
+            }),
+            Animated.timing(animate2, {
+                toValue: 1,
+                duration: duration,
+                useNativeDriver: true,
+            }),
+            Animated.timing(animate3, {
+                toValue: 1,
+                duration: duration,
+                useNativeDriver: true,
+            }),
+        ]).start( () => {
+            animate1.setValue(0);
+            animate2.setValue(0);
+            animate3.setValue(0);
+            loadingAnimation();
+        });
+    }
 
-    if (isLoading){
-        return(
-            <View style={{ flex: 1, paddingBottom: 20, backgroundColor: colors.background}} >
-            
+
+     if (isLoading){
+        return (
+            <View style={{ flex: 1, backgroundColor: colors.background }}>
+
             <SearchField searchText={searchText}
             setSearchText={setSearchText} />
-
-            {/* <NextButton
-            buttonText={"Redeem Fan Code Here!"}
-            onPressFunction={() => {
-                navigation.navigate("redemptionPage");
-            }}
-            style={{ marginTop: -20 }} // Adjust the marginTop value as needed
-            /> */}
-
+            <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
+            <Text style={{color: colors.textSecondary}}>Loading</Text>
+            
+            <Animated.View style={{opacity: animate1}}>
+            <Text style={{color: colors.textSecondary}}> .</Text>
+            </Animated.View>
+            
+            <Animated.View style={{opacity: animate2}}>
+            <Text style={{color: colors.textSecondary}}> .</Text>
+            </Animated.View>
+            
+            <Animated.View style={{opacity: animate3}}>
+            <Text style={{color: colors.textSecondary}}> .</Text>
+            </Animated.View>
+            
             </View>
-
+            </View>
         );
-    }
+     }
 
 
     return (
@@ -81,6 +120,7 @@ export default FanDashboardPage = ({ route, navigation }) => {
                 // setSortedProfiles(profiles.filter(profile => profile.clubName.contains(query)));
             }}
         />
+        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', width: '100%'}}>
         <FlatList 
         data={sortedProfiles}
         keyExtractor={item => item._id}
@@ -94,7 +134,6 @@ export default FanDashboardPage = ({ route, navigation }) => {
                 artistIcon={item.club.imageUrl}
                 onPressFunction={() => {
                     navigation.navigate('viewClubPage', {
-
                         clubName: item.club.name,
                         artistDescription: item.club.description,
                         key: item._id,
@@ -107,7 +146,9 @@ export default FanDashboardPage = ({ route, navigation }) => {
 
                 />     
             );
-        }} />  
+        }} 
+        style={{width: '100%'}}
+        />  
         <NextButton
         buttonText={"Redeem Fan Code Here!"}
         onPressFunction={() => {
@@ -116,11 +157,7 @@ export default FanDashboardPage = ({ route, navigation }) => {
         style={{ marginTop: -20 }} // Adjust the marginTop value as needed
         />
         </View>
+        </View>
     );
 };
 
-const styles = StyleSheet.create({
-    flatListContainer: {
-        height: "85%",
-    },
-});
