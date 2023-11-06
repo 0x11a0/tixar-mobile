@@ -6,7 +6,7 @@ import CardWallet from '../../components/eWallet/cardWallet';
 import WithdrawalMethodCard from '../../components/eWallet/withdrawalMethodCard';
 import NextButton from '../../components/viewConcert/nextButton';
 
-export default EWalletWithdrawPage = () => {
+export default EWalletWithdrawPage = ({ Navigation }) => {
     const [withdrawalAmount, setWithdrawalAmount] = useState('');
 
     return (
