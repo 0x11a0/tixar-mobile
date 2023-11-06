@@ -240,6 +240,24 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
 
           {/* quantity selection */}
           <Text style={styles.subtitle}>Quantity</Text>
+          <View>
+            <Picker
+              selectedValue={quantity}
+              onValueChange={(itemValue) => setQuantity(itemValue)}
+            >
+              {quantities.map((qty, index) => (
+                <Picker.Item key={index} label={qty} value={qty} />
+              ))}
+            </Picker>
+          </View>
+
+          {/* <OptionFields
+            optionText={quantity}
+            setOption={setQuantity}
+            materialIconName={"format-list-numbered"}
+            options={quantities}
+          /> */}
+
           {/* <OptionFields
                         optionText={"0"}
                         icon={require("../../assets/soft-ui-pro-react-native-v1.1.1/users3x.png")}
@@ -251,12 +269,6 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
                         }}
                         keyboardType={"numeric"}
                     /> */}
-          <OptionFields
-            optionText={quantity}
-            setOption={setQuantity}
-            materialIconName={"format-list-numbered"}
-            options={quantities}
-          />
 
           {/* button that brings you to the purchase confirmation page */}
 
@@ -265,7 +277,7 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
               buttonText={"BOOK NOW"}
               onPressFunction={() => {
                 console.log("Book button clicked");
-                navigation.navigate("checkoutPage");
+                navigation.navigate("purchaseTicketPage");
               }}
               enableCondition={isButtonEnabled} // condition to be set  when all fields are filled and available
             />
