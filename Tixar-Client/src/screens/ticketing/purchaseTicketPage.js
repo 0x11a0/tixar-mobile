@@ -57,9 +57,6 @@ export default ViewConcertPage = ({ route, navigation }) => {
       },
       body: JSON.stringify(requestBody),
     }).then((response) => {
-      console.log("this is the request Body" + JSON.stringify(requestBody));
-
-      console.log(response);
       if (response.ok) {
         console.log("Update successful");
       } else {
