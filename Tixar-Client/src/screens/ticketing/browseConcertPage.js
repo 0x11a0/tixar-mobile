@@ -11,7 +11,6 @@ import { ColorContext } from "../../../context";
 import { StatusBar } from "expo-status-bar";
 
 import SearchField from "../../components/browseConcert/searchField";
-import FilterButton from "../../components/browseConcert/filterButton";
 import ConcertBlock from "../../components/viewConcert/concertBlock";
 import { AuthContext } from "../../../context";
 
@@ -46,7 +45,7 @@ export default BrowseConcertPage = ({ route, navigation }) => {
   }, [navigation]);
 
   return (
-    <View style={[styles.container, {backgroundColor: colors.primary}]}>
+    <View style={[styles.container, {backgroundColor: colors.background}]}>
 
       <View
         style={{
@@ -59,8 +58,8 @@ export default BrowseConcertPage = ({ route, navigation }) => {
       </View>
   
 
-      <View style={[styles.contentContainer, {backgroundColor: colors.primary}]}>
-        <ScrollView style={{backgroundColor: colors.primary}}>
+      <View style={[styles.contentContainer, {backgroundColor: colors.background}]}>
+        <ScrollView style={{backgroundColor: colors.background}}>
           {/* Your FanclubCards go here */}
           {concerts.map((concert) => {
             //retrieve session information from each concert
