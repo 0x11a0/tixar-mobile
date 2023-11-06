@@ -160,7 +160,7 @@ export default ViewConcertPage = ({ route, navigation }) => {
         {/* Ticket Category Button */}
         <View style={styles.buttonContainer}>
           <Button
-            buttonText={"Check Availbility"}
+            buttonText={"Check Availability"}
             onPressFunction={() => {
               navigation.navigate("concertCategoryPage", {
                 concert: concert,
