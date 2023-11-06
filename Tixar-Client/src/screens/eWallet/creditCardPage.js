@@ -117,7 +117,7 @@ export default CreditCardPage = ({ route, navigation }) => {
         <View style = {{height: 40}}/>
 
         <Text style = {{color: colors.textPrimary}}> 
-            Top Up Your E-Wallet </Text>
+            Update your card details </Text>
 
             <View style={{backgroundColor: "white"}}>
                   <TextInput

@@ -147,7 +147,7 @@ export default EWalletPage = ({ route, navigation }) => {
                 onPress={() => {
                   // Navigate to the relevant screen when the right arrow is pressed
                   console.log("Transfer to Bank");
-                  navigation.navigate("eWalletWithdrawPage");
+                  navigation.navigate("eWalletWithdrawPage", { card: user.card, eWalletBalance: user.eWalletBalance });
                 }}
               >
                 <Image

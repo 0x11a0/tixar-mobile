@@ -101,8 +101,8 @@ export default function App() {
         <SafeAreaProvider>
           <NavigationContainer>
             <Stack.Navigator
-              // initialRouteName="loginPage" //brings you to login page first, if need to test other pages, change this (BYPASS)
-              initialRouteName="browseConcertPage"
+              initialRouteName="loginPage" //brings you to login page first, if need to test other pages, change this (BYPASS)
+              // initialRouteName="browseConcertPage"
               screenOptions={{
                 headerStyle: {
                   backgroundColor: colors.background,
