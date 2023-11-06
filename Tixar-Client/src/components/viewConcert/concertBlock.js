@@ -20,9 +20,7 @@ import { useContext } from "react";
 
 export default ConcertBlock = ({
   concertName,
-  venueName,
-  startDate,
-  endDate,
+
   artistName,
   artistDescription,
   artistImage,
@@ -69,6 +67,8 @@ export default ConcertBlock = ({
     },
     artistTextContainer: {
       paddingHorizontal: 15,
+      width:'90%',
+      // backgroundColor: 'red',
     },
     artistName: {
       fontFamily: "Lato-Bold",
