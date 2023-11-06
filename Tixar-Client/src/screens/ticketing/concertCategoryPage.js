@@ -205,8 +205,8 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
               selectedValue={date}
               onValueChange={(itemValue) => setDate(itemValue)}
             >
-              {dateList.map((date) => (
-                <Picker.Item key={date} label={date} value={date} />
+              {dateList.map((date, index) => (
+                <Picker.Item key={index} label={date} value={date} />
               ))}
             </Picker>
           </View>
@@ -218,8 +218,8 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
               selectedValue={category}
               onValueChange={(itemValue) => setCategory(itemValue)}
             >
-              {categoryAndPrice.map((category) => (
-                <Picker.Item key={category} label={category} value={category} />
+              {categoryAndPrice.map((category, index) => (
+                <Picker.Item key={index} label={category} value={category} />
               ))}
             </Picker>
           </View>
