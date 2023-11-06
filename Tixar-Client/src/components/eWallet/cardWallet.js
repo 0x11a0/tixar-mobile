@@ -37,7 +37,7 @@ export default cardWallet = ({ firstName, lastName, balance }) => {
             </View>
 
             <View style={styles.balanceContainer}>
-            <Text style={styles.balanceAmount}>Balance:  {balance}</Text>
+            <Text style={styles.balanceAmount}>Balance ($):  {balance}</Text>
 
             </View>
 

@@ -125,7 +125,10 @@ export default EWalletPage = ({ route, navigation }) => {
                   alignItems: "flex-end",
                 }}
                 onPress={() => {
-                  navigation.navigate("eWalletTopupPage", { card: user.card, eWalletBalance: user.eWalletBalance });
+                  navigation.navigate("eWalletTopupPage", {
+                    card: user.card,
+                    eWalletBalance: user.eWalletBalance,
+                  });
                   console.log("Top Up");
                 }}
               >
@@ -156,11 +159,7 @@ export default EWalletPage = ({ route, navigation }) => {
                 />
               </Pressable>
             </View>
-          </Card>
-        </View>
 
-        <View style={styles.transactionContainer}>
-          <Card>
             {/* Top Up link */}
             <View style={styles.cardRow}>
               <Text style={styles.cardText}>Add/Update Credit Card</Text>
@@ -183,14 +182,39 @@ export default EWalletPage = ({ route, navigation }) => {
           </Card>
         </View>
 
+        {/* <View style={styles.transactionContainer}>
+          <Card>
+            {/* Top Up link
+            <View style={styles.cardRow}>
+              <Text style={styles.cardText}>Add/Update Credit Card</Text>
+              <Pressable
+                style={{
+                  width: 20,
+                  alignItems: "flex-end",
+                }}
+                onPress={() => {
+                  navigation.navigate("creditCardPage", { card: user.card });
+                  console.log("Top Up");
+                }}
+              >
+                <Image
+                  source={require("../../assets/soft-ui-pro-react-native-v1.1.1/arrow3x.png")}
+                  style={styles.cardRightIcon}
+                />
+              </Pressable>
+            </View> */}
+        {/* </Card>
+        </View> */}
+
+        {/* <View style={{ height: 20 }} />
 
         <View style={styles.container}>
           <Card>
             <View style={{ alignItems: "center" }}>
               <Text style={styles.cardTitle}>History</Text>
-            </View>
+            </View> */}
             {/* Scrollable transaction history */}
-            <ScrollView style={styles.scrollView}>
+            {/* <ScrollView style={styles.scrollView}>
               {transactionHistory.map((transaction, index) => (
                 <View style={styles.cardRow} key={index}>
                   <Text style={styles.cardText}>{transaction.title}</Text>
@@ -199,7 +223,7 @@ export default EWalletPage = ({ route, navigation }) => {
               ))}
             </ScrollView>
           </Card>
-        </View>
+        </View> */}
       </View>
     </SafeAreaView>
   );
