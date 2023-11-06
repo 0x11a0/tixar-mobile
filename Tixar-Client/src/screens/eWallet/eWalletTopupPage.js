@@ -126,13 +126,13 @@ export default EWalletTopupPage = ({ route, navigation }) => {
         ) : (
           <View>
             {/* Display card details */}
-            <Text style={{ color: colors.textPrimary }}>
+            <Text style={styles.text}>
               Card Name: {card.cardName}
             </Text>
-            <Text style={{ color: colors.textPrimary }}>
+            <Text style={styles.text}>
               Card Number: {"**** ".repeat(3) + card.cardNumber.slice(-4)}
             </Text>
-            <Text style={{ color: colors.textPrimary }}>
+            <Text style={styles.text}>
               Expiry Date: {card.cardExpiryMonth}/{card.cardExpiryYear}
             </Text>
             {/* Add more details as needed */}
@@ -172,7 +172,7 @@ export default EWalletTopupPage = ({ route, navigation }) => {
           <View style={{height: 20}}></View>
 
         <Button
-          buttonText={"TOP UP"}
+          buttonText={"CONFIRM"}
           enableCondition={valid}
           onPressFunction={() => {
             topUp();
