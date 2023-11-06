@@ -27,7 +27,7 @@ export default GenerateTicketPage = ({navigation}) => {
     containerView: {
       marginHorizontal: 15,
       backgroundColor: colors.primary,
-      opacity: 0.85,
+      opacity: 0.9,
       width: "80%",
       padding: 20,
       borderTopRightRadius: 15,
@@ -35,7 +35,7 @@ export default GenerateTicketPage = ({navigation}) => {
     },
 
     stadiumTitleView: {
-      paddingVertical: 10,
+      paddingVertical: 20,
     },
     stadiumTitle: {
       fontFamily: "Lato-Bold",
@@ -50,7 +50,7 @@ export default GenerateTicketPage = ({navigation}) => {
       color: colors.textPrimary,
     },
     concertInfoView: {
-      paddingBottom: 20,
+      // paddingBottom: 10,
     },
     concertInfo: {
       fontFamily: "Lato-Regular",
@@ -67,7 +67,7 @@ export default GenerateTicketPage = ({navigation}) => {
       alignItems: "center",
       justifyContent: "center",
       backgroundColor: "white",
-      opacity: 0.80,
+      opacity: 0.90,
       borderBottomRightRadius: 15,
       borderBottomLeftRadius: 15,
     },
@@ -104,9 +104,9 @@ export default GenerateTicketPage = ({navigation}) => {
 
           {/* Concert Info */}
           <View style={styles.concertInfoView}>
-            <Text style={styles.concertInfo}>Reference Number: 12345ABC</Text>
-            <Text style={styles.concertInfo}>Category: 1</Text>
-            <Text style={styles.concertInfo}>Quantity: 1</Text>
+            {/* <Text style={styles.concertInfo}>Reference Number: 12345ABC</Text> */}
+            {/* <Text style={styles.concertInfo}>Category: 1</Text> */}
+            {/* <Text style={styles.concertInfo}>Quantity: 1</Text> */}
           </View>
         </View>
 
@@ -114,8 +114,8 @@ export default GenerateTicketPage = ({navigation}) => {
         <View style={styles.barcode}>
           <DashedLine style={styles.dashedLine} />
           <Barcode
-            value="12345678999"
-            options={{ format: "CODE128", backgroundColor: "white" }}
+            value="6547811223231" //ticket reference number
+            options={{ format: "CODE128", backgroundColor: "black" }}
           />
         </View>
         {/* </View> */}

@@ -1,4 +1,6 @@
 import { View, Image, Text, Pressable, StyleSheet } from "react-native";
+import { ColorContext } from "../../../context";
+import { useContext } from "react";
 // const formatDateString = (startDate, endDate) => {
 //   const startDay = startDate.getDate();
 //   const endDay = endDate.getDate();
@@ -27,6 +29,57 @@ export default ConcertBlock = ({
   imageBackground,
   onPressFunction,
 }) => {
+  const { colors } = useContext(ColorContext);
+  const styles = StyleSheet.create({
+    container: {
+      backgroundColor: colors.primary,
+      height: 350,
+      width: "95%",
+      borderRadius: 10,
+      marginVertical: 10,
+      alignSelf: "center",
+      overflow: "hidden",
+    },
+    title: {
+      fontFamily: "Lato-Bold",
+      fontSize: 25,
+      color: "white",
+    },
+    subtitle: {
+      fontFamily: "Lato-Regular",
+      fontSize: 15,
+      color: "white",
+    },
+    artistIcon: {
+      height: 45,
+      width: 45,
+      resizeMode: "contain",
+      borderRadius: 6,
+    },
+    imageBackground: {
+      height: 240,
+      width: "100%",
+      // position: "absolute",
+      alignSelf: "flex-start",
+      resizeMode: "cover",
+      borderRadius: 10,
+    },
+    artistBlock: {
+      flexDirection: "row",
+    },
+    artistTextContainer: {
+      paddingHorizontal: 15,
+    },
+    artistName: {
+      fontFamily: "Lato-Bold",
+      color: "white",
+    },
+    artistDescription: {
+      fontFamily: "Lato-Regular",
+      color: "white",
+    },
+  });
+
   //   const formattedDate = formatDateString(startDate, endDate);
   return (
     <Pressable
@@ -39,22 +92,22 @@ export default ConcertBlock = ({
     >
       <Image source={{ uri: imageBackground }} style={styles.imageBackground} />
       <View style={{ paddingHorizontal: 15 }}>
-        <View style={{ height: 20 }} />
+        <View style={{ height: 10 }} />
 
         <Text style={styles.title}>{concertName}</Text>
 
-        <View style={{ height: 30 }} />
+        {/* <View style={{ height: 30 }} /> */}
 
-        <Text style={styles.subtitle}>{venueName}</Text>
+        {/* <Text style={styles.subtitle}>{venueName}</Text> */}
 
-        <View style={{ height: 7 }} />
+        {/* <View style={{ height: 10 }} /> */}
 
-        <Text style={styles.subtitle}>
-          {startDate === endDate ? startDate : `${startDate} to ${endDate}`}
+        {/* <Text style={styles.title}> */}
+          {/* {startDate === endDate ? startDate : `${startDate} to ${endDate}`} */}
           {/* {formattedDate} */}
-        </Text>
+        {/* </Text> */}
 
-        <View style={{ height: 45 }} />
+        <View style={{ height: 10 }} />
 
         <View style={styles.artistBlock}>
           <Image source={{ uri: artistImage }} style={styles.artistIcon} />
@@ -69,52 +122,4 @@ export default ConcertBlock = ({
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    // backgroundColor: "green",
-    height: 240,
-    width: "95%",
-    borderRadius: 10,
-    marginVertical: 10,
-    paddingVertical: 10,
-    alignSelf: "center",
-    overflow: "hidden",
-  },
-  title: {
-    fontFamily: "Lato-Bold",
-    fontSize: 25,
-    color: "white",
-  },
-  subtitle: {
-    fontFamily: "Lato-Regular",
-    fontSize: 15,
-    color: "white",
-  },
-  artistIcon: {
-    height: 45,
-    width: 45,
-    resizeMode: "contain",
-    borderRadius: 6,
-  },
-  imageBackground: {
-    height: 240,
-    width: "100%",
-    position: "absolute",
-    alignSelf: "center",
-    resizeMode: "stretch",
-  },
-  artistBlock: {
-    flexDirection: "row",
-  },
-  artistTextContainer: {
-    paddingHorizontal: 15,
-  },
-  artistName: {
-    fontFamily: "Lato-Bold",
-    color: "white",
-  },
-  artistDescription: {
-    fontFamily: "Lato-Regular",
-    color: "white",
-  },
-});
+
