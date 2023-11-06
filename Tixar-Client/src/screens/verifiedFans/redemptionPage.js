@@ -7,104 +7,112 @@ import {
   Image,
   TextInput,
   Alert,
+  ScrollView,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import card33x from "../../assets/images/card33x.png";
 import { AuthContext, ColorContext } from "../../../context";
+import Button from "../../components/newApp/button";
 
 export default RedemptionPage = ({ navigation }) => {
-    const [code, setCode] = useState("");
-    const [canRedeem, setCanRedeem] = useState(false);
-    const { token } = useContext(AuthContext);
-    const codeInputRef = useRef(null);
-    const { colors } = useContext(ColorContext);
-    const handleCode = (text) => {
-        setCode(text);
-        setCanRedeem(text !== "");
-    };
+  const [code, setCode] = useState("");
+  const [canRedeem, setCanRedeem] = useState(false);
+  const { token } = useContext(AuthContext);
+  const codeInputRef = useRef(null);
+  const { colors } = useContext(ColorContext);
+  const handleCode = (text) => {
+    setCode(text);
+    setCanRedeem(text !== "");
+  };
 
   // function to handle code redemption request
-    const handleRedemption = () => {
-        const endPoint = "http://vf.tixar.sg:3001/api/profile/redeem";
-        const payload = {
-            code: code,
-        };
-
-        fetch(endPoint, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(payload),
-        })
-            .then((response) => {
-                if (response.ok) {
-                    console.log("Redemption request successful");
-                    return response.json();
-                } else {
-                    console.log("Redemption request unsuccessful");
-                    throw new Error("Failed to login");
-                }
-            })
-            .then((data) => {
-                // upon successful verification of code, let user know
-                // console.log("Code is valid, points added to account");
-                Alert.alert(
-                    "Redemption successful!",
-                    "Your points: " + data.updatedPoints.toString()
-                );
-                codeInputRef.current.clear();
-                handleCode("");
-            })
-            .catch((error) => {
-                // upon unsuccessful verification of code, let user know
-                // console.log("Code is invalid");
-                Alert.alert("Redemption unsuccessful", "Please try again");
-            });
+  const handleRedemption = () => {
+    const endPoint = "http://vf.tixar.sg:3001/api/profile/redeem";
+    const payload = {
+      code: code,
     };
 
-    return (
-        <View
-        style={{ flex: 1, backgroundColor: colors.primary }} >
-        {/* Header box stuff */}
-        <View style={styles.headerContainer}>
+    fetch(endPoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(payload),
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log("Redemption request successful");
+          return response.json();
+        } else {
+          console.log("Redemption request unsuccessful");
+          throw new Error("Failed to login");
+        }
+      })
+      .then((data) => {
+        // upon successful verification of code, let user know
+        // console.log("Code is valid, points added to account");
+        Alert.alert(
+          "Redemption successful!",
+          "Your points: " + data.updatedPoints.toString()
+        );
+        codeInputRef.current.clear();
+        handleCode("");
+      })
+      .catch((error) => {
+        // upon unsuccessful verification of code, let user know
+        // console.log("Code is invalid");
+        Alert.alert("Redemption unsuccessful", "Please try again");
+      });
+  };
+
+  return (
+    <ScrollView style={{ flex: 1, backgroundColor: colors.primary }}>
+      {/* Header box stuff */}
+      <View style={styles.headerContainer}>
         <Image source={card33x} style={styles.imageBackground} />
         <Text style={styles.headerText}>TIXAR FAN CODES</Text>
-        <View style={{height: 20}}/>
-        <Text style={[styles.subtitleText, {color: colors.textSecondary}]}>Get verified.</Text>
-        <Text style={[styles.subtitleText, {color: colors.textSecondary}]}>Get priority.</Text>
-        </View>
+        <View style={{ height: 20 }} />
+        <Text style={[styles.subtitleText, { color: colors.textSecondary }]}>
+          Get verified.
+        </Text>
+        <Text style={[styles.subtitleText, { color: colors.textSecondary }]}>
+          Get priority.
+        </Text>
+      </View>
 
-        <View style={{height: 15}} />
-        
-        <Text style={[styles.redeemText, {color: colors.textSecondary}]}>Redeem your code here</Text>
+      <View style={{ height: 15 }} />
 
-        <View style={{height: 10}} />
+      <Text style={[styles.redeemText, { color: colors.textSecondary }]}>
+        Redeem your code here
+      </Text>
 
-        {/* Redeem code stuff */}
-        <View style={[styles.fieldBox, {backgroundColor: colors.secondary}]}>
+      <View style={{ height: 10 }} />
+
+      {/* Redeem code stuff */}
+      <View style={[styles.fieldBox, { backgroundColor: colors.secondary }]}>
         <TextInput
-        ref={codeInputRef}
-        style={[styles.fieldText, {color: colors.textSecondary}]}
-        placeholderTextColor={colors.textSecondary}
-        onChangeText={handleCode}
-        value={code}
-        placeholder="XXXX-XXXX-XXXX-XXXX"
+          ref={codeInputRef}
+          style={[styles.fieldText, { color: colors.textSecondary }]}
+          placeholderTextColor={colors.textSecondary}
+          onChangeText={handleCode}
+          value={code}
+          placeholder="XXXX-XXXX-XXXX-XXXX"
         />
-        </View>
-        <View style={{height: 10}}/>
-        {/* Redeem button */}
-        <RedeemButton
-        code={code}
-        canRedeem={canRedeem}
-        navigation={navigation}
-        handleRedemption={handleRedemption}
-        token={token}
-        />
+      </View>
+      <View style={{ height: 10 }} />
+      {/* Redeem button */}
 
-        {/* FAQ */}
-        <Text style={styles.faqText}>
+      <Button
+        buttonText="Redeem"
+        onPressFunction={() => {
+          handleRedemption();
+        }}
+        enableCondition={canRedeem}
+      />
+
+      {/* FAQ */}
+      <Text style={styles.faqText}>
         FAQs {`\n`}
         Lorem ipsum dolor sit amet. Ab repellat voluptas ut rerum fugit rem
         autem ducimus est repellendus optio eos iusto commodi. Ut nulla itaque
@@ -114,12 +122,12 @@ export default RedemptionPage = ({ navigation }) => {
         assumenda reiciendis et velit deserunt qui recusandae consequatur.{" "}
         {"\n"}
         Learn More
-        </Text>
+      </Text>
 
-        {/* Footer */}
-        {/* <Text style={styles.footerText}>TIXAR</Text> */}
-        </View>
-    );
+      {/* Footer */}
+      {/* <Text style={styles.footerText}>TIXAR</Text> */}
+    </ScrollView>
+  );
 };
 
 const RedeemButton = ({
