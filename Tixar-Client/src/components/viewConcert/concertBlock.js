@@ -103,8 +103,8 @@ export default ConcertBlock = ({
         {/* <View style={{ height: 10 }} /> */}
 
         {/* <Text style={styles.title}> */}
-          {/* {startDate === endDate ? startDate : `${startDate} to ${endDate}`} */}
-          {/* {formattedDate} */}
+        {/* {startDate === endDate ? startDate : `${startDate} to ${endDate}`} */}
+        {/* {formattedDate} */}
         {/* </Text> */}
 
         <View style={{ height: 10 }} />
@@ -114,12 +114,16 @@ export default ConcertBlock = ({
           <View style={styles.artistTextContainer}>
             <Text style={styles.artistName}>{artistName}</Text>
             <View style={{ height: 5 }} />
-            <Text style={styles.artistDescription}>{artistDescription}</Text>
+            <Text
+              numberOfLines={1.5}
+              ellipsizeMode="tail"
+              style={styles.artistDescription}
+            >
+              {artistDescription}
+            </Text>
           </View>
         </View>
       </View>
     </Pressable>
   );
 };
-
-

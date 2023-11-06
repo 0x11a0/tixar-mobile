@@ -121,10 +121,7 @@ export default ViewConcertPage = ({ route, navigation }) => {
         contentContainerStyle={styles.container}
       >
         {/* Top Image from DB */}
-        <Image
-          source={require("../../assets/soft-ui-pro-react-native-v1.1.1/background3x.png")}
-          style={styles.topImage}
-        />
+        <Image source={{ uri: concert.concertImage }} style={styles.topImage} />
 
         {/* Venue from DB */}
         <Text style={styles.venueText}>{concert.sessions[0].venue}</Text>
@@ -152,9 +149,7 @@ export default ViewConcertPage = ({ route, navigation }) => {
 
         {/* Ticket Category Description from DB */}
         <Text style={styles.ticketCategoryDescription}>
-          Lorem ipsum dolor sit amet consectetur. Elementum mauris turpis non eu
-          eget vitae tincidunt nunc. Nibh at viverra mollis viverra aenean.
-          Sollicitudin arcu consequat viverra nisi morbi aenean placerat eget.
+          {concert.concertDescription}
         </Text>
 
         {/* Ticket Category Button */}

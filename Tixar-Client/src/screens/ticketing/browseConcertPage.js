@@ -1,9 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import {
-  View,
-  StyleSheet,
-  ScrollView,
-} from "react-native";
+import { View, StyleSheet, ScrollView } from "react-native";
 import { ColorContext } from "../../../context";
 import { StatusBar } from "expo-status-bar";
 
@@ -42,7 +38,7 @@ export default BrowseConcertPage = ({ route, navigation }) => {
   }, [navigation]);
 
   return (
-    <View style={[styles.container, {backgroundColor: colors.background}]}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       <View
         style={{
           backgroundColor: colors.background,
@@ -52,8 +48,13 @@ export default BrowseConcertPage = ({ route, navigation }) => {
         <SearchField searchText={searchText} setSearchText={setSearchText} />
       </View>
 
-      <View style={[styles.contentContainer, {backgroundColor: colors.background}]}>
-        <ScrollView style={{backgroundColor: colors.background}}>
+      <View
+        style={[
+          styles.contentContainer,
+          { backgroundColor: colors.background },
+        ]}
+      >
+        <ScrollView style={{ backgroundColor: colors.background }}>
           {/* Your FanclubCards go here */}
           {concerts.map((concert) => {
             //retrieve session information from each concert
@@ -84,7 +85,7 @@ export default BrowseConcertPage = ({ route, navigation }) => {
                 startDate={formattedStartDate}
                 endDate={formattedEndDate}
                 artistName={concert.artistName}
-                artistDescription={"Lorem ipsum dolor sit amet consectetur"}
+                artistDescription={concert.concertDescription}
                 artistImage={concert.artistImage}
                 imageBackground={concert.concertImage}
                 onPressFunction={() => {
