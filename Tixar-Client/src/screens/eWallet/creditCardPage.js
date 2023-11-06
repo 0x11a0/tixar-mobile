@@ -19,6 +19,7 @@ import Button from "../../components/newApp/button";
 export default CreditCardPage = ({ route, navigation }) => {
     const { token } = useContext(AuthContext);
     const { colors } = useContext(ColorContext);
+    const [cardName, setCardName] = useState("");
     const [cardNumber, setCardNumber] = useState("");
     const [expiryDate, setExpiryDate] = useState("");
     const [cvv, setCvv] = useState("");
@@ -26,40 +27,49 @@ export default CreditCardPage = ({ route, navigation }) => {
 
     const card = route.params.card;
 
+
+    const handleCardName = (text) => {
+      setCardName(text);
+      setValid(text.length > 0 && cardNumber.length === 16 && expiryDate.length === 7 && cvv.length === 3);
+    };
+
     const handleCardNumber = (text) => {
-        setCardNumber(text);
-        setValid(text.length === 16 && expiryDate.length === 5 && cvv.length === 3);
+      setCardNumber(text);
+      setValid(cardName.length > 0 && text.length === 16 && expiryDate.length === 7 && cvv.length === 3);
     };
 
     const handleExpiryDate = (text) => {
-        setExpiryDate(text);
-        setValid(cardNumber.length === 16 && text.length === 5 && cvv.length === 3);    
+      setExpiryDate(text);
+      setValid(cardName.length > 0 && cardNumber.length === 16 && text.length === 7 && cvv.length === 3);    
     };
 
     const handleCvv = (text) => {
-        setCvv(text);
-        setValid(cardNumber.length === 16 && expiryDate.length === 5 && text.length === 3);
+      setCvv(text);
+      setValid(cardName.length > 0 && cardNumber.length === 16 && expiryDate.length === 7 && text.length === 3);
     };
 
     const addCreditCard = () => {
-        console.log("attempting to add card")
+        console.log("attempting to add/update card")
         const endPoint = "http://rt.tixar.sg:3000/api/user/card";
         const payload = {
-            "customer": {
+            "card": {
+                "cardName": cardName,
                 "cardNumber": cardNumber,
-                "expiryMonth": expiryDate.substring(0,2),
-                "expiryYear": expiryDate.substring(3,5),
+                "cardExpiryMonth": expiryDate.substring(0,2),
+                "cardExpiryYear": expiryDate.substring(3,7),
                 "cvv": cvv
             }
         };
+        console.log(JSON.stringify(payload));
         const method = Object.keys(card).length === 0 ? "POST" : "PUT";
+        console.log(method);
 
         fetch(endPoint, {
           method: method,
           credentials: "include",
           headers: {
             Authorization: `Bearer ${token}`,
-            "Cache-Control": "no-cache",
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify(payload),
         })
@@ -74,52 +84,15 @@ export default CreditCardPage = ({ route, navigation }) => {
               console.log("card changed successfully");
               Alert.alert("Card changed successfully");
               navigation.pop();
+            } else {
+              console.log("invalid card details");
+              Alert.alert("Invalid card details");
             }
           })
           .catch((error) => {
             console.error(error);
           });
       };
-
-
-  const styles = StyleSheet.create({
-    eCardContainer: {
-      flex: 1,
-      alignItems: "center",
-      justifyContent: "center",
-      marginTop: 10,
-      marginHorizontal: 20,
-    },
-    transactionContainer: {
-      flex: 0.8,
-    },
-    container: {
-      flex: 3,
-    },
-    cardRow: {
-      flexDirection: "row",
-      alignItems: "center",
-      margin: 10,
-      justifyContent: "space-between",
-    },
-    cardRightIcon: {
-      width: 10,
-      height: 17.22,
-      resizeMode: "contain",
-      tintColor: colors.textPrimary,
-    },
-    cardText: {
-      color: colors.textPrimary,
-    },
-    cardTitle: {
-      fontSize: 18,
-      fontFamily: "Lato-Bold",
-      color: colors.textPrimary,
-      padding: 10,
-    },
-    scrollView: {
-      height: 200,
-    },});
 
   return (
     <SafeAreaView
@@ -134,7 +107,8 @@ export default CreditCardPage = ({ route, navigation }) => {
         ) : (
             <View>
                 {/* Display card details */}
-                <Text style = {{color: colors.textPrimary}}>Card Number: {card.cardNumber}</Text>
+                <Text style = {{color: colors.textPrimary}}>Card Name: {card.cardName}</Text>
+                <Text style = {{color: colors.textPrimary}}>Card Number: {"**** ".repeat(3) + card.cardNumber.slice(-4)}</Text>
                 <Text style = {{color: colors.textPrimary}}>Expiry Date: {card.cardExpiryMonth}/{card.cardExpiryYear}</Text>
                 {/* Add more details as needed */}
             </View>
@@ -143,7 +117,16 @@ export default CreditCardPage = ({ route, navigation }) => {
         <View style = {{height: 40}}/>
 
         <Text style = {{color: colors.textPrimary}}> 
-            Update card details </Text>
+            Top Up Your E-Wallet </Text>
+
+            <View style={{backgroundColor: "white"}}>
+                  <TextInput
+                    onChangeText={handleCardName}
+                    value={cardName}
+                    placeholder="Card Name"
+                    autoCapitalize="none"
+                  />
+            </View>
 
             <View style={{backgroundColor: "white"}}>
                   <TextInput
@@ -159,9 +142,9 @@ export default CreditCardPage = ({ route, navigation }) => {
                   <TextInput
                     onChangeText={handleExpiryDate}
                     value={expiryDate}
-                    placeholder="Expiry Date MM/YY"
+                    placeholder="Expiry Date MM/YYYY"
                     autoCapitalize="none"
-                    maxLength={5}
+                    maxLength={7}
                   />
             </View>
 
