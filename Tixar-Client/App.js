@@ -38,6 +38,7 @@ import BrowseConcertPage from "./src/screens/ticketing/browseConcertPage";
 import ConcertCategoryPage from "./src/screens/ticketing/concertCategoryPage";
 import GeneratedUserTicketPage from "./src/screens/ticketing/generateTicketPage";
 import CheckoutPage from "./src/screens/ticketing/checkoutPage";
+import PurchaseTicketPage from "./src/screens/ticketing/purchaseTicketPage";
 
 // User
 import UserTicketsPage from "./src/screens/user/ticketsPage";
@@ -137,6 +138,13 @@ export default function App() {
                   component={CheckoutPage}
                   options={{
                     drawerLabel: "Checkout Page",
+                  }}
+                />
+                <Stack.Screen
+                  name="purchaseTicketPage"
+                  component={PurchaseTicketPage}
+                  options={{
+                    drawerLabel: "Purchase Ticket",
                   }}
                 />
               </Stack.Group>
