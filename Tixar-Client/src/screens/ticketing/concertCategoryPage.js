@@ -14,7 +14,6 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { ColorContext } from "../../../context";
 import { useContext } from "react";
 import Button from "../../components/newApp/button";
-import { AntDesign } from "@expo/vector-icons";
 import FooterBlock from "../../components/viewConcert/footerBlock";
 import OptionFields from "../../components/concertCategory/optionFields";
 import { Picker } from "@react-native-picker/picker";
@@ -234,7 +233,7 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
             </Picker>
           </View>
 
-          <Text style={{ color: "gray", fontSize: 12, marginTop: 5 }}>
+          <Text style={{ color: colors.textPrimary, fontSize: 12, marginTop: 5 }}>
             Available Quantity: {availableQuantity}
           </Text>
 
