@@ -94,9 +94,12 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
   const quantities = ["1", "2", "3", "4"];
 
   const [date, setDate] = useState(null);
-  const [quantity, setQuantity] = useState(quantities);
+  const [quantity, setQuantity] = useState(null);
   const [category, setCategory] = useState(null);
   const [availableQuantity, setAvailableQuantity] = useState(null);
+  const [eventID, setEventID] = useState(null);
+  const [salesRoundID, setSalesRoundID] = useState(null);
+  const [priceID, setPriceID] = useState(null);
 
   useEffect(() => {
     setIsButtonEnabled(date !== null && quantity !== null && category !== null);
@@ -123,7 +126,6 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
               individualCapacity.category === selectedCategoryFiltered
           );
           if (selectedCapacity) {
-            console.log(selectedCapacity.available);
             setAvailableQuantity(selectedCapacity.available);
             return selectedCapacity.available;
           }
@@ -131,6 +133,51 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
       });
     }
   };
+
+  function getPriceID(eventID, salesRoundID, category, price, concert) {
+    if (!concert || !concert._id) {
+      console.error(
+        `Concert with eventID ${eventID} not found or has no _id property.`
+      );
+      return null;
+    }
+
+    if (!concert.salesRound || !Array.isArray(concert.salesRound)) {
+      console.error(
+        `Concert with eventID ${eventID} has no valid sales rounds.`
+      );
+      return null;
+    }
+
+    const salesRound = concert.salesRound.find(
+      (round) => round && round._id === salesRoundID
+    );
+
+    if (!salesRound) {
+      console.error(
+        `Sales round with salesRoundID ${salesRoundID} not found in concert ${eventID}.`
+      );
+      return null;
+    }
+
+    if (!salesRound.prices || !Array.isArray(salesRound.prices)) {
+      console.error(`Sales round ${salesRoundID} has no valid prices.`);
+      return null;
+    }
+
+    const priceInfo = salesRound.prices.find(
+      (p) => p.category === category && p.price === price
+    );
+
+    if (!priceInfo) {
+      console.error(
+        `Price with category ${category} and price ${price} not found in sales round ${salesRoundID}.`
+      );
+      return null;
+    }
+
+    return priceInfo._id;
+  }
 
   const styles = StyleSheet.create({
     container: {
@@ -208,6 +255,8 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
               selectedValue={date}
               onValueChange={(itemValue) => {
                 setDate(itemValue);
+                setEventID(concert._id);
+                setSalesRoundID(filteredSalesRound[0]._id);
                 handleDateChange(itemValue); // Call handleDateChange when the user selects a date
               }}
             >
@@ -250,35 +299,36 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
             </Picker>
           </View>
 
-          {/* <OptionFields
-            optionText={quantity}
-            setOption={setQuantity}
-            materialIconName={"format-list-numbered"}
-            options={quantities}
-          /> */}
-
-          {/* <OptionFields
-                        optionText={"0"}
-                        icon={require("../../assets/soft-ui-pro-react-native-v1.1.1/users3x.png")}
-                        onPressFunction={() => {
-                            console.log("quantity option clicked");
-                        }}
-                        onChangeTextFunction={(text) => {
-                            handleQuantityChange(text);
-                        }}
-                        keyboardType={"numeric"}
-                    /> */}
-
           {/* button that brings you to the purchase confirmation page */}
 
           <View style={styles.buttonContainer}>
             <Button
               buttonText={"BOOK NOW"}
               onPressFunction={() => {
-                console.log("Book button clicked");
-                navigation.navigate("purchaseTicketPage");
+                const priceID = getPriceID(
+                  eventID,
+                  salesRoundID,
+                  category.split("- $")[0].trim(),
+                  parseFloat(category.split("- $")[1]),
+                  concert
+                );
+                if (priceID) {
+                  setPriceID(priceID);
+                  navigation.navigate("purchaseTicketPage", {
+                    date: date,
+                    quantity: quantity,
+                    category: category,
+                    concertName: concert.name,
+                    artist: concert.artistName,
+                    eventID: eventID,
+                    salesRoundID: salesRoundID,
+                    priceID: priceID, // Pass the priceID to the next screen
+                  });
+                } else {
+                  console.error("Price ID not found.");
+                }
               }}
-              enableCondition={isButtonEnabled} // condition to be set  when all fields are filled and available
+              enableCondition={isButtonEnabled}
             />
           </View>
         </View>

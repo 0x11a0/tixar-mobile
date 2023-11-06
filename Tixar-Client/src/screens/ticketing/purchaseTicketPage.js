@@ -17,24 +17,54 @@ export default ViewConcertPage = ({ route, navigation }) => {
   const { colors } = useContext(ColorContext);
   const insets = useSafeAreaInsets();
   const { token } = useContext(AuthContext);
-  const concert = route.params.concert;
-  console.log(concert);
+  //   const concert = route.params.concert;
+  //   console.log(concert);
+  const {
+    date,
+    quantity,
+    category,
+    concertName,
+    artist,
+    eventID,
+    salesRoundID,
+    priceID,
+  } = route.params;
+  const categoryValue = category.split("-")[0].trim();
+  const price = category.split("-")[1].trim();
+  const numericPrice = Number(price.slice(1));
+  const totalPrice = numericPrice * quantity;
 
-  //function to format dates
-  function formatDate(dateString) {
-    const dateObject = new Date(dateString);
-    const day = dateObject.getUTCDate();
-    const month = dateObject.toLocaleString("default", {
-      month: "long",
+  const requestBody = {
+    type: "ewallet",
+    eventID: eventID,
+    salesRoundID: salesRoundID,
+    items: [
+      {
+        priceID: priceID,
+        qty: quantity,
+      },
+    ],
+  };
+
+  const purchaseTicket = () => {
+    fetch("http://rt.tixar.sg:3000/api/transaction/purchaseTicket", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(requestBody),
+    }).then((response) => {
+      console.log("this is the request Body" + JSON.stringify(requestBody));
+
+      console.log(response);
+      if (response.ok) {
+        console.log("Update successful");
+      } else {
+        console.log("Update unsuccessful");
+      }
     });
-    const year = dateObject.getUTCFullYear();
-    return `${day} ${month} ${year}`;
-  }
-
-  const startDate = new Date(concert.sessions[0].start);
-  const formattedStartDate = formatDate(startDate);
-  const endDate = new Date(concert.sessions[0].end);
-  const formattedEndDate = formatDate(endDate);
+  };
 
   const styles = StyleSheet.create({
     // main container
@@ -120,46 +150,52 @@ export default ViewConcertPage = ({ route, navigation }) => {
         style={{ width: "100%" }}
         contentContainerStyle={styles.container}
       >
-        {/* Top Image from DB */}
-        <Image source={{ uri: concert.concertImage }} style={styles.topImage} />
+        <Text style={{ color: colors.textPrimary }}>Confirm Purchase</Text>
 
-        {/* Venue from DB */}
-        <Text style={styles.venueText}>{concert.sessions[0].venue}</Text>
-
-        {/* Concert Title from DB */}
-        <Text style={styles.concertTitle}>{concert.name}</Text>
-
-        {/* Description from DB */}
-        <Text style={styles.ticketCategoryDescription}>
-          Hosted by {concert.artistName}, {concert.name}{" "}
-          {formattedStartDate === formattedEndDate
-            ? `runs on ${formattedStartDate}`
-            : `runs from ${formattedStartDate} to ${formattedEndDate}`}
-          .
+        <Text style={{ color: colors.textPrimary }}>
+          Reference Number: 3E12F89C68
         </Text>
 
-        {/* Concert Category Image from DB */}
-        <Image
-          source={require("../../assets/images/concertLayout.png")}
-          style={styles.layoutImage}
+        <Text style={{ color: colors.textPrimary }}>{concertName}</Text>
+
+        <Text style={{ color: colors.textPrimary }}>{artist}</Text>
+
+        <Text style={{ color: colors.textPrimary }}>{date}</Text>
+
+        <Text style={{ color: colors.textPrimary }}>
+          Category: {categoryValue}
+        </Text>
+
+        <Text style={{ color: colors.textPrimary }}>Price: {price}</Text>
+
+        <Text style={{ color: colors.textPrimary }}>Quantity: {quantity}</Text>
+
+        <Text style={{ color: colors.textPrimary }}>
+          Total Price: ${totalPrice}
+        </Text>
+
+        <Text style={{ color: colors.textPrimary }}>event ID: {eventID}</Text>
+
+        <Text style={{ color: colors.textPrimary }}>
+          sales round ID: {salesRoundID}
+        </Text>
+
+        <Text style={{ color: colors.textPrimary }}>price ID: {priceID}</Text>
+
+        <Button
+          buttonText={"Ewallet"}
+          onPressFunction={() => {
+            purchaseTicket();
+          }}
+          enableCondition={true} //change to enable condition based on account verified fan status and access
         />
-
-        {/* Ticket Category Title */}
-        <Text style={styles.ticketCategoryTitle}>Ticket Categories</Text>
-
-        {/* Ticket Category Description from DB */}
-        <Text style={styles.ticketCategoryDescription}>
-          {concert.concertDescription}
-        </Text>
 
         {/* Ticket Category Button */}
         <View style={styles.buttonContainer}>
           <Button
-            buttonText={"Check Availability"}
+            buttonText={"Back"}
             onPressFunction={() => {
-              navigation.navigate("concertCategoryPage", {
-                concert: concert,
-              });
+              navigation.goBack();
             }}
             enableCondition={true} //change to enable condition based on account verified fan status and access
           />
