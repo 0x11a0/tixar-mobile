@@ -17,158 +17,243 @@ import { useContext, useState, useEffect } from "react";
 import Button from "../../components/newApp/button";
 
 export default CreditCardPage = ({ route, navigation }) => {
-    const { token } = useContext(AuthContext);
-    const { colors } = useContext(ColorContext);
-    const [cardName, setCardName] = useState("");
-    const [cardNumber, setCardNumber] = useState("");
-    const [expiryDate, setExpiryDate] = useState("");
-    const [cvv, setCvv] = useState("");
-    const [valid, setValid] = useState(false);
+  const { token } = useContext(AuthContext);
+  const { colors } = useContext(ColorContext);
+  const [cardName, setCardName] = useState("");
+  const [cardNumber, setCardNumber] = useState("");
+  const [expiryDate, setExpiryDate] = useState("");
+  const [cvv, setCvv] = useState("");
+  const [valid, setValid] = useState(false);
 
-    const card = route.params.card;
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: colors.background,
+      flexDirection: "column",
+      alignItems: "center",
+    },
 
+    textContainer: {
+      backgroundColor: colors.primary,
+      padding: 15,
+      borderRadius: 10,
+      marginTop: 10,
+      width: "90%",
+    },
 
-    const handleCardName = (text) => {
-      setCardName(text);
-      setValid(text.length > 0 && cardNumber.length === 16 && expiryDate.length === 7 && cvv.length === 3);
+    inputContainer: {
+      backgroundColor: colors.primary,
+      padding: 20,
+      borderRadius: 10,
+      marginVertical: 10,
+      width: "90%",
+    },
+    text: {
+      color: colors.textPrimary,
+      fontFamily: "Lato-Regular",
+      fontSize: 16,
+    },
+    textBox: {
+      backgroundColor: colors.secondary,
+      borderRadius: 10,
+      padding: 10,
+      marginVertical: 10,
+    },
+    title: {
+      color: colors.textPrimary,
+      fontFamily: "Lato-Bold",
+      fontSize: 20,
+      marginBottom: 20,
+    },
+  });
+
+  const card = route.params.card;
+
+  const handleCardName = (text) => {
+    setCardName(text);
+    setValid(
+      text.length > 0 &&
+        cardNumber.length === 16 &&
+        expiryDate.length === 7 &&
+        cvv.length === 3
+    );
+  };
+
+  const handleCardNumber = (text) => {
+    setCardNumber(text);
+    setValid(
+      cardName.length > 0 &&
+        text.length === 16 &&
+        expiryDate.length === 7 &&
+        cvv.length === 3
+    );
+  };
+
+  const handleExpiryDate = (text) => {
+    setExpiryDate(text);
+    setValid(
+      cardName.length > 0 &&
+        cardNumber.length === 16 &&
+        text.length === 7 &&
+        cvv.length === 3
+    );
+  };
+
+  const handleCvv = (text) => {
+    setCvv(text);
+    setValid(
+      cardName.length > 0 &&
+        cardNumber.length === 16 &&
+        expiryDate.length === 7 &&
+        text.length === 3
+    );
+  };
+
+  const addCreditCard = () => {
+    console.log("attempting to add/update card");
+    const endPoint = "http://rt.tixar.sg:3000/api/user/card";
+    const payload = {
+      card: {
+        cardName: cardName,
+        cardNumber: cardNumber,
+        cardExpiryMonth: expiryDate.substring(0, 2),
+        cardExpiryYear: expiryDate.substring(3, 7),
+        cvv: cvv,
+      },
     };
+    console.log(JSON.stringify(payload));
+    const method = Object.keys(card).length === 0 ? "POST" : "PUT";
+    console.log(method);
 
-    const handleCardNumber = (text) => {
-      setCardNumber(text);
-      setValid(cardName.length > 0 && text.length === 16 && expiryDate.length === 7 && cvv.length === 3);
-    };
-
-    const handleExpiryDate = (text) => {
-      setExpiryDate(text);
-      setValid(cardName.length > 0 && cardNumber.length === 16 && text.length === 7 && cvv.length === 3);    
-    };
-
-    const handleCvv = (text) => {
-      setCvv(text);
-      setValid(cardName.length > 0 && cardNumber.length === 16 && expiryDate.length === 7 && text.length === 3);
-    };
-
-    const addCreditCard = () => {
-        console.log("attempting to add/update card")
-        const endPoint = "http://rt.tixar.sg:3000/api/user/card";
-        const payload = {
-            "card": {
-                "cardName": cardName,
-                "cardNumber": cardNumber,
-                "cardExpiryMonth": expiryDate.substring(0,2),
-                "cardExpiryYear": expiryDate.substring(3,7),
-                "cvv": cvv
-            }
-        };
-        console.log(JSON.stringify(payload));
-        const method = Object.keys(card).length === 0 ? "POST" : "PUT";
-        console.log(method);
-
-        fetch(endPoint, {
-          method: method,
-          credentials: "include",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(payload),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            console.log(data);
-            if (data.message === "Credit card updated successfully!" && method === "POST") {
-              console.log("card added successfully");
-              Alert.alert("Card added successfully");
-              navigation.pop();
-            } else if (data.message === "Credit card updated successfully!" && method === "PUT"){
-              console.log("card changed successfully");
-              Alert.alert("Card changed successfully");
-              navigation.pop();
-            } else {
-              console.log("invalid card details");
-              Alert.alert("Invalid card details");
-            }
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-      };
+    fetch(endPoint, {
+      method: method,
+      credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        if (
+          data.message === "Credit card added successfully!" &&
+          method === "POST"
+        ) {
+          console.log("card added successfully");
+          Alert.alert("Card added successfully");
+          navigation.pop();
+        } else if (
+          data.message === "Credit card added successfully!" &&
+          method === "PUT"
+        ) {
+          console.log("card changed successfully");
+          Alert.alert("Card changed successfully");
+          navigation.pop();
+        } else {
+          console.log("invalid card details");
+          Alert.alert("Invalid card details");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        backgroundColor: colors.background,
-        flexDirection: "column",
-      }}
-    >
+    <SafeAreaView style={styles.container}>
+      <View style={styles.textContainer}>
         {Object.keys(card).length === 0 ? (
-            <Text style = {{color: colors.textPrimary}}>You have no card you broke ass go add it below</Text>
+          <Text style={styles.text}>
+            You do not have a card linked to your account, please add a card to
+            top up your eWallet !
+          </Text>
         ) : (
-            <View>
-                {/* Display card details */}
-                <Text style = {{color: colors.textPrimary}}>Card Name: {card.cardName}</Text>
-                <Text style = {{color: colors.textPrimary}}>Card Number: {"**** ".repeat(3) + card.cardNumber.slice(-4)}</Text>
-                <Text style = {{color: colors.textPrimary}}>Expiry Date: {card.cardExpiryMonth}/{card.cardExpiryYear}</Text>
-                {/* Add more details as needed */}
-            </View>
+          <View>
+            {/* Display card details */}
+            <Text style={styles.text}>Card Name: {card.cardName}</Text>
+            <Text style={styles.text}>
+              Card Number: {"**** ".repeat(3) + card.cardNumber.slice(-4)}
+            </Text>
+            <Text style={styles.text}>
+              Expiry Date: {card.cardExpiryMonth}/{card.cardExpiryYear}
+            </Text>
+            {/* Add more details as needed */}
+          </View>
         )}
+      </View>
 
-        <View style = {{height: 40}}/>
+      <View style={styles.inputContainer}>
+        <Text style={styles.title}>
+          Enter Card Details{" "}
+        </Text>
 
-        <Text style = {{color: colors.textPrimary}}> 
-            Update your card details </Text>
+        <View style={styles.textBox}>
+          <TextInput
+            onChangeText={handleCardName}
+            value={cardName}
+            placeholder="Card Name"
+            placeholderTextColor={colors.textDisabled}
+            autoCapitalize="none"
+            styles={styles.text}
+            color={colors.textPrimary}
+            keyboardType="numeric"
+          />
+        </View>
 
-            <View style={{backgroundColor: "white"}}>
-                  <TextInput
-                    onChangeText={handleCardName}
-                    value={cardName}
-                    placeholder="Card Name"
-                    autoCapitalize="none"
-                  />
-            </View>
+        <View style={styles.textBox}>
+          <TextInput
+            onChangeText={handleCardNumber}
+            value={cardNumber}
+            placeholder="Card Number XXXX XXXX XXXX XXXX"
+            placeholderTextColor={colors.textDisabled}
+            autoCapitalize="none"
+            maxLength={16}
+            styles={styles.text}
+            color={colors.textPrimary}
+            keyboardType="numeric"
+          />
+        </View>
 
-            <View style={{backgroundColor: "white"}}>
-                  <TextInput
-                    onChangeText={handleCardNumber}
-                    value={cardNumber}
-                    placeholder="Card Number XXXX XXXX XXXX XXXX"
-                    autoCapitalize="none"
-                    maxLength={16}
-                  />
-            </View>
+        <View style={styles.textBox}>
+          <TextInput
+            onChangeText={handleExpiryDate}
+            value={expiryDate}
+            placeholder="Expiry Date MM/YYYY"
+            placeholderTextColor={colors.textDisabled}
+            autoCapitalize="none"
+            maxLength={7}
+            styles={styles.text}
+            color={colors.textPrimary}
+            keyboardType="numeric"
+          />
+        </View>
 
-            <View style={{backgroundColor: "white"}}>
-                  <TextInput
-                    onChangeText={handleExpiryDate}
-                    value={expiryDate}
-                    placeholder="Expiry Date MM/YYYY"
-                    autoCapitalize="none"
-                    maxLength={7}
-                  />
-            </View>
+        <View style={styles.textBox}>
+          <TextInput
+            onChangeText={handleCvv}
+            value={cvv}
+            placeholder="CVV XXX"
+            placeholderTextColor={colors.textDisabled}
+            autoCapitalize="none"
+            maxLength={3}
+            styles={styles.text}
+            color={colors.textPrimary}
+            keyboardType="numeric"
+          />
+        </View>
 
-            <View style={{backgroundColor: "white"}}>
-                  <TextInput
-                    onChangeText={handleCvv}
-                    value={cvv}
-                    placeholder="CVV XXX"
-                    autoCapitalize="none"
-                    maxLength={3}
-                  />
-            </View>
+        <View style={{ height: 40 }} />
 
-            <View style = {{height: 40}}/>
-
-            <Button
-                  buttonText={"UPDATE CARD"}
-                  enableCondition={valid}
-                  onPressFunction={() => {
-                    addCreditCard();
-                  }}
-            />
-
-
+        <Button
+          buttonText={"ADD CARD"}
+          enableCondition={valid}
+          onPressFunction={() => {
+            addCreditCard();
+          }}
+        />
+      </View>
     </SafeAreaView>
   );
 };
