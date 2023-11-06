@@ -16,37 +16,35 @@ import { AuthContext, ColorContext } from "../../../context";
 import { useContext, useState, useEffect } from "react";
 
 export default EWalletPage = ({ route, navigation }) => {
-    const { token } = useContext(AuthContext);
-    const { colors } = useContext(ColorContext);
-    let [user, setUser] = useState({});
+  const { token } = useContext(AuthContext);
+  const { colors } = useContext(ColorContext);
+  let [user, setUser] = useState({});
 
-    useEffect(() => {
-        navigation.addListener("focus", () => {
-        console.log("reloaded");
-            getUser();
-        });
-    }, [navigation]);
+  useEffect(() => {
+    navigation.addListener("focus", () => {
+      console.log("reloaded");
+      getUser();
+    });
+  }, [navigation]);
 
-    const getUser = () => {
-        console.log("getting user profile")
-        fetch("http://rt.tixar.sg:3000/api/user", {
-          method: "GET",
-          credentials: "include",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Cache-Control": "no-cache",
-          },
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            setUser(data);
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-      };
-
-
+  const getUser = () => {
+    console.log("getting user profile");
+    fetch("http://rt.tixar.sg:3000/api/user", {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Cache-Control": "no-cache",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setUser(data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   // Define an array of transaction items, change as needed for integration team!!
   const transactionHistory = [
@@ -57,17 +55,17 @@ export default EWalletPage = ({ route, navigation }) => {
 
   const styles = StyleSheet.create({
     eCardContainer: {
-      flex: 1,
-      alignItems: "center",
-      justifyContent: "center",
-      marginTop: 10,
-      marginHorizontal: 20,
+      marginTop: 15,
+      flex: 1.5,
+      // backgroundColor: "yellow",
     },
     transactionContainer: {
-      flex: 0.8,
+      flex: 1,
+      // backgroundColor:'purple',
     },
     container: {
       flex: 3,
+      // backgroundColor:'orange',
     },
     cardRow: {
       flexDirection: "row",
@@ -92,7 +90,8 @@ export default EWalletPage = ({ route, navigation }) => {
     },
     scrollView: {
       height: 200,
-    },});
+    },
+  });
 
   return (
     <SafeAreaView
@@ -103,10 +102,11 @@ export default EWalletPage = ({ route, navigation }) => {
       }}
     >
       <View style={styles.eCardContainer}>
-        <CardWallet 
-            firstName={user.firstName}
-            lastName={user.lastName}
-            balance={user.eWalletBalance}/>
+        <CardWallet
+          firstName={user.firstName}
+          lastName={user.lastName}
+          balance={user.eWalletBalance}
+        />
       </View>
       <View
         style={{

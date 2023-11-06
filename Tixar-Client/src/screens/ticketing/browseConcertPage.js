@@ -1,11 +1,8 @@
 import { useState, useEffect, useContext } from "react";
 import {
   View,
-  Text,
   StyleSheet,
   ScrollView,
-  Pressable,
-  Image,
 } from "react-native";
 import { ColorContext } from "../../../context";
 import { StatusBar } from "expo-status-bar";
