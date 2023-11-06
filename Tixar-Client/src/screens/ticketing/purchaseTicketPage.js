@@ -5,11 +5,12 @@ import {
   SafeAreaView,
   Pressable,
   ScrollView,
+  Alert,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import FooterBlock from "../../components/viewConcert/footerBlock";
 import { ColorContext } from "../../../context";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import Button from "../../components/newApp/button";
 import { AuthContext } from "../../../context";
 import { FontAwesome } from "@expo/vector-icons";
@@ -30,7 +31,12 @@ export default ViewConcertPage = ({ route, navigation }) => {
     eventID,
     salesRoundID,
     priceID,
+    sessionID,
+    capacityID,
   } = route.params;
+
+  const [transactionID, setTransactionID] = useState("");
+
   const categoryValue = category.split("-")[0].trim();
   const price = category.split("-")[1].trim();
   const numericPrice = Number(price.slice(1));
@@ -49,6 +55,7 @@ export default ViewConcertPage = ({ route, navigation }) => {
   };
 
   const purchaseTicket = () => {
+    console.log("Attempting to purchase ticket")
     fetch("http://rt.tixar.sg:3000/api/transaction/purchaseTicket", {
       method: "POST",
       headers: {
@@ -57,14 +64,61 @@ export default ViewConcertPage = ({ route, navigation }) => {
       },
       body: JSON.stringify(requestBody),
     }).then((response) => {
-      console.log("this is the request Body" + JSON.stringify(requestBody));
-
-      console.log(response);
-      if (response.ok) {
-        console.log("Update successful");
-      } else {
-        console.log("Update unsuccessful");
+      console.log("Attempting to purchase ticket with" + JSON.stringify(requestBody));
+      if (!response.ok) {
+        console.log("Payment unsuccessful");
+        throw new Error(response.status);
       }
+      console.log("Payment successful");
+      Alert.alert("Tickets purchased successfully", "You can find them in your tickets list")
+      return response.json();
+    }).then((data) => {
+      console.log("data is:", JSON.stringify(data));
+      // navigation.navigate("generatedUserTicketPage", {
+      //   datePurchased: new Date().toLocaleDateString(),
+      //   eventID: eventID,
+      //   sessionID: sessionID,
+      //   transactionID: data._id,
+      //   capacityID: capacityID,
+      //   category: category,
+      // });
+      setTransactionID(data._id);
+      generateTicket(data._id);
+    }).catch((error) => {
+      console.log(error);
+    });
+  };
+
+  const generateTicket = (transactionId) => {
+
+    const ticketBody = {
+      datePurchased: new Date(),
+      eventId: eventID,
+      sessionId: sessionID,
+      transactionId: transactionId,
+      capacityId: capacityID,
+      category: category.split("-")[0].trim(),
+    }
+
+    console.log("Attempting to generate ticket");
+    fetch("http://rt.tixar.sg:3000/api/ticket/generate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(ticketBody)
+    }).then((response) => {
+      console.log("attempting to generate ticket with" + JSON.stringify(ticketBody));
+      if (!response.ok) {
+        console.log("Ticket generation unsuccessful");
+        throw new Error(response.status);
+      }
+      console.log("Ticket generation successful");
+      navigation.navigate("browseConcertPage");
+      return response.json();
+    }).catch((error) => {
+      console.log(error);
     });
   };
 
@@ -278,7 +332,7 @@ export default ViewConcertPage = ({ route, navigation }) => {
           <Pressable
             style={styles.paymentMode}
             onPress={() => {
-              navigation.navigate("browseConcertPage");
+              // navigation.navigate("browseConcertPage");
               purchaseTicket();
             }}
           >
@@ -298,6 +352,10 @@ export default ViewConcertPage = ({ route, navigation }) => {
             enableCondition={true} //change to enable condition based on account verified fan status and access
           />
         </View>
+
+        <Text style = {{color: colors.textPrimary}}> Event ID: {eventID} </Text>
+        <Text style = {{color: colors.textPrimary}}> Session ID: {sessionID} </Text>
+        <Text style = {{color: colors.textPrimary}}> Capacity ID: {capacityID} </Text>
       </ScrollView>
     </SafeAreaView>
   );
