@@ -38,6 +38,7 @@ import BrowseConcertPage from "./src/screens/ticketing/browseConcertPage";
 import ConcertCategoryPage from "./src/screens/ticketing/concertCategoryPage";
 import GeneratedUserTicketPage from "./src/screens/ticketing/generateTicketPage";
 import CheckoutPage from "./src/screens/ticketing/checkoutPage";
+import PurchaseTicketPage from "./src/screens/ticketing/purchaseTicketPage";
 
 // User
 import UserTicketsPage from "./src/screens/user/ticketsPage";
@@ -50,6 +51,7 @@ import ViewClubPage from "./src/screens/user/viewClubPage";
 // eWallet
 import ManageEWalletPage from "./src/screens/eWallet/eWalletPage";
 import EWalletWithdrawPage from "./src/screens/eWallet/eWalletWithdrawPage";
+import CreditCardPage from "./src/screens/eWallet/creditCardPage";
 import ColorTheme from "./src/colorScheme";
 import { StatusBar } from "expo-status-bar";
 
@@ -137,6 +139,13 @@ export default function App() {
                   component={CheckoutPage}
                   options={{
                     drawerLabel: "Checkout Page",
+                  }}
+                />
+                <Stack.Screen
+                  name="purchaseTicketPage"
+                  component={PurchaseTicketPage}
+                  options={{
+                    drawerLabel: "Purchase Ticket",
                   }}
                 />
               </Stack.Group>
@@ -230,6 +239,10 @@ export default function App() {
                 <Stack.Screen
                   name="generatedUserTicketPage"
                   component={GeneratedUserTicketPage}
+                />
+                <Stack.Screen
+                  name="creditCardPage"
+                  component={CreditCardPage}
                 />
               </Stack.Group>
 
