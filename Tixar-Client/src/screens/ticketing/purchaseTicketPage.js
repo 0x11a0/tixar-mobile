@@ -70,7 +70,6 @@ export default ViewConcertPage = ({ route, navigation }) => {
         throw new Error(response.status);
       }
       console.log("Payment successful");
-      Alert.alert("Tickets purchased successfully", "You can find them in your tickets list")
       return response.json();
     }).then((data) => {
       console.log("data is:", JSON.stringify(data));
@@ -112,9 +111,11 @@ export default ViewConcertPage = ({ route, navigation }) => {
       console.log("attempting to generate ticket with" + JSON.stringify(ticketBody));
       if (!response.ok) {
         console.log("Ticket generation unsuccessful");
+        Alert.alert("Ticket generation unsuccessful", "Please try again");
         throw new Error(response.status);
       }
       console.log("Ticket generation successful");
+      Alert.alert("Tickets purchased successfully", "You can find them in your tickets list")
       navigation.navigate("browseConcertPage");
       return response.json();
     }).catch((error) => {
