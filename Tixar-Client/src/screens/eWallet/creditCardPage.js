@@ -145,7 +145,7 @@ export default CreditCardPage = ({ route, navigation }) => {
           Alert.alert("Card added successfully");
           navigation.pop();
         } else if (
-          data.message === "Credit card added successfully!" &&
+          data.message === "Credit card updated successfully!" &&
           method === "PUT"
         ) {
           console.log("card changed successfully");

@@ -67,6 +67,7 @@ export default ViewConcertPage = ({ route, navigation }) => {
       console.log("Attempting to purchase ticket with" + JSON.stringify(requestBody));
       if (!response.ok) {
         console.log("Payment unsuccessful");
+        Alert.alert("Payment unsuccessful", "Please ensure your E-Wallet has sufficient funds.")
         throw new Error(response.status);
       }
       console.log("Payment successful");
