@@ -46,8 +46,7 @@ export default BrowseConcertPage = ({ route, navigation }) => {
   }, [navigation]);
 
   return (
-    <View style={[styles.container, {backgroundColor: colors.primary}]}>
-
+    <View style={[styles.container, { backgroundColor: colors.primary }]}>
       <View
         style={{
           backgroundColor: colors.background,
@@ -55,12 +54,12 @@ export default BrowseConcertPage = ({ route, navigation }) => {
         }}
       >
         <SearchField searchText={searchText} setSearchText={setSearchText} />
-
       </View>
-  
 
-      <View style={[styles.contentContainer, {backgroundColor: colors.primary}]}>
-        <ScrollView style={{backgroundColor: colors.primary}}>
+      <View
+        style={[styles.contentContainer, { backgroundColor: colors.primary }]}
+      >
+        <ScrollView style={{ backgroundColor: colors.primary }}>
           {/* Your FanclubCards go here */}
           {concerts.map((concert) => {
             //retrieve session information from each concert
@@ -83,9 +82,6 @@ export default BrowseConcertPage = ({ route, navigation }) => {
             const formattedStartDate = formatDate(startDate);
             const formattedEndDate = formatDate(endDate);
 
-            console.log("Start Date: " + formattedStartDate);
-            console.log("End Date: " + formattedEndDate);
-
             return (
               <ConcertBlock
                 key={concert._id}
@@ -95,8 +91,8 @@ export default BrowseConcertPage = ({ route, navigation }) => {
                 endDate={formattedEndDate}
                 artistName={concert.artistName}
                 artistDescription={"Lorem ipsum dolor sit amet consectetur"}
-                artistIcon={artistIcon}
-                imageBackground={imageBackground}
+                artistImage={concert.artistImage}
+                imageBackground={concert.concertImage}
                 onPressFunction={() => {
                   if (concert._id) {
                     console.log("Switching to concert page, \n" + concert._id);

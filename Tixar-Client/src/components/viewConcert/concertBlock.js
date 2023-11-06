@@ -21,10 +21,10 @@ export default ConcertBlock = ({
   venueName,
   startDate,
   endDate,
-  imageBackground,
   artistName,
   artistDescription,
-  artistIcon,
+  artistImage,
+  imageBackground,
   onPressFunction,
 }) => {
   //   const formattedDate = formatDateString(startDate, endDate);
@@ -37,7 +37,7 @@ export default ConcertBlock = ({
           : console.log(concertName + " pressed");
       }}
     >
-      <Image source={imageBackground} style={styles.imageBackground} />
+      <Image source={{ uri: imageBackground }} style={styles.imageBackground} />
       <View style={{ paddingHorizontal: 15 }}>
         <View style={{ height: 20 }} />
 
@@ -57,7 +57,7 @@ export default ConcertBlock = ({
         <View style={{ height: 45 }} />
 
         <View style={styles.artistBlock}>
-          <Image source={artistIcon} style={styles.artistIcon} />
+          <Image source={{ uri: artistImage }} style={styles.artistIcon} />
           <View style={styles.artistTextContainer}>
             <Text style={styles.artistName}>{artistName}</Text>
             <View style={{ height: 5 }} />
