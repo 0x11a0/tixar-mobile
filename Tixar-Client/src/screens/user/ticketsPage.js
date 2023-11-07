@@ -72,11 +72,12 @@ export default TicketsPage = ({ navigation }) => {
             console.log(ticket._id);
             const category = ticket.type;
             const id = ticket._id;
+            const eventName = ticket.event.name;
 
             return (
               <TicketCard
                 key={id}
-                concertName={"Coldplay Concert"}
+                concertName={eventName}
                 concertCategory={category}
                 concertReference={`Reference No. ${id}`}
                 onPress={() => {
