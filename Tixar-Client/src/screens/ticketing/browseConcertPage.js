@@ -30,7 +30,6 @@ export default BrowseConcertPage = ({ route, navigation }) => {
       })
       .catch((error) => console.log("error at profiles" + error));
 
-<<<<<<< HEAD
         await fetch("http://rt.tixar.sg:3000/api/event", {
             method: "GET",
             credentials: "include",
@@ -87,107 +86,6 @@ export default BrowseConcertPage = ({ route, navigation }) => {
             animate3.stopAnimation();
         }
     },[isLoading]);
-
-    const duration = 300;
-    const animate1 = useRef(new Animated.Value(0)).current;
-    const animate2 = useRef(new Animated.Value(0)).current;
-    const animate3 = useRef(new Animated.Value(0)).current;
-
-    const loadingAnimation = () => {
-        Animated.sequence([
-            Animated.timing(animate1, {
-                toValue: 1,
-                duration: duration,
-                useNativeDriver: true,
-            }),
-            Animated.timing(animate2, {
-                toValue: 1,
-                duration: duration,
-                useNativeDriver: true,
-            }),
-            Animated.timing(animate3, {
-                toValue: 1,
-                duration: duration,
-                useNativeDriver: true,
-            }),
-        ]).start( () => {
-            animate1.setValue(0);
-            animate2.setValue(0);
-            animate3.setValue(0);
-            loadingAnimation();
-        });
-    }
-
-    if (isLoading){
-        return (
-            <View style={{ flex: 1, backgroundColor: colors.background }}>
-
-            <SearchField searchText={searchText}
-            setSearchText={setSearchText} />
-            <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
-            <Text style={{color: colors.textSecondary}}>Loading</Text>
-            <Text style={{color: colors.textSecondary}}> .</Text>
-            <Text style={{color: colors.textSecondary}}> .</Text>
-            <Text style={{color: colors.textSecondary}}> .</Text>
-            </View>
-            </View>
-=======
-    await fetch("http://rt.tixar.sg:3000/api/event", {
-      method: "GET",
-      credentials: "include",
-      headers: { Authorization: `Bearer ${token}` },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setAllConcerts(data);
-        console.log(profileData);
-        setConcerts(
-          data.sort((e1, e2) => {
-            let x = profileData.includes(e1.artistName.toLowerCase());
-            let y = profileData.includes(e2.artistName.toLowerCase());
-            if (x && y) {
-              return e1.artistName.localeCompare(e2.artistName);
-            } else if (x) {
-              return -1;
-            } else if (y) {
-              return 1;
-            }
-            return e1.artistName.localeCompare(e2.artistName);
-          })
->>>>>>> c44471809e8f23803d48a7a823da9984706e5551
-        );
-      })
-      .then(() => {
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
-
-  useEffect(() => {
-    const navFunc = navigation.addListener("focus", async () => {
-      await getProfiles();
-    });
-    return navFunc;
-  }, [navigation]);
-
-  useEffect(() => {
-    if (isLoading) {
-      return;
-    } else if (searchText === "") {
-      setConcerts(allConcerts);
-      return;
-    }
-    let query = searchText.toLowerCase();
-    setConcerts(
-      allConcerts.filter(
-        (concert) =>
-          concert.name.toLowerCase().includes(query) ||
-          concert.artistName.toLowerCase().includes(query)
-      )
-    );
-  }, [searchText]);
 
   const duration = 300;
   const animate1 = useRef(new Animated.Value(0)).current;
