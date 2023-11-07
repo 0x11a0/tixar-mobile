@@ -183,7 +183,7 @@ export default ViewConcertPage = ({ route, navigation }) => {
 
   const startDate = new Date(concert.sessions[0].start);
   const formattedStartDate = formatDate(startDate);
-  const endDate = new Date(concert.sessions[0].end);
+  const endDate = new Date(concert.sessions[concert.sessions.length - 1].end);
   const formattedEndDate = formatDate(endDate);
 
   //check availability checks
