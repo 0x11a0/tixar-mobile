@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -21,17 +21,16 @@ export default FanclubCard = ({
     imageUrl,
     onPressFunction,
     isMember,
+    profiles,
     isLoading,
     setIsLoading,
 }) => {
     const navigation = useNavigation();
     const { token } = useContext(AuthContext);
     const { colors } = useContext(ColorContext);
-    const [pressed, setPressed] = useState(isMember);
-   
+    const [pressed, setPressed] = useState(profiles.includes(clubId));
 
     const handleAddPress = () => {
-        setIsLoading(true);
         // Handle the delete action here
         // You can add your logic to delete the item
         const requestBody = {
@@ -51,7 +50,9 @@ export default FanclubCard = ({
                 console.log("SUCCESSFUL");
                 console.log(data);
                 //navigation.navigate("vfDashboardPage", { token: token });
-            }).then(() => setIsLoading(true))
+            }).then(() => {
+                setPressed(true);
+            })
             .catch((error) => {
                 console.error(error);
             });
@@ -61,6 +62,11 @@ export default FanclubCard = ({
     if (imageUrl) {
         image = { uri: imageUrl };
     }
+
+    useEffect(() => {
+        setPressed(profiles.includes(clubId));
+
+    }, []);
 
     return (
         <View>

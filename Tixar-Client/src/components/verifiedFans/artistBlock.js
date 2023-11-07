@@ -93,6 +93,7 @@ export default ArtistBlock = ({
 };
 
 const styles = StyleSheet.create({
+
   container: {
     backgroundColor: "white",
     height: 100,
@@ -109,6 +110,7 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     marginRight: 10,
   },
+
 
   artistBlock: {
     flexDirection: "row",

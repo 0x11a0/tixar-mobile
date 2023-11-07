@@ -20,6 +20,7 @@ import Button from "../../components/newApp/button";
 import { AuthContext, ColorContext } from "../../../context";
 
 export default ViewClubPage = ({ route, navigation }) => {
+
   const { clubName, artistDescription, key, imageUrl, points } = route.params;
   const { token } = useContext(AuthContext);
   const { colors } = useContext(ColorContext);
