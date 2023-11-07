@@ -154,14 +154,6 @@ export default FanDashboardPage = ({ route, navigation }) => {
         }} 
         style={{width: '100%'}}
         />  
-        <NextButton
-
-        buttonText={"Redeem Fan Code Here!"}
-        onPressFunction={() => {
-            navigation.navigate("redemptionPage");
-        }}
-        style={{ marginTop: -20 }} // Adjust the marginTop value as needed
-        />
         </View>
         </View>
     );

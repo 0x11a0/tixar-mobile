@@ -71,7 +71,8 @@ export default LoginPage = ({ navigation }) => {
       .then((response) => {
         if (response.ok) {
           console.log("Login request successful");
-          animate1();
+            setValid(false);
+            animate1();
         } else {
           animate3();
         }
