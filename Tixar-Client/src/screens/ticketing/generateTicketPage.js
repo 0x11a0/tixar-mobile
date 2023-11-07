@@ -93,20 +93,20 @@ export default GenerateTicketPage = ({ route, navigation}) => {
           {/* Location */}
           <View style={styles.stadiumTitleView}>
             <GradientText style={styles.stadiumTitle}>
-              NATIONAL STADIUM SINGAPORE
+              {ticket.event.sessions[0].venue}
             </GradientText>
           </View>
           {/* Concert Title */}
           <View style={styles.concertTitleView}>
             <Text style={styles.concertTitle}>
-              Coldplay: Music of the Spheres
+              {ticket.event.name}
             </Text>
           </View>
 
           {/* Concert Info */}
           <View style={styles.concertInfoView}>
-            {/* <Text style={styles.concertInfo}>Reference Number: 12345ABC</Text> */}
-            {/* <Text style={styles.concertInfo}>Category: 1</Text> */}
+            <Text style={styles.concertInfo}>{ticket.event.artistName}</Text>
+            <Text style={styles.concertInfo}>{ticket.type}</Text>
             {/* <Text style={styles.concertInfo}>Quantity: 1</Text> */}
           </View>
         </View>

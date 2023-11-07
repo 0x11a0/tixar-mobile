@@ -4,6 +4,7 @@ import { ColorContext } from "../../../context";
 import { useContext } from "react";
 
 export default TicketCard = ({
+  artistName,
   concertName,
   concertCategory,
   concertReference,
@@ -58,21 +59,21 @@ export default TicketCard = ({
       fontSize: 16,
       color: colors.textPrimary,
       fontFamily: "Lato-Bold",
-      lineHeight: 27,
+      lineHeight: 20,
     },
   
     concertCategory: {
       fontSize: 12,
       color: colors.textPrimary,
       fontFamily: "Lato-Regular",
-      lineHeight: 27,
+      lineHeight: 20,
     },
   
     concertReference: {
       fontSize: 12,
       color: colors.textPrimary,
       fontFamily: "Lato-Regular",
-      lineHeight: 27,
+      lineHeight: 20,
     },
   });
   
@@ -91,6 +92,7 @@ export default TicketCard = ({
         {/* body info (need integration thanks) */}
         <View style={styles.textContainer}>
           <Text style={styles.concertTitle}>{concertName}</Text>
+          <Text style={styles.concertReference}>{artistName}</Text>
           <Text style={styles.concertReference}>{concertReference}</Text>
           <Text style={styles.concertCategory}>{concertCategory}</Text>
         </View>
