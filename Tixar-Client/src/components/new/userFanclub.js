@@ -17,18 +17,14 @@ export default FanclubCard = ({
     clubName,
     fanNumber,
     codesActive,
-    navigationDestination, // Receive the screen name prop
     imageUrl,
     onPressFunction,
     isMember,
     profiles,
-    isLoading,
-    setIsLoading,
 }) => {
     const navigation = useNavigation();
     const { token } = useContext(AuthContext);
     const { colors } = useContext(ColorContext);
-    const [pressed, setPressed] = useState(profiles.includes(clubId));
 
     const handleAddPress = () => {
         // Handle the delete action here
@@ -51,7 +47,6 @@ export default FanclubCard = ({
                 console.log(data);
                 //navigation.navigate("vfDashboardPage", { token: token });
             }).then(() => {
-                setPressed(true);
             })
             .catch((error) => {
                 console.error(error);
@@ -63,10 +58,6 @@ export default FanclubCard = ({
         image = { uri: imageUrl };
     }
 
-    useEffect(() => {
-        setPressed(profiles.includes(clubId));
-
-    }, []);
 
     return (
         <View>
@@ -117,8 +108,8 @@ export default FanclubCard = ({
                 handleAddPress();
             } 
         }}> 
-        <AntDesign name={pressed ? 'check' : 'plus'} color={colors.textSecondary} size={30}/>        
-
+        {/* <AntDesign name={pressed ? 'check' : 'plus'} color={colors.textSecondary} size={30}/>        
+        */}
         </Pressable>
 
         <View style={{width: 10}}/>
@@ -138,6 +129,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 10,
         paddingHorizontal: 10,
         paddingVertical: 10,
+        width: Dimensions.get('window').width * 0.95,
     },
 
     icon: {

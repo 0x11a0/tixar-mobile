@@ -20,6 +20,48 @@ import Button from "../../components/newApp/button";
 import { AuthContext, ColorContext } from "../../../context";
 
 export default ViewClubPage = ({ route, navigation }) => {
+<<<<<<< HEAD
+    const { clubName, artistDescription, clubId, profileId, imageUrl, points } = route.params;
+    const { token } = useContext(AuthContext);
+    const { colors } = useContext(ColorContext);
+    
+    const handleDeletePress = () => {
+        fetch(`http://vf.tixar.sg:3001/api/profile/${profileId}`, {
+            method: "DELETE",
+            credentials: "include",
+            headers: { Authorization: `Bearer ${token}` },
+        }).then(response => {
+            console.log(response.json());
+            console.log("deletes here");
+            navigation.pop();
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    };
+
+
+    const handleAddPress = () => {
+        const requestBody = {
+            // Add your data here
+            mode: "raw",
+            raw: "",
+        };
+        fetch(`http://vf.tixar.sg:3001/api/club/${clubId}/join`, {
+            method: "POST",
+            credentials: "include",
+            headers: { Authorization: `Bearer ${token}` },
+            body: JSON.stringify(requestBody),
+        })
+            .then(() => {
+                navigation.pop();
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    };
+=======
+>>>>>>> c44471809e8f23803d48a7a823da9984706e5551
 
   const { clubName, artistDescription, key, imageUrl, points } = route.params;
   const { token } = useContext(AuthContext);
@@ -50,6 +92,50 @@ export default ViewClubPage = ({ route, navigation }) => {
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
       <View style={{ backgroundColor: colors.background }}>
         <View
+<<<<<<< HEAD
+        style={{ flex: 1,
+                 width: "90%",
+                 alignItems: "center",
+                 alignSelf: "center",
+        }} >
+
+        <StatisticBox
+        clubName={clubName}
+        artistIcon={image}
+        artistDescription={artistDescription}
+        points={points}
+        />
+
+        <ConcertBox
+        clubName={"Taylor"}
+        monthlyInteractions={40123}
+        newFans={16452}
+        totalFans={131239543}
+        artistIcon={require("../../assets/nationalstadiumicon.png")}
+        />
+
+        <NextButton
+        buttonText={"Redeem Fan Code Here!"}
+        onPressFunction={() => {
+            navigation.navigate("redemptionPage");
+        }}
+        style={(marginTop = 50)}
+        />
+        {profileId === null && <Pressable
+        style={styles.deleteButton}
+        onPress={handleAddPress}
+        >
+        <Text style={styles.deleteButtonText}>Join</Text>
+        </Pressable> }
+        
+        {profileId !== null &&  <Pressable
+        style={styles.deleteButton}
+        onPress={handleDeletePress}
+        >
+        <Text style={styles.deleteButtonText}>Delete</Text>
+        </Pressable> }
+        </View>
+=======
           style={{
             flex: 1,
             width: "90%",
@@ -63,6 +149,7 @@ export default ViewClubPage = ({ route, navigation }) => {
             artistDescription={artistDescription}
             points={points}
           />
+>>>>>>> c44471809e8f23803d48a7a823da9984706e5551
 
           <ConcertBox
             clubName={"Taylor"}
