@@ -23,6 +23,7 @@ import { Picker } from "@react-native-picker/picker";
 export default ConcertCategoryPage = ({ route, navigation }) => {
   const insets = useSafeAreaInsets();
   const concert = route.params.concert;
+  const isVerifiedFan = route.params.isVerifiedFan;
 
   //code used to check if any sales round is open
   const showAlertAndNavigateBack = () => {
@@ -40,22 +41,57 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
   const currentDate = new Date();
   const salesRounds = concert.salesRound;
 
-  //check which round it is now, if current round is public and within the current date, 
+  //check which round it is now, if current round is public and within the current date,
   //set true
   let anySalesRoundMatchesConditions = false;
-  const filteredSalesRound = salesRounds.map((salesRound) => {
-    const salesRoundStartDate = new Date(salesRound.start);
-    const salesRoundEndDate = new Date(salesRound.end);
-    if (
-      currentDate >= salesRoundStartDate &&
-      currentDate <= salesRoundEndDate &&
-      salesRound.roundType == "public"
-    ) {
-      anySalesRoundMatchesConditions = true;
-      return salesRound;
-    } else {
-    }
-  });
+  // const filteredSalesRound = salesRounds.map((salesRound) => {
+  //   const salesRoundStartDate = new Date(salesRound.start);
+  //   const salesRoundEndDate = new Date(salesRound.end);
+  //   if (
+  //     currentDate >= salesRoundStartDate &&
+  //     currentDate <= salesRoundEndDate &&
+  //     salesRound.roundType == "private" &&
+  //     isVerifiedFan == true
+  //   ) {
+  //     console.log("PRIVATEEE");
+  //     console.log(salesRound);
+  //     anySalesRoundMatchesConditions = true;
+  //     return salesRound;
+  //   }
+  //   if (
+  //     currentDate >= salesRoundStartDate &&
+  //     currentDate <= salesRoundEndDate &&
+  //     salesRound.roundType == "public"
+  //   ) {
+  //     anySalesRoundMatchesConditions = true;
+  //     return salesRound;
+  //   } else {
+  //   }
+  // });
+  const filteredSalesRound = salesRounds
+    .map((salesRound) => {
+      const salesRoundStartDate = new Date(salesRound.start);
+      const salesRoundEndDate = new Date(salesRound.end);
+      if (
+        currentDate >= salesRoundStartDate &&
+        currentDate <= salesRoundEndDate &&
+        salesRound.roundType == "private" &&
+        isVerifiedFan == true
+      ) {
+        anySalesRoundMatchesConditions = true;
+        return salesRound;
+      }
+      if (
+        currentDate >= salesRoundStartDate &&
+        currentDate <= salesRoundEndDate &&
+        salesRound.roundType == "public"
+      ) {
+        anySalesRoundMatchesConditions = true;
+        return salesRound;
+      }
+      return undefined; // Return undefined explicitly when no condition matches
+    })
+    .filter((round) => round !== undefined);
 
   dateList = [];
   categoryAndPrice = [];
@@ -87,6 +123,33 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
     dateList = generateDateList(moment(startDate), moment(endDate));
     const prices = filteredSalesRound[0].prices;
     categoryAndPrice = generateCategoryAndPrice(prices);
+    // if (filteredSalesRound.length > 0) {
+    //   // const quantityForRound = filteredSalesRound[0].allocation;
+    //   // const sessions = concert.sessions;
+    //   // const startDate = concert.sessions[0].start;
+    //   // const length = concert.sessions.length;
+    //   // const endDate = concert.sessions[length - 1].end;
+    //   // dateList = generateDateList(moment(startDate), moment(endDate));
+    //   // const prices = filteredSalesRound[0].prices;
+    //   // categoryAndPrice = generateCategoryAndPrice(prices);
+    //   const quantityForRound = filteredSalesRound[1].allocation;
+    //   const sessions = concert.sessions;
+    //   const startDate = concert.sessions[1].start;
+    //   const length = concert.sessions.length;
+    //   const endDate = concert.sessions[length - 1].end;
+    //   dateList = generateDateList(moment(startDate), moment(endDate));
+    //   const prices = filteredSalesRound[1].prices;
+    //   categoryAndPrice = generateCategoryAndPrice(prices);
+    // } else {
+    //   const quantityForRound = filteredSalesRound.allocation;
+    //   const sessions = concert.sessions;
+    //   const startDate = concert.sessions.start;
+    //   const length = concert.sessions.length;
+    //   const endDate = concert.sessions[length - 1].end;
+    //   dateList = generateDateList(moment(startDate), moment(endDate));
+    //   const prices = filteredSalesRound.prices;
+    //   categoryAndPrice = generateCategoryAndPrice(prices);
+    // }
   }
 
   //for dates - get the date from the session, the first array element and the last one
@@ -105,6 +168,7 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
   const [sessionID, setSessionID] = useState(null);
   const [capacityID, setCapacityID] = useState(null);
   const [priceID, setPriceID] = useState(null);
+  const [salesRound, setSalesRound] = useState(null);
 
   useEffect(() => {
     setIsButtonEnabled(date !== null && quantity !== null && category !== null);
@@ -274,6 +338,13 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
       paddingVertical: 10,
       marginTop: 10,
     },
+    title: {
+      color: colors.textPrimary,
+      fontFamily: "Lato-Bold",
+      alignSelf: "center",
+      fontSize: 20,
+      marginBottom: 10,
+    },
     buttonContainer: {
       width: "100%",
       alignItems: "center",
@@ -336,6 +407,7 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
             padding: 20,
           }}
         >
+          <Text style={styles.title}>{filteredSalesRound[0].title}</Text>
           {/* date picker that works on both iOS and Android */}
           <Text style={styles.subtitle}>Date</Text>
           <View>
@@ -396,7 +468,11 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
           <View style={styles.quantityContainer}>
             <Text style={styles.subtitle}>Quantity</Text>
             <Text
-              style={{ color: colors.textPrimary, fontSize: 12, alignSelf:"flex-end"}}
+              style={{
+                color: colors.textPrimary,
+                fontSize: 12,
+                alignSelf: "flex-end",
+              }}
             >
               Available Quantity: {availableQuantity}
             </Text>
