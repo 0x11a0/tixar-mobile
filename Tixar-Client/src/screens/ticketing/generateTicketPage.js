@@ -27,7 +27,7 @@ export default GenerateTicketPage = ({ route, navigation}) => {
    
     containerView: {
       marginHorizontal: 15,
-      backgroundColor: colors.primary,
+      backgroundColor: 'white',
       opacity: 0.9,
       width: "80%",
       padding: 20,
@@ -48,7 +48,7 @@ export default GenerateTicketPage = ({ route, navigation}) => {
     concertTitle: {
       fontSize: 18,
       fontFamily: "Lato-Bold",
-      color: colors.textPrimary,
+      color: 'black',
       marginBottom: 5,
     },
     concertInfoView: {
@@ -58,7 +58,7 @@ export default GenerateTicketPage = ({ route, navigation}) => {
       fontFamily: "Lato-Regular",
       fontSize: 16,
       paddingBottom: 5,
-      color: colors.textPrimary,
+      color: 'black',
     },
     dashedLine: {
       width: "95%",
@@ -102,7 +102,7 @@ export default GenerateTicketPage = ({ route, navigation}) => {
             <Text style={styles.concertTitle}>
               {ticket.event.name}
             </Text>
-            <Text style={styles.concertInfo}>- {ticket.event.artistName}</Text>
+            <Text style={styles.concertInfo}>{ticket.event.artistName}</Text>
 
           </View>
 
