@@ -23,6 +23,7 @@ import { Picker } from "@react-native-picker/picker";
 export default ConcertCategoryPage = ({ route, navigation }) => {
   const insets = useSafeAreaInsets();
   const concert = route.params.concert;
+  const isVerifiedFan = route.params.isVerifiedFan;
 
   //code used to check if any sales round is open
   const showAlertAndNavigateBack = () => {
@@ -43,19 +44,54 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
   //check which round it is now, if current round is public and within the current date,
   //set true
   let anySalesRoundMatchesConditions = false;
-  const filteredSalesRound = salesRounds.map((salesRound) => {
-    const salesRoundStartDate = new Date(salesRound.start);
-    const salesRoundEndDate = new Date(salesRound.end);
-    if (
-      currentDate >= salesRoundStartDate &&
-      currentDate <= salesRoundEndDate &&
-      salesRound.roundType == "public"
-    ) {
-      anySalesRoundMatchesConditions = true;
-      return salesRound;
-    } else {
-    }
-  });
+  // const filteredSalesRound = salesRounds.map((salesRound) => {
+  //   const salesRoundStartDate = new Date(salesRound.start);
+  //   const salesRoundEndDate = new Date(salesRound.end);
+  //   if (
+  //     currentDate >= salesRoundStartDate &&
+  //     currentDate <= salesRoundEndDate &&
+  //     salesRound.roundType == "private" &&
+  //     isVerifiedFan == true
+  //   ) {
+  //     console.log("PRIVATEEE");
+  //     console.log(salesRound);
+  //     anySalesRoundMatchesConditions = true;
+  //     return salesRound;
+  //   }
+  //   if (
+  //     currentDate >= salesRoundStartDate &&
+  //     currentDate <= salesRoundEndDate &&
+  //     salesRound.roundType == "public"
+  //   ) {
+  //     anySalesRoundMatchesConditions = true;
+  //     return salesRound;
+  //   } else {
+  //   }
+  // });
+  const filteredSalesRound = salesRounds
+    .map((salesRound) => {
+      const salesRoundStartDate = new Date(salesRound.start);
+      const salesRoundEndDate = new Date(salesRound.end);
+      if (
+        currentDate >= salesRoundStartDate &&
+        currentDate <= salesRoundEndDate &&
+        salesRound.roundType == "private" &&
+        isVerifiedFan == true
+      ) {
+        anySalesRoundMatchesConditions = true;
+        return salesRound;
+      }
+      if (
+        currentDate >= salesRoundStartDate &&
+        currentDate <= salesRoundEndDate &&
+        salesRound.roundType == "public"
+      ) {
+        anySalesRoundMatchesConditions = true;
+        return salesRound;
+      }
+      return undefined; // Return undefined explicitly when no condition matches
+    })
+    .filter((round) => round !== undefined);
 
   dateList = [];
   categoryAndPrice = [];
@@ -87,6 +123,33 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
     dateList = generateDateList(moment(startDate), moment(endDate));
     const prices = filteredSalesRound[0].prices;
     categoryAndPrice = generateCategoryAndPrice(prices);
+    // if (filteredSalesRound.length > 0) {
+    //   // const quantityForRound = filteredSalesRound[0].allocation;
+    //   // const sessions = concert.sessions;
+    //   // const startDate = concert.sessions[0].start;
+    //   // const length = concert.sessions.length;
+    //   // const endDate = concert.sessions[length - 1].end;
+    //   // dateList = generateDateList(moment(startDate), moment(endDate));
+    //   // const prices = filteredSalesRound[0].prices;
+    //   // categoryAndPrice = generateCategoryAndPrice(prices);
+    //   const quantityForRound = filteredSalesRound[1].allocation;
+    //   const sessions = concert.sessions;
+    //   const startDate = concert.sessions[1].start;
+    //   const length = concert.sessions.length;
+    //   const endDate = concert.sessions[length - 1].end;
+    //   dateList = generateDateList(moment(startDate), moment(endDate));
+    //   const prices = filteredSalesRound[1].prices;
+    //   categoryAndPrice = generateCategoryAndPrice(prices);
+    // } else {
+    //   const quantityForRound = filteredSalesRound.allocation;
+    //   const sessions = concert.sessions;
+    //   const startDate = concert.sessions.start;
+    //   const length = concert.sessions.length;
+    //   const endDate = concert.sessions[length - 1].end;
+    //   dateList = generateDateList(moment(startDate), moment(endDate));
+    //   const prices = filteredSalesRound.prices;
+    //   categoryAndPrice = generateCategoryAndPrice(prices);
+    // }
   }
 
   //for dates - get the date from the session, the first array element and the last one

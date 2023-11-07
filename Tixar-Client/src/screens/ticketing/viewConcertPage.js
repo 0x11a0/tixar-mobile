@@ -15,19 +15,152 @@ import Button from "../../components/newApp/button";
 import { AuthContext } from "../../../context";
 
 export default ViewConcertPage = ({ route, navigation }) => {
-  const getVerifiedFanEligibility = () => {
-    fetch("http://vf.tixar.sg:3001/api/fan/eligibility", {
-      method: "GET",
+  useEffect(() => {
+    getFanInfo();
+  }, []);
+  // let isVerifiedFan = false;
+  // function getVerifiedFanEligibility(profileId) {
+  //   console.log("getVerifiedFanElibility page");
+  //   const payload = {
+  //     profileId: profileId,
+  //   };
+  //   fetch("http://vf.tixar.sg:3001/api/fan/eligibility", {
+  //     method: "POST",
+  //     credentials: "include",
+  //     headers: {
+  //       Authorization: `Bearer ${token}`,
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify(payload),
+  //   })
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       console.log(data);
+  //       isVerifiedFan = data;
+  //       console.log("get verified fan is verified fan value " + isVerifiedFan);
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  // }
+
+  // fanProfiles = [];
+  // const getFanInfo = () => {
+  //   fetch("http://vf.tixar.sg:3001/api/fan", {
+  //     method: "GET",
+  //     credentials: "include",
+  //     headers: { Authorization: `Bearer ${token}` },
+  //   })
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       console.log(data.profiles);
+  //       fanProfiles = data.profiles;
+  //       for (const profile of fanProfiles) {
+  //         console.log("here is the profile id " + profile.club._id);
+  //         console.log("here is the clubID " + clubId);
+  //         if (profile.club._id == clubId) {
+  //           console.log("THEY ARE THE SAME");
+  //           getVerifiedFanEligibility(profile._id);
+  //         }
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  // };
+  const [isVerifiedFan, setIsVerifiedFan] = useState(false);
+  const [fanProfiles, setFanProfiles] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const getVerifiedFanEligibility = (profileId) => {
+    console.log("getVerifiedFanEligibility page");
+    const payload = {
+      profileId: profileId,
+    };
+
+    return fetch("http://vf.tixar.sg:3001/api/fan/eligibility", {
+      method: "POST",
       credentials: "include",
-      headers: { Authorization: `Bearer ${token}` },
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        if (data) {
+          console.log("it is true");
+          setIsVerifiedFan(true);
+          return true;
+        }
+        console.log("get verified fan is verified fan value " + data);
       })
       .catch((error) => {
         console.error(error);
       });
+  };
+
+  // const getFanInfo = () => {
+  //   return new Promise((resolve, reject) => {
+  //     setLoading(true);
+  //     fetch("http://vf.tixar.sg:3001/api/fan", {
+  //       method: "GET",
+  //       credentials: "include",
+  //       headers: { Authorization: `Bearer ${token}` },
+  //     })
+  //       .then((response) => response.json())
+  //       .then((data) => {
+  //         console.log(data.profiles);
+  //         setFanProfiles(data.profiles);
+  //         for (const profile of data.profiles) {
+  //           console.log("here is the profile id " + profile.club._id);
+  //           console.log("here is the clubID " + clubId);
+  //           if (profile.club._id == clubId) {
+  //             console.log("THEY ARE THE SAME");
+  //             if (getVerifiedFanEligibility(profile._id)) {
+  //               return;
+  //             }
+  //           }
+  //         }
+  //       })
+  //       .then(() => {
+  //         setLoading(false);
+  //         resolve();
+  //       })
+  //       .catch((error) => {
+  //         console.error(error);
+  //         setLoading(false);
+  //         reject(error);
+  //       });
+  //   });
+  // };
+
+  const getFanInfo = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch("http://vf.tixar.sg:3001/api/fan", {
+        method: "GET",
+        credentials: "include",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await response.json();
+      console.log(data.profiles);
+      setFanProfiles(data.profiles);
+      for (const profile of data.profiles) {
+        console.log("here is the profile id " + profile.club._id);
+        console.log("here is the clubID " + clubId);
+        if (profile.club._id == clubId) {
+          console.log("THEY ARE THE SAME");
+          await getVerifiedFanEligibility(profile._id);
+          // If you want to wait for the verification to complete, use `await` here.
+        }
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const { colors } = useContext(ColorContext);
@@ -35,6 +168,7 @@ export default ViewConcertPage = ({ route, navigation }) => {
   const { token } = useContext(AuthContext);
   const concert = route.params.concert;
   console.log(concert);
+  const clubId = concert.clubId;
 
   //function to format dates
   function formatDate(dateString) {
@@ -62,16 +196,26 @@ export default ViewConcertPage = ({ route, navigation }) => {
   const filteredSalesRound = salesRounds.map((salesRound) => {
     const salesRoundStartDate = new Date(salesRound.start);
     const salesRoundEndDate = new Date(salesRound.end);
+    console.log("LAST " + isVerifiedFan);
     if (
-      currentDate >= salesRoundStartDate &&
-      currentDate <= salesRoundEndDate &&
-      salesRound.roundType == "public"
+      (currentDate >= salesRoundStartDate &&
+        currentDate <= salesRoundEndDate &&
+        salesRound.roundType == "public") ||
+      isVerifiedFan == true
     ) {
       anySalesRoundMatchesConditions = true;
       return salesRound;
     } else {
     }
   });
+
+  const checkAvailability = () => {
+    if (!anySalesRoundMatchesConditions) {
+      Alert.alert("Sales round not open", "Please wait till further notice");
+    } else {
+      navigation.navigate("concertCategoryPage", { concert: concert });
+    }
+  };
 
   const styles = StyleSheet.create({
     // main container
@@ -194,6 +338,8 @@ export default ViewConcertPage = ({ route, navigation }) => {
           <Button
             buttonText={"Check Availability"}
             onPressFunction={() => {
+              console.log("am i a verified fan " + isVerifiedFan);
+              console.log("here are all the fan profiles " + fanProfiles);
               if (!anySalesRoundMatchesConditions) {
                 Alert.alert(
                   "Sales round not open",
@@ -202,9 +348,22 @@ export default ViewConcertPage = ({ route, navigation }) => {
               } else {
                 navigation.navigate("concertCategoryPage", {
                   concert: concert,
+                  isVerifiedFan: isVerifiedFan,
                 });
               }
             }}
+            // onPressFunction={() => {
+            //   getFanInfo()
+            //     .then(() => {
+            //       console.log("am i a verified fan " + isVerifiedFan);
+            //       console.log("here are all the fan profiles " + fanProfiles);
+            //       checkAvailability();
+            //     })
+            //     .catch((error) => {
+            //       // Handle error if needed
+            //       console.error(error);
+            //     });
+            // }}
             enableCondition={true} //change to enable condition based on account verified fan status and access
           />
         </View>
