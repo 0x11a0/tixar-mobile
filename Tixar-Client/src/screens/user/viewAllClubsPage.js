@@ -6,12 +6,14 @@ import {
     ScrollView,
     FlatList,
     Animated,
-    Text
+    Text,
+    Pressable
 } from "react-native";
 import ClubsCard from "../../components/new/userFanclub";
 import { AuthContext, ColorContext } from "../../../context";
 import SearchField from "../../components/browseConcert/searchField";
 import { useFocusEffect } from "expo-router";
+import { AntDesign } from '@expo/vector-icons';
 
 export default ViewAllClubsPage = ({ route, navigation }) => {
     const { token } = useContext(AuthContext);
@@ -22,7 +24,6 @@ export default ViewAllClubsPage = ({ route, navigation }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [profiles, setProfiles] = useState([]);
     const [allProfiles, setAllProfiles] = useState([]);
-
 
     const getProfiles = async () => {
         await fetch('http://vf.tixar.sg:3001/api/profiles', {
@@ -52,12 +53,20 @@ export default ViewAllClubsPage = ({ route, navigation }) => {
     };
     useEffect(() => {
         const navFunc = navigation.addListener('focus', () => {
-            //setIsLoading(true);
+            // setIsLoading(true);
             getProfiles();
         });
         return navFunc;
     }, [navigation]);
     
+    useEffect(() => {
+        if (!isLoading){
+            animate1.stopAnimation();
+            animate2.stopAnimation();
+            animate3.stopAnimation();
+        }
+    },[isLoading]);
+
     useEffect(() => {
         if (isLoading){
             return;
@@ -69,6 +78,35 @@ export default ViewAllClubsPage = ({ route, navigation }) => {
         setClubs(allClubs.filter(club => club.name.toLowerCase().includes(query)));
     }, [searchText]);
 
+    const duration = 300;
+    const animate1 = useRef(new Animated.Value(0)).current;
+    const animate2 = useRef(new Animated.Value(0)).current;
+    const animate3 = useRef(new Animated.Value(0)).current;
+
+    const loadingAnimation = () => {
+        Animated.sequence([
+            Animated.timing(animate1, {
+                toValue: 1,
+                duration: duration,
+                useNativeDriver: true,
+            }),
+            Animated.timing(animate2, {
+                toValue: 1,
+                duration: duration,
+                useNativeDriver: true,
+            }),
+            Animated.timing(animate3, {
+                toValue: 1,
+                duration: duration,
+                useNativeDriver: true,
+            }),
+        ]).start( () => {
+            animate1.setValue(0);
+            animate2.setValue(0);
+            animate3.setValue(0);
+            loadingAnimation();
+        });
+    }
 
      if (isLoading){
         return (
@@ -80,9 +118,7 @@ export default ViewAllClubsPage = ({ route, navigation }) => {
             <Text style={{color: colors.textSecondary}}>Loading</Text>
             
             <Text style={{color: colors.textSecondary}}> .</Text>
-            
             <Text style={{color: colors.textSecondary}}> .</Text>
-            
             <Text style={{color: colors.textSecondary}}> .</Text>
             
             </View>
@@ -104,24 +140,25 @@ export default ViewAllClubsPage = ({ route, navigation }) => {
                 <View style={{height: 5}}/>
                 <ClubsCard
                 clubId={item._id}
+                
                 onPressFunction={() => {
-                    if (!isLoading){
-                        navigation.navigate("viewClubPage", {
-                            clubName: item.name,
-                            artistDescription: item.description,
-                            key: item._id,
-                            imageUrl: item.imageUrl,
-                            points: profiles.includes(item._id) ? allProfiles.filter(x => x.club._id === item._id)[0].points : null,
-                        });
-                    }
+                    const mem = profiles.includes(item._id);
+                    navigation.navigate('viewClubPage', {
+                        clubName: item.name,
+                        artistDescription: item.description,
+                        clubId: mem ? null : item._id,
+                        profileId: mem ? allProfiles.filter(prof => prof.club._id === item._id).pop()._id : null,
+                        imageUrl: item.imageUrl,
+                        points: mem ? item.points : null,
+                    });
                 }}
-
+ 
                 setIsLoading={setIsLoading}
-                profiles={profiles}
                 clubName={item.name}
                 fanNumber={item.members.length}
                 codesActive={item.codes.length}
                 imageUrl={item.imageUrl} />
+                
                 </View>
             );
         }}

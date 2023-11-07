@@ -30,61 +30,62 @@ export default BrowseConcertPage = ({ route, navigation }) => {
       })
       .catch((error) => console.log("error at profiles" + error));
 
-    await fetch("http://rt.tixar.sg:3000/api/event", {
-      method: "GET",
-      credentials: "include",
-      headers: { Authorization: `Bearer ${token}` },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setAllConcerts(data);
-        console.log(profileData);
-        setConcerts(
-          data.sort((e1, e2) => {
-            let x = profileData.includes(e1.artistName.toLowerCase());
-            let y = profileData.includes(e2.artistName.toLowerCase());
-            if (x && y) {
-              return e1.artistName.localeCompare(e2.artistName);
-            } else if (x) {
-              return -1;
-            } else if (y) {
-              return 1;
-            }
-            return e1.artistName.localeCompare(e2.artistName);
-          })
-        );
-      })
-      .then(() => {
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
+        await fetch("http://rt.tixar.sg:3000/api/event", {
+            method: "GET",
+            credentials: "include",
+            headers: { Authorization: `Bearer ${token}` },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                setAllConcerts(data);
+                console.log(profileData);
+                setConcerts(data.sort((e1, e2) => {
+                    let x = profileData.includes(e1.artistName.toLowerCase());
+                    let y = profileData.includes(e2.artistName.toLowerCase());
+                    if (x && y){
+                        return e1.artistName.localeCompare(e2.artistName);
+                    } else if (x){
+                        return -1;
+                    } else if (y){
+                        return 1;
+                    }
+                    return e1.artistName.localeCompare(e2.artistName);
+                }));
+            }).then(() => {
+                setIsLoading(false);
+                })
+            .catch((error) => {
+                console.error(error);
+            });
+    };
 
-  useEffect(() => {
-    const navFunc = navigation.addListener("focus", async () => {
-      await getProfiles();
-    });
-    return navFunc;
-  }, [navigation]);
+    useEffect(() => {
+        const navFunc = navigation.addListener("focus", async () => {
+            setIsLoading(true);
+            await getProfiles();
+        });
+        return navFunc;
+    }, [navigation]);
 
-  useEffect(() => {
-    if (isLoading) {
-      return;
-    } else if (searchText === "") {
-      setConcerts(allConcerts);
-      return;
-    }
-    let query = searchText.toLowerCase();
-    setConcerts(
-      allConcerts.filter(
-        (concert) =>
-          concert.name.toLowerCase().includes(query) ||
-          concert.artistName.toLowerCase().includes(query)
-      )
-    );
-  }, [searchText]);
+    useEffect(() => {
+        if (isLoading){
+            return;
+        } else if (searchText === ''){
+            setConcerts(allConcerts);
+            return;
+        }
+        let query = searchText.toLowerCase();
+        setConcerts(allConcerts.filter(concert => concert.name.toLowerCase().includes(query)
+            || concert.artistName.toLowerCase().includes(query)));
+    }, [searchText]);
+ 
+    useEffect(() => {
+        if (!isLoading){
+            animate1.stopAnimation();
+            animate2.stopAnimation();
+            animate3.stopAnimation();
+        }
+    },[isLoading]);
 
   const duration = 300;
   const animate1 = useRef(new Animated.Value(0)).current;
