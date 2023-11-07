@@ -15,6 +15,14 @@ import Button from "../../components/newApp/button";
 import { AuthContext } from "../../../context";
 
 export default ViewConcertPage = ({ route, navigation }) => {
+  const { colors } = useContext(ColorContext);
+  const insets = useSafeAreaInsets();
+  const { token } = useContext(AuthContext);
+  const concert = route.params.concert;
+  console.log(concert);
+  const clubId = concert.clubId;
+  const vfThreshold = concert.vfThreshold;
+
   useEffect(() => {
     getFanInfo();
   }, []);
@@ -72,10 +80,11 @@ export default ViewConcertPage = ({ route, navigation }) => {
   const [fanProfiles, setFanProfiles] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const getVerifiedFanEligibility = (profileId) => {
+  const getVerifiedFanEligibility = (profileId, vfThreshold) => {
     console.log("getVerifiedFanEligibility page");
     const payload = {
       profileId: profileId,
+      threshold: vfThreshold,
     };
 
     return fetch("http://vf.tixar.sg:3001/api/fan/eligibility", {
@@ -152,7 +161,7 @@ export default ViewConcertPage = ({ route, navigation }) => {
         console.log("here is the clubID " + clubId);
         if (profile.club._id == clubId) {
           console.log("THEY ARE THE SAME");
-          await getVerifiedFanEligibility(profile._id);
+          await getVerifiedFanEligibility(profile._id, vfThreshold);
           // If you want to wait for the verification to complete, use `await` here.
         }
       }
@@ -162,13 +171,6 @@ export default ViewConcertPage = ({ route, navigation }) => {
       setLoading(false);
     }
   };
-
-  const { colors } = useContext(ColorContext);
-  const insets = useSafeAreaInsets();
-  const { token } = useContext(AuthContext);
-  const concert = route.params.concert;
-  console.log(concert);
-  const clubId = concert.clubId;
 
   //function to format dates
   function formatDate(dateString) {

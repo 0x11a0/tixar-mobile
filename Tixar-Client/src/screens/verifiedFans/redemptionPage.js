@@ -149,8 +149,8 @@ const RedeemButton = ({
         onPress={() => {
           if (canRedeem) {
             // Redeem code here
-            // console.log("Token: " + token);
-            // console.log(' Attempting to redeem code: "' + code + '"');
+            console.log("Token: " + token);
+            console.log(' Attempting to redeem code: "' + code + '"');
             handleRedemption();
           } else {
             console.log("button disabled");
