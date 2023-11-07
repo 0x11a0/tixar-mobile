@@ -275,6 +275,13 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
       paddingVertical: 10,
       marginTop: 10,
     },
+    title: {
+      color: colors.textPrimary,
+      fontFamily: "Lato-Bold",
+      alignSelf: "center",
+      fontSize: 20,
+      marginBottom: 10,
+    },
     buttonContainer: {
       width: "100%",
       alignItems: "center",
@@ -337,7 +344,7 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
             padding: 20,
           }}
         >
-          <Text style={styles.subtitle}>{filteredSalesRound[0].title}</Text>
+          <Text style={styles.title}>{filteredSalesRound[0].title}</Text>
           {/* date picker that works on both iOS and Android */}
           <Text style={styles.subtitle}>Date</Text>
           <View>
