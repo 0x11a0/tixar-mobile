@@ -425,7 +425,7 @@ const DrawerNav = ({ route, navigation }) => {
           }}
         />
 
-        {userType === "admin" && (
+        {/* userType === "admin" && (
           <Drawer.Screen
             name="adminDashboardPage"
             component={AdminDashboardPage}
@@ -433,7 +433,7 @@ const DrawerNav = ({ route, navigation }) => {
               drawerLabel: "ADMIN",
             }}
           />
-        )}
+        ) */}
       </Drawer.Group>
     </Drawer.Navigator>
   );
