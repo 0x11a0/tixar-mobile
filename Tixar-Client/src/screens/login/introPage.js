@@ -213,16 +213,6 @@ export default IntroPage = ({ isLoaded, route, navigation }) => {
     }, []);
 
     return (
-        <ImageBackground source={require('../../assets/images/blue.png')} style={{
-            flex: 1,
-            paddingTop: insets.top,
-            paddingLeft: insets.left,
-            paddingRight: insets.right,
-            paddingBottom: insets.bottom,
-            justifyContent: 'center',
-            alignItems: 'center',
-            opacity: backOpacity,
-        }}>
             <Animated.View style={{
                 justifyContent: 'center',
                 alignItems: 'center',
@@ -274,7 +264,6 @@ export default IntroPage = ({ isLoaded, route, navigation }) => {
                 }} />
             </Animated.View>
 
-        </ImageBackground >
     );
 }
 

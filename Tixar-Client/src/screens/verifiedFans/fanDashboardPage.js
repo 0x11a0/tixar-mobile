@@ -61,7 +61,6 @@ export default FanDashboardPage = ({ route, navigation }) => {
     const animate2 = useRef(new Animated.Value(0)).current;
     const animate3 = useRef(new Animated.Value(0)).current;
 
-
     const loadingAnimation = () => {
         Animated.sequence([
             Animated.timing(animate1, {
@@ -88,6 +87,14 @@ export default FanDashboardPage = ({ route, navigation }) => {
     }
 
 
+    useEffect(() => {
+        if (!isLoading){
+            animate1.stopAnimation();
+            animate2.stopAnimation();
+            animate3.stopAnimation();
+        }
+    },[isLoading]);
+
      if (isLoading){
         return (
             <View style={{ flex: 1, backgroundColor: colors.background }}>
@@ -98,9 +105,7 @@ export default FanDashboardPage = ({ route, navigation }) => {
             <Text style={{color: colors.textSecondary}}>Loading</Text>
             
             <Text style={{color: colors.textSecondary}}> .</Text>
-            
             <Text style={{color: colors.textSecondary}}> .</Text>
-            
             <Text style={{color: colors.textSecondary}}> .</Text>
             
             </View>
@@ -134,7 +139,8 @@ export default FanDashboardPage = ({ route, navigation }) => {
                     navigation.navigate('viewClubPage', {
                         clubName: item.club.name,
                         artistDescription: item.club.description,
-                        key: item._id,
+                        clubId: item.club._id,
+                        profileId: item._id,
                         imageUrl: item.club.imageUrl,
                         points: item.points,
 

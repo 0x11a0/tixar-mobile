@@ -64,11 +64,11 @@ export default BrowseConcertPage = ({ route, navigation }) => {
 
     useEffect(() => {
         const navFunc = navigation.addListener("focus", async () => {
+            setIsLoading(true);
             await getProfiles();
         });
         return navFunc;
     }, [navigation]);
-
 
     useEffect(() => {
         if (isLoading){
@@ -81,7 +81,15 @@ export default BrowseConcertPage = ({ route, navigation }) => {
         setConcerts(allConcerts.filter(concert => concert.name.toLowerCase().includes(query)
             || concert.artistName.toLowerCase().includes(query)));
     }, [searchText]);
-   
+ 
+    useEffect(() => {
+        if (!isLoading){
+            animate1.stopAnimation();
+            animate2.stopAnimation();
+            animate3.stopAnimation();
+        }
+    },[isLoading]);
+
     const duration = 300;
     const animate1 = useRef(new Animated.Value(0)).current;
     const animate2 = useRef(new Animated.Value(0)).current;
@@ -120,11 +128,9 @@ export default BrowseConcertPage = ({ route, navigation }) => {
             setSearchText={setSearchText} />
             <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
             <Text style={{color: colors.textSecondary}}>Loading</Text>
-
             <Text style={{color: colors.textSecondary}}> .</Text>
             <Text style={{color: colors.textSecondary}}> .</Text>
             <Text style={{color: colors.textSecondary}}> .</Text>
-
             </View>
             </View>
         );

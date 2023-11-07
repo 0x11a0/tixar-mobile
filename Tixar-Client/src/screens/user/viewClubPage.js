@@ -19,16 +19,39 @@ import NextButton from "../../components/new/nextButton";
 import { AuthContext, ColorContext } from "../../../context";
 
 export default ViewClubPage = ({ route, navigation }) => {
-    const { clubName, artistDescription, key, imageUrl, points } = route.params;
+    const { clubName, artistDescription, clubId, profileId, imageUrl, points } = route.params;
     const { token } = useContext(AuthContext);
     const { colors } = useContext(ColorContext);
     
     const handleDeletePress = () => {
-        fetch(`http://vf.tixar.sg:3001/api/profile/${key}`, {
+        fetch(`http://vf.tixar.sg:3001/api/profile/${profileId}`, {
             method: "DELETE",
             credentials: "include",
             headers: { Authorization: `Bearer ${token}` },
-        }).then(() => {
+        }).then(response => {
+            console.log(response.json());
+            console.log("deletes here");
+            navigation.pop();
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    };
+
+
+    const handleAddPress = () => {
+        const requestBody = {
+            // Add your data here
+            mode: "raw",
+            raw: "",
+        };
+        fetch(`http://vf.tixar.sg:3001/api/club/${clubId}/join`, {
+            method: "POST",
+            credentials: "include",
+            headers: { Authorization: `Bearer ${token}` },
+            body: JSON.stringify(requestBody),
+        })
+            .then(() => {
                 navigation.pop();
             })
             .catch((error) => {
@@ -72,12 +95,19 @@ export default ViewClubPage = ({ route, navigation }) => {
         }}
         style={(marginTop = 50)}
         />
-        <Pressable
+        {profileId === null && <Pressable
+        style={styles.deleteButton}
+        onPress={handleAddPress}
+        >
+        <Text style={styles.deleteButtonText}>Join</Text>
+        </Pressable> }
+        
+        {profileId !== null &&  <Pressable
         style={styles.deleteButton}
         onPress={handleDeletePress}
         >
-        {points !== null && <Text style={styles.deleteButtonText}>Delete</Text> }
-        </Pressable>
+        <Text style={styles.deleteButtonText}>Delete</Text>
+        </Pressable> }
         </View>
 
         <View>
