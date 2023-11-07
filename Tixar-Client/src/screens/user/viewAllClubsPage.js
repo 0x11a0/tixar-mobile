@@ -146,7 +146,7 @@ export default ViewAllClubsPage = ({ route, navigation }) => {
                     let pId = null;
                     let points = null;
                     if (mem){
-                        const prof = allProfiles.filter(prof => prof.club_id === item._id).pop();
+                        const prof = allProfiles.filter(prof => prof.club._id === item._id).pop();
                         pId = prof._id;
                         points = prof.points;
                     }
