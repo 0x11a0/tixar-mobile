@@ -40,7 +40,7 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
   const currentDate = new Date();
   const salesRounds = concert.salesRound;
 
-  //check which round it is now, if current round is public and within the current date, 
+  //check which round it is now, if current round is public and within the current date,
   //set true
   let anySalesRoundMatchesConditions = false;
   const filteredSalesRound = salesRounds.map((salesRound) => {
@@ -105,6 +105,7 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
   const [sessionID, setSessionID] = useState(null);
   const [capacityID, setCapacityID] = useState(null);
   const [priceID, setPriceID] = useState(null);
+  const [salesRound, setSalesRound] = useState(null);
 
   useEffect(() => {
     setIsButtonEnabled(date !== null && quantity !== null && category !== null);
@@ -336,6 +337,7 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
             padding: 20,
           }}
         >
+          <Text style={styles.subtitle}>{filteredSalesRound[0].title}</Text>
           {/* date picker that works on both iOS and Android */}
           <Text style={styles.subtitle}>Date</Text>
           <View>
@@ -396,7 +398,11 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
           <View style={styles.quantityContainer}>
             <Text style={styles.subtitle}>Quantity</Text>
             <Text
-              style={{ color: colors.textPrimary, fontSize: 12, alignSelf:"flex-end"}}
+              style={{
+                color: colors.textPrimary,
+                fontSize: 12,
+                alignSelf: "flex-end",
+              }}
             >
               Available Quantity: {availableQuantity}
             </Text>

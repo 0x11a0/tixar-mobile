@@ -55,7 +55,7 @@ export default ViewConcertPage = ({ route, navigation }) => {
   };
 
   const purchaseTicket = () => {
-    console.log("Attempting to purchase ticket")
+    console.log("Attempting to purchase ticket");
     fetch("http://rt.tixar.sg:3000/api/transaction/purchaseTicket", {
       method: "POST",
       headers: {
@@ -63,34 +63,41 @@ export default ViewConcertPage = ({ route, navigation }) => {
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(requestBody),
-    }).then((response) => {
-      console.log("Attempting to purchase ticket with" + JSON.stringify(requestBody));
-      if (!response.ok) {
-        console.log("Payment unsuccessful");
-        Alert.alert("Payment unsuccessful", "Please ensure your E-Wallet has sufficient funds.")
-        throw new Error(response.status);
-      }
-      console.log("Payment successful");
-      return response.json();
-    }).then((data) => {
-      console.log("data is:", JSON.stringify(data));
-      // navigation.navigate("generatedUserTicketPage", {
-      //   datePurchased: new Date().toLocaleDateString(),
-      //   eventID: eventID,
-      //   sessionID: sessionID,
-      //   transactionID: data._id,
-      //   capacityID: capacityID,
-      //   category: category,
-      // });
-      setTransactionID(data._id);
-      generateTicket(data._id);
-    }).catch((error) => {
-      console.log(error);
-    });
+    })
+      .then((response) => {
+        console.log(
+          "Attempting to purchase ticket with" + JSON.stringify(requestBody)
+        );
+        if (!response.ok) {
+          console.log("Payment unsuccessful");
+          Alert.alert(
+            "Payment unsuccessful",
+            "Please ensure your E-Wallet has sufficient funds."
+          );
+          throw new Error(response.status);
+        }
+        console.log("Payment successful");
+        return response.json();
+      })
+      .then((data) => {
+        console.log("data is:", JSON.stringify(data));
+        // navigation.navigate("generatedUserTicketPage", {
+        //   datePurchased: new Date().toLocaleDateString(),
+        //   eventID: eventID,
+        //   sessionID: sessionID,
+        //   transactionID: data._id,
+        //   capacityID: capacityID,
+        //   category: category,
+        // });
+        setTransactionID(data._id);
+        generateTicket(data._id);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const generateTicket = (transactionId) => {
-
     const ticketBody = {
       datePurchased: new Date(),
       eventId: eventID,
@@ -98,7 +105,7 @@ export default ViewConcertPage = ({ route, navigation }) => {
       transactionId: transactionId,
       capacityId: capacityID,
       category: category.split("-")[0].trim(),
-    }
+    };
 
     console.log("Attempting to generate ticket");
     fetch("http://rt.tixar.sg:3000/api/ticket/generate", {
@@ -107,21 +114,28 @@ export default ViewConcertPage = ({ route, navigation }) => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(ticketBody)
-    }).then((response) => {
-      console.log("attempting to generate ticket with" + JSON.stringify(ticketBody));
-      if (!response.ok) {
-        console.log("Ticket generation unsuccessful");
-        Alert.alert("Ticket generation unsuccessful", "Please try again");
-        throw new Error(response.status);
-      }
-      console.log("Ticket generation successful");
-      Alert.alert("Tickets purchased successfully", "You can find them in your tickets list")
-      navigation.navigate("browseConcertPage");
-      return response.json();
-    }).catch((error) => {
-      console.log(error);
-    });
+      body: JSON.stringify(ticketBody),
+    })
+      .then((response) => {
+        console.log(
+          "attempting to generate ticket with" + JSON.stringify(ticketBody)
+        );
+        if (!response.ok) {
+          console.log("Ticket generation unsuccessful");
+          Alert.alert("Ticket generation unsuccessful", "Please try again");
+          throw new Error(response.status);
+        }
+        console.log("Ticket generation successful");
+        Alert.alert(
+          "Tickets purchased successfully",
+          "You can find them in your tickets list"
+        );
+        navigation.navigate("browseConcertPage");
+        return response.json();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const styles = StyleSheet.create({
@@ -355,9 +369,9 @@ export default ViewConcertPage = ({ route, navigation }) => {
           />
         </View>
 
-        <Text style = {{color: colors.textPrimary}}> Event ID: {eventID} </Text>
+        {/* <Text style = {{color: colors.textPrimary}}> Event ID: {eventID} </Text>
         <Text style = {{color: colors.textPrimary}}> Session ID: {sessionID} </Text>
-        <Text style = {{color: colors.textPrimary}}> Capacity ID: {capacityID} </Text>
+        <Text style = {{color: colors.textPrimary}}> Capacity ID: {capacityID} </Text> */}
       </ScrollView>
     </SafeAreaView>
   );

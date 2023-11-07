@@ -5,6 +5,7 @@ import {
   SafeAreaView,
   Image,
   ScrollView,
+  Alert,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import FooterBlock from "../../components/viewConcert/footerBlock";
@@ -14,6 +15,21 @@ import Button from "../../components/newApp/button";
 import { AuthContext } from "../../../context";
 
 export default ViewConcertPage = ({ route, navigation }) => {
+  const getVerifiedFanEligibility = () => {
+    fetch("http://vf.tixar.sg:3001/api/fan/eligibility", {
+      method: "GET",
+      credentials: "include",
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   const { colors } = useContext(ColorContext);
   const insets = useSafeAreaInsets();
   const { token } = useContext(AuthContext);
@@ -35,6 +51,27 @@ export default ViewConcertPage = ({ route, navigation }) => {
   const formattedStartDate = formatDate(startDate);
   const endDate = new Date(concert.sessions[0].end);
   const formattedEndDate = formatDate(endDate);
+
+  //check availability checks
+  const currentDate = new Date();
+  const salesRounds = concert.salesRound;
+
+  //check which round it is now, if current round is public and within the current date,
+  //set true
+  let anySalesRoundMatchesConditions = false;
+  const filteredSalesRound = salesRounds.map((salesRound) => {
+    const salesRoundStartDate = new Date(salesRound.start);
+    const salesRoundEndDate = new Date(salesRound.end);
+    if (
+      currentDate >= salesRoundStartDate &&
+      currentDate <= salesRoundEndDate &&
+      salesRound.roundType == "public"
+    ) {
+      anySalesRoundMatchesConditions = true;
+      return salesRound;
+    } else {
+    }
+  });
 
   const styles = StyleSheet.create({
     // main container
@@ -157,9 +194,16 @@ export default ViewConcertPage = ({ route, navigation }) => {
           <Button
             buttonText={"Check Availability"}
             onPressFunction={() => {
-              navigation.navigate("concertCategoryPage", {
-                concert: concert,
-              });
+              if (!anySalesRoundMatchesConditions) {
+                Alert.alert(
+                  "Sales round not open",
+                  "Please wait till further notice"
+                );
+              } else {
+                navigation.navigate("concertCategoryPage", {
+                  concert: concert,
+                });
+              }
             }}
             enableCondition={true} //change to enable condition based on account verified fan status and access
           />
