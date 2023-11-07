@@ -109,7 +109,7 @@ export default ViewClubPage = ({ route, navigation }) => {
           enableCondition={true}
           buttonText={"Quit club"}
           onPressFunction={() => {
-              handleAddPress();
+              handleDeletePress();
           }} />
               </View>
       }
