@@ -25,6 +25,7 @@ export default TicketCard = ({
       marginHorizontal: 10, 
       padding: 10,
       borderRadius: 10,
+    marginBottom: 20
       // borderBottomWidth: 0.5,
       // borderColor: colors.secondary,
     },
