@@ -64,7 +64,6 @@ export default BrowseConcertPage = ({ route, navigation }) => {
 
     useEffect(() => {
         const navFunc = navigation.addListener("focus", async () => {
-            setIsLoading(true);
             await getProfiles();
         });
         return navFunc;

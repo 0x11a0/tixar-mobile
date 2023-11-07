@@ -52,7 +52,7 @@ export default ViewAllClubsPage = ({ route, navigation }) => {
     };
     useEffect(() => {
         const navFunc = navigation.addListener('focus', () => {
-            setIsLoading(true);
+            //setIsLoading(true);
             getProfiles();
         });
         return navFunc;
@@ -117,7 +117,7 @@ export default ViewAllClubsPage = ({ route, navigation }) => {
                 }}
 
                 setIsLoading={setIsLoading}
-                isMember={profiles.includes(item._id)}
+                profiles={profiles}
                 clubName={item.name}
                 fanNumber={item.members.length}
                 codesActive={item.codes.length}

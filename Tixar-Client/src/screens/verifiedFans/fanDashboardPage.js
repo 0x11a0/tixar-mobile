@@ -24,7 +24,12 @@ export default FanDashboardPage = ({ route, navigation }) => {
             .then((response) => response.json())
             .then((data) => {
                 setProfiles(data);
-                setSortedProfiles(data);
+                setSortedProfiles(data.sort((e1, e2) => {
+                    if (e1.points !== e2.points){
+                        return e2.points - e1.points;
+                    }
+                    return e1.club.name.localeCompare(e2.club.name);
+                }));
             }).then(() => { 
                 setIsLoading(false);
             })
@@ -35,7 +40,6 @@ export default FanDashboardPage = ({ route, navigation }) => {
 
     useEffect(() => {
         const navFunc = navigation.addListener("focus", () => {
-            setIsLoading(true);
             getProfiles();
         });
         return navFunc;
@@ -93,17 +97,11 @@ export default FanDashboardPage = ({ route, navigation }) => {
             <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
             <Text style={{color: colors.textSecondary}}>Loading</Text>
             
-            <Animated.View style={{opacity: animate1}}>
             <Text style={{color: colors.textSecondary}}> .</Text>
-            </Animated.View>
             
-            <Animated.View style={{opacity: animate2}}>
             <Text style={{color: colors.textSecondary}}> .</Text>
-            </Animated.View>
             
-            <Animated.View style={{opacity: animate3}}>
             <Text style={{color: colors.textSecondary}}> .</Text>
-            </Animated.View>
             
             </View>
             </View>

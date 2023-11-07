@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -21,13 +21,14 @@ export default FanclubCard = ({
     imageUrl,
     onPressFunction,
     isMember,
+    profiles,
     isLoading,
     setIsLoading,
 }) => {
     const navigation = useNavigation();
     const { token } = useContext(AuthContext);
     const { colors } = useContext(ColorContext);
-    const [pressed, setPressed] = useState(isMember);
+    const [pressed, setPressed] = useState(profiles.includes(clubId));
 
     const handleAddPress = () => {
         // Handle the delete action here
@@ -61,6 +62,11 @@ export default FanclubCard = ({
     if (imageUrl) {
         image = { uri: imageUrl };
     }
+
+    useEffect(() => {
+        setPressed(profiles.includes(clubId));
+
+    }, []);
 
     return (
         <View>
