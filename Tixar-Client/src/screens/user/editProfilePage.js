@@ -87,39 +87,6 @@ export default EditProfilePage = ({ route, navigation }) => {
       color: "#8F8F8F",
     },
 
-    resetButton: {
-      width: "86%",
-      height: 35,
-      alignItems: "center",
-      justifyContent: "center",
-    },
-    resetBackgroundEnabled: {
-      marginTop: 55,
-      borderRadius: 8,
-      width: "86%",
-      height: 40,
-      alignItems: "center",
-      justifyContent: "center",
-    },
-    resetBackgroundDisabled: {
-      marginTop: 55,
-      borderRadius: 8,
-      width: "86%",
-      height: 40,
-      alignItems: "center",
-      justifyContent: "center",
-      backgroundColor: "#E8ECEF",
-    },
-    resetTextEnabled: {
-      fontSize: 15,
-      fontFamily: "Lato-Bold",
-      color: "white",
-    },
-    resetTextDisabled: {
-      fontSize: 15,
-      fontFamily: "Lato-Bold",
-      color: "#252F40",
-    },
     textBox: {
       backgroundColor: colors.secondary,
       borderRadius: 10,
