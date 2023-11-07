@@ -57,6 +57,7 @@ export default LoginPage = ({ navigation }) => {
       })
       .catch((error) => {
         // upon unsuccessful verification of phone number, navigate to register page
+        console.error(error);
         console.log(
           "Phone number valid but not in system, Navigating to register page"
         );

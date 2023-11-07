@@ -1,9 +1,11 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { useContext } from 'react';
+import { View, StyleSheet } from 'react-native';
+import { ColorContext } from '../../../context';
 
 export default Card = (props) => {
+    const {colors} = useContext(ColorContext);
     return (
-        <View style={styles.cardContainer}>
+        <View style={[styles.cardContainer, {backgroundColor: colors.primary}]}>
             <View>
                 {props.children}
             </View>
@@ -13,7 +15,6 @@ export default Card = (props) => {
 
 const styles = StyleSheet.create({
     cardContainer: {
-        backgroundColor: '#FFFFFF',
         marginHorizontal: 15,
         marginTop: 20,
         borderRadius: 14,

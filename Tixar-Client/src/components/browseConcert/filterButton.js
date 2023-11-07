@@ -1,6 +1,10 @@
+import { useContext } from 'react';
 import { Image, Text, Pressable, View, StyleSheet } from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
+import { ColorContext } from '../../../context';
 
-export default FilterButton = ({ buttonText, imageSource, isFocused, onPressFunction, isLeft }) => {
+export default FilterButton = ({ buttonText, iconName, isFocused, onPressFunction, isLeft }) => {
+    const { colors } = useContext(ColorContext);
     return (
         <Pressable style={{
             flexDirection: 'row',
@@ -8,20 +12,20 @@ export default FilterButton = ({ buttonText, imageSource, isFocused, onPressFunc
             justifyContent: 'center',
             borderLeftWidth: isLeft ? 0 : 0.5,
             borderRightWidth: isLeft ? 0.5 : 0,
-            }}
+            borderColor: colors.textPrimary,
+        }}
             onPress={() => {
                 isFocused ? console.log('no effect') : onPressFunction();
             }}>
 
-            <Image source={imageSource}
-                style={styles.buttonIcon} />
+            <AntDesign name={iconName} size={20} color='white' />
 
             <View style={{ width: 10 }} />
 
             <Text style={{
                 fontFamily: isFocused ? 'Lato-Bold' : 'Lato-Regular',
                 fontSize: 17,
-                color: isFocused ? '#252F40' : '#67748E',
+                color: isFocused ? colors.textPrimary : colors.textDisabled,
             }}>
                 {buttonText}
             </Text>

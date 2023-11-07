@@ -1,91 +1,112 @@
-import { React } from 'react';
-import { View, Text, StyleSheet, Image, Pressable } from 'react-native';
-import { Entypo } from '@expo/vector-icons';
-import { creditcardicon } from '../../assets/creditcardicon.png';
+import { React } from "react";
+import { View, Text, StyleSheet, Image, Pressable } from "react-native";
 
 
-export default cardWallet = ({name}) => {
+export default cardWallet = ({ firstName, lastName, balance }) => {
+  return (
+    // entire card container
+    <View style={styles.container}>
+      {/* card backgroud image */}
+      <Image
+        source={require("../../assets/soft-ui-pro-react-native-v1.1.1/background3x.png")}
+        style={styles.cardBackground}
+      />
 
-    return (
-            <View style={styles.container}>
-                <Image source={require('../../assets/soft-ui-pro-react-native-v1.1.1/background3x.png')}
-                style={styles.headerImage} />
-                <View style={styles.overlayContainer}>
-                    <View style={styles.nameContainer}>
-                        <View>
-                            <Text style={styles.eCardTitle}>{name}</Text>
-                        </View>
-                        <View style = {{}}>
-                            <Image source={require('../../assets/creditcardicon.png')}
-                                style = {styles.profilePicture}/>
-                        </View>
-                    </View>
-                    <View style={styles.profileContainer}>
-                        <View>
-                            <Image source={require('../../assets/soft-ui-pro-react-native-v1.1.1/avatar23x.png')} style={styles.profilePicture}/>
-                        </View>
-                        <View style = {{justifyContent: 'flex-end'}}>
-                            <Text style={styles.balanceText}>Balance</Text>
-                            <Text style={styles.balanceAmount}>$1000.88</Text>
-                        </View>
-                    </View>
-                </View>
+         <View style={styles.cardContentContainer}>
+
+            {/* name */}
+            <View style={styles.nameContainer}>
+            <Text style={styles.name}>
+                {firstName} {lastName}
+            </Text>
             </View>
-    );
-}
+
+            {/* image row */}
+            <View style={styles.cardImageContainer}>
+            {/* card image */}
+            <Image
+                source={require("../../assets/creditcardicon.png")}
+                style={styles.cardImage}
+            />
+
+            {/* profile icon */}
+            <Image
+                source={require("../../assets/soft-ui-pro-react-native-v1.1.1/avatar23x.png")}
+                style={styles.profilePicture}
+            />
+            </View>
+
+            <View style={styles.balanceContainer}>
+            <Text style={styles.balanceAmount}>Balance ($):  {balance}</Text>
+
+            </View>
+
+        </View>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        flexDirection: 'row',
-        zIndex: 1,
-    },
-    overlayContainer: {
-        ...StyleSheet.absoluteFillObject,
-        zIndex: 2,
-        flexDirection: 'row',
-        paddingHorizontal: 15,
-        paddingTop: 15,
-        paddingBottom: '15%'
-    },
-    nameContainer: {
-        flex: 1.5,
-        zIndex: 2,
-        flexDirection: 'column',
-    },
-    profileContainer: {
-        flex: 1,
-        alignItems: 'flex-end',
-        flexDirection: 'column',
-        zIndex: 2,
-    },
-    headerImage: {
-        width: 274,
-        height: 161,
-        borderRadius: 8,
-        resizeMode: 'cover',
-        zIndex: 1,
-    },
-    eCardTitle: {
-        fontFamily: 'Lato-Bold',
-        fontSize: 28,
-        color: 'white'
-    },
-    profilePicture: {
-        height: 60,
-        width: 60,
-        resizeMode: 'cover',
-        borderRadius: 15
-    },
-    balanceText: {
-        fontFamily: 'Lato-Regular',
-        fontSize: 14,
-        color: 'white',
-        textAlign: 'right',
-    },
-    balanceAmount: {
-        fontFamily: 'Lato-Regular',
-        fontSize: 22,
-        color: 'white'
-    }
+  container: {
+    flex: 1,
+    paddingHorizontal: '5%',
+    alignItems: "center",
+    // backgroundColor: "red",
+  },
+
+  cardBackground: {
+    height: '100%',
+    width: "100%",
+    borderRadius: 15,
+    resizeMode: "cover",
+    position: "absolute",
+  },
+  cardContentContainer: {
+    flex: 1,
+    width: "100%",
+    paddingHorizontal: 20,
+    // backgroundColor: "red",
+  },
+  //   name
+  nameContainer: {
+    flex: 1,
+    justifyContent: "center",
+    // backgroundColor: "blue",
+  },
+  name: {
+    fontFamily: "Lato-Bold",
+    fontSize: 25,
+    color: "white",
+  },
+
+  //   images
+  cardImageContainer: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    // backgroundColor: "orange",
+  },
+  cardImage: {
+    height: 50,
+    width: 50,
+  },
+  profilePicture: {
+    height: 50,
+    width: 50,
+    resizeMode: "cover",
+    borderRadius: 10,
+  },
+
+  //   balance
+  balanceContainer: {
+    flex: 1,
+    justifyContent: "center",
+    // backgroundColor: "red",
+  },
+  balanceAmount: {
+    fontFamily: "Lato-Bold",
+    fontSize: 20,
+    color: "white",
+  },
 });

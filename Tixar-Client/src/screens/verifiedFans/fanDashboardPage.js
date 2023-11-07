@@ -1,97 +1,176 @@
-import { React, useState, useEffect } from "react";
-import { View, Text, StyleSheet, ScrollView, SafeAreaView } from "react-native";
+import { React, useState, useEffect, useContext, useRef } from "react";
+import { View, Text, Animated, StyleSheet, ScrollView, SafeAreaView } from "react-native";
 import ArtistBlock from "../../components/verifiedFans/artistBlock";
 import NextButton from "../../components/new/nextButton";
+import Button from "../../components/newApp/button";
+import { AuthContext, ColorContext } from "../../../context";
+import SearchField from "../../components/browseConcert/searchField";
+import { FlatList } from "react-native-gesture-handler";
 
 export default FanDashboardPage = ({ route, navigation }) => {
-  const [profiles, setProfiles] = useState([]);
+    const [profiles, setProfiles] = useState([]);
+    const [sortedProfiles, setSortedProfiles] = useState([]);
+    const [searchText, setSearchText] = useState('');
+    const [isLoading, setIsLoading] = useState(true);
 
-  const getProfiles = () => {
-    fetch("http://vf.tixar.sg/api/profiles", {
-      method: "GET",
-      credentials: "include",
-      headers: { Authorization: route.params.token },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // console.log(data);
-        setProfiles(data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
+    const { token } = useContext(AuthContext);
+    const { colors } = useContext(ColorContext);
+ 
+    const getProfiles = () => {
+        fetch("http://vf.tixar.sg:3001/api/profiles", {
+            method: "GET",
+            credentials: "include",
+            headers: { Authorization: `Bearer ${token}` },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                setProfiles(data);
+                setSortedProfiles(data.sort((e1, e2) => {
+                    if (e1.points !== e2.points){
+                        return e2.points - e1.points;
+                    }
+                    return e1.club.name.localeCompare(e2.club.name);
+                }));
+            }).then(() => { 
+                setIsLoading(false);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    };
 
-  // useEffect(() => {
-  //   // console.log("here is " + route.params.token);
-  //   getProfiles();
-  //   // console.log(profiles);
-  // }, []);
+    useEffect(() => {
+        const navFunc = navigation.addListener("focus", () => {
+            getProfiles();
+        });
+        return navFunc;
+    }, [navigation]);
 
-  useEffect(() => {
-    navigation.addListener("focus", () => {
-      console.log("reloaded");
-      getProfiles();
-    });
-  }, [navigation]);
+    useEffect(() => {
+        if (isLoading){
+            return;
+        } else if (searchText === ''){
+            setSortedProfiles(profiles);
+            return;
+        }
+        let query = searchText.toLowerCase();
+        setSortedProfiles(profiles.filter(profile => profile.club.name.toLowerCase().includes(query)));
+    }, [searchText]);
+   
+    const duration = 300;
+    const animate1 = useRef(new Animated.Value(0)).current;
+    const animate2 = useRef(new Animated.Value(0)).current;
+    const animate3 = useRef(new Animated.Value(0)).current;
 
-  return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        backgroundColor: "#F8F9FA",
-      }}
-    >
-      <View style={styles.contentContainer}>
-        <ScrollView>
-          {/* Your FanclubCards go here */}
-          {profiles.map((profile) => {
-            // console.log(profile);
-            // console.log(profile.points);
-            // console.log(profile.club.imageUrl);
-            return (
-              <ArtistBlock
-                key={profile._id} // Add a unique key prop
-                points={profile.points}
-                clubName={profile.club.name} // Use clubName, not clubname
-                artistDescription={profile.club.description}
-                artistIcon={profile.club.imageUrl}
-                onPressFunction={() => {
-                  navigation.navigate("viewClubPage", {
-                    clubName: profile.club.name,
-                    artistDescription: profile.club.description,
-                    key: profile._id,
-                    token: route.params.token,
-                    imageUrl: profile.club.imageUrl,
-                  });
-                }}
-                // artistIcon: require("../../assets/soft-ui-pro-react-native-v1.1.1/avatar23x.png"),
-              />
-            );
-          })}
-        </ScrollView>
+    const loadingAnimation = () => {
+        Animated.sequence([
+            Animated.timing(animate1, {
+                toValue: 1,
+                duration: duration,
+                useNativeDriver: true,
+            }),
+            Animated.timing(animate2, {
+                toValue: 1,
+                duration: duration,
+                useNativeDriver: true,
+            }),
+            Animated.timing(animate3, {
+                toValue: 1,
+                duration: duration,
+                useNativeDriver: true,
+            }),
+        ]).start( () => {
+            animate1.setValue(0);
+            animate2.setValue(0);
+            animate3.setValue(0);
+            loadingAnimation();
+        });
+    }
 
-        <NextButton
-          buttonText={"Redeem Fan Code Here!"}
-          onPressFunction={() => {
-            navigation.navigate("redemptionPage");
-          }}
-          style={{ marginTop: -20 }} // Adjust the marginTop value as needed
+
+    useEffect(() => {
+        if (!isLoading){
+            animate1.stopAnimation();
+            animate2.stopAnimation();
+            animate3.stopAnimation();
+        }
+    },[isLoading]);
+
+     if (isLoading){
+        return (
+            <View style={{ flex: 1, backgroundColor: colors.background }}>
+
+            <SearchField searchText={searchText}
+            setSearchText={setSearchText} />
+            <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
+            <Text style={{color: colors.textSecondary}}>Loading</Text>
+            
+            <Text style={{color: colors.textSecondary}}> .</Text>
+            <Text style={{color: colors.textSecondary}}> .</Text>
+            <Text style={{color: colors.textSecondary}}> .</Text>
+            
+            </View>
+            </View>
+        );
+     }
+
+
+    return (
+        <View style={{ flex: 1, paddingBottom: 20, backgroundColor: colors.background}} >
+        <SearchField searchText={searchText}
+            setSearchText={setSearchText}
+            onBlurFunction={() => {
+                let query = searchText.toLowerCase;
+                // setSortedProfiles(profiles.filter(profile => profile.clubName.contains(query)));
+            }}
         />
-      </View>
-    </SafeAreaView>
-  );
+        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', width: '100%'}}>
+        <FlatList 
+        data={sortedProfiles}
+        keyExtractor={item => item._id}
+        renderItem={({item}) => {
+            return(
+                <ArtistBlock 
+                key={item._id}
+                points={item.points}
+                clubName={item.club.name}
+                artistDescription={item.club.description}
+                artistIcon={item.club.imageUrl}
+                onPressFunction={() => {
+                    navigation.navigate('viewClubPage', {
+                        clubName: item.club.name,
+                        artistDescription: item.club.description,
+                        clubId: item.club._id,
+                        profileId: item._id,
+                        imageUrl: item.club.imageUrl,
+                        points: item.points,
+
+                    });
+
+                }}
+
+                />     
+            );
+        }} 
+        style={{width: '100%'}}
+        />  
+        <NextButton
+
+        buttonText={"Redeem Fan Code Here!"}
+        onPressFunction={() => {
+            navigation.navigate("redemptionPage");
+        }}
+        style={{ marginTop: -20 }} // Adjust the marginTop value as needed
+        />
+        </View>
+        </View>
+    );
 };
 
-const styles = StyleSheet.create({
-  // list
-  flatListContainer: {
-    // backgroundColor: "red",
-    height: "85%",
-  },
 
-  contentContainer: {
-    flex: 0.97,
-    backgroundColor: "#F8F9FA",
+
+const styles = StyleSheet.create({
+  flatListContainer: {
+    height: "85%",
   },
 });
