@@ -41,12 +41,12 @@ export default ConcertBlock = ({
     title: {
       fontFamily: "Lato-Bold",
       fontSize: 25,
-      color: "white",
+      color: colors.textPrimary,
     },
     subtitle: {
       fontFamily: "Lato-Regular",
       fontSize: 15,
-      color: "white",
+      color: colors.textPrimary,
     },
     artistIcon: {
       height: 45,
@@ -72,11 +72,11 @@ export default ConcertBlock = ({
     },
     artistName: {
       fontFamily: "Lato-Bold",
-      color: "white",
+      color: colors.textPrimary,
     },
     artistDescription: {
       fontFamily: "Lato-Regular",
-      color: "white",
+      color: colors.textPrimary,
     },
   });
 

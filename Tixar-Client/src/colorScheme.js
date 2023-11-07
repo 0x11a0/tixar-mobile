@@ -25,15 +25,15 @@ export default ColorScheme = {
     },
     light: {
         // General
-        primary: '#818181',
-        secondary: '#212124',
-        background: '#bf94f7',
-        accent: '#161618',
+        primary: '#ffffff',
+        secondary: '#818181',
+        background: '#CCCCCC',
+        accent: '#bf94f7',
 
 
         // Text
-        textPrimary: '#ffffff',
-        textAccent: '#000000',
+        textPrimary: '#000000',
+        textAccent: '#161618',
         textDisabled: '#CCCCCC',
 
         // Button
