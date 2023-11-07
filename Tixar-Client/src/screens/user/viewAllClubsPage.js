@@ -143,13 +143,20 @@ export default ViewAllClubsPage = ({ route, navigation }) => {
                 
                 onPressFunction={() => {
                     const mem = profiles.includes(item._id);
+                    let pId = null;
+                    let points = null;
+                    if (mem){
+                        const prof = allProfiles.filter(prof => prof.club_id === item._id).pop();
+                        pId = prof._id;
+                        points = prof.points;
+                    }
                     navigation.navigate('viewClubPage', {
                         clubName: item.name,
                         artistDescription: item.description,
-                        clubId: mem ? null : item._id,
-                        profileId: mem ? allProfiles.filter(prof => prof.club._id === item._id).pop()._id : null,
+                        clubId: item._id,
+                        profileId: pId,
                         imageUrl: item.imageUrl,
-                        points: mem ? item.points : null,
+                        points: points,
                     });
                 }}
  

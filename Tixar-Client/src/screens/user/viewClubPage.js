@@ -66,7 +66,8 @@ export default ViewClubPage = ({ route, navigation }) => {
   }
 
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+    <ScrollView style={{backgroundColor: colors.background}}
+      contentContainerStyle={{ flexGrow: 1 }}>
       <View style={{ backgroundColor: colors.background }}>
         <View
         style={{ flex: 1,
@@ -111,12 +112,6 @@ export default ViewClubPage = ({ route, navigation }) => {
         <Text style={styles.deleteButtonText}>Delete</Text>
         </Pressable> }
         </View>
-          style={{
-            flex: 1,
-            width: "90%",
-            alignItems: "center",
-            alignSelf: "center",
-          }}
       </View>
     </ScrollView>
   );
