@@ -5,6 +5,8 @@ import {
   SafeAreaView,
   Image,
   Alert,
+  Platform,
+  TouchableOpacity,
 } from "react-native";
 
 import moment from "moment";
@@ -14,7 +16,6 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { ColorContext } from "../../../context";
 import { useContext } from "react";
 import Button from "../../components/newApp/button";
-import { AntDesign } from "@expo/vector-icons";
 import FooterBlock from "../../components/viewConcert/footerBlock";
 import OptionFields from "../../components/concertCategory/optionFields";
 import { Picker } from "@react-native-picker/picker";
@@ -39,7 +40,8 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
   const currentDate = new Date();
   const salesRounds = concert.salesRound;
 
-  //check which round it is now, if current round is public and within the current date, set true
+  //check which round it is now, if current round is public and within the current date, 
+  //set true
   let anySalesRoundMatchesConditions = false;
   const filteredSalesRound = salesRounds.map((salesRound) => {
     const salesRoundStartDate = new Date(salesRound.start);
@@ -95,13 +97,26 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
   const quantities = ["1", "2", "3", "4"];
 
   const [date, setDate] = useState(null);
-  const [quantity, setQuantity] = useState(quantities);
+  const [quantity, setQuantity] = useState(null);
   const [category, setCategory] = useState(null);
+  const [availableQuantity, setAvailableQuantity] = useState(null);
+  const [eventID, setEventID] = useState(null);
+  const [salesRoundID, setSalesRoundID] = useState(null);
+  const [sessionID, setSessionID] = useState(null);
+  const [capacityID, setCapacityID] = useState(null);
+  const [priceID, setPriceID] = useState(null);
 
   useEffect(() => {
     setIsButtonEnabled(date !== null && quantity !== null && category !== null);
   }, [date, quantity, category]);
 
+  const handleDateChange = (selectedDate) => {
+    getQuantity(category, selectedDate);
+  };
+
+  const handleCategoryChange = (selectedCategory) => {
+    getQuantity(selectedCategory, date);
+  };
   const getQuantity = (selectedCategory, selectedDate) => {
     if (selectedCategory != null && selectedDate != null) {
       const selectedDateSessions = concert.sessions.filter((session) => {
@@ -116,18 +131,126 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
               individualCapacity.category === selectedCategoryFiltered
           );
           if (selectedCapacity) {
-            console.log(selectedCapacity.available);
+            setAvailableQuantity(selectedCapacity.available);
+            setSessionID(session._id);
+            setCapacityID(selectedCapacity._id);
             return selectedCapacity.available;
           }
         }
       });
-      if (selectedDateSessions.length > 0) {
-        // assuming all sessions have the same available quantity, you can take the first one
-        return selectedDateSessions[0].capacity[0].available;
-      }
     }
-    return null;
   };
+  const [isDatePickerVisible, setDatePickerVisible] = useState(false);
+  const [isCategoryPickerVisible, setCategoryPickerVisible] = useState(false);
+  const [isQuantityPickerVisible, setQuantityPickerVisible] = useState(false);
+
+  const handleDatePickerButtonPress = () => {
+    setDatePickerVisible(!isDatePickerVisible);
+    // Close other pickers when this one opens
+    setCategoryPickerVisible(false);
+    setQuantityPickerVisible(false);
+  };
+
+  const handleCategoryPickerButtonPress = () => {
+    setCategoryPickerVisible(!isCategoryPickerVisible);
+    // Close other pickers when this one opens
+    setDatePickerVisible(false);
+    setQuantityPickerVisible(false);
+  };
+
+  const handleQuantityPickerButtonPress = () => {
+    setQuantityPickerVisible(!isQuantityPickerVisible);
+    // Close other pickers when this one opens
+    setDatePickerVisible(false);
+    setCategoryPickerVisible(false);
+  };
+
+  useEffect(() => {
+    // Close all pickers when the user taps anywhere else
+    if (!isButtonEnabled) {
+      setDatePickerVisible(false);
+      setCategoryPickerVisible(false);
+      setQuantityPickerVisible(false);
+    }
+  }, [isButtonEnabled]);
+
+  const renderButtons = () => {
+    if (Platform.OS === "ios") {
+      return (
+        <>
+          <TouchableOpacity
+            onPress={handleDatePickerButtonPress}
+            style={styles.pickerButton}
+          >
+            <Text style={styles.pickerButtonText}>
+              {date ? date : "Select Date"}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={handleCategoryPickerButtonPress}
+            style={styles.pickerButton}
+          >
+            <Text style={styles.pickerButtonText}>
+              {category ? category : "Select Seat Category"}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={handleQuantityPickerButtonPress}
+            style={styles.pickerButton}
+          >
+            <Text style={styles.pickerButtonText}>
+              {quantity ? quantity : "Select Quantity"}
+            </Text>
+          </TouchableOpacity>
+        </>
+      );
+    }
+  };
+
+  function getPriceID(eventID, salesRoundID, category, price, concert) {
+    if (!concert || !concert._id) {
+      console.error(
+        `Concert with eventID ${eventID} not found or has no _id property.`
+      );
+      return null;
+    }
+
+    if (!concert.salesRound || !Array.isArray(concert.salesRound)) {
+      console.error(
+        `Concert with eventID ${eventID} has no valid sales rounds.`
+      );
+      return null;
+    }
+
+    const salesRound = concert.salesRound.find(
+      (round) => round && round._id === salesRoundID
+    );
+
+    if (!salesRound) {
+      console.error(
+        `Sales round with salesRoundID ${salesRoundID} not found in concert ${eventID}.`
+      );
+      return null;
+    }
+
+    if (!salesRound.prices || !Array.isArray(salesRound.prices)) {
+      console.error(`Sales round ${salesRoundID} has no valid prices.`);
+      return null;
+    }
+
+    const priceInfo = salesRound.prices.find(
+      (p) => p.category === category && p.price === price
+    );
+
+    if (!priceInfo) {
+      console.error(
+        `Price with category ${category} and price ${price} not found in sales round ${salesRoundID}.`
+      );
+      return null;
+    }
+
+    return priceInfo._id;
+  }
 
   const styles = StyleSheet.create({
     container: {
@@ -149,12 +272,27 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
       fontFamily: "Lato-Bold",
       color: colors.textPrimary,
       paddingVertical: 10,
+      marginTop: 10,
     },
     buttonContainer: {
       width: "100%",
       alignItems: "center",
       justifyContent: "center",
       marginTop: 30,
+    },
+    pickerButton: {
+      backgroundColor: colors.secondary, // Set the background color for the button
+      padding: 10,
+      borderRadius: 10,
+    },
+    pickerButtonText: {
+      fontFamily: "Lato-Regular",
+      color: colors.textPrimary,
+    },
+    quantityContainer: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      // backgroundColor:"red"
     },
   });
 
@@ -201,52 +339,90 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
           {/* date picker that works on both iOS and Android */}
           <Text style={styles.subtitle}>Date</Text>
           <View>
-            <Picker
-              selectedValue={date}
-              onValueChange={(itemValue) => setDate(itemValue)}
+            <TouchableOpacity
+              onPress={handleDatePickerButtonPress}
+              style={styles.pickerButton}
             >
-              {dateList.map((date, index) => (
-                <Picker.Item key={index} label={date} value={date} />
-              ))}
-            </Picker>
+              <Text style={styles.pickerButtonText}>
+                {date ? date : "Select Date"}
+              </Text>
+            </TouchableOpacity>
+            {isDatePickerVisible && (
+              <Picker
+                selectedValue={date}
+                onValueChange={(itemValue) => {
+                  setDate(itemValue);
+                  setEventID(concert._id);
+                  setSalesRoundID(filteredSalesRound[0]._id);
+                  handleDateChange(itemValue);
+                }}
+                itemStyle={{ color: colors.textPrimary }}
+              >
+                {dateList.map((date, index) => (
+                  <Picker.Item key={index} label={date} value={date} />
+                ))}
+              </Picker>
+            )}
           </View>
 
           {/* seat category selection */}
           <Text style={styles.subtitle}>Seat Category</Text>
           <View>
-            <Picker
-              selectedValue={category}
-              onValueChange={(itemValue) => setCategory(itemValue)}
+            <TouchableOpacity
+              onPress={handleCategoryPickerButtonPress}
+              style={styles.pickerButton}
             >
-              {categoryAndPrice.map((category, index) => (
-                <Picker.Item key={index} label={category} value={category} />
-              ))}
-            </Picker>
+              <Text style={styles.pickerButtonText}>
+                {category ? category : "Select Seat Category"}
+              </Text>
+            </TouchableOpacity>
+            {isCategoryPickerVisible && (
+              <Picker
+                selectedValue={category}
+                onValueChange={(itemValue) => {
+                  setCategory(itemValue);
+                  handleCategoryChange(itemValue);
+                }}
+                itemStyle={{ color: colors.textPrimary }}
+              >
+                {categoryAndPrice.map((category, index) => (
+                  <Picker.Item key={index} label={category} value={category} />
+                ))}
+              </Picker>
+            )}
           </View>
 
-          <Text style={{ color: "gray", fontSize: 12, marginTop: 5 }}>
-            Available Quantity: {getQuantity(category, date)}
-          </Text>
-
           {/* quantity selection */}
-          <Text style={styles.subtitle}>Quantity</Text>
-          {/* <OptionFields
-                        optionText={"0"}
-                        icon={require("../../assets/soft-ui-pro-react-native-v1.1.1/users3x.png")}
-                        onPressFunction={() => {
-                            console.log("quantity option clicked");
-                        }}
-                        onChangeTextFunction={(text) => {
-                            handleQuantityChange(text);
-                        }}
-                        keyboardType={"numeric"}
-                    /> */}
-          <OptionFields
-            optionText={quantity}
-            setOption={setQuantity}
-            materialIconName={"format-list-numbered"}
-            options={quantities}
-          />
+          <View style={styles.quantityContainer}>
+            <Text style={styles.subtitle}>Quantity</Text>
+            <Text
+              style={{ color: colors.textPrimary, fontSize: 12, alignSelf:"flex-end"}}
+            >
+              Available Quantity: {availableQuantity}
+            </Text>
+          </View>
+          <View>
+            <TouchableOpacity
+              onPress={handleQuantityPickerButtonPress}
+              style={styles.pickerButton}
+            >
+              <Text style={styles.pickerButtonText}>
+                {quantity ? quantity : "Select Quantity"}
+              </Text>
+            </TouchableOpacity>
+            {isQuantityPickerVisible && (
+              <Picker
+                selectedValue={quantity}
+                onValueChange={(itemValue) => setQuantity(itemValue)}
+                itemStyle={{ color: colors.textPrimary }}
+                pickerStyleType="drowdown"
+              >
+                {quantities.map((qty, index) => (
+                  <Picker.Item key={index} label={qty} value={qty} />
+                ))}
+              </Picker>
+            )}
+          </View>
 
           {/* button that brings you to the purchase confirmation page */}
 
@@ -254,10 +430,32 @@ export default ConcertCategoryPage = ({ route, navigation }) => {
             <Button
               buttonText={"BOOK NOW"}
               onPressFunction={() => {
-                console.log("Book button clicked");
-                navigation.navigate("checkoutPage");
+                const priceID = getPriceID(
+                  eventID,
+                  salesRoundID,
+                  category.split("- $")[0].trim(),
+                  parseFloat(category.split("- $")[1]),
+                  concert
+                );
+                if (priceID) {
+                  setPriceID(priceID);
+                  navigation.navigate("purchaseTicketPage", {
+                    date: date,
+                    quantity: quantity,
+                    category: category,
+                    concertName: concert.name,
+                    artist: concert.artistName,
+                    eventID: eventID,
+                    salesRoundID: salesRoundID,
+                    priceID: priceID, // Pass the priceID to the next screen
+                    sessionID: sessionID,
+                    capacityID: capacityID,
+                  });
+                } else {
+                  console.error("Price ID not found.");
+                }
               }}
-              enableCondition={isButtonEnabled} // condition to be set  when all fields are filled and available
+              enableCondition={isButtonEnabled}
             />
           </View>
         </View>

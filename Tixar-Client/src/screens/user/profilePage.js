@@ -17,7 +17,7 @@ export default ProfilePage = ({ route, navigation }) => {
   }, [navigation]);
 
   const getUser = () => {
-    console.log("getting user profile")
+    console.log("getting user profile");
     fetch("http://rt.tixar.sg:3000/api/user", {
       method: "GET",
       credentials: "include",
@@ -46,10 +46,10 @@ export default ProfilePage = ({ route, navigation }) => {
         }}
         editOnPress={() => {
           navigation.navigate("editProfilePage", {
-            firstName: firstName,
-            lastName: lastName,
-            email: email,
-            phoneNumber: phoneNumber,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            phoneNumber: user.phoneNumber,
           });
         }}
         settingsOnPress={() => {
@@ -68,7 +68,6 @@ export default ProfilePage = ({ route, navigation }) => {
         <Text style={[styles.subtitle, { color: colors.textPrimary }]}>
           {user.phone}
         </Text>
-    
       </View>
     </SafeAreaView>
   );

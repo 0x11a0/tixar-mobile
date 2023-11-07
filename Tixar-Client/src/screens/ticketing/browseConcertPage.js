@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useContext, useRef } from "react";
 import {
     View,
@@ -6,6 +7,7 @@ import {
     Text,
     Animated,
 } from "react-native";
+
 import { ColorContext } from "../../../context";
 import { StatusBar } from "expo-status-bar";
 
@@ -133,6 +135,7 @@ export default BrowseConcertPage = ({ route, navigation }) => {
     return (
         <View style={[styles.container, {backgroundColor: colors.background}]}>
         <View
+
         style={{
             backgroundColor: colors.background,
                 paddingBottom: 13,
@@ -148,6 +151,7 @@ export default BrowseConcertPage = ({ route, navigation }) => {
             renderItem={({item}) => {
 
             const session = item.sessions[0];
+
             const venueName = session.venue;
             const startDate = session.start;
             const endDate = session.end;
@@ -173,10 +177,10 @@ export default BrowseConcertPage = ({ route, navigation }) => {
                 venueName={venueName}
                 startDate={formattedStartDate}
                 endDate={formattedEndDate}
-                artistName={item.artistName}
-                artistDescription={"Lorem ipsum dolor sit amet consectetur"}
-                artistImage={item.artistImage}
-                imageBackground={item.concertImage}
+                artistName={concert.artistName}
+                artistDescription={concert.concertDescription}
+                artistImage={concert.artistImage}
+                imageBackground={concert.concertImage}
                 onPressFunction={() => {
                     if (item._id) {
                         console.log("Switching to concert page, \n" + item._id);
@@ -194,13 +198,8 @@ export default BrowseConcertPage = ({ route, navigation }) => {
             }}
         />
 
-        <ScrollView style={{backgroundColor: colors.background}}>
         
-        </ScrollView>
         </View>
-
-        {/*      
-            </ScrollView> */}
         <StatusBar style="light" />
         </View>
     );

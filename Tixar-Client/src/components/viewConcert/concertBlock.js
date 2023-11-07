@@ -20,9 +20,7 @@ import { useContext } from "react";
 
 export default ConcertBlock = ({
   concertName,
-  venueName,
-  startDate,
-  endDate,
+
   artistName,
   artistDescription,
   artistImage,
@@ -43,12 +41,12 @@ export default ConcertBlock = ({
     title: {
       fontFamily: "Lato-Bold",
       fontSize: 25,
-      color: "white",
+      color: colors.textPrimary,
     },
     subtitle: {
       fontFamily: "Lato-Regular",
       fontSize: 15,
-      color: "white",
+      color: colors.textPrimary,
     },
     artistIcon: {
       height: 45,
@@ -69,14 +67,16 @@ export default ConcertBlock = ({
     },
     artistTextContainer: {
       paddingHorizontal: 15,
+      width:'90%',
+      // backgroundColor: 'red',
     },
     artistName: {
       fontFamily: "Lato-Bold",
-      color: "white",
+      color: colors.textPrimary,
     },
     artistDescription: {
       fontFamily: "Lato-Regular",
-      color: "white",
+      color: colors.textPrimary,
     },
   });
 
@@ -103,8 +103,8 @@ export default ConcertBlock = ({
         {/* <View style={{ height: 10 }} /> */}
 
         {/* <Text style={styles.title}> */}
-          {/* {startDate === endDate ? startDate : `${startDate} to ${endDate}`} */}
-          {/* {formattedDate} */}
+        {/* {startDate === endDate ? startDate : `${startDate} to ${endDate}`} */}
+        {/* {formattedDate} */}
         {/* </Text> */}
 
         <View style={{ height: 10 }} />
@@ -114,12 +114,16 @@ export default ConcertBlock = ({
           <View style={styles.artistTextContainer}>
             <Text style={styles.artistName}>{artistName}</Text>
             <View style={{ height: 5 }} />
-            <Text style={styles.artistDescription}>{artistDescription}</Text>
+            <Text
+              numberOfLines={1.5}
+              ellipsizeMode="tail"
+              style={styles.artistDescription}
+            >
+              {artistDescription}
+            </Text>
           </View>
         </View>
       </View>
     </Pressable>
   );
 };
-
-

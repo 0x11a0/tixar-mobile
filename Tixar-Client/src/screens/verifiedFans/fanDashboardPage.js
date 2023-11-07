@@ -2,6 +2,7 @@ import { React, useState, useEffect, useContext, useRef } from "react";
 import { View, Text, Animated, StyleSheet, ScrollView, SafeAreaView } from "react-native";
 import ArtistBlock from "../../components/verifiedFans/artistBlock";
 import NextButton from "../../components/new/nextButton";
+import Button from "../../components/newApp/button";
 import { AuthContext, ColorContext } from "../../../context";
 import SearchField from "../../components/browseConcert/searchField";
 import { FlatList } from "react-native-gesture-handler";
@@ -148,6 +149,7 @@ export default FanDashboardPage = ({ route, navigation }) => {
         style={{width: '100%'}}
         />  
         <NextButton
+
         buttonText={"Redeem Fan Code Here!"}
         onPressFunction={() => {
             navigation.navigate("redemptionPage");
@@ -159,3 +161,10 @@ export default FanDashboardPage = ({ route, navigation }) => {
     );
 };
 
+
+
+const styles = StyleSheet.create({
+  flatListContainer: {
+    height: "85%",
+  },
+});

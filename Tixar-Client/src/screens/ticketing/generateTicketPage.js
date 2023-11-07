@@ -15,8 +15,9 @@ import DashedLine from "react-native-dashed-line";
 import { ColorContext } from "../../../context";
 import { useContext } from "react";
 
-export default GenerateTicketPage = ({navigation}) => {
+export default GenerateTicketPage = ({ route, navigation}) => {
   const { colors } = useContext(ColorContext);
+  const ticket = route.params.ticket;
 
   const styles = StyleSheet.create({
     backgroundImage: {
@@ -114,7 +115,7 @@ export default GenerateTicketPage = ({navigation}) => {
         <View style={styles.barcode}>
           <DashedLine style={styles.dashedLine} />
           <Barcode
-            value="6547811223231" //ticket reference number
+            value={ticket._id.slice(-12)} //ticket reference number
             options={{ format: "CODE128", backgroundColor: "black" }}
           />
         </View>
