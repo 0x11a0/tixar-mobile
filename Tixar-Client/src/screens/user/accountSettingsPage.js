@@ -1,19 +1,23 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useNavigation } from '@react-navigation/native'
-import { View, Text, StyleSheet, ScrollView, Pressable, Image, SafeAreaViewBase, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Pressable, Image, SafeAreaViewBase, SafeAreaView, useColorScheme } from 'react-native';
 
 import Card from '../../components/accountSettings/card.js';
 import ToggleSlider from '../../components/accountSettings/toggleSlider.js';
 import NotificationsPage from './notificationsPage.js';
+import { ColorContext } from '../../../context.js';
+import ColorScheme from '../../colorScheme.js';
+import colorScheme from '../../colorScheme.js';
 
-export default AccountSettingsPage = () => {
-
-    const navigation = useNavigation();
+export default AccountSettingsPage = ({ navigation }) => {
+    const { colors, setColors } = useContext(ColorContext);
+    const [useFaceID, setUseFaceID] = useState(false);
+    const [isDarkMode, setIsDarkMode] = useState(colors === colorScheme.dark);
 
     return (
         <SafeAreaView style={{
             flex: 1,
-            backgroundColor: "#F8F9FA",
+            backgroundColor: colors.background,
         }}>
             {/* Recommended Settings */}
             <Card>
@@ -21,28 +25,36 @@ export default AccountSettingsPage = () => {
                     <Image source={require('../../assets/icon.png')}
                         style={styles.cardIcon}
                     />
-                    <Text style={styles.cardTitle}>
+                    <Text style={[styles.cardTitle, { color: colors.textPrimary }]}>
                         Recommended Settings
                     </Text>
                 </View>
                 <View style={styles.cardRow}>
-                    <Text style={styles.cardText}>
+                    <Text style={[styles.cardText, { color: colors.textPrimary }]}>
                         Use FaceID to sign in
                     </Text>
-                    <ToggleSlider/>
+                    <ToggleSlider toggleValue={useFaceID}
+                        onToggle={() => {
+                            setUseFaceID(!useFaceID);
+                        }} />
                 </View>
                 <View style={styles.cardRow}>
-                    <Text style={styles.cardText}>
+                    <Text style={[styles.cardText, { color: colors.textPrimary }]}>
                         Light/Dark Mode
                     </Text>
-                    <ToggleSlider/>
+                    <ToggleSlider toggleValue={isDarkMode}
+                        onToggle={() => {
+                            setIsDarkMode(!isDarkMode);
+                            setColors(isDarkMode ? ColorScheme.light : ColorScheme.dark)
+
+                        }} />
                 </View>
                 <Pressable onPress={() => navigation.navigate('notificationsPage')}>
                     <View style={styles.cardRow}>
-                            <Text style={styles.cardText}>
-                                Notifications
-                            </Text>
-                            <Image source={require('../../assets/soft-ui-pro-react-native-v1.1.1/arrow3x.png')} style={styles.cardRightIcon}/>
+                        <Text style={[styles.cardText, { color: colors.textPrimary }]}>
+                            Notifications
+                        </Text>
+                        <Image source={require('../../assets/soft-ui-pro-react-native-v1.1.1/arrow3x.png')} style={styles.cardRightIcon} />
                     </View>
                 </Pressable>
             </Card>
@@ -53,21 +65,21 @@ export default AccountSettingsPage = () => {
                     <Image source={require('../../assets/icon.png')}
                         style={styles.cardIcon}
                     />
-                    <Text style={styles.cardTitle}>
+                    <Text style={[styles.cardTitle, { color: colors.textPrimary }]}>
                         Payment
                     </Text>
                 </View>
                 <View style={styles.cardRow}>
-                    <Text style={styles.cardText}>
+                    <Text style={[styles.cardText, { color: colors.textPrimary }]}>
                         Manage E-wallet
                     </Text>
-                    <Image source={require('../../assets/soft-ui-pro-react-native-v1.1.1/arrow3x.png')} style={styles.cardRightIcon}/>
+                    <Image source={require('../../assets/soft-ui-pro-react-native-v1.1.1/arrow3x.png')} style={styles.cardRightIcon} />
                 </View>
                 <View style={styles.cardRow}>
-                    <Text style={styles.cardText}>
+                    <Text style={[styles.cardText, { color: colors.textPrimary }]}>
                         Manage Gift Cards
                     </Text>
-                    <Image source={require('../../assets/soft-ui-pro-react-native-v1.1.1/arrow3x.png')} style={styles.cardRightIcon}/>
+                    <Image source={require('../../assets/soft-ui-pro-react-native-v1.1.1/arrow3x.png')} style={styles.cardRightIcon} />
                 </View>
             </Card>
 
@@ -77,28 +89,28 @@ export default AccountSettingsPage = () => {
                     <Image source={require('../../assets/icon.png')}
                         style={styles.cardIcon}
                     />
-                    <Text style={styles.cardTitle}>
+                    <Text style={[styles.cardTitle, { color: colors.textPrimary }]}>
                         Payment
                     </Text>
                 </View>
                 <View style={styles.cardRow}>
-                    <Text style={styles.cardText}>
+                    <Text style={[styles.cardText, { color: colors.textPrimary }]}>
                         User Agreement
                     </Text>
-                    <Image source={require('../../assets/soft-ui-pro-react-native-v1.1.1/arrow3x.png')} style={styles.cardRightIcon}/>
+                    <Image source={require('../../assets/soft-ui-pro-react-native-v1.1.1/arrow3x.png')} style={styles.cardRightIcon} />
                 </View>
                 <View style={styles.cardRow}>
-                    <Text style={styles.cardText}>
+                    <Text style={[styles.cardText, { color: colors.textPrimary }]}>
                         Privacy
                     </Text>
-                    <Image source={require('../../assets/soft-ui-pro-react-native-v1.1.1/arrow3x.png')} style={styles.cardRightIcon}/>
+                    <Image source={require('../../assets/soft-ui-pro-react-native-v1.1.1/arrow3x.png')} style={styles.cardRightIcon} />
                 </View>
                 <View style={styles.cardRow}>
 
-                    <Text style={styles.cardText}>
+                    <Text style={[styles.cardText, { color: colors.textPrimary }]}>
                         About
                     </Text>
-                    <Image source={require('../../assets/soft-ui-pro-react-native-v1.1.1/arrow3x.png')} style={styles.cardRightIcon}/>
+                    <Image source={require('../../assets/soft-ui-pro-react-native-v1.1.1/arrow3x.png')} style={styles.cardRightIcon} />
                 </View>
             </Card>
         </SafeAreaView>
@@ -107,12 +119,12 @@ export default AccountSettingsPage = () => {
 
 const styles = StyleSheet.create({
     cardHeaderRow: {
-        flexDirection: 'row', 
+        flexDirection: 'row',
         alignItems: 'center',
         margin: 10
     },
     cardRow: {
-        flexDirection: 'row', 
+        flexDirection: 'row',
         alignItems: 'center',
         margin: 10,
         justifyContent: 'space-between'

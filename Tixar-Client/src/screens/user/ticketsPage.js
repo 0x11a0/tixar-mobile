@@ -1,79 +1,115 @@
-import {
-    View,
-    Text,
-    StyleSheet,
-    SafeAreaView,
-    Image,
-    Pressable,
-  } from "react-native";
-  import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { View, StyleSheet } from "react-native";
 
-  import SearchField from '../../components/browseConcert/searchField';
-  import TicketCard from '../../components/userTickets/ticketCard';
-  import FilterButton from '../../components/userTickets/filterButton';
-  
-  export default TicketsPage = ({ route, navigation }) => {
+import SearchField from "../../components/browseConcert/searchField";
+import TicketCard from "../../components/userTickets/ticketCard";
 
-    // Function to handle the press event of the first ticket
-    const firstTicketPress = () => {
-        // console.log("first ticket pressed");
-        navigation.navigate("viewConcertPage"); //change this to haris's view ticket page
-    };
-  
-    return (
+import { ColorContext } from "../../../context";
+import { useContext, useState, useEffect } from "react";
+import { ScrollView } from "react-native-gesture-handler";
+import { AuthContext } from "../../../context";
 
-        // container to contain all the elements
-        <View style={styles.container}>
+export default TicketsPage = ({ navigation }) => {
+  const { colors } = useContext(ColorContext);
+  const { token } = useContext(AuthContext);
+  const [tickets, setTickets] = useState([]);
 
-            {/* container for search bar and filter button */}
-            <View style={{
-                // backgroundColor: 'red',
-                paddingVertical: 5,
-            }}>
-                
-                {/* search field imported from browseConcert components */}
-                <SearchField />
+  const getAllTickets = () => {
+    fetch("http://rt.tixar.sg:3000/api/ticket", {
+      method: "GET",
+      credentials: "include",
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setTickets(data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
-                <View style={{ height: 16 }} />
+  useEffect(() => {
+    navigation.addListener("focus", () => {
+      console.log("reloaded");
+      getAllTickets();
+    });
+  }, [navigation]);
 
-                {/* filter button */}
-                <FilterButton />
-                
-            </View>        
-
-            {/* container for the ticket cards */}
-            <View style={styles.ticketContainer}>
-
-                {/* first concert ticket*/}
-                <TicketCard 
-                    concertName={'Coldplay Concert'}
-                    concertCategory={'Category: 1'}
-                    concertReference={'Reference No. 123456789'}
-                    onPress={() => {firstTicketPress()}}
-                />
-                
-                {/* second concert ticket*/}
-                <TicketCard 
-                    concertName={'Coldplay Concert'}
-                    concertCategory={'Category: 1'}
-                    concertReference={'Reference No. 123456789'}
-                />
-            </View>
-
-        </View>
-    );
-};
-  
-const styles = StyleSheet.create({
+  const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        justifyContent: 'flex-start',
+      flex: 1,
+      justifyContent: "flex-start",
+      backgroundColor: colors.background,
     },
 
+    searchContainer: {
+      backgroundColor: colors.background,
+      marginVertical: 20,
+    },
     ticketContainer: {
-        flex: 1, //grow and take up the space of the parent container
-        justifyContent: 'flex-start',
-        flexDirection: 'column',
-        // backgroundColor: 'blue',
-    }
-});
+      flex: 1, //grow and take up the space of the parent container
+      justifyContent: "flex-start",
+      flexDirection: "column",
+      backgroundColor: colors.background,
+    },
+  });
+
+  return (
+    <View style={styles.container}>
+      {/* container for search bar and filter button */}
+      {/* <View style={styles.searchContainer}>
+        {/* search field imported from browseConcert components */}
+        {/* <SearchField /> */}
+      {/* </View> */} 
+
+      <ScrollView>
+        {/* container for the ticket cards */}
+        <View style={styles.ticketContainer}>
+          {tickets.map((ticket) => {
+            console.log(ticket);
+            console.log(ticket.type);
+            console.log(ticket._id);
+            const category = ticket.type;
+            const id = ticket._id;
+            const eventName = ticket.event.name;
+
+            return (
+              <TicketCard
+                key={id}
+                artistName={ticket.event.artistName}
+                concertName={eventName}
+                concertCategory={category}
+                concertReference={`Reference No. ${id}`}
+                onPress={() => {
+                  navigation.navigate("generatedUserTicketPage", {
+                    ticket: ticket,
+                  });
+                }}
+              />
+            );
+          })}
+          {/* first concert ticket*/}
+          {/* <TicketCard
+            concertName={"Coldplay Concert"}
+            concertCategory={"Category: 1"}
+            concertReference={"Reference No. 123456789"}
+            onPress={() => {
+              navigation.navigate("generatedUserTicketPage");
+            }}
+          /> */}
+
+          {/* second concert ticket*/}
+          {/* <TicketCard
+            concertName={"Coldplay Concert"}
+            concertCategory={"Category: 1"}
+            concertReference={"Reference No. 123456789"}
+            onPress={() => {
+              navigation.navigate("generatedUserTicketPage");
+            }}
+          /> */}
+        </View>
+      </ScrollView>
+    </View>
+  );
+};

@@ -1,5 +1,6 @@
 import { View, Image, Text, Pressable, StyleSheet } from "react-native";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { ColorContext } from "../../../context";
 
 export default ArtistBlock = ({
   clubName,
@@ -9,7 +10,7 @@ export default ArtistBlock = ({
   onPressFunction,
 }) => {
   const [isPressed, setIsPressed] = useState(false);
-
+  const { colors } = useContext(ColorContext);
   const handleHeartPress = () => {
     // Toggle the isPressed state here
     setIsPressed(!isPressed);
@@ -25,7 +26,7 @@ export default ArtistBlock = ({
 
   return (
     <Pressable
-      style={styles.container}
+      style={[styles.container, { backgroundColor: colors.primary }]}
       onPress={() => {
         onPressFunction
           ? onPressFunction()
@@ -42,34 +43,47 @@ export default ArtistBlock = ({
         <View style={styles.artistTextContainer}>
           {/* SPLITS INTO TITLE ROW AND DESCRIPTION ROW */}
           <View style={{ flexDirection: "column" }}>
-            <Text style={styles.clubName} numberOfLines={1}>
-              {clubName}
-            </Text>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Text
+                style={[styles.clubName, { color: colors.textSecondary }]}
+                numberOfLines={2}
+              >
+                {clubName}
+              </Text>
 
-            <Text style={styles.pointText} numberOfLines={1}>
-              Your points: {points}
-            </Text>
-
+              <Text
+                style={[styles.clubName, { color: colors.textSecondary }]}
+                numberOfLines={1}
+              >
+                Your points: {points}
+              </Text>
+            </View>
             {/* DESCRIPTION ROW */}
             <View style={styles.textConainer}>
               <View style={styles.descriptionContainer}>
-                <Text style={styles.artistDescription} numberOfLines={2}>
+                <Text
+                  style={[
+                    styles.artistDescription,
+                    { color: colors.textSecondary },
+                  ]}
+                  numberOfLines={2}
+                >
                   {artistDescription}
                 </Text>
               </View>
 
-              {/* FAVORITE ICON */}
-              <Pressable onPress={handleHeartPress} style={styles.iconBox}>
-                {/* <View style={styles.iconBox}> */}
-                <Image
-                  style={[
-                    styles.favoriteIcon,
-                    { tintColor: isPressed ? "red" : "#252F40" },
-                  ]}
-                  source={require("../../assets/favoriteiconfilled.png")}
-                />
-                {/* </View> */}
-              </Pressable>
+              {/* FAVORITE ICON - REMOVED */}
+              {/* <Pressable onPress={handleHeartPress} style={styles.iconBox}> */}
+              {/* <View style={styles.iconBox}> */}
+              {/* <Image */}
+              {/* style={[ */}
+              {/* styles.favoriteIcon, */}
+              {/* { tintColor: isPressed ? "red" : "#252F40" }, */}
+              {/* ]} */}
+              {/* source={require("../../assets/favoriteiconfilled.png")} */}
+              {/* /> */}
+              {/* </View> */}
+              {/* </Pressable> */}
             </View>
           </View>
         </View>
@@ -79,13 +93,15 @@ export default ArtistBlock = ({
 };
 
 const styles = StyleSheet.create({
+
   container: {
     backgroundColor: "white",
     height: 100,
     borderRadius: 20,
     paddingTop: 5,
-    width: "100%",
+    width: "95%",
     marginTop: 15,
+    justifyContent: "center",
   },
   artistIcon: {
     width: 70,
@@ -95,12 +111,16 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
 
+
   artistBlock: {
     flexDirection: "row",
+    // backgroundColor: "white",
   },
   artistTextContainer: {
     flexDirection: "column",
     justifyContent: "center",
+    paddingRight: 10,
+    // backgroundColor: "white",
     flex: 1,
   },
   clubName: {
@@ -108,7 +128,6 @@ const styles = StyleSheet.create({
     fontFamily: "Lato-Bold",
     color: "#252F40",
     marginRight: 15,
-    // backgroundColor: "yellow",
   },
   pointText: {
     fontSize: 14,
@@ -117,7 +136,6 @@ const styles = StyleSheet.create({
     textAlign: "left",
     marginRight: 15,
     marginTop: 5,
-    // backgroundColor: "red",
   },
 
   // description row + icon

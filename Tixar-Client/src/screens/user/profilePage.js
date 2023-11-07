@@ -1,43 +1,13 @@
-import { React, useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  SafeAreaView,
-  Image,
-  Pressable,
-  TextInput,
-  FlatList,
-  TouchableOpacity,
-  Button,
-  onPressLearnMore,
-  Alert,
-} from "react-native";
-import { useFocusEffect } from "@react-navigation/native";
-import { LinearGradient } from "expo-linear-gradient";
+import { React, useState, useEffect, useContext } from "react";
+import { View, Text, StyleSheet, SafeAreaView } from "react-native";
 import HeaderBlock from "../../components/user/headerBlockUserProfile";
-import { useIsFocused, useNavigation } from "@react-navigation/native"; // Import useIsFocused
-import nextButton from "../../components/viewConcert/nextButton";
-// import { useNavigation } from "react-navigation-hooks";
-
-const userEdit = ["Ewallet", "Edit", "Settings"];
+import { ColorContext } from "../../../context";
+import { AuthContext } from "../../../context";
 
 export default ProfilePage = ({ route, navigation }) => {
-//   console.log("user profile");
-  let [firstName, setFirstName] = useState("");
-  let [lastName, setLastName] = useState("");
-  let [email, setEmail] = useState("");
-  let [phoneNumber, setPhoneNumber] = useState("");
-
-  // const isFocused = useIsFocused(); // Use useIsFocused to check if the screen is focused
-  // console.log("HERE");
-  // useEffect(() => {
-  //   console.log("use effect");
-  //   if (isFocused) {
-  //     console.log("running get user");
-  //     getUser(); // Fetch data when the screen is focused
-  //   }
-  // }, [isFocused]); // Use isFocused as a dependency in useEffect
+  const { colors } = useContext(ColorContext);
+  const { token } = useContext(AuthContext);
+  let [user, setUser] = useState({});
 
   useEffect(() => {
     navigation.addListener("focus", () => {
@@ -46,26 +16,19 @@ export default ProfilePage = ({ route, navigation }) => {
     });
   }, [navigation]);
 
-  const parsePhoneNumber = (phoneNum) => {
-    // convert phone number to formatter phone number
-  };
-
   const getUser = () => {
-    // console.log("GET REQUEST");
-    fetch("http://rt.tixar.sg/api/user", {
+    console.log("getting user profile");
+    fetch("http://rt.tixar.sg:3000/api/user", {
       method: "GET",
       credentials: "include",
       headers: {
-        Authorization: route.params.token,
+        Authorization: `Bearer ${token}`,
         "Cache-Control": "no-cache",
       },
     })
       .then((response) => response.json())
       .then((data) => {
-        setFirstName(data.firstName);
-        setLastName(data.lastName);
-        setEmail(data.email);
-        setPhoneNumber(data.phone);
+        setUser(data);
       })
       .catch((error) => {
         console.error(error);
@@ -73,73 +36,48 @@ export default ProfilePage = ({ route, navigation }) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView
+      style={[styles.container, { backgroundColor: colors.background }]}
+    >
       <HeaderBlock
-        name={firstName + " " + lastName}
+        name={user.firstName + " " + user.lastName}
         walletOnPress={() => {
-          navigation.navigate("manageEWalletPage", {
-            token: route.params.token,
-            firstName: firstName,
-            lastName: lastName,
-            email: email,
-            phoneNumber: phoneNumber,
-          });
+          navigation.navigate("manageEWalletPage");
         }}
         editOnPress={() => {
           navigation.navigate("editProfilePage", {
-            token: route.params.token,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            phoneNumber: user.phoneNumber,
           });
         }}
         settingsOnPress={() => {
-          navigation.navigate("accountSettingsPage", { token: route.params.token });
+          navigation.navigate("accountSettingsPage");
         }}
       />
 
       <View style={styles.translucentBox}>
-        <Text style={styles.email}>Email</Text>
-        <Text style={styles.subtitle}>{email}</Text>
-        <Text style={styles.text}>Phone Number</Text>
-        <Text style={styles.subtitle}>{phoneNumber}</Text>
-        <View style={styles.buttonContainerStyle}>
-          <NextButton
-            buttonText={"View Tickets"}
-            onPressFunction={() => {
-              navigation.navigate("userTicketsPage");
-            }}
-            buttonHeight={50}
-          />
-        </View>
-
-        {/* <TouchableOpacity style={{ marginTop: 50 }}> */}
-        {/* <View style={buttonContainerStyle}> */}
-
-        {/* <Button
-              title="View My Tickets"
-              accessibilityLabel="View Tickets"
-              color={Platform.OS === "ios" ? "white" : "#AB2FCD"}
-              onPress={() => {
-                // Alert.alert('Link to view tickets');
-                navigation.navigate("userTicketsPage");
-              }}
-            /> */}
-        {/* </View> */}
-        {/* </TouchableOpacity> */}
+        <Text style={[styles.title, { color: colors.textPrimary }]}>Email</Text>
+        <Text style={[styles.subtitle, { color: colors.textPrimary }]}>
+          {user.email}
+        </Text>
+        <Text style={[styles.title, { color: colors.textPrimary }]}>
+          Phone Number
+        </Text>
+        <Text style={[styles.subtitle, { color: colors.textPrimary }]}>
+          {user.phone}
+        </Text>
       </View>
-
-      <Text style={styles.footerText}>TIXAR</Text>
     </SafeAreaView>
   );
 };
-// const buttonContainerStyle =
-//   Platform.OS === "ios"
-//     ? { backgroundColor: "#AB2FCD" }
-//     : { backgroundColor: "transparent" };
 
 const styles = StyleSheet.create({
   buttonContainerStyle: {
     flex: 1,
     width: "100%",
-    marginTop: 100,
+    marginTop: 20,
   },
   translucentBox: {
     height: "50%",
@@ -151,15 +89,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
     alignSelf: "center",
+    // backgroundColor: 'white',
   },
-  email: {
-    marginTop: 20,
-    fontFamily: "Lato-Bold",
-    fontSize: 20,
-    marginBottom: 10,
-    marginRight: "auto",
-  },
-  text: {
+  title: {
     marginTop: 20,
     fontFamily: "Lato-Bold",
     fontSize: 20,
@@ -175,10 +107,10 @@ const styles = StyleSheet.create({
 
   container: {
     flex: 1,
-    backgroundColor: "#f2f2f2",
+    // backgroundColor: "#f2f2f2",
     alignItems: "center",
     justifyContent: "flex-start",
-    borderColor: "#f2f2f2",
+    // borderColor: "#f2f2f2",
   },
   footerText: {
     bottom: 15,
@@ -186,9 +118,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     position: "absolute",
   },
-
   viewTicketsButton: {
-    marginTop: 50,
     backgroundColor: "#B731D9",
     borderWidth: 5,
     borderColor: "#fff",

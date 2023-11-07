@@ -1,12 +1,8 @@
 import { React, useState, useRef, useContext } from "react";
 import {
-  TouchableOpacity,
-  Button,
   View,
   Text,
   StyleSheet,
-  SafeAreaView,
-  Image,
   Pressable,
   TextInput,
   ImageBackground,
@@ -15,19 +11,20 @@ import {
   Keyboard,
   Alert,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
-import HeaderBlock from "../../components/login/headerBlock";
-import PhoneInput from "react-native-phone-number-input";
-import AuthContext from "../../../AuthContext";
+
+import { AuthContext } from "../../../context";
+import SmallButton from "../../components/newApp/smallButton";
 
 export default OTPPage = ({ route, navigation }) => {
   const { phoneNumber } = route.params;
   const [otp, setotp] = useState("");
   const { setToken } = useContext(AuthContext);
+  const [valid, setValid] = useState(false);
 
   // function to handle OTP input as user types
   const handleOTP = (number) => {
     setotp(number);
+    setValid(number.length === 6);
   };
 
   // function to handle otp and login request
@@ -79,7 +76,7 @@ export default OTPPage = ({ route, navigation }) => {
 
   // function to handle phone number authentication request
   const handleOTPResend = () => {
-    const endPoint = "http://rt.tixar.sg/api/otp/request";
+    const endPoint = "http://rt.tixar.sg:3000/api/otp/request";
     const payload = {
       phone: phoneNumber,
     };
@@ -144,22 +141,20 @@ export default OTPPage = ({ route, navigation }) => {
 
               {/* Buttons */}
               <View style={styles.buttonRow}>
-                <Pressable
-                  style={styles.button}
-                  onPress={() => {
-                    navigation.goBack();
-                  }}
-                >
-                  <Text style={styles.buttonText}>Back</Text>
-                </Pressable>
-                <Pressable
-                  style={styles.button}
-                  onPress={() => {
-                    handleOTPLogin();
-                  }}
-                >
-                  <Text style={styles.buttonText}>Continue</Text>
-                </Pressable>
+                  <SmallButton
+                    buttonText={"Back"}
+                    enableCondition={true}
+                    onPressFunction={() => {
+                      navigation.goBack();
+                    }}
+                  />
+                  <SmallButton
+                    buttonText={"Continue"}
+                    enableCondition={valid}
+                    onPressFunction={() => {
+                      handleOTPLogin(otp);
+                    }}
+                  />
               </View>
 
               <View style={styles.resendButton}>
@@ -285,7 +280,7 @@ const styles = StyleSheet.create({
     // container holding the otp input
     alignSelf: "center",
     width: "75%",
-    height: 45,
+    height: 40,
     flexDirection: "row",
     // backgroundColor: "purple",
     marginVertical: 20,

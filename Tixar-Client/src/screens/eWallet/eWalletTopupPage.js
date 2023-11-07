@@ -79,19 +79,10 @@ export default EWalletTopupPage = ({ route, navigation }) => {
   };
 
   const topUp = () => {
-    console.log("attempting to withdraw from ewallet");
-
-    if (value > eWalletBalance) {
-      Alert.alert(
-        "Withdrawal failed",
-        "You do not have enough money in your eWallet balance"
-      );
-      return;
-    }
-
-    const endPoint = "http://rt.tixar.sg:3000/api/transaction/withdrawEWallet";
+    console.log("attempting to top up ewallet");
+    const endPoint = "http://rt.tixar.sg:3000/api/transaction/topUpEWallet";
     const payload = {
-      type: "eWalletWithdraw",
+      type: "eWalletTopUp",
       card: card,
       value: value,
     };
@@ -108,20 +99,19 @@ export default EWalletTopupPage = ({ route, navigation }) => {
       .then((response) => response.json())
       .then((data) => {
         Alert.alert(
-          "Withdrawal successful",
-          "$" + value + " has been withdrawn from your eWallet balance"
+          "Top up successful",
+          "$" + value + " has been added to your eWallet balance"
         );
         navigation.pop();
       })
       .catch((error) => {
         console.error(error);
-        Alert.alert("Withdrawal failed", "Please try again");
+        Alert.alert("Top up failed", "Please try again");
       });
   };
 
   return (
     <SafeAreaView style={styles.container}>
-
       <View style={styles.textContainer}>
         <Text style={styles.text}>
           E Wallet Balance: ${eWalletBalance}
@@ -151,48 +141,44 @@ export default EWalletTopupPage = ({ route, navigation }) => {
       </View>
 
       <View style={styles.inputContainer}>
-      <Text style={styles.title}>
-        Withdraw Funds{" "}
-      </Text>
+        <Text style={styles.title}>Add Funds</Text>
 
-      <View style={styles.textBox}>
-        <TextInput
-          onChangeText={handleValue}
-          value={value}
-          placeholder="Withdraw Amount ($)"
-          placeholderTextColor={colors.textDisabled}
-          autoCapitalize="none"
-          color={colors.textPrimary}
+        <View style={styles.textBox}>
+          <TextInput
+            onChangeText={handleValue}
+            value={value}
+            placeholder="Top Up Amount ($)"
+            placeholderTextColor={colors.textDisabled}
+            autoCapitalize="none"
+            styles={styles.text}
+            color={colors.textPrimary}
             keyboardType="numeric"
-        />
-      </View>
-
-      <View style={styles.textBox}>
-        <TextInput
-          onChangeText={handleCvv}
-          value={cvv}
-          placeholder="CVV"
-          placeholderTextColor={colors.textDisabled}
-          autoCapitalize="none"
-          maxLength={3}
-          color={colors.textPrimary}
-            keyboardType="numeric"
-        />
-      </View>
-      <View style={{height: 20}}></View>
-
-      <Button
-        buttonText={"CONFIRM"}
-        enableCondition={valid}
-        onPressFunction={() => {
-          topUp();
-        }}
-      />
+          />
         </View>
 
+        <View style={styles.textBox}>
+          <TextInput
+            onChangeText={handleCvv}
+            value={cvv}
+            placeholder="CVV"
+            placeholderTextColor={colors.textDisabled}
+            autoCapitalize="none"
+            maxLength={3}
+            color={colors.textPrimary}
+            keyboardType="numeric"
+          />
+        </View>
 
+          <View style={{height: 20}}></View>
 
-
+        <Button
+          buttonText={"CONFIRM"}
+          enableCondition={valid}
+          onPressFunction={() => {
+            topUp();
+          }}
+        />
+      </View>
     </SafeAreaView>
   );
 };
