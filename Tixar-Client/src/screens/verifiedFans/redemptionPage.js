@@ -114,14 +114,8 @@ export default RedemptionPage = ({ navigation }) => {
       {/* FAQ */}
       <Text style={styles.faqText}>
         FAQs {`\n`}
-        Lorem ipsum dolor sit amet. Ab repellat voluptas ut rerum fugit rem
-        autem ducimus est repellendus optio eos iusto commodi. Ut nulla itaque
-        ut ducimus veritatis est accusantium voluptas est minima reprehenderit
-        et iste magni aut maxime sint ad incidunt pariatur. Et obcaecati
-        doloremque quo quos magni ab dolorem fugiat id sequi accusamus et
-        assumenda reiciendis et velit deserunt qui recusandae consequatur.{" "}
+        These Terms and Conditions ("Terms") govern the use of promotional or redemption codes ("Codes") provided by TIXAR ("Company") for the purpose of accessing or receiving specific products, services, or benefits. By redeeming a Code, you agree to be bound by these Terms. If you do not agree to these Terms, you should not redeem the Code. Eligibility: The Codes are available to individuals who meet the eligibility criteria specified by the Company. Code Redemption: Each Code is valid for a limited time and can only be redeemed during the specified redemption period. Codes are for personal use only and may not be transferred, sold, or exchanged for cash or other benefits. The Company reserves the right to modify or terminate Codes, redemption periods, and eligible products or services at its discretion.
         {"\n"}
-        Learn More
       </Text>
 
       {/* Footer */}

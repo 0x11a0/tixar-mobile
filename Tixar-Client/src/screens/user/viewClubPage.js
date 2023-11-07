@@ -103,6 +103,15 @@ export default ViewClubPage = ({ route, navigation }) => {
           </View>
       }
 
+      {profileId !== null && <NextButton
+          buttonText={"Redeem Fan Code Here!"}
+          onPressFunction={() => {
+              navigation.navigate("redemptionPage");
+          }} /> }
+
+      {profileId !== null && <View style={{height: 15}}/> }
+
+
       {profileId !== null &&  
               <View style={{width: '50%', overflow: 'hidden', borderRadius: 15}}>
               <Button
@@ -113,13 +122,7 @@ export default ViewClubPage = ({ route, navigation }) => {
           }} />
               </View>
       }
-      <View style={{height: 15}}/>
 
-      <NextButton
-      buttonText={"Redeem Fan Code Here!"}
-      onPressFunction={() => {
-          navigation.navigate("redemptionPage");
-      }} />
       </View>
       </View>
       </ScrollView>
