@@ -91,29 +91,38 @@ export default ViewClubPage = ({ route, navigation }) => {
         artistIcon={require("../../assets/nationalstadiumicon.png")}
         />
 
-        <NextButton
-        buttonText={"Redeem Fan Code Here!"}
-        onPressFunction={() => {
-            navigation.navigate("redemptionPage");
-        }}
-        style={(marginTop = 50)}
-        />
-        {profileId === null && <Pressable
-        style={styles.deleteButton}
-        onPress={handleAddPress}
-        >
-        <Text style={styles.deleteButtonText}>Join</Text>
-        </Pressable> }
-        
-        {profileId !== null &&  <Pressable
-        style={styles.deleteButton}
-        onPress={handleDeletePress}
-        >
-        <Text style={styles.deleteButtonText}>Delete</Text>
-        </Pressable> }
-        </View>
+
+      {profileId === null && 
+          <View style={{width: '50%', overflow: 'hidden', borderRadius: 15}}>
+          <Button
+          enableCondition={true}
+          buttonText={"Join club!"}
+          onPressFunction={() => {
+              handleAddPress();
+          }} />
+          </View>
+      }
+
+      {profileId !== null &&  
+              <View style={{width: '50%', overflow: 'hidden', borderRadius: 15}}>
+              <Button
+          enableCondition={true}
+          buttonText={"Quit club"}
+          onPressFunction={() => {
+              handleAddPress();
+          }} />
+              </View>
+      }
+      <View style={{height: 15}}/>
+
+      <NextButton
+      buttonText={"Redeem Fan Code Here!"}
+      onPressFunction={() => {
+          navigation.navigate("redemptionPage");
+      }} />
       </View>
-    </ScrollView>
+      </View>
+      </ScrollView>
   );
 };
 
