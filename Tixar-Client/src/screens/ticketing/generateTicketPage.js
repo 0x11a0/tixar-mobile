@@ -17,12 +17,7 @@ import { useContext } from "react";
 
 export default GenerateTicketPage = ({ route, navigation}) => {
   const { colors } = useContext(ColorContext);
-  const { datePurchased,
-          eventID,
-          sessionID,
-          transactionID,
-          capacityID,
-          category, } = route.params;
+  const ticket = route.params.ticket;
 
   const styles = StyleSheet.create({
     backgroundImage: {
@@ -120,7 +115,7 @@ export default GenerateTicketPage = ({ route, navigation}) => {
         <View style={styles.barcode}>
           <DashedLine style={styles.dashedLine} />
           <Barcode
-            value="6547811223231" //ticket reference number
+            value={ticket._id} //ticket reference number
             options={{ format: "CODE128", backgroundColor: "black" }}
           />
         </View>

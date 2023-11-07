@@ -80,7 +80,9 @@ export default TicketsPage = ({ navigation }) => {
                 concertCategory={category}
                 concertReference={`Reference No. ${id}`}
                 onPress={() => {
-                  navigation.navigate("generatedUserTicketPage");
+                  navigation.navigate("generatedUserTicketPage", {
+                    ticket: ticket,
+                  });
                 }}
               />
             );
