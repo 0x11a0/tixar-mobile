@@ -115,7 +115,7 @@ export default GenerateTicketPage = ({ route, navigation}) => {
         <View style={styles.barcode}>
           <DashedLine style={styles.dashedLine} />
           <Barcode
-            value={ticket._id} //ticket reference number
+            value={ticket._id.slice(-12)} //ticket reference number
             options={{ format: "CODE128", backgroundColor: "black" }}
           />
         </View>
