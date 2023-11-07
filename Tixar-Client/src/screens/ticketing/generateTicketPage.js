@@ -36,11 +36,11 @@ export default GenerateTicketPage = ({ route, navigation}) => {
     },
 
     stadiumTitleView: {
-      paddingVertical: 20,
+      paddingBottom: 20,
     },
     stadiumTitle: {
       fontFamily: "Lato-Bold",
-      fontSize: 13,
+      fontSize: 20,
     },
     concertTitleView: {
       paddingBottom: 20,
@@ -49,6 +49,7 @@ export default GenerateTicketPage = ({ route, navigation}) => {
       fontSize: 18,
       fontFamily: "Lato-Bold",
       color: colors.textPrimary,
+      marginBottom: 5,
     },
     concertInfoView: {
       // paddingBottom: 10,
@@ -56,7 +57,7 @@ export default GenerateTicketPage = ({ route, navigation}) => {
     concertInfo: {
       fontFamily: "Lato-Regular",
       fontSize: 16,
-      paddingBottom: 10,
+      paddingBottom: 5,
       color: colors.textPrimary,
     },
     dashedLine: {
@@ -101,11 +102,12 @@ export default GenerateTicketPage = ({ route, navigation}) => {
             <Text style={styles.concertTitle}>
               {ticket.event.name}
             </Text>
+            <Text style={styles.concertInfo}>- {ticket.event.artistName}</Text>
+
           </View>
 
           {/* Concert Info */}
           <View style={styles.concertInfoView}>
-            <Text style={styles.concertInfo}>{ticket.event.artistName}</Text>
             <Text style={styles.concertInfo}>{ticket.type}</Text>
             {/* <Text style={styles.concertInfo}>Quantity: 1</Text> */}
           </View>
@@ -115,7 +117,7 @@ export default GenerateTicketPage = ({ route, navigation}) => {
         <View style={styles.barcode}>
           <DashedLine style={styles.dashedLine} />
           <Barcode
-            value={ticket._id.slice(-12)} //ticket reference number
+            value={ticket._id.slice(-8)} //ticket reference number
             options={{ format: "CODE128", backgroundColor: "black" }}
           />
         </View>
