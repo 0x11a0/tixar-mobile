@@ -5,6 +5,7 @@ import {
   SafeAreaView,
   Pressable,
   ScrollView,
+  Alert,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import FooterBlock from "../../components/viewConcert/footerBlock";
