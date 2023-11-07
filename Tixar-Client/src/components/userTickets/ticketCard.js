@@ -21,10 +21,10 @@ export default TicketCard = ({
     container: {
       flexDirection: "row",
       alignItems: "center",
-      // backgroundColor: "red",
+      backgroundColor: colors.primary,
       marginHorizontal: 10, 
       padding: 10,
-      height: 120,
+      borderRadius: 10,
       // borderBottomWidth: 0.5,
       // borderColor: colors.secondary,
     },
@@ -83,18 +83,24 @@ export default TicketCard = ({
       <View style={styles.container}>
 
         {/* icon (need integration) */}
-        <Image
+        {/* <Image
           source={require("../../assets/soft-ui-pro-react-native-v1.1.1/avatar23x.png")}
           style={styles.icon}
           resizeMode="cover"
-        />
+        /> */}
 
         {/* body info (need integration thanks) */}
         <View style={styles.textContainer}>
-          <Text style={styles.concertTitle}>{concertName}</Text>
-          <Text style={styles.concertReference}>{artistName}</Text>
+          <Text style={styles.concertTitle}>{concertName} Ticket</Text>
+
+          <View style= {{height:10,}}/>
+
+          <Text style={styles.concertReference}>Artist:  {artistName}</Text>
+          <Text style={styles.concertCategory}>Category:  {concertCategory}</Text>
+
+          <View style= {{height:10,}}/>
+
           <Text style={styles.concertReference}>{concertReference}</Text>
-          <Text style={styles.concertCategory}>{concertCategory}</Text>
         </View>
 
         {/* favorite button not implemented */}

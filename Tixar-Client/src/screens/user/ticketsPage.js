@@ -58,10 +58,10 @@ export default TicketsPage = ({ navigation }) => {
   return (
     <View style={styles.container}>
       {/* container for search bar and filter button */}
-      <View style={styles.searchContainer}>
+      {/* <View style={styles.searchContainer}>
         {/* search field imported from browseConcert components */}
-        <SearchField />
-      </View>
+        {/* <SearchField /> */}
+      {/* </View> */} 
 
       <ScrollView>
         {/* container for the ticket cards */}
