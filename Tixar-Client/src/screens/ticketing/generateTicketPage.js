@@ -105,8 +105,8 @@ export default GenerateTicketPage = ({ route, navigation}) => {
 
           {/* Concert Info */}
           <View style={styles.concertInfoView}>
-            {/* <Text style={styles.concertInfo}>Reference Number: 12345ABC</Text> */}
-            {/* <Text style={styles.concertInfo}>Category: 1</Text> */}
+            <Text style={styles.concertInfo}>{ticket.event.artistName}</Text>
+            <Text style={styles.concertInfo}>{ticket.type}</Text>
             {/* <Text style={styles.concertInfo}>Quantity: 1</Text> */}
           </View>
         </View>

@@ -77,6 +77,7 @@ export default TicketsPage = ({ navigation }) => {
             return (
               <TicketCard
                 key={id}
+                artistName={ticket.event.artistName}
                 concertName={eventName}
                 concertCategory={category}
                 concertReference={`Reference No. ${id}`}
