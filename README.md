@@ -26,7 +26,8 @@ yarn start
 ## View the React Native Interface (On Your Mobile Device)
 Download the Expo Go application on your phone
  - app store: https://apps.apple.com/sg/app/expo-go/id982107779
-   
+ - google plat store: https://play.google.com/store/apps/details?id=host.exp.exponent&pcampaignid=web_share
+
 Scan the QR code presented in the terminal using your device's native camera
 
 ## View the React Native Interface (On a Mobile Emulator)
