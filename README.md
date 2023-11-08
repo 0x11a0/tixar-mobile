@@ -45,6 +45,8 @@ npx expo start
 
 **Viewing the App on Mobile**:
 
+Install the Expo Go app on the [App store](https://apps.apple.com/sg/app/expo-go/id982107779) or [Google Play Store](https://play.google.com/store/apps/details?id=host.exp.exponent&pcampaignid=web_share)
+
 Scan the QR code generated in the terminal using your native camera app. This will open the app in Expo Go.
 
 **Viewing the App on a Mobile Emulator**:
@@ -61,7 +63,7 @@ Register for an account by filling out the relevant fields in the app.
 
 To use the OTP service, we have integrated a Telegram bot. Follow these steps:
 
-- Add the Tixar Telegram bot to your Telegram app.
+- Add the [Tixar Telegram Bot](https://t.me/Tixar_bot) to your Telegram app.
 - Start a chat with the bot by typing `/start`.
 - Follow the instructions to add your phone number. This will register your phone number with our OTP service.
 
@@ -69,13 +71,7 @@ To use the OTP service, we have integrated a Telegram bot. Follow these steps:
 
 When logging in to the Tixar app, enter your phone number. An OTP will be sent to you via Telegram.
 
-## Contributing
-
-If you'd like to contribute to the development of Tixar, please read our [contributing guidelines](CONTRIBUTING.md) before submitting a pull request.
-
-## License
-
-This project is licensed under the [Your License Name] License. See the [LICENSE](LICENSE) file for details.
+## Enquiries
 
 If you have any questions or encounter issues, feel free to contact us.
 
