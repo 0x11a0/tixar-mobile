@@ -78,6 +78,5 @@ If you'd like to contribute to the development of Tixar, please read our [contri
 This project is licensed under the [Your License Name] License. See the [LICENSE](LICENSE) file for details.
 
 If you have any questions or encounter issues, feel free to contact us.
-```
 
-You can copy and paste this entire markdown text into your README file.
+
