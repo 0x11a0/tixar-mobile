@@ -1,23 +1,19 @@
 # TIXAR-Mobile Usage Guide
-Welcome to the Tixar! This guide will help you understand how to launch the Tixar Mobile client.
+Welcome to the Tixar! This guide will help you understand how to launch the Tixar Mobile client
 
 ## Requirements
 Please ensure you have Yarn and NPM installed.
 
 ## Running React Native Interface
-cd into Tixar-Client.
+Ensure that you are in the right directory
+```cd Tixar-Client```
 
-Download dependencies `yarn install`.
+Download all dependencies
+```npm install```
+```yarn install```
 
-```
-yarn install
-```
-
-Run `yarn start` to start local developmental server.
-
-```
-yarn start
-```
+Start the local developmental server
+```yarn start```
 
 ## View the React Native Interface (On Your Mobile Device)
 Download the Expo Go application on your phone
