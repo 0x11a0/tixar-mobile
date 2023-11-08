@@ -7,13 +7,13 @@ Please ensure you have Yarn and NPM installed.
 ## Running React Native Interface
 1. cd into Tixar-Client.
 2. Download dependencies `yarn install`.
-   '''
+   ```
    yarn install
-   '''
+   ```
 3. Run `yarn start` to start local developmental server.
-   '''
+   ```
    yarn start
-   '''
+   ```
 
 ## View the React Native Interface (On Your Mobile Device)
 4. Download the Expo Go application on your phone
