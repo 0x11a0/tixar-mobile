@@ -1,19 +1,14 @@
 # Tixar Mobile App
 
-**Tixar** is a mobile application that allows fans to get verified and purchase event tickets. As we don't have developer accounts on the App Store or Google Play Store, we will run our app on Expo. You will need both npm and Yarn installed as we have both package.lock and yarn.lock files.
+**Tixar** is a mobile application that allows fans to get verified and purchase event tickets. As we don't have developer accounts on the App Store or Google Play Store, we will run our app on Expo. You will need Yarn installed as we have dependencies in our yarn.lock file.
 
 ## Prerequisites
-
-- **Node.js and npm**: You can download and install Node.js, which includes npm, from [nodejs.org](https://nodejs.org/).
 
 - **Yarn**: You can install Yarn as from [yarnpkg.com](https://classic.yarnpkg.com/en/docs/install).
 
 - **Expo CLI**: Install the Expo CLI globally using npm or Yarn.
 
 ```bash
-# Using npm:
-npm install -g expo-cli
-
 # Using Yarn:
 yarn global add expo-cli
 ```
@@ -30,9 +25,6 @@ cd Tixar-Client
 **Install Dependencies**:
 
 ```bash
-# install npm dependencies:
-npm install
-
 # install yarn dependencies:
 yarn install
 ```
