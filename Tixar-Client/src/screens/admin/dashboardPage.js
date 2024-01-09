@@ -20,7 +20,7 @@ export default DashboardPage = ({ route, navigation }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [codes, setCodes] = useState([]);
   const getCodes = () => {
-    fetch("http://vf.tixar.sg:3001/api/codes", {
+    fetch("http://vf.tixar.sg/api/codes", {
       method: "GET",
       credentials: "include",
       headers: { Authorization: `Bearer ${token}` },
@@ -31,7 +31,7 @@ export default DashboardPage = ({ route, navigation }) => {
   };
 
   const getClubs = () => {
-    fetch("http://vf.tixar.sg:3001/api/clubs", {
+    fetch("http://vf.tixar.sg/api/clubs", {
       method: "GET",
       credentials: "include",
       headers: { Authorization: `Bearer ${token}` },
@@ -72,39 +72,38 @@ export default DashboardPage = ({ route, navigation }) => {
       <View style={styles.container}>
         <ScrollView>
           {/* Your FanclubCards go here */}
-          {clubs.length > 0 && clubs.map((club) => { // If there are clubs, map each club to a FanclubCard
-            return (
-              <FanclubCard
-                key={club._id}
-                onPressFunction={() => {
-                  navigation.navigate("adminClubPage", {
-                    clubId: club._id,
-                    token: token,
-                  });
-                }}
-                clubName={club.name}
-                fanNumber={club.members.length}
-                codesActive={
-                  codes.filter((entry) => entry.club._id === club._id).length
-                }
-                imageUrl={club.imageUrl}
-              />
-            );
-          })}
+          {clubs.length > 0 &&
+            clubs.map((club) => {
+              // If there are clubs, map each club to a FanclubCard
+              return (
+                <FanclubCard
+                  key={club._id}
+                  onPressFunction={() => {
+                    navigation.navigate("adminClubPage", {
+                      clubId: club._id,
+                      token: token,
+                    });
+                  }}
+                  clubName={club.name}
+                  fanNumber={club.members.length}
+                  codesActive={
+                    codes.filter((entry) => entry.club._id === club._id).length
+                  }
+                  imageUrl={club.imageUrl}
+                />
+              );
+            })}
         </ScrollView>
 
         {/* Next Button */}
         <View style={styles.buttonContainer}>
-
           <Button
             buttonText={"Create New Fanclub"}
             onPressFunction={() =>
               navigation.navigate("createClubPage", { token: token })
-            } 
+            }
             enableCondition={true}
           />
-
-  
         </View>
       </View>
     </SafeAreaView>

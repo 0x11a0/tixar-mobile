@@ -14,7 +14,7 @@ export default TicketsPage = ({ navigation }) => {
   const [tickets, setTickets] = useState([]);
 
   const getAllTickets = () => {
-    fetch("http://rt.tixar.sg:3000/api/ticket", {
+    fetch("http://rt.tixar.sg/api/ticket", {
       method: "GET",
       credentials: "include",
       headers: { Authorization: `Bearer ${token}` },
@@ -60,8 +60,8 @@ export default TicketsPage = ({ navigation }) => {
       {/* container for search bar and filter button */}
       {/* <View style={styles.searchContainer}>
         {/* search field imported from browseConcert components */}
-        {/* <SearchField /> */}
-      {/* </View> */} 
+      {/* <SearchField /> */}
+      {/* </View> */}
 
       <ScrollView>
         {/* container for the ticket cards */}

@@ -80,7 +80,7 @@ export default EWalletTopupPage = ({ route, navigation }) => {
 
   const topUp = () => {
     console.log("attempting to top up ewallet");
-    const endPoint = "http://rt.tixar.sg:3000/api/transaction/topUpEWallet";
+    const endPoint = "http://rt.tixar.sg/api/transaction/topUpEWallet";
     const payload = {
       type: "eWalletTopUp",
       card: card,
@@ -113,22 +113,19 @@ export default EWalletTopupPage = ({ route, navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.textContainer}>
-        <Text style={styles.text}>
-          E Wallet Balance: ${eWalletBalance}
-        </Text>
+        <Text style={styles.text}>E Wallet Balance: ${eWalletBalance}</Text>
 
-        <View style={{height: 20}}></View>
+        <View style={{ height: 20 }}></View>
 
         {Object.keys(card).length === 0 ? (
           <Text style={styles.text}>
-            You do not have a card linked to your account, please add a card to top up your eWallet !
+            You do not have a card linked to your account, please add a card to
+            top up your eWallet !
           </Text>
         ) : (
           <View>
             {/* Display card details */}
-            <Text style={styles.text}>
-              Card Name: {card.cardName}
-            </Text>
+            <Text style={styles.text}>Card Name: {card.cardName}</Text>
             <Text style={styles.text}>
               Card Number: {"**** ".repeat(3) + card.cardNumber.slice(-4)}
             </Text>
@@ -169,7 +166,7 @@ export default EWalletTopupPage = ({ route, navigation }) => {
           />
         </View>
 
-          <View style={{height: 20}}></View>
+        <View style={{ height: 20 }}></View>
 
         <Button
           buttonText={"CONFIRM"}

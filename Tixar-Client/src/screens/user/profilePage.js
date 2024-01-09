@@ -18,7 +18,7 @@ export default ProfilePage = ({ route, navigation }) => {
 
   const getUser = () => {
     console.log("getting user profile");
-    fetch("http://rt.tixar.sg:3000/api/user", {
+    fetch("http://rt.tixar.sg/api/user", {
       method: "GET",
       credentials: "include",
       headers: {

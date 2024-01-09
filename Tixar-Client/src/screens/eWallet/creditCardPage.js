@@ -111,7 +111,7 @@ export default CreditCardPage = ({ route, navigation }) => {
 
   const addCreditCard = () => {
     console.log("attempting to add/update card");
-    const endPoint = "http://rt.tixar.sg:3000/api/user/card";
+    const endPoint = "http://rt.tixar.sg/api/user/card";
     const payload = {
       card: {
         cardName: cardName,
@@ -185,9 +185,7 @@ export default CreditCardPage = ({ route, navigation }) => {
       </View>
 
       <View style={styles.inputContainer}>
-        <Text style={styles.title}>
-          Enter Card Details{" "}
-        </Text>
+        <Text style={styles.title}>Enter Card Details </Text>
 
         <View style={styles.textBox}>
           <TextInput

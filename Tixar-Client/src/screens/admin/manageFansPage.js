@@ -20,7 +20,7 @@ export default ManageFansPage = ({ route, navigation }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   const getMembers = () => {
-    fetch("http://vf.tixar.sg:3001/api/club/" + route.params.clubId, {
+    fetch("http://vf.tixar.sg/api/club/" + route.params.clubId, {
       method: "GET",
       credentials: "include",
       headers: { Authorization: `Bearer ${token}` },
@@ -73,14 +73,11 @@ export default ManageFansPage = ({ route, navigation }) => {
                     title: "Delete profile",
                     message: "Action cannot be undone",
                     positiveFunction: () => {
-                      fetch(
-                        "http://vf.tixar.sg:3001/api/profile/" + member._id,
-                        {
-                          method: "DELETE",
-                          credentials: "include",
-                          headers: { Authorization: route.params.token },
-                        }
-                      )
+                      fetch("http://vf.tixar.sg/api/profile/" + member._id, {
+                        method: "DELETE",
+                        credentials: "include",
+                        headers: { Authorization: route.params.token },
+                      })
                         .then(() => {
                           members.splice(index, 1);
                           console.log("here >" + members);

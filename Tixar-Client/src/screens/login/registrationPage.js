@@ -47,7 +47,7 @@ export default RegistrationPage = ({ route, navigation }) => {
 
   // function to handle new user registration
   const handleRegister = () => {
-    const endPoint = "http://rt.tixar.sg:3000/api/register";
+    const endPoint = "http://rt.tixar.sg/api/register";
     const payload = {
       phone: phoneNumber,
       firstName: firstNameField,

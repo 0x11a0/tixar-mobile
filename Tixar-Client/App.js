@@ -334,7 +334,7 @@ const DrawerNav = ({ route, navigation }) => {
   const token = useContext(AuthContext).token;
   const [userType, setUserType] = useState("");
   const getUser = () => {
-    fetch("http://rt.tixar.sg:3000/api/user", {
+    fetch("http://rt.tixar.sg/api/user", {
       method: "GET",
       credentials: "include",
       headers: { Authorization: `Bearer ${token}` },

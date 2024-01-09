@@ -136,7 +136,7 @@ export default EditProfilePage = ({ route, navigation }) => {
     // Show a loading indicator
     setIsUpdating(true);
 
-    fetch("http://rt.tixar.sg:3000/api/user", {
+    fetch("http://rt.tixar.sg/api/user", {
       method: "PUT",
       credentials: "include",
       headers: {
@@ -225,10 +225,7 @@ export default EditProfilePage = ({ route, navigation }) => {
           />
         </View>
         <Text style={styles.footerText}>TIXAR</Text>
-
       </View>
     </KeyboardAwareScrollView>
   );
 };
-
-

@@ -56,7 +56,7 @@ export default LoginPage = ({ navigation }) => {
   // function to handle phone number authentication request
   const handleLogin = () => {
     Keyboard.dismiss();
-    const endPoint = "http://rt.tixar.sg:3000/api/otp/request";
+    const endPoint = "http://rt.tixar.sg/api/otp/request";
     const payload = {
       phone: phoneNumber,
     };
@@ -90,7 +90,7 @@ export default LoginPage = ({ navigation }) => {
 
   // function to handle otp and login request
   const handleOTPLogin = () => {
-    const endPoint = "http://rt.tixar.sg:3000/api/login";
+    const endPoint = "http://rt.tixar.sg/api/login";
     const payload = {
       phone: phoneNumber,
       otp: otp,
@@ -143,7 +143,7 @@ export default LoginPage = ({ navigation }) => {
 
   // function to handle phone number authentication request
   const handleOTPResend = () => {
-    const endPoint = "http://rt.tixar.sg:3000/api/otp/request";
+    const endPoint = "http://rt.tixar.sg/api/otp/request";
     const payload = {
       phone: phoneNumber,
     };
@@ -196,7 +196,7 @@ export default LoginPage = ({ navigation }) => {
 
   // function to handle new user registration
   const handleRegister = () => {
-    const endPoint = "http://rt.tixar.sg:3000/api/register";
+    const endPoint = "http://rt.tixar.sg/api/register";
     const payload = {
       phone: phoneNumber,
       firstName: firstNameField,

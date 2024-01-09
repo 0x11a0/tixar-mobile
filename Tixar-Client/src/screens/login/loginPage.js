@@ -29,7 +29,7 @@ export default LoginPage = ({ navigation }) => {
 
   // function to handle phone number authentication request
   const handleLogin = () => {
-    const endPoint = "http://rt.tixar.sg:3000/api/otp/request";
+    const endPoint = "http://rt.tixar.sg/api/otp/request";
     const payload = {
       phone: phoneNumber,
     };

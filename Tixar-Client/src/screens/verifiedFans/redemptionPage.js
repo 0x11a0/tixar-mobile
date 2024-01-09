@@ -27,7 +27,7 @@ export default RedemptionPage = ({ navigation }) => {
 
   // function to handle code redemption request
   const handleRedemption = () => {
-    const endPoint = "http://vf.tixar.sg:3001/api/profile/redeem";
+    const endPoint = "http://vf.tixar.sg/api/profile/redeem";
     const payload = {
       code: code,
     };
@@ -114,7 +114,18 @@ export default RedemptionPage = ({ navigation }) => {
       {/* FAQ */}
       <Text style={styles.faqText}>
         FAQs {`\n`}
-        These Terms and Conditions ("Terms") govern the use of promotional or redemption codes ("Codes") provided by TIXAR ("Company") for the purpose of accessing or receiving specific products, services, or benefits. By redeeming a Code, you agree to be bound by these Terms. If you do not agree to these Terms, you should not redeem the Code. Eligibility: The Codes are available to individuals who meet the eligibility criteria specified by the Company. Code Redemption: Each Code is valid for a limited time and can only be redeemed during the specified redemption period. Codes are for personal use only and may not be transferred, sold, or exchanged for cash or other benefits. The Company reserves the right to modify or terminate Codes, redemption periods, and eligible products or services at its discretion.
+        These Terms and Conditions ("Terms") govern the use of promotional or
+        redemption codes ("Codes") provided by TIXAR ("Company") for the purpose
+        of accessing or receiving specific products, services, or benefits. By
+        redeeming a Code, you agree to be bound by these Terms. If you do not
+        agree to these Terms, you should not redeem the Code. Eligibility: The
+        Codes are available to individuals who meet the eligibility criteria
+        specified by the Company. Code Redemption: Each Code is valid for a
+        limited time and can only be redeemed during the specified redemption
+        period. Codes are for personal use only and may not be transferred,
+        sold, or exchanged for cash or other benefits. The Company reserves the
+        right to modify or terminate Codes, redemption periods, and eligible
+        products or services at its discretion.
         {"\n"}
       </Text>
 

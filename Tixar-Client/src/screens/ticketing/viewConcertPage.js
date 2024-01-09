@@ -32,7 +32,7 @@ export default ViewConcertPage = ({ route, navigation }) => {
   //   const payload = {
   //     profileId: profileId,
   //   };
-  //   fetch("http://vf.tixar.sg:3001/api/fan/eligibility", {
+  //   fetch("http://vf.tixar.sg/api/fan/eligibility", {
   //     method: "POST",
   //     credentials: "include",
   //     headers: {
@@ -54,7 +54,7 @@ export default ViewConcertPage = ({ route, navigation }) => {
 
   // fanProfiles = [];
   // const getFanInfo = () => {
-  //   fetch("http://vf.tixar.sg:3001/api/fan", {
+  //   fetch("http://vf.tixar.sg/api/fan", {
   //     method: "GET",
   //     credentials: "include",
   //     headers: { Authorization: `Bearer ${token}` },
@@ -87,7 +87,7 @@ export default ViewConcertPage = ({ route, navigation }) => {
       threshold: vfThreshold,
     };
 
-    return fetch("http://vf.tixar.sg:3001/api/fan/eligibility", {
+    return fetch("http://vf.tixar.sg/api/fan/eligibility", {
       method: "POST",
       credentials: "include",
       headers: {
@@ -113,7 +113,7 @@ export default ViewConcertPage = ({ route, navigation }) => {
   // const getFanInfo = () => {
   //   return new Promise((resolve, reject) => {
   //     setLoading(true);
-  //     fetch("http://vf.tixar.sg:3001/api/fan", {
+  //     fetch("http://vf.tixar.sg/api/fan", {
   //       method: "GET",
   //       credentials: "include",
   //       headers: { Authorization: `Bearer ${token}` },
@@ -148,7 +148,7 @@ export default ViewConcertPage = ({ route, navigation }) => {
   const getFanInfo = async () => {
     setLoading(true);
     try {
-      const response = await fetch("http://vf.tixar.sg:3001/api/fan", {
+      const response = await fetch("http://vf.tixar.sg/api/fan", {
         method: "GET",
         credentials: "include",
         headers: { Authorization: `Bearer ${token}` },

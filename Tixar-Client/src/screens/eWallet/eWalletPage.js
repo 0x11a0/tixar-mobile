@@ -29,7 +29,7 @@ export default EWalletPage = ({ route, navigation }) => {
 
   const getUser = () => {
     console.log("getting user profile");
-    fetch("http://rt.tixar.sg:3000/api/user", {
+    fetch("http://rt.tixar.sg/api/user", {
       method: "GET",
       credentials: "include",
       headers: {
@@ -150,7 +150,10 @@ export default EWalletPage = ({ route, navigation }) => {
                 onPress={() => {
                   // Navigate to the relevant screen when the right arrow is pressed
                   console.log("Transfer to Bank");
-                  navigation.navigate("eWalletWithdrawPage", { card: user.card, eWalletBalance: user.eWalletBalance });
+                  navigation.navigate("eWalletWithdrawPage", {
+                    card: user.card,
+                    eWalletBalance: user.eWalletBalance,
+                  });
                 }}
               >
                 <Image
@@ -213,8 +216,8 @@ export default EWalletPage = ({ route, navigation }) => {
             <View style={{ alignItems: "center" }}>
               <Text style={styles.cardTitle}>History</Text>
             </View> */}
-            {/* Scrollable transaction history */}
-            {/* <ScrollView style={styles.scrollView}>
+        {/* Scrollable transaction history */}
+        {/* <ScrollView style={styles.scrollView}>
               {transactionHistory.map((transaction, index) => (
                 <View style={styles.cardRow} key={index}>
                   <Text style={styles.cardText}>{transaction.title}</Text>

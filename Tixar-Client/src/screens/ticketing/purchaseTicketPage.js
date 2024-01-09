@@ -56,7 +56,7 @@ export default ViewConcertPage = ({ route, navigation }) => {
 
   const purchaseTicket = () => {
     console.log("Attempting to purchase ticket");
-    fetch("http://rt.tixar.sg:3000/api/transaction/purchaseTicket", {
+    fetch("http://rt.tixar.sg/api/transaction/purchaseTicket", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -108,7 +108,7 @@ export default ViewConcertPage = ({ route, navigation }) => {
     };
 
     console.log("Attempting to generate ticket");
-    fetch("http://rt.tixar.sg:3000/api/ticket/generate", {
+    fetch("http://rt.tixar.sg/api/ticket/generate", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
